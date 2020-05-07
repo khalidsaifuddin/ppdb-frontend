@@ -45,12 +45,12 @@ localStorage.setItem('api_base','http://mejabantu:8888');
 // localStorage.setItem('logo_aplikasi',"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png");
 // localStorage.setItem('socket_url',"http://localhost:5000");
 
-localStorage.setItem('judul_aplikasi','PPDB-Diskuis');
-localStorage.setItem('sub_judul_aplikasi','PPDB-Diskuis');
+localStorage.setItem('judul_aplikasi','PPDB Lumajang');
+localStorage.setItem('sub_judul_aplikasi','PPDB Lumajang');
 localStorage.setItem('kode_aplikasi','PPDB');
 localStorage.setItem('tema_warna_aplikasi','biru-1');
-localStorage.setItem('wilayah_aplikasi','');
-localStorage.setItem('kode_wilayah_aplikasi','026100');
+localStorage.setItem('wilayah_aplikasi','Kabupaten Lumajang');
+localStorage.setItem('kode_wilayah_aplikasi','052100');
 localStorage.setItem('id_level_wilayah_aplikasi','2');
 localStorage.setItem('jenjang_aplikasi','5-6-13-15-29'); // 5=SD, 6=SMP, 13=SMA, 15=SMK, 29=SLB, 1=PAUD
 localStorage.setItem('semester_id_aplikasi','20191'); // 5=SD, 6=SMP, 13=SMA, 15=SMK, 29=SLB, 1=PAUD

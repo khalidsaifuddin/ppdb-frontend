@@ -180,6 +180,8 @@ class app extends Component {
                   <i slot="media" className="f7-icons">house</i>
                 </ListItem>
                 }
+                {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+                <>
                 {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
                 <ListItem link={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Kuis">
                   {/* <Icon slot="media" ios="f7:house"></Icon> */}
@@ -196,6 +198,8 @@ class app extends Component {
                 <ListItem link={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Pertanyaan">
                   <i slot="media" className="f7-icons">question_square_fill</i>
                 </ListItem>
+                }
+                </>
                 }
                 {/* {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
                 <ListItem link={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Pantauan Pertanyaan">
@@ -271,6 +275,8 @@ class app extends Component {
               text="Cari" 
               style={{fontSize:'12px'}} 
             /> */}
+            {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+            <>
             <Link 
               href={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
               // onClick={()=>{this.onClickLinkTab('beranda')}} 
@@ -293,10 +299,13 @@ class app extends Component {
             />
             </>
             }
+            </>
+            }
             {localStorage.getItem('kode_aplikasi') !== 'SPM' &&
             <>
             {localStorage.getItem('sudah_login') === '1' &&
               <>
+              {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
               <Link 
                 href={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
                 // onClick={()=>{this.onClickLinkTab('beranda')}} 
@@ -307,6 +316,7 @@ class app extends Component {
                 text="Pertanyaan" 
                 style={{fontSize:'12px'}} 
               />
+              }
               {/* <Link 
                 href={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
                 // onClick={()=>{this.onClickLinkTab('beranda')}} 
@@ -329,6 +339,8 @@ class app extends Component {
               /> */}
               </>
             }
+            </>
+            }
             {localStorage.getItem('sudah_login') === '0' &&
               <Link 
                 href="/login" 
@@ -340,8 +352,6 @@ class app extends Component {
                 text="Login" 
                 style={{fontSize:'12px'}} 
               />
-            }
-            </>
             }
             <Link 
               iconIos="f7:ellipsis" 
