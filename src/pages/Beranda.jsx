@@ -196,7 +196,6 @@ class Beranda extends Component {
                         {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}
                       </Icon>
                     </Link>
-                    {/* <Link style={{marginLeft:'0px'}} iconIos="f7:plus_app" iconAurora="f7:plus_app" iconMd="material:plus_app" tooltip="Buat Pertanyaan Baru" href="/tambahPertanyaan"></Link> */}
                     <Link href="/ProfilPengguna">
                       <img style={{height:'30px', borderRadius:'50%', marginLeft:'0px'}} src={JSON.parse(localStorage.getItem('user')).gambar} />
                     </Link>
@@ -210,32 +209,12 @@ class Beranda extends Component {
                   <Col width="100" style={{textAlign:'center'}}>
                     <h1>{localStorage.getItem('judul_aplikasi')}</h1>
                   </Col>
-                  <Col width="33" style={{textAlign:'center'}}>
+                  <Col width="100" style={{textAlign:'center'}}>
                     <Link href="/tambahPertanyaan/" style={{display:'inline'}}>
                       <Card style={{background:'#ede7f6'}}>
                         <CardContent style={{color:'#7e57c2'}}>
-                          <Icon style={{color:'#7e57c2', fontSize:'50px'}} ios={"f7:question_circle_fill"} aurora={"f7:question_circle_fill"} md={"material:question_circle_fill"} tooltip="Buat Pertanyaan Baru"/>
-                          <br/>Bertanya  
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </Col>
-                  <Col width="33" style={{textAlign:'center'}}>
-                    <Link href="/gabungKuis/" style={{display:'inline'}}>
-                      <Card style={{background:'#ede7f6'}}>
-                        <CardContent style={{color:'#4A2884'}}>
-                          <Icon style={{color:'#4A2884', fontSize:'70px'}} ios={"f7:pencil_circle_fill"} aurora={"f7:pencil_circle_fill"} md={"material:pencil_circle_fill"} tooltip="Buat Pertanyaan Baru"/>
-                          <br/>Ikuti Kuis
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </Col>
-                  <Col width="33" style={{textAlign:'center'}}>
-                    <Link href="/gabungRuang/" style={{display:'inline'}}>
-                      <Card style={{background:'#ede7f6'}}>
-                        <CardContent style={{color:'#ab47bc'}}>
-                          <Icon style={{color:'#ab47bc', fontSize:'50px'}} ios={"f7:circle_grid_hex_fill"} aurora={"f7:circle_grid_hex_fill"} md={"material:circle_grid_hex_fill"} tooltip="Ikuti Ruang"/>
-                          <br/>Ikuti Ruang
+                          <Icon style={{color:'#7e57c2', fontSize:'50px'}} ios={"f7:doc_checkmark_fill"} aurora={"f7:doc_checkmark_fill"} md={"material:doc_checkmark_fill"} tooltip="Buat Pertanyaan Baru"/>
+                          <br/>Daftarkan Siswa  
                         </CardContent>
                       </Card>
                     </Link>
@@ -243,195 +222,6 @@ class Beranda extends Component {
                 </Row>
               </CardContent>
             </Card>
-            <BlockTitle style={{marginTop:'0px'}}>Kuis Anda</BlockTitle>
-            <Block strong style={{padding:16, paddingRight: 0, paddingLeft:0}}>
-              <div className="divtes" style={{paddingLeft: 0, whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', width: '100%'}}>
-                {this.props.kuis_diikuti.rows.map((option)=>{
-                  let waktu_mengerjakan = '';
-                  let tgl_waktu_mengerjakan = new Date(option.waktu_mengerjakan);
-                  waktu_mengerjakan = moment(option.waktu_mengerjakan).format('D') + ' ' + this.bulan[(moment(option.waktu_mengerjakan).format('M')-1)] + ' ' + moment(option.waktu_mengerjakan).format('YYYY') + ', pukul ' + moment(option.waktu_mengerjakan).format('H') + ':' + moment(option.waktu_mengerjakan).format('mm');
-
-                  return (
-                    <Card className="cardPopuler" style={{marginLeft:(this.props.kuis_diikuti.rows.indexOf(option) === 0 ? 16 : 0), backgroundImage:'url('+localStorage.getItem('api_base')+'/assets/berkas/'+option.gambar_kuis+')', backgroundSize:'cover'}}>
-                    {/* <Card style={{background:'#37474F'}} className="cardPopuler" style={{marginLeft:(this.props.kuis_diikuti.rows.indexOf(option) === 0 ? 16 : 0), marginRight:(this.props.kuis_diikuti.rows.indexOf(option) === (this.props.kuis_diikuti.rows.length-1) ? 16 : 8)}}> */}
-                      <CardContent style={{background:'rgba(0, 0, 0, 0.6)'}}>
-                          <Row>
-                              <Col width={75} style={{whiteSpace:'pre-wrap'}}>
-                                  <h2 style={{marginTop:'0px'}}>
-                                      {option.judul}
-                                  </h2>
-                                  {/* <p> */}
-                                      {/* {option.keterangan}<br/> */}
-                                      Tanggal {waktu_mengerjakan}
-                                  {/* </p> */}
-                              </Col>
-                              <Col width={25} style={{textAlign:'right'}}>
-                                  <div style={{fontSize:'10px'}}>
-                                      Skor
-                                  </div>
-                                  <div style={{fontSize:'30px', fontWeight:'bold', color:'#64FFDA'}}>{option.skor ? parseFloat(option.skor).toFixed(1)  : "0"}</div>
-                                  <div style={{fontSize:'10px'}}>
-                                      Peringkat {option.peringkat} 
-                                      <br/>dari 
-                                      <br/>{option.total_peserta} peserta
-                                  </div>
-                              </Col>
-                          </Row>
-                      </CardContent>
-                      <CardFooter style={{background:'rgba(0, 0, 0, 0.8)'}}>
-                          <Button raised fill>
-                              Rincian
-                          </Button>
-                      </CardFooter>
-                    </Card>
-                  )
-                })}
-                <Card className="cardPopuler" style={{marginLeft:(this.props.kuis_diikuti.total === 0 ? 16 : 8),marginRight:16, background:'#37474F',width:'240px'}} >
-                    <CardContent style={{textAlign:'center', paddingBottom:'10px'}}>
-                      <Icon style={{fontSize:'100px',color:'#cccccc'}} ios="f7:plus_app" aurora="f7:plus_app" md="material:plus_app" tooltip="Kuis"/>
-                    </CardContent>
-                    <CardFooter>
-                          <Button raised fill onClick={()=>this.$f7router.navigate('/Kuis/')}>
-                              Ikuti Kuis atau Buat Kuis Baru
-                          </Button>
-                      </CardFooter>
-                  </Card>
-                {/* <Card className="cardPopuler" style={{marginLeft:16}}>
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler" style={{marginRight:16}}>
-                  &nbsp;
-                </Card> */}
-              </div>
-            </Block>
-            <BlockTitle style={{marginTop:'0px'}}>Ruang Anda</BlockTitle>
-            <Block strong style={{padding:16, paddingRight: 0, paddingLeft:0}}>
-              {/* <div className="divtes" style={{paddingLeft: 0, whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', height: 250, width: '100%'}}>
-                <Card className="cardPopuler" style={{marginLeft:16}}>
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler">
-                  &nbsp;
-                </Card>
-                <Card className="cardPopuler" style={{marginRight:16}}>
-                  &nbsp;
-                </Card>
-              </div> */}
-              <div className="divtes" style={{paddingLeft: 0, whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', width: '100%'}}>
-                {this.props.ruang_diikuti.rows.map((option)=>{
-                  let create_date = '';
-                  let tgl_create_date = new Date(option.create_date);
-                  create_date = moment(option.create_date).format('D') + ' ' + this.bulan[(moment(option.create_date).format('M')-1)] + ' ' + moment(option.create_date).format('YYYY');
-                  
-                  return (
-                    <Card className="cardPopuler" style={{marginLeft:(this.props.ruang_diikuti.rows.indexOf(option) === 0 ? 16 : 0), backgroundImage:'url('+localStorage.getItem('api_base')+'/assets/berkas/'+option.gambar_ruang+')', backgroundSize:'cover'}}>
-                    {/* <Card style={{background:'#37474F'}} className="cardPopuler" style={{marginLeft:(this.props.kuis_diikuti.rows.indexOf(option) === 0 ? 16 : 0), marginRight:(this.props.kuis_diikuti.rows.indexOf(option) === (this.props.kuis_diikuti.rows.length-1) ? 16 : 8)}}> */}
-                      <CardContent style={{background:'rgba(0, 0, 0, 0.6)'}}>
-                          <Row>
-                              <Col width={75} style={{whiteSpace:'pre-wrap'}}>
-                                  <h2 style={{marginTop:'0px'}}>
-                                      {option.nama}
-                                  </h2>
-                                  Mengikuti sejak {create_date}<br/>
-                                  {option.pertanyaan.result ? option.pertanyaan.result : '0'} Pertanyaan <br/>{option.ruang.total ? option.ruang.total : '0'} Pengikut
-                              </Col>
-                              <Col width={25} style={{textAlign:'right'}}>
-                                  
-                              </Col>
-                          </Row>
-                      </CardContent>
-                      <CardFooter style={{background:'rgba(0, 0, 0, 0.8)'}}>
-                          <Button raised fill onClick={()=>this.$f7router.navigate('/tampilRuang/'+option.ruang_id)}>
-                              Rincian
-                          </Button>
-                      </CardFooter>
-                    </Card>
-                  )
-                })}
-
-                <Card className="cardPopuler" style={{marginLeft:(this.props.kuis_diikuti.total === 0 ? 16 : 16),marginRight:16, background:'#37474F',width:'240px'}} >
-                  <CardContent style={{textAlign:'center', paddingBottom:'10px'}}>
-                    <Icon style={{fontSize:'100px',color:'#cccccc'}} ios="f7:plus_app" aurora="f7:plus_app" md="material:plus_app" tooltip="Ruang"/>
-                  </CardContent>
-                  <CardFooter>
-                        <Button raised fill onClick={()=>this.$f7router.navigate('/Ruang/')}>
-                            Ikuti Ruang
-                        </Button>
-                    </CardFooter>
-                </Card>
-              </div>
-            </Block>
-            {/* <Card>
-              <CardContent style={{textAlign:'center'}}>
-                <h3>Ikut Kuis Sekarang!</h3>
-                <h4>Masukkan kode kuis:</h4>
-                <List>
-                  <ListInput
-                    // label={"Kode Kuis"}
-                    outline
-                    floatingLabel
-                    clearButton
-                    type="text"
-                    // resizable
-                    placeholder={"Kode Kuis"}
-                    style={{width:'100%'}}
-                    // onChange={this.setStateValuePilihan(key, 'teks')}
-                    // defaultValue={element.teks}
-                    >
-                  </ListInput>
-                </List>
-                <br/>
-                <Button raised large fill>
-                  Ikuti Kuis Sekarang
-                </Button>
-              </CardContent>
-            </Card> */}
-            {/* <Card>
-              <CardContent style={{textAlign:'center'}}>
-                <h3>Gabung ke dalam Ruang Sekarang!</h3>
-                <h4>Masukkan kode ruang:</h4>
-                <List>
-                  <ListInput
-                    // label={"Kode Kuis"}
-                    outline
-                    floatingLabel
-                    clearButton
-                    type="text"
-                    // resizable
-                    placeholder={"Kode Ruang"}
-                    style={{width:'100%'}}
-                    // onChange={this.setStateValuePilihan(key, 'teks')}
-                    // defaultValue={element.teks}
-                    >
-                  </ListInput>
-                </List>
-                <br/>
-                <Button raised large fill>
-                  Gabung Ruang
-                </Button>
-              </CardContent>
-            </Card> */}
           </Page>
         )
     }

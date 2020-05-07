@@ -180,6 +180,10 @@ class app extends Component {
                   <i slot="media" className="f7-icons">house</i>
                 </ListItem>
                 }
+                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Daftarkan Siswa">
+                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
+                  <i slot="media" className="f7-icons">doc_checkmark_fill</i>
+                </ListItem>
                 {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                 <>
                 {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
@@ -265,16 +269,16 @@ class app extends Component {
               text="Beranda" 
               style={{fontSize:'12px'}} 
             />
-            {/* <Link 
-              href="/Cari" 
+            <Link 
+              href={"/Daftar/"} 
               // onClick={()=>{this.onClickLinkTab('beranda')}} 
               // tabLinkActive={this.props.tabBar.beranda} 
-              iconIos="f7:search" 
-              iconAurora="f7:search" 
-              iconMd="f7:search" 
-              text="Cari" 
+              iconIos="f7:doc_checkmark_fill" 
+              iconAurora="f7:doc_checkmark_fill" 
+              iconMd="f7:doc_checkmark_fill" 
+              text="Daftarkan Siswa" 
               style={{fontSize:'12px'}} 
-            /> */}
+            />
             {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
             <>
             <Link 
