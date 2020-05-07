@@ -1,0 +1,143 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Left Panel right border when it is visible by breakpoint */
+.panel-left.panel-visible-by-breakpoint:before {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: rgba(0,0,0,0.1);
+  content: '';
+  z-index: 6000;
+}
+
+/* Hide navbar link which opens left panel when it is visible by breakpoint */
+.panel-left.panel-visible-by-breakpoint ~ .view .navbar .panel-open[data-panel="left"] {
+  display: none;
+}
+
+/*
+  Extra borders for main view and left panel for iOS theme when it behaves as panel (before breakpoint size)
+*/
+.ios .panel-left:not(.panel-visible-by-breakpoint).panel-active ~ .view-main:before,
+.ios .panel-left:not(.panel-visible-by-breakpoint).panel-closing ~ .view-main:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: rgba(0,0,0,0.1);
+  content: '';
+  z-index: 6000;
+}
+
+.mobileTab {
+  display: none;
+  height: 60px;
+}
+
+.mobileTab > .toolbar-inner {
+  margin-top: 6px;
+}
+
+.sideMenuToggle{
+  display: none !important;
+}
+
+.cardPopuler{
+  margin-left:3px;
+  margin-right:8px;
+  float:none;
+  /* min-height: 300px; */
+  /* height:2300px; */
+  width:350px;
+  background:#37474F;
+  border-radius:3px; 
+  display:inline-block;
+}
+.hilangDiDesktop {
+  display:none;
+}
+
+.hilangDiMobile {
+  display: block;
+}
+
+@media only screen and (max-width: 960px) {
+  .mobileTab {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .hilangDiDesktop{
+    display: block;
+  }
+
+  .hilangDiMobile{
+    display: none;
+  }
+}
+
+.MenuDetail > .menu-item-content {
+  background: #f5f5f5;
+  color:#434343;
+  border-radius: 6px;
+}
+
+.pagination{
+  display: flex;
+  /* padding-left: 15px; */
+  /* padding-right: 15px; */
+  list-style: none;
+  border:0px solid #ccc;
+  background:white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom:0px;
+  right:0px;
+  padding-left: 8px;
+}
+
+.pagination li {
+  display: inline-block;
+  border:0px solid #ccc;
+  width: 15px;
+  height: 15px;
+  padding:8px;
+  text-align: center;
+}
+
+.FabSebaranSekolah > a {
+  height: 40px;
+}
+
+.FabSebaranSekolah > a > div {
+  font-size: 12px;
+}
+
+.listSekolah > .item-content > .item-inner > .item-title-row > .item-title {
+  font-size: 12px;
+}
+
+.listSekolah > .item-content > .item-inner > .item-subtitle {
+  font-size: 10px;
+}
+
+.read-more { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0;
+  width: 100%; 
+  text-align: center; 
+  margin: 0; padding: 20px 0; 
+  height: 100px;
+	
+  /* background-image: linear-gradient(to bottom, transparent 35%, white 65%); */
+}
+
+
