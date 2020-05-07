@@ -2,6 +2,7 @@ import axios from 'axios/index';
 
 export const UPDATE_WINDOW_DIMENSION = '[APP] UPDATE WINDOW DIMENSION';
 export const SET_LOADING = '[APP] SET LOADING';
+export const SET_KEYWORD = '[APP] SET KEYWORD';
 export const SET_TAB_ACTIVE = '[APP] SET TAB ACTIVE';
 export const GET_SEKOLAH = '[APP] GET SEKOLAH';
 export const GET_COUNT_SEKOLAH = '[APP] GET COUNT SEKOLAH';
@@ -39,6 +40,16 @@ export function setLoading(loading)
         return dispatch ({
             type: SET_LOADING,
             loading: loading
+        })
+    }
+}
+
+export function setKeyword(keyword)
+{
+    return (dispatch) => {
+        return dispatch ({
+            type: SET_KEYWORD,
+            keyword: keyword
         })
     }
 }

@@ -38,7 +38,7 @@ import { getSPMKabupatenPerKecamatan, getGtkJenisPie } from '../store/actions';
 import io from 'socket.io-client';
 
 import moment from 'moment';
-import ruang from './Ruang/ruang';
+// import ruang from './Ruang/ruang';
 
 class Beranda extends Component {
 
@@ -203,23 +203,9 @@ class Beranda extends Component {
                     }
                 </NavRight>
             </Navbar>
-            <Card style={{backgroundImage:'url('+localStorage.getItem('api_base')+'/assets/berkas/bg1.jpg)', backgroundSize:'cover', marginTop:'0px', marginLeft:'0px', marginRight:'0px'}}>
-              <CardContent style={{padding:'0px', background:'rgba(0, 0, 0, 0.8)'}}>
-                <Row noGap style={{alignItems:'flex-end', marginTop:'-50px'}}>
-                  <Col width="100" style={{textAlign:'center'}}>
-                    <h1>{localStorage.getItem('judul_aplikasi')}</h1>
-                  </Col>
-                  <Col width="100" style={{textAlign:'center'}}>
-                    <Link href="/tambahPertanyaan/" style={{display:'inline'}}>
-                      <Card style={{background:'#ede7f6'}}>
-                        <CardContent style={{color:'#7e57c2'}}>
-                          <Icon style={{color:'#7e57c2', fontSize:'50px'}} ios={"f7:doc_plaintext"} aurora={"f7:doc_plaintext"} md={"material:doc_plaintext"} tooltip="Buat Pertanyaan Baru"/>
-                          <br/>Daftarkan Siswa  
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </Col>
-                </Row>
+            <Card>
+              <CardContent>
+                <h1>Beranda masih kosong :)</h1>
               </CardContent>
             </Card>
           </Page>

@@ -183,7 +183,11 @@ class app extends Component {
                 <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari">
                   <i slot="media" className="f7-icons">search</i>
                 </ListItem>
-                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Daftarkan Siswa">
+                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
+                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
+                  <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
+                </ListItem>
+                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                   {/* <Icon slot="media" ios="f7:house"></Icon> */}
                   <i slot="media" className="f7-icons">doc_plaintext</i>
                 </ListItem>
@@ -287,10 +291,20 @@ class app extends Component {
               href={"/Daftar/"} 
               // onClick={()=>{this.onClickLinkTab('beranda')}} 
               // tabLinkActive={this.props.tabBar.beranda} 
+              iconIos="f7:pencil_ellipsis_rectangle" 
+              iconAurora="f7:pencil_ellipsis_rectangle" 
+              iconMd="f7:pencil_ellipsis_rectangle" 
+              text="Form Daftar" 
+              style={{fontSize:'12px'}} 
+            />
+            <Link 
+              href={"/Daftar/"} 
+              // onClick={()=>{this.onClickLinkTab('beranda')}} 
+              // tabLinkActive={this.props.tabBar.beranda} 
               iconIos="f7:doc_plaintext" 
               iconAurora="f7:doc_plaintext" 
               iconMd="f7:doc_plaintext" 
-              text="Daftar" 
+              text="Pendaftar" 
               style={{fontSize:'12px'}} 
             />
             {localStorage.getItem('kode_aplikasi') === 'MEJA' &&

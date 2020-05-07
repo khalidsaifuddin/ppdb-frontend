@@ -14,29 +14,8 @@ import NotFoundPage from '../pages/404.jsx';
 import CatalogPage from '../pages/catalog.jsx';
 import SettingsPage from '../pages/settings.jsx';
 
-import tambahPertanyaan from '../pages/Pertanyaan/tambahPertanyaan';
-import pertanyaanPengguna from '../pages/Pertanyaan/pertanyaanPengguna';
-import tampilPertanyaan from '../pages/Pertanyaan/tampilPertanyaan';
-import pantauan from '../pages/Pertanyaan/pantauan';
-import jawabPertanyaan from '../pages/Pertanyaan/jawabPertanyaan';
-import cariPertanyaan from '../pages/Pertanyaan/cariPertanyaan';
 import notifikasi from '../pages/Notifikasi/notifikasi';
-import ruang from '../pages/Ruang/ruang';
-import tambahRuang from '../pages/Ruang/tambahRuang';
-import tampilRuang from '../pages/Ruang/tampilRuang';
-import kodeRuang from '../pages/Ruang/kodeRuang';
-import tambahPertanyaanRuang from '../pages/Ruang/tambahPertanyaanRuang';
-import kuis from '../pages/Kuis/kuis';
-import tambahKuis from '../pages/Kuis/tambahKuis';
-import kodeKuis from '../pages/Kuis/kodeKuis';
-import gabungKuis from '../pages/Kuis/gabungKuis';
-import gabungRuang from '../pages/Ruang/gabungRuang';
-import praTampilKuis from '../pages/Kuis/praTampilKuis';
-import kerjakanKuis from '../pages/Kuis/kerjakanKuis';
-import hasilAkhirKuis from '../pages/Kuis/hasilAkhirKuis';
-import peringkatKuis from '../pages/Kuis/peringkatKuis';
-import praTampilRuang from '../pages/Ruang/praTampilRuang';
-
+import cari from '../pages/PPDB/cari';
 
 var routes = [
   {
@@ -44,105 +23,8 @@ var routes = [
     component: Beranda,
   },
   {
-    path: '/tambahPertanyaan',
-    component: tambahPertanyaan
-  },
-  {
     path: '/Cari',
-    component: cariPertanyaan
-  },
-  {
-    path: '/Kuis',
-    component: kuis,
-    keepAlive: false
-  },
-  {
-    path: '/gabungKuis',
-    component: gabungKuis,
-    keepAlive: false
-  },
-  {
-    path: '/gabungRuang',
-    component: gabungRuang,
-    keepAlive: false
-  },
-  {
-    path: '/Kuis/:pengguna_id',
-    component: kuis,
-    keepAlive: false
-  },
-  {
-    path: '/peringkatKuis/:kuis_id',
-    component: peringkatKuis,
-    keepAlive: false
-  },
-  {
-    path: '/hasilAkhirKuis/:kuis_id',
-    component: hasilAkhirKuis
-  },
-  {
-    path: '/KodeKuis/:kuis_id',
-    component: kodeKuis
-  },
-  {
-    path: '/kerjakanKuis/:kuis_id',
-    component: kerjakanKuis
-  },
-  {
-    path: '/praTampilKuis/:kode_kuis',
-    component: praTampilKuis
-  },
-  {
-    path: '/praTampilRuang/:kode_ruang',
-    component: praTampilRuang
-  },
-  {
-    path: '/tambahKuis/:pengguna_id',
-    component: tambahKuis
-  },
-  {
-    path: '/tambahKuis/:pengguna_id/:kuis_id',
-    component: tambahKuis
-  },
-  {
-    path: '/tambahKuisRuang/:pengguna_id/:ruang_id',
-    component: tambahKuis
-  },
-  {
-    path: '/Ruang',
-    component: ruang
-  },
-  {
-    path: '/tambahRuang',
-    component: tambahRuang
-  },
-  {
-    path: '/tampilRuang/:ruang_id',
-    component: tampilRuang
-  },
-  {
-    path: '/kodeRuang/:ruang_id',
-    component: kodeRuang
-  },
-  {
-    path: '/tambahPertanyaanRuang/:ruang_id',
-    component: tambahPertanyaanRuang
-  },
-  {
-    path: '/pertanyaanPengguna/:pengguna_id',
-    component: pertanyaanPengguna
-  },
-  {
-    path: '/pantauan/:pengguna_id',
-    component: pantauan
-  },
-  {
-    path: '/tampilPertanyaan/:pertanyaan_id',
-    component: tampilPertanyaan
-  },
-  {
-    path: '/jawabPertanyaan/:pertanyaan_id',
-    component: jawabPertanyaan
+    component: cari
   },
   {
     path: '/notifikasi',
