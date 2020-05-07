@@ -213,7 +213,7 @@ class Beranda extends Component {
                     <Link href="/tambahPertanyaan/" style={{display:'inline'}}>
                       <Card style={{background:'#ede7f6'}}>
                         <CardContent style={{color:'#7e57c2'}}>
-                          <Icon style={{color:'#7e57c2', fontSize:'50px'}} ios={"f7:doc_checkmark_fill"} aurora={"f7:doc_checkmark_fill"} md={"material:doc_checkmark_fill"} tooltip="Buat Pertanyaan Baru"/>
+                          <Icon style={{color:'#7e57c2', fontSize:'50px'}} ios={"f7:doc_plaintext"} aurora={"f7:doc_plaintext"} md={"material:doc_plaintext"} tooltip="Buat Pertanyaan Baru"/>
                           <br/>Daftarkan Siswa  
                         </CardContent>
                       </Card>

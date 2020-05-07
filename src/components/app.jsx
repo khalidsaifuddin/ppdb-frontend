@@ -180,10 +180,14 @@ class app extends Component {
                   <i slot="media" className="f7-icons">house</i>
                 </ListItem>
                 }
+                <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari">
+                  <i slot="media" className="f7-icons">search</i>
+                </ListItem>
                 <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Daftarkan Siswa">
                   {/* <Icon slot="media" ios="f7:house"></Icon> */}
-                  <i slot="media" className="f7-icons">doc_checkmark_fill</i>
+                  <i slot="media" className="f7-icons">doc_plaintext</i>
                 </ListItem>
+                
                 {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                 <>
                 {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
@@ -270,13 +274,23 @@ class app extends Component {
               style={{fontSize:'12px'}} 
             />
             <Link 
+              href={"/Cari/"} 
+              // onClick={()=>{this.onClickLinkTab('beranda')}} 
+              // tabLinkActive={this.props.tabBar.beranda} 
+              iconIos="f7:search" 
+              iconAurora="f7:search" 
+              iconMd="f7:search" 
+              text="Cari" 
+              style={{fontSize:'12px'}} 
+            />
+            <Link 
               href={"/Daftar/"} 
               // onClick={()=>{this.onClickLinkTab('beranda')}} 
               // tabLinkActive={this.props.tabBar.beranda} 
-              iconIos="f7:doc_checkmark_fill" 
-              iconAurora="f7:doc_checkmark_fill" 
-              iconMd="f7:doc_checkmark_fill" 
-              text="Daftarkan Siswa" 
+              iconIos="f7:doc_plaintext" 
+              iconAurora="f7:doc_plaintext" 
+              iconMd="f7:doc_plaintext" 
+              text="Daftar" 
               style={{fontSize:'12px'}} 
             />
             {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
