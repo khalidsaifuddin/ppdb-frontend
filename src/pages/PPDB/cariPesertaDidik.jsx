@@ -16,8 +16,6 @@ class cariPesertaDidik extends Component {
         loading: false,
         routeParams:{
             keyword: this.props.keyword
-            // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-            // pantauan: 1
         },
         pertanyaan: {
             rows: [],
@@ -46,6 +44,29 @@ class cariPesertaDidik extends Component {
         
         // this.props.getPesertaDidik(this.state.routeParams);
         
+    }
+
+    daftarkanPesertaDidik = (peserta_didik_id) => {
+        // console.log(this);
+        this.setState({
+            routeParams: {
+                ...this.state.routeParams,
+                peserta_didik_id: peserta_didik_id
+            }
+        },()=>{
+            // console.log(this);
+            this.props.importPesertaDidik(this.state.routeParams);
+            // this.props.importPesertaDidik(this.state.routeParams).then((result) => {
+                // console.log(this);
+                // this.$f7router.navigate('/tambahCalonPesertaDidik/' + peserta_didik_id);
+                // if(result.payload.success === true){
+
+                // }else{
+
+                // }
+            // });
+
+        });
     }
 
     render()
@@ -126,7 +147,7 @@ class cariPesertaDidik extends Component {
                                 </Row>
                             </CardContent>
                             <CardFooter>
-                                <Button raised fill disabled={(parseInt(option.tingkat_pendidikan_id) === 6 ? false : true)}>
+                                <Button raised fill disabled={(parseInt(option.tingkat_pendidikan_id) === 6 ? false : true)} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
                                     <Icon ios="f7:doc_plaintext" style={{fontSize:'20px'}}/>
                                     &nbsp; Daftarkan Peserta Didik
                                 </Button>
@@ -147,7 +168,8 @@ function mapDispatchToProps(dispatch) {
       updateWindowDimension: Actions.updateWindowDimension,
       setLoading: Actions.setLoading,
       getPesertaDidik: Actions.getPesertaDidik,
-      setKeyword: Actions.setKeyword
+      setKeyword: Actions.setKeyword,
+      importPesertaDidik: Actions.importPesertaDidik
     }, dispatch);
 }
 

@@ -12,6 +12,10 @@ const initialState = {
     mata_pelajaran: {
         rows: [],
         total: 0
+    },
+    mst_wilayah: {
+        rows: [],
+        total: 0
     }
 };
 
@@ -37,6 +41,13 @@ const RefReducers = function (state = initialState, action) {
             return {
                 ...state,
                 mata_pelajaran: action.payload
+            };
+        }
+        case Actions.GET_MST_WILAYAH:
+        {
+            return {
+                ...state,
+                mst_wilayah: action.payload
             };
         }
         default:

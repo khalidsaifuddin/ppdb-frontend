@@ -21,12 +21,27 @@ class tambahCalonPesertaDidik extends Component {
             pendidikan_terakhir_id_ibu: 99,
             pekerjaan_id_ibu: 98,
             pendidikan_terakhir_id_wali: 99,
-            pekerjaan_id_wali: 98
+            pekerjaan_id_wali: 98,
+            jenis_kelamin: 'L',
+            calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
         },
         sekolah_terpilih: {
             sekolah_id: null,
             nama: null
-        }
+        },
+        provinsi: {
+            rows: [],
+            count: 0
+        },
+        kabupaten: {
+            rows: [],
+            count: 0
+        },
+        kecamatan: {
+            rows: [],
+            count: 0
+        },
+        smartSelectJenisKelamin: (<></>)
     }
 
     bulan = [
@@ -48,9 +63,52 @@ class tambahCalonPesertaDidik extends Component {
         this.setState({
             routeParams: {
                 ...this.state.routeParams
+            },
+            routeParamsWilayah: {
+                ...this.state.routeParamsWilayah,
+                id_level_wilayah: 1
             }
         },()=>{
-            
+            this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=>{
+                this.setState({
+                    provinsi: this.props.mst_wilayah
+                });
+            });
+
+            if(this.state.routeParams.calon_peserta_didik_id){
+                this.props.getCalonPesertaDidik(this.state.routeParams).then((result)=>{
+                    this.setState({
+                        routeParams: {
+                            ...this.state.routeParams,
+                            ...this.props.calon_peserta_didik.rows[0]
+                        },
+                        sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal,
+                        smartSelectJenisKelamin: (<ListItem
+                            title={"Jenis_Kelamin"}
+                            smartSelect
+                            smartSelectParams={{
+                                openIn: 'sheet', 
+                                closeOnSelect: true, 
+                                // setValueText:true,
+                                // formatValueText: (values)=>{
+                                //     // return (<h1>haha</h1>)
+                                //     console.log(this.state.routeParams.jenis_kelamin);
+                                //     return [this.state.routeParams.jenis_kelamin];
+                                // }
+                            }}
+                        >
+                            <select name="jenis_kelamin" value={this.props.calon_peserta_didik.rows[0].jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
+                                <option disabled value={"0"}>-</option>
+                                <option value={"L"}>Laki-laki</option>
+                                <option value={"P"}>Perempuan</option>
+                                
+                            </select>
+                        </ListItem>)
+                    },()=>{
+                        // console.log(this.state.routeParams);
+                    });
+                });
+            }
         });
 
     }
@@ -71,7 +129,7 @@ class tambahCalonPesertaDidik extends Component {
         this.setState({
             routeParams: {
                 ...this.state.routeParams,
-                sekolah_id_asal: sekolah_id
+                asal_sekolah_id: sekolah_id
             },
             sekolah_terpilih: {
                 sekolah_id: sekolah_id,
@@ -84,7 +142,19 @@ class tambahCalonPesertaDidik extends Component {
         });
     }
 
+    simpan = () => {
+        this.setState({
+            routeParams: {
+                ...this.state.routeParams,
+                sekolah_asal: null
+            }
+        },()=>{
+            this.props.simpanCalonPesertaDidik(this.state.routeParams);
+        });
+    }    
+
     setSelectValue = (key) => (b) => {
+        // console.log(b);
         this.setState({
             routeParams: {
                 ...this.state.routeParams,
@@ -92,6 +162,34 @@ class tambahCalonPesertaDidik extends Component {
             }
         },()=>{
             console.log(this.state.routeParams);
+
+            if(key === 'kode_wilayah_provinsi'){
+                this.setState({
+                    routeParamsWilayah: {
+                        id_level_wilayah: 2,
+                        mst_kode_wilayah: this.state.routeParams.kode_wilayah_provinsi
+                    }
+                },()=>{
+                    this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=>{
+                        this.setState({
+                            kabupaten: this.props.mst_wilayah
+                        })
+                    });
+                });
+            }else if(key === 'kode_wilayah_kabupaten'){
+                this.setState({
+                    routeParamsWilayah: {
+                        id_level_wilayah: 3,
+                        mst_kode_wilayah: this.state.routeParams.kode_wilayah_kabupaten
+                    }
+                },()=>{
+                    this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=>{
+                        this.setState({
+                            kecamatan: this.props.mst_wilayah
+                        })
+                    });
+                });
+            }
         });
     }
 
@@ -139,6 +237,7 @@ class tambahCalonPesertaDidik extends Component {
                                         info="Sesuai Ijazah"
                                         clearButton
                                         onChange={this.setFieldValue('nama')}
+                                        defaultValue={this.state.routeParams.nama}
                                     />
 
                                     <ListInput
@@ -148,20 +247,31 @@ class tambahCalonPesertaDidik extends Component {
                                         info="NIK yang belum pernah didaftarkan sebelumnya"
                                         clearButton
                                         onChange={this.setFieldValue('nik')}
+                                        defaultValue={this.state.routeParams.nik}
                                     />
                                     
-                                    <ListItem
+                                    {this.state.smartSelectJenisKelamin}
+                                    {/* <ListItem
                                         title={"Jenis_Kelamin"}
                                         smartSelect
-                                        smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
+                                        smartSelectParams={{
+                                            openIn: 'sheet', 
+                                            closeOnSelect: true, 
+                                            setValueText:true,
+                                            formatValueText: (values)=>{
+                                                // return (<h1>haha</h1>)
+                                                console.log(this.state.routeParams.jenis_kelamin);
+                                                return [this.state.routeParams.jenis_kelamin];
+                                            }
+                                        }}
                                     >
-                                        <select name="jenis_kelamin" defaultValue={"L"} onChange={this.setSelectValue('jenis_kelamin')}>
+                                        <select name="jenis_kelamin" value={this.state.routeParams.jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
                                             <option disabled value={"0"}>-</option>
                                             <option value={"L"}>Laki-laki</option>
                                             <option value={"P"}>Perempuan</option>
                                             
                                         </select>
-                                    </ListItem>
+                                    </ListItem> */}
                                     
                                     <ListInput
                                         label="Tempat Lahir"
@@ -170,6 +280,7 @@ class tambahCalonPesertaDidik extends Component {
                                         // info="NIK yang belum pernah didaftarkan sebelumnya"
                                         clearButton
                                         onChange={this.setFieldValue('tempat_lahir')}
+                                        defaultValue={this.state.routeParams.tempat_lahir}
                                     />
 
                                     <ListInput
@@ -177,6 +288,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="date"
                                         placeholder="Tanggal Lahir..."
                                         onChange={this.setFieldValue('tanggal_lahir')}
+                                        defaultValue={this.state.routeParams.tanggal_lahir}
                                     />
 
                                     <ListItem
@@ -185,8 +297,12 @@ class tambahCalonPesertaDidik extends Component {
                                         smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
                                     >
                                         <select name="kode_wilayah_provinsi" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_provinsi')}>
-                                            <option value={"0"}>-</option>
-                                            
+                                            <option disabled value={"0"}>-</option>
+                                            {this.state.provinsi.rows.map((optionProvinsi)=>{
+                                                return (
+                                                    <option value={optionProvinsi.kode_wilayah}>{optionProvinsi.nama}</option>
+                                                )
+                                            })}
                                         </select>
                                     </ListItem>
                                     
@@ -197,7 +313,11 @@ class tambahCalonPesertaDidik extends Component {
                                     >
                                         <select name="kode_wilayah_kabupaten" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kabupaten')}>
                                             <option value={"0"}>-</option>
-                                            
+                                            {this.state.kabupaten.rows.map((optionKabupaten)=>{
+                                                return (
+                                                    <option value={optionKabupaten.kode_wilayah}>{optionKabupaten.nama}</option>
+                                                )
+                                            })}
                                         </select>
                                     </ListItem>
                                     
@@ -208,7 +328,11 @@ class tambahCalonPesertaDidik extends Component {
                                     >
                                         <select name="kode_wilayah_kecamatan" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kecamatan')}>
                                             <option value={"0"}>-</option>
-                                            
+                                            {this.state.kecamatan.rows.map((optionKecamatan)=>{
+                                                return (
+                                                    <option value={optionKecamatan.kode_wilayah}>{optionKecamatan.nama}</option>
+                                                )
+                                            })}
                                         </select>
                                     </ListItem>
 
@@ -219,6 +343,7 @@ class tambahCalonPesertaDidik extends Component {
                                         info="Sesuai dengan kartu keluarga (KK)"
                                         clearButton
                                         onChange={this.setFieldValue('alamat_tempat_tinggal')}
+                                        defaultValue={this.state.routeParams.alamat_tempat_tinggal}
                                     />
 
                                     <ListInput
@@ -226,6 +351,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="RT..."
                                         onChange={this.setFieldValue('rt')}
+                                        defaultValue={this.state.routeParams.rt}
                                     />
 
                                     <ListInput
@@ -233,6 +359,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="RW..."
                                         onChange={this.setFieldValue('rw')}
+                                        defaultValue={this.state.routeParams.rw}
                                     />
                                     
                                     <ListInput
@@ -240,6 +367,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="Dusun..."
                                         onChange={this.setFieldValue('dusun')}
+                                        defaultValue={this.state.routeParams.dusun}
                                     />
                                     
                                     <ListInput
@@ -247,6 +375,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="Desa/Kelurahan..."
                                         onChange={this.setFieldValue('desa_kelurahan')}
+                                        defaultValue={this.state.routeParams.desa_kelurahan}
                                     />
                                     
                                     <ListInput
@@ -254,6 +383,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="Lintang..."
                                         onChange={this.setFieldValue('lintang')}
+                                        defaultValue={this.state.routeParams.lintang}
                                     />
                                     
                                     <ListInput
@@ -261,6 +391,7 @@ class tambahCalonPesertaDidik extends Component {
                                         type="text"
                                         placeholder="Bujur..."
                                         onChange={this.setFieldValue('bujur')}
+                                        defaultValue={this.state.routeParams.bujur}
                                     />
 
                                     {/* <ListInput
@@ -307,6 +438,7 @@ class tambahCalonPesertaDidik extends Component {
                                         // info="Sesuai Ijazah"
                                         clearButton
                                         onChange={this.setFieldValue('nama_ayah')}
+                                        defaultValue={this.state.routeParams.nama_ayah}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ayah' &&
@@ -317,6 +449,7 @@ class tambahCalonPesertaDidik extends Component {
                                             // info="Sesuai Ijazah"
                                             clearButton
                                             onChange={this.setFieldValue('tempat_lahir_ayah')}
+                                            defaultValue={this.state.routeParams.tempat_lahir_ayah}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ayah' &&
@@ -325,6 +458,7 @@ class tambahCalonPesertaDidik extends Component {
                                             type="date"
                                             placeholder="Tanggal Lahir Ayah..."
                                             onChange={this.setFieldValue('tanggal_lahir_ayah')}
+                                            defaultValue={this.state.routeParams.tanggal_lahir_ayah}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ayah' &&
@@ -381,6 +515,7 @@ class tambahCalonPesertaDidik extends Component {
                                             info="Sesuai dengan kartu keluarga (KK)"
                                             clearButton
                                             onChange={this.setFieldValue('alamat_tempat_tinggal_ayah')}
+                                            defaultValue={this.state.routeParams.alamat_tempat_tinggal_ayah}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ayah' &&
@@ -394,6 +529,7 @@ class tambahCalonPesertaDidik extends Component {
                                             validate
                                             pattern="[0-9]*"
                                             onChange={this.setFieldValue('no_telepon_ayah')}
+                                            defaultValue={this.state.routeParams.no_telepon_ayah}
                                         />
                                     }
 
@@ -405,6 +541,7 @@ class tambahCalonPesertaDidik extends Component {
                                             // info="Sesuai Ijazah"
                                             clearButton
                                             onChange={this.setFieldValue('nama_ibu')}
+                                            defaultValue={this.state.routeParams.nama_ibu}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ibu' &&
@@ -415,6 +552,7 @@ class tambahCalonPesertaDidik extends Component {
                                             // info="Sesuai Ijazah"
                                             clearButton
                                             onChange={this.setFieldValue('tempat_lahir_ibu')}
+                                            defaultValue={this.state.routeParams.tempat_lahir_ibu}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ibu' &&
@@ -423,6 +561,7 @@ class tambahCalonPesertaDidik extends Component {
                                             type="date"
                                             placeholder="Tanggal Lahir Ibu..."
                                             onChange={this.setFieldValue('tanggal_lahir_ibu')}
+                                            defaultValue={this.state.routeParams.tanggal_lahir_ibu}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ibu' &&
@@ -479,6 +618,7 @@ class tambahCalonPesertaDidik extends Component {
                                             info="Sesuai dengan kartu keluarga (KK)"
                                             clearButton
                                             onChange={this.setFieldValue('alamat_tempat_tinggal_ibu')}
+                                            defaultValue={this.state.routeParams.alamat_tempat_tinggal_ibu}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'ibu' &&
@@ -492,6 +632,7 @@ class tambahCalonPesertaDidik extends Component {
                                             validate
                                             pattern="[0-9]*"
                                             onChange={this.setFieldValue('no_telepon_ibu')}
+                                            defaultValue={this.state.routeParams.no_telepon_ibu}
                                         />
                                     }
                                     
@@ -503,6 +644,7 @@ class tambahCalonPesertaDidik extends Component {
                                             // info="Sesuai Ijazah"
                                             clearButton
                                             onChange={this.setFieldValue('nama_wali')}
+                                            defaultValue={this.state.routeParams.nama_wali}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'wali' &&
@@ -513,6 +655,7 @@ class tambahCalonPesertaDidik extends Component {
                                             // info="Sesuai Ijazah"
                                             clearButton
                                             onChange={this.setFieldValue('tempat_lahir_wali')}
+                                            defaultValue={this.state.routeParams.tempat_lahir_wali}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'wali' &&
@@ -521,6 +664,7 @@ class tambahCalonPesertaDidik extends Component {
                                             type="date"
                                             placeholder="Tanggal Lahir Wali..."
                                             onChange={this.setFieldValue('tanggal_lahir_wali')}
+                                            defaultValue={this.state.routeParams.tanggal_lahir_wali}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'wali' &&
@@ -571,6 +715,7 @@ class tambahCalonPesertaDidik extends Component {
                                             info="Sesuai dengan kartu keluarga (KK)"
                                             clearButton
                                             onChange={this.setFieldValue('alamat_tempat_tinggal_wali')}
+                                            defaultValue={this.state.routeParams.alamat_tempat_tinggal_wali}
                                         />
                                     }
                                     {this.state.routeParams.orang_tua_utama === 'wali' &&
@@ -584,6 +729,7 @@ class tambahCalonPesertaDidik extends Component {
                                             validate
                                             pattern="[0-9]*"
                                             onChange={this.setFieldValue('no_telepon_wali')}
+                                            defaultValue={this.state.routeParams.no_telepon_wali}
                                         />
                                     }
                                 </List>
@@ -611,6 +757,11 @@ class tambahCalonPesertaDidik extends Component {
                                 <Button fill sheetOpen=".demo-sheet">Pilih Sekolah</Button>
                             </CardContent>
                         </Card>
+                    </Col>
+                    <Col width="100" style={{padding:'8px'}}>
+                        <Button raised fill style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
+                            Simpan dan Lanjutkan
+                        </Button>
                     </Col>
                 </Row>
                 <Sheet className="demo-sheet" push style={{height:'50%'}}>
@@ -669,15 +820,20 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
       updateWindowDimension: Actions.updateWindowDimension,
       setLoading: Actions.setLoading,
-      getPPDBSekolah: Actions.getPPDBSekolah
+      getPPDBSekolah: Actions.getPPDBSekolah,
+      getMstWilayah: Actions.getMstWilayah,
+      getCalonPesertaDidik: Actions.getCalonPesertaDidik,
+      simpanCalonPesertaDidik: Actions.simpanCalonPesertaDidik
     }, dispatch);
 }
 
-function mapStateToProps({ App, PPDBSekolah }) {
+function mapStateToProps({ App, PPDBSekolah, Ref, PPDBPesertaDidik }) {
     return {
         window_dimension: App.window_dimension,
         loading: App.loading,
-        ppdb_sekolah: PPDBSekolah.ppdb_sekolah
+        ppdb_sekolah: PPDBSekolah.ppdb_sekolah,
+        mst_wilayah: Ref.mst_wilayah,
+        calon_peserta_didik: PPDBPesertaDidik.calon_peserta_didik
     }
 }
 
