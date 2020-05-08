@@ -101,15 +101,15 @@ class cariPesertaDidik extends Component {
                                                 <span className="hilangDiDesktop">
                                                     Tingkat Terakhir: Kelas {option.tingkat_pendidikan_id}<br/>
                                                     Status pendaftaran: 
-                                                    {option.flag_pendaftar && <span>Sudah mendaftar</span>} 
-                                                    {!option.flag_pendaftar && <span>Belum mendaftar</span>}
+                                                    {option.flag_pendaftar && <span>&nbsp;Sudah mendaftar</span>} 
+                                                    {!option.flag_pendaftar && <span>&nbsp;Belum mendaftar</span>}
                                                 </span>
                                             </Col>
                                             <Col width="100" className="hilangDiMobile" tabletWidth="30">
                                                 Tingkat Terakhir: Kelas {option.tingkat_pendidikan_id}<br/>
                                                 Status pendaftaran: 
-                                                {option.flag_pendaftar && <span style={{color:'green',fontWeight:'bold'}}><br/>Sudah mendaftar</span>} 
-                                                {!option.flag_pendaftar && <span style={{color:'#434343',fontWeight:'bold'}}><br/>Belum mendaftar</span>}
+                                                {option.flag_pendaftar && <span style={{color:'green',fontWeight:'bold'}}><br/>&nbsp;Sudah mendaftar</span>} 
+                                                {!option.flag_pendaftar && <span style={{color:'#434343',fontWeight:'bold'}}><br/>&nbsp;Belum mendaftar</span>}
                                             </Col>
                                             {/* <Col width="100" style={{marginTop:'10px', border:'1px solid #eceff1', padding:'8px'}}>
                                                 <Row noGap>

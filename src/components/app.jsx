@@ -21,7 +21,8 @@ import {
   ListButton,
   BlockFooter,
   Icon,
-  Button
+  Button,
+  Popover
 } from 'framework7-react';
 import LoginPage from '../pages/login';
 // import {Provider} from 'react-redux';
@@ -183,7 +184,7 @@ class app extends Component {
                 <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari">
                   <i slot="media" className="f7-icons">search</i>
                 </ListItem>
-                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
+                <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
                   {/* <Icon slot="media" ios="f7:house"></Icon> */}
                   <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
                 </ListItem>
@@ -288,7 +289,7 @@ class app extends Component {
               style={{fontSize:'12px'}} 
             />
             <Link 
-              href={"/Daftar/"} 
+              // href={"/Daftar/"} 
               // onClick={()=>{this.onClickLinkTab('beranda')}} 
               // tabLinkActive={this.props.tabBar.beranda} 
               iconIos="f7:pencil_ellipsis_rectangle" 
@@ -296,6 +297,7 @@ class app extends Component {
               iconMd="f7:pencil_ellipsis_rectangle" 
               text="Form Daftar" 
               style={{fontSize:'12px'}} 
+              popoverOpen=".popover-menu"
             />
             <Link 
               href={"/Daftar/"} 
@@ -430,6 +432,13 @@ class app extends Component {
             </Page>
           </View>
         </Popup>
+
+        <Popover className="popover-menu">
+        <List>
+          <ListItem link="/Cari/" popoverClose title="Cari dari Dapodik" />
+          <ListItem link="/TambahCalonPesertaDidik" popoverClose title="Tambah Manual" />
+        </List>
+      </Popover>
 
         <LoginScreen id="my-login-screen">
           <LoginPage/>

@@ -16,6 +16,7 @@ import SettingsPage from '../pages/settings.jsx';
 
 import notifikasi from '../pages/Notifikasi/notifikasi';
 import cari from '../pages/PPDB/cari';
+import tambahCalonPesertaDidik from '../pages/PPDB/tambahCalonPesertaDidik';
 
 var routes = [
   {
@@ -25,6 +26,14 @@ var routes = [
   {
     path: '/Cari',
     component: cari
+  },
+  {
+    path: '/tambahCalonPesertaDidik',
+    component: tambahCalonPesertaDidik
+  },
+  {
+    path: '/tambahCalonPesertaDidik/:peserta_didik_id',
+    component: tambahCalonPesertaDidik
   },
   {
     path: '/notifikasi',

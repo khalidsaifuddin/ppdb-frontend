@@ -155,17 +155,21 @@ class cari extends Component {
                 </Navbar>
                 
                 <Block strong style={{marginTop:'0px', marginBottom:'0px'}}>
-                    Riwayat Pencarian:<br/>
-                    {this.state.riwayat_kata_kunci.map((option)=>{
 
+                    Riwayat Pencarian:<br/>
+                    <div style={{background:'#FAFAFA',border:'0px solid #ccc', padding:'8px', borderRadius:'4px'}}>
+                    {this.state.riwayat_kata_kunci.map((option)=>{
+                        
                         if(this.state.riwayat_kata_kunci.indexOf(option) <= 10){
                             return (
                                 <><a onClick={()=>this.repeatKataKunci(option.kata_kunci)}><b><i>{option.kata_kunci}</i></b></a>, </>
                             )
                         }
-
+                        
                     })}
-                    <br/>
+
+                    </div>
+                    {/* <br/> */}
                     {/* <b><i>{localStorage.getItem('riwayat_kata_kunci').substring(2,localStorage.getItem('riwayat_kata_kunci').length)}</i></b><br/> */}
                     <a onClick={()=>{localStorage.setItem('riwayat_kata_kunci','');this.setState({riwayat_kata_kunci:[]});}}>Bersihkan riwayat pencarian</a>
                 </Block>
