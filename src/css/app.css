@@ -271,7 +271,7 @@
   margin-right: 0;
   margin-bottom: 0;
   padding: 0;
-  margin-top: 0;
+  margin-top: 16px;
   position: relative;
   width: 100%;
 }
@@ -491,4 +491,16 @@
   .onlyOnMobile { display: block !important; }
 
   .page-content { padding-bottom: 60px; }
+
+  .gridMenu {
+    margin: 0 -2%;
+    flex-wrap: wrap;
+  }
+
+  .gridMenu .link {
+    width: 100%;
+    margin: 2%;
+    max-width: 29.333333%;
+    flex: 0 0 29.333333%;
+  }
 }
