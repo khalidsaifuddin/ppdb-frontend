@@ -83,6 +83,10 @@ class app extends Component {
     this.props.setTabActive(this.props.tabBar);
   }
 
+  onClickMenu(menu) {
+    console.log(this.props);
+  }
+
   componentDidMount = () => {
     let socket = io(localStorage.getItem('socket_url'));
     let params = {};
@@ -96,6 +100,7 @@ class app extends Component {
 
   gantiSemester = (b) => {
     localStorage.setItem('semester_id_aplikasi', b.target.value);
+    console.log(localStorage.getItem('semester_id_aplikasi'));
   }
 
   keluar = () =>{
@@ -141,7 +146,10 @@ class app extends Component {
                 <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari Data">
                   <i slot="media" className="f7-icons">search</i>
                 </ListItem>
-                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Formulir">
+                <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
+                  <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
+                </ListItem>
+                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                   <i slot="media" className="f7-icons">doc_plaintext</i>
                 </ListItem>
                 <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
@@ -211,132 +219,124 @@ class app extends Component {
         </Panel>
         <Views tabs className="safe-areas" hideToolbarOnScroll>
           {localStorage.getItem('sudah_login') === '1' &&
-          <Toolbar labels bottom className="mobileTab" hideToolbarOnScroll>
-            {localStorage.getItem('sudah_login') === '1' &&
-            <>
-            <Link 
-              href="/" 
-              tabLinkActive={this.props.tabBar.beranda} 
-              iconIos="f7:house"
-              iconAurora="f7:house" 
-              iconMd="f7:house" 
-              text="Beranda" 
-              style={{fontSize:'12px'}} 
-            />
-            <Link 
-              href={"/Cari/"} 
-              iconIos="f7:search" 
-              iconAurora="f7:search" 
-              iconMd="f7:search" 
-              text="Cari" 
-              style={{fontSize:'12px'}} 
-            />
-            <Link 
-              // href={"/Daftar/"} 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
-              // tabLinkActive={this.props.tabBar.beranda} 
-              iconIos="f7:pencil_ellipsis_rectangle" 
-              iconAurora="f7:pencil_ellipsis_rectangle" 
-              iconMd="f7:pencil_ellipsis_rectangle" 
-              text="Form Daftar" 
-              style={{fontSize:'12px'}} 
-              popoverOpen=".popover-menu"
-            />
-            <Link 
-              href={"/Daftar/"} 
-              iconIos="f7:doc_plaintext" 
-              iconAurora="f7:doc_plaintext" 
-              iconMd="f7:doc_plaintext" 
-              text="Pendaftar" 
-              style={{fontSize:'12px'}} 
-            />
-            {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
-            <>
-            <Link 
-              href={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} 
-              iconIos="f7:pencil_circle_fill" 
-              iconAurora="f7:pencil_circle_fill" 
-              iconMd="f7:pencil_circle_fill" 
-              text="Kuis" 
-              style={{fontSize:'12px'}} 
-            />
-            <Link 
-              href="/Ruang" 
-              iconIos="f7:circle_grid_hex_fill" 
-              iconAurora="f7:circle_grid_hex_fill" 
-              iconMd="f7:circle_grid_hex_fill" 
-              text="Ruang" 
-              style={{fontSize:'12px'}} 
-            />
-            </>
-            }
-            </>
-            }
-            {localStorage.getItem('kode_aplikasi') !== 'SPM' &&
-            <>
-            {localStorage.getItem('sudah_login') === '1' &&
-              <>
-              {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
-              <Link 
-                href={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
-                // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                // tabLinkActive={this.props.tabBar.beranda} 
-                iconIos="f7:question_square_fill" 
-                iconAurora="f7:question_square_fill" 
-                iconMd="f7:question_square_fill" 
-                text="Pertanyaan" 
-                style={{fontSize:'12px'}} 
-              />
+            <Toolbar labels bottom className="mobileTab" hideToolbarOnScroll>
+              {localStorage.getItem('sudah_login') === '1' &&
+                <>
+                  <Link 
+                    href="/" 
+                    tabLinkActive={this.props.tabBar.beranda} 
+                    iconIos="f7:house"
+                    iconAurora="f7:house" 
+                    iconMd="f7:house" 
+                    text="Beranda" 
+                    style={{fontSize:'12px'}} 
+                  />
+                  <Link 
+                    href={"/Cari/"} 
+                    iconIos="f7:search" 
+                    iconAurora="f7:search" 
+                    iconMd="f7:search" 
+                    text="Cari" 
+                    style={{fontSize:'12px'}} 
+                  />
+                  <Link 
+                    iconIos="f7:pencil_ellipsis_rectangle" 
+                    iconAurora="f7:pencil_ellipsis_rectangle" 
+                    iconMd="f7:pencil_ellipsis_rectangle" 
+                    text="Form Daftar" 
+                    style={{fontSize:'12px'}} 
+                    popoverOpen=".popover-menu"
+                  />
+                  <Link 
+                    href={"/Daftar/"} 
+                    iconIos="f7:doc_plaintext" 
+                    iconAurora="f7:doc_plaintext" 
+                    iconMd="f7:doc_plaintext" 
+                    text="Pendaftar" 
+                    style={{fontSize:'12px'}} 
+                  />
+                  {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+                    <>
+                      <Link 
+                        href={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} 
+                        iconIos="f7:pencil_circle_fill" 
+                        iconAurora="f7:pencil_circle_fill" 
+                        iconMd="f7:pencil_circle_fill" 
+                        text="Kuis" 
+                        style={{fontSize:'12px'}} 
+                      />
+                      <Link 
+                        href="/Ruang" 
+                        iconIos="f7:circle_grid_hex_fill" 
+                        iconAurora="f7:circle_grid_hex_fill" 
+                        iconMd="f7:circle_grid_hex_fill" 
+                        text="Ruang" 
+                        style={{fontSize:'12px'}} 
+                      />
+                    </>
+                  }
+                  </>
+                  }
+                  {localStorage.getItem('kode_aplikasi') !== 'SPM' &&
+                  <>
+                  {localStorage.getItem('sudah_login') === '1' &&
+                    <>
+                    {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+                    <Link 
+                      href={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
+                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
+                      // tabLinkActive={this.props.tabBar.beranda} 
+                      iconIos="f7:question_square_fill" 
+                      iconAurora="f7:question_square_fill" 
+                      iconMd="f7:question_square_fill" 
+                      text="Pertanyaan" 
+                      style={{fontSize:'12px'}} 
+                    />
+                    }
+                    {/* <Link 
+                      href={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
+                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
+                      // tabLinkActive={this.props.tabBar.beranda} 
+                      iconIos="f7:bell_circle" 
+                      iconAurora="f7:bell_circle" 
+                      iconMd="f7:bell_circle" 
+                      text="Pantau" 
+                      style={{fontSize:'12px'}} 
+                    /> */}
+                    {/* <Link 
+                      href="/ProfilPengguna" 
+                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
+                      tabLinkActive={this.props.tabBar.beranda} 
+                      iconIos="f7:person_alt" 
+                      iconAurora="f7:person_alt" 
+                      iconMd="material:person_alt" 
+                      text="Pengguna" 
+                      style={{fontSize:'12px'}} 
+                    /> */}
+                    </>
+                  }
+                </>
               }
-              {/* <Link 
-                href={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
-                // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                // tabLinkActive={this.props.tabBar.beranda} 
-                iconIos="f7:bell_circle" 
-                iconAurora="f7:bell_circle" 
-                iconMd="f7:bell_circle" 
-                text="Pantau" 
-                style={{fontSize:'12px'}} 
-              /> */}
-              {/* <Link 
-                href="/ProfilPengguna" 
-                // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                tabLinkActive={this.props.tabBar.beranda} 
-                iconIos="f7:person_alt" 
-                iconAurora="f7:person_alt" 
-                iconMd="material:person_alt" 
-                text="Pengguna" 
-                style={{fontSize:'12px'}} 
-              /> */}
-              </>
-            }
-            </>
-            }
-            {localStorage.getItem('sudah_login') === '0' &&
+              {localStorage.getItem('sudah_login') === '0' &&
+                <Link 
+                  href="/login" 
+                  tabLinkActive={this.props.tabBar.beranda} 
+                  iconIos="f7:square_arrow_right" 
+                  iconAurora="f7:square_arrow_right" 
+                  iconMd="material:square_arrow_right" 
+                  text="Login" 
+                  style={{fontSize:'12px'}} 
+                />
+              }
               <Link 
-                href="/login" 
-                // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                tabLinkActive={this.props.tabBar.beranda} 
-                iconIos="f7:square_arrow_right" 
-                iconAurora="f7:square_arrow_right" 
-                iconMd="material:square_arrow_right" 
-                text="Login" 
-                style={{fontSize:'12px'}} 
+                iconIos="f7:ellipsis" 
+                iconAurora="f7:ellipsis" 
+                iconMd="material:ellipsis" 
+                text="More"
+                panelOpen="left" 
+                style={{fontSize:'12px'}}
               />
-            }
-            <Link 
-              iconIos="f7:ellipsis" 
-              iconAurora="f7:ellipsis" 
-              iconMd="material:ellipsis" 
-              text="More"
-              panelOpen="left" 
-              // loginScreenOpen="#my-login-screen" 
-              style={{fontSize:'12px'}}
-            />
-            {/* <Link link="/" view=".view-main" tabLinkActive iconIos="f7:home_fil" iconAurora="f7:home_fil" iconMd="material:home" text="Home" />
-            <Link link="/catalog/" view=".view-main" iconIos="f7:list_fill" iconAurora="f7:list_fill" iconMd="material:view_list" text="Catalog" />
-            <Link link="/form/" view=".view-main" iconIos="f7:settings_fill" iconAurora="f7:settings_fill" iconMd="material:settings" text="About" /> */}
-          </Toolbar>
+            </Toolbar>
           }
 
           <View id="view-beranda" main tab tabActive url="/" />
@@ -355,6 +355,12 @@ class app extends Component {
             </Page>
           </View>
         </Popup>
+        <Popover className="popover-menu">
+          <List>
+            <ListItem link="/Cari/" popoverClose title="Cari dari Dapodik" />
+            <ListItem link="/TambahCalonPesertaDidik" popoverClose title="Tambah Manual" />
+          </List>
+        </Popover>
         <LoginScreen id="my-login-screen">
           <LoginPage/>
         </LoginScreen>
