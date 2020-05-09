@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   App,
   Panel,
@@ -14,127 +14,88 @@ import {
   Block,
   BlockTitle,
   LoginScreen,
-  LoginScreenTitle,
   List,
   ListItem,
-  ListInput,
-  ListButton,
-  BlockFooter,
-  Icon,
   Button
 } from 'framework7-react';
 import LoginPage from '../pages/login';
-// import {Provider} from 'react-redux';
-// import store from 'store';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../store/actions';
-
 import cordovaApp from '../js/cordova-app';
 import routes from '../js/routes';
-
 import io from 'socket.io-client';
-
 import 'framework7-icons';
 
 class app extends Component {
-  state = {
-    // Framework7 Parameters
-    f7params: {
-      id: 'io.timkayu.simdik', // App bundle ID
-      name: 'Simdik', // App name
-      theme: 'ios', // Automatic theme detection
-      // App root data
-      data: function () {
-        return {
-          user: {
-            firstName: 'Khalid',
-            lastName: 'Saifuddin',
-          },
-
-        };
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      f7params: {
+        id: 'io.timkayu.simdik',
+        name: 'Simdik',
+        theme: 'ios',
+        data: function () {
+          return {
+            user: {
+              firstName: 'Khalid',
+              lastName: 'Saifuddin',
+            },
+          };
+        },
+        routes: routes,
+        panel: {
+          leftBreakpoint: 960,
+        },
+        serviceWorker: this.$device.cordova ? {} : {
+          path: '/service-worker.js',
+        },
+        input: {
+          scrollIntoViewOnFocus: this.$device.cordova && !this.$device.electron,
+          scrollIntoViewCentered: this.$device.cordova && !this.$device.electron,
+        },
+        statusbar: {
+          overlay: this.$device.cordova && this.$device.ios || 'auto',
+          iosOverlaysWebView: true,
+          androidOverlaysWebView: false,
+        },
       },
-
-      // App routes
-      routes: routes,
-      // Enable panel left visibility breakpoint
-      panel: {
-        leftBreakpoint: 960,
+      tabBar:{
+        beranda: true,
+        kategori: false,
+        cari: false,
+        materi: false,
+        profil: false,
       },
-
-      // Register service worker
-      serviceWorker: this.$device.cordova ? {} : {
-        path: '/service-worker.js',
-      },
-      // Input settings
-      input: {
-        scrollIntoViewOnFocus: this.$device.cordova && !this.$device.electron,
-        scrollIntoViewCentered: this.$device.cordova && !this.$device.electron,
-      },
-      // Cordova Statusbar settings
-      statusbar: {
-        overlay: this.$device.cordova && this.$device.ios || 'auto',
-        iosOverlaysWebView: true,
-        androidOverlaysWebView: false,
-      },
-    },
-    tabBar:{
-      beranda: true,
-      kategori: false,
-      cari: false,
-      materi: false,
-      profil: false
-    },
-    // Login screen demo data
-    username: '',
-    password: '',
-  };
-
-    // this.onClickLinkTab = this.onClickLinkTab.bind(this);
-    // this.onClickMenu = this.onClickMenu.bind(this);
+      username: '',
+      password: '',
+    };
+  }
   
   onClickLinkTab = (menu) => {
-    // console.log(event);
-    
     for (var property in this.props.tabBar) {
-      // console.log(this.state.tabBar[property]);
       this.props.tabBar[property] = false;
     }
     
     this.props.tabBar[menu] = true;
-    
-    // console.log(this.props.tabBar);
 
     this.props.setTabActive(this.props.tabBar);
-    // console.log(this.props.tabBar);
-
-    // this.setState({
-    //   ...this.state,
-    //   tabBar: this.props.tabBar
-    // });
   }
 
-  onClickMenu(menu){
+  onClickMenu(menu) {
     console.log(this.props);
-    // alert(menu);
   }
 
   componentDidMount = () => {
-    // console.log(this);
-    // console.log(this);
-    // this.$f7route.navigate(localStorage.getItem('initial_route'));
-
     let socket = io(localStorage.getItem('socket_url'));
     let params = {};
 
-    // console.log(params);
     socket.emit('online', params, function (err) {
       if (err) {
-          this.props.history.push('/');
+        this.props.history.push('/');
       }
     });
-    
   }
 
   gantiSemester = (b) => {
@@ -143,7 +104,6 @@ class app extends Component {
   }
 
   keluar = () =>{
-    // this.$f7.dialog.alert('oke');
     localStorage.setItem('sudah_login', '0');
     localStorage.setItem('user', '');
     localStorage.setItem('token', '');
@@ -151,123 +111,118 @@ class app extends Component {
     window.location.href="/";
   }
 
+  alertLoginData() {
+    this.$f7.dialog.alert('Username: ' + this.state.username + '<br>Password: ' + this.state.password);
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+    }, 3000);
+
+    this.$f7ready((f7) => {
+      if (f7.device.cordova) {
+        cordovaApp.init(f7);
+      }
+    });
+  }
+
   render() {
-    // console.log(this.props.tabBar.beranda);
-    // const {classes} = this.props;
-    
-    // console.log(classes);
-
     return (
-      <App params={ this.state.f7params } hideToolbarOnScroll>
-      {/* <Provider store={store}> */}
-        {/* Status bar overlay for fullscreen mode*/}
+      <App params={this.state.f7params} hideToolbarOnScroll>
         <Statusbar></Statusbar>
-
-        {/* Left panel with cover effect when hidden */}
-        <Panel left cover themeDark>
+        <Panel className="mainMenu" left cover>
           <View>
             <Page>
-              <Navbar title={localStorage.getItem('judul_aplikasi')}/>
-              
-              <BlockTitle>Menu</BlockTitle>
+              <Navbar title={localStorage.getItem('judul_aplikasi')}>
+                <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
+              </Navbar>
+              <BlockTitle>MENU APLIKASI</BlockTitle>
               <List>
-                {/* <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari">
-                  <i slot="media" className="f7-icons">search</i>
-                </ListItem> */}
                 {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                <ListItem link="/" view=".view-main" panelClose panel-close title="Beranda">
-                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
-                  <i slot="media" className="f7-icons">house</i>
-                </ListItem>
+                  <ListItem link="/" view=".view-main" panelClose panel-close title="Beranda">
+                    <i slot="media" className="f7-icons">house</i>
+                  </ListItem>
                 }
-                <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari">
+                <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari Data">
                   <i slot="media" className="f7-icons">search</i>
                 </ListItem>
-                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Daftarkan Siswa">
-                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
+                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Formulir">
                   <i slot="media" className="f7-icons">doc_plaintext</i>
                 </ListItem>
-                
+                <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
+                  <i slot="media" className="f7-icons">calendar</i>
+                </ListItem>
+                <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
+                  <i slot="media" className="f7-icons">book</i>
+                </ListItem>
+                <ListItem link="/" view=".view-main" panelClose panel-close title="Kuota">
+                  <i slot="media" className="f7-icons">chart_bar</i>
+                </ListItem>
+                <ListItem link="/" view=".view-main" panelClose panel-close title="Pengumuman">
+                  <i slot="media" className="f7-icons">bell</i>
+                </ListItem>
                 {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
-                <>
-                {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                <ListItem link={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Kuis">
-                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
-                  <i slot="media" className="f7-icons">pencil_circle_fill</i>
-                </ListItem>
+                  <>
+                    {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                      <ListItem link={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Kuis">
+                        <i slot="media" className="f7-icons">pencil_circle_fill</i>
+                      </ListItem>
+                      }
+                      {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                      <ListItem link="/Ruang" view=".view-main" panelClose panel-close title="Ruang">
+                        <i slot="media" className="f7-icons">circle_grid_hex_fill</i>
+                      </ListItem>
+                    }
+                    {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                      <ListItem link={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Pertanyaan">
+                        <i slot="media" className="f7-icons">question_square_fill</i>
+                      </ListItem>
+                    }
+                  </>
                 }
-                {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                <ListItem link="/Ruang" view=".view-main" panelClose panel-close title="Ruang">
-                  {/* <Icon slot="media" ios="f7:house"></Icon> */}
-                  <i slot="media" className="f7-icons">circle_grid_hex_fill</i>
-                </ListItem>
-                }
-                {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                <ListItem link={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Pertanyaan">
-                  <i slot="media" className="f7-icons">question_square_fill</i>
-                </ListItem>
-                }
-                </>
-                }
-                {/* {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                <ListItem link={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} view=".view-main" panelClose panel-close title="Pantauan Pertanyaan">
-                  <i slot="media" className="f7-icons">bell_circle_fill</i>
-                </ListItem>
-                } */}
-              </List>
-              {localStorage.getItem('sudah_login') === '0' && 
-              <List>
+                {localStorage.getItem('sudah_login') === '0' && 
                   <ListItem link="/login" view=".view-main" panelClose panel-close title="Login/Masuk">
                     <i slot="media" className="f7-icons">square_arrow_right</i>
                   </ListItem>
-              </List>
-              }
-              {localStorage.getItem('sudah_login') === '1' && 
-              <>
-              <List>
+                }
+                {localStorage.getItem('sudah_login') === '1' && 
                   <ListItem link="/ProfilPengguna" view=".view-main" panelClose panel-close title="Profil Pengguna">
-                    <i slot="media" className="f7-icons">person_crop_square_fill</i>
+                    <i slot="media" className="f7-icons">person</i>
                   </ListItem>
-                  <ListItem onClick={this.keluar} panelClose panel-close title="Keluar" style={{background:'#470128', cursor: 'pointer'}}>
+                }
+                {localStorage.getItem('sudah_login') === '1' && 
+                  <ListItem link="/" onClick={this.keluar} panelClose panel-close title="Keluar">
                     <i slot="media" className="f7-icons">square_arrow_left</i>
                   </ListItem>
+                }
               </List>
-              </>
-              }
+              <Block className="formRegisterWidget">
+                <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
+                <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
+                <Button raised fill round>Daftar Sekarang</Button>
+              </Block>
             </Page>
           </View>
         </Panel>
-
-
-        {/* Right panel with reveal effect*/}
-        <Panel right cover themeDark style={{width:'280px'}}>
-            <View>
-                <Page>
-                    <Navbar title={this.props.judul_panel_kanan}/>
-                    <Block style={{paddingLeft:'0px', paddingRight:'0px'}}>
-                      {this.props.isi_panel_kanan}
-                    </Block>
-                </Page>
-            </View>
+        <Panel right cover style={{width:'280px'}}>
+          <View>
+            <Page>
+              <Navbar title={this.props.judul_panel_kanan}/>
+              <Block style={{paddingLeft:'0px', paddingRight:'0px'}}>
+                {this.props.isi_panel_kanan}
+              </Block>
+            </Page>
+          </View>
         </Panel>
-
-
-        {/* Your main view, should have "view-main" class */}
-        {/* <View main className="safe-areas" url="/" /> */}
-
-        {/* Views/Tabs container */}
-        
         <Views tabs className="safe-areas" hideToolbarOnScroll>
-          {/* Tabbar for switching views-tabs */}
           {localStorage.getItem('sudah_login') === '1' &&
           <Toolbar labels bottom className="mobileTab" hideToolbarOnScroll>
             {localStorage.getItem('sudah_login') === '1' &&
             <>
             <Link 
               href="/" 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
               tabLinkActive={this.props.tabBar.beranda} 
-              iconIos="f7:house" 
+              iconIos="f7:house"
               iconAurora="f7:house" 
               iconMd="f7:house" 
               text="Beranda" 
@@ -275,8 +230,6 @@ class app extends Component {
             />
             <Link 
               href={"/Cari/"} 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
-              // tabLinkActive={this.props.tabBar.beranda} 
               iconIos="f7:search" 
               iconAurora="f7:search" 
               iconMd="f7:search" 
@@ -285,8 +238,6 @@ class app extends Component {
             />
             <Link 
               href={"/Daftar/"} 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
-              // tabLinkActive={this.props.tabBar.beranda} 
               iconIos="f7:doc_plaintext" 
               iconAurora="f7:doc_plaintext" 
               iconMd="f7:doc_plaintext" 
@@ -296,9 +247,7 @@ class app extends Component {
             {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
             <>
             <Link 
-              href={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
-              // tabLinkActive={this.props.tabBar.beranda} 
+              href={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} 
               iconIos="f7:pencil_circle_fill" 
               iconAurora="f7:pencil_circle_fill" 
               iconMd="f7:pencil_circle_fill" 
@@ -307,8 +256,6 @@ class app extends Component {
             />
             <Link 
               href="/Ruang" 
-              // onClick={()=>{this.onClickLinkTab('beranda')}} 
-              // tabLinkActive={this.props.tabBar.beranda} 
               iconIos="f7:circle_grid_hex_fill" 
               iconAurora="f7:circle_grid_hex_fill" 
               iconMd="f7:circle_grid_hex_fill" 
@@ -386,22 +333,8 @@ class app extends Component {
           </Toolbar>
           }
 
-          {/* Your main view/tab, should have "view-main" class. It also has "tabActive" prop */}
           <View id="view-beranda" main tab tabActive url="/" />
-
-          {/* Catalog View */}
-          {/* <View id="view-kategori" name="kategori" tab url="/kategori/" /> */}
-
-          {/* Settings View */}
-          {/* <View id="view-cari" name="cari" tab url="/cari/" /> */}
-
-          {/* Settings View */}
-          {/* <View id="view-settings" name="About" tab url="/settings/" /> */}
-
         </Views>
-
-
-        {/* Popup */}
         <Popup id="my-popup">
           <View>
             <Page>
@@ -416,60 +349,11 @@ class app extends Component {
             </Page>
           </View>
         </Popup>
-
         <LoginScreen id="my-login-screen">
           <LoginPage/>
-          {/* <View>
-            <Page loginScreen>
-              <LoginScreenTitle>Masuk Aplikasi</LoginScreenTitle>
-              <List form>
-                <ListInput
-                  type="text"
-                  name="username"
-                  placeholder="Your username"
-                  value={this.state.username}
-                  onInput={(e) => this.setState({username: e.target.value})}
-                ></ListInput>
-                <ListInput
-                  type="password"
-                  name="password"
-                  placeholder="Your password"
-                  value={this.state.password}
-                  onInput={(e) => this.setState({password: e.target.value})}
-                ></ListInput>
-              </List>
-              <List>
-                <ListButton title="Sign In" loginScreenClose onClick={() => this.alertLoginData()} />
-                <BlockFooter>
-                  Some text about login information.<br />Click "Sign In" to close Login Screen
-                </BlockFooter>
-              </List>
-            </Page>
-          </View> */}
         </LoginScreen>
-      {/* </Provider> */}
       </App>
     )
-  }
-  alertLoginData() {
-    this.$f7.dialog.alert('Username: ' + this.state.username + '<br>Password: ' + this.state.password);
-  }
-  componentDidMount() {
-    // console.log(this.props);
-    // this.$f7.preloader.show();
-    // this.$f7.dialog.preloader();
-    setTimeout(() => {
-      // this.$f7.preloader.hide();
-      // this.$f7.dialog.close();
-    }, 3000);
-
-    this.$f7ready((f7) => {
-      // Init cordova APIs (see cordova-app.js)
-      if (f7.device.cordova) {
-        cordovaApp.init(f7);
-      }
-      // Call F7 APIs here
-    });
   }
 }
 
@@ -477,19 +361,17 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     updateWindowDimension: Actions.updateWindowDimension,
     setLoading: Actions.setLoading,
-    setTabActive: Actions.setTabActive
+    setTabActive: Actions.setTabActive,
   }, dispatch);
 }
 
 function mapStateToProps({ App }) {
-  // console.log(App.tabBar);
-
   return {
-      window_dimension: App.window_dimension,
-      loading: App.loading,
-      tabBar: App.tabBar,
-      judul_panel_kanan: App.judul_panel_kanan,
-      isi_panel_kanan: App.isi_panel_kanan
+    window_dimension: App.window_dimension,
+    loading: App.loading,
+    tabBar: App.tabBar,
+    judul_panel_kanan: App.judul_panel_kanan,
+    isi_panel_kanan: App.isi_panel_kanan,
   }
 }
 
