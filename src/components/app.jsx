@@ -6,6 +6,7 @@ import {
   View,
   Statusbar,
   Popup,
+  Popover,
   Page,
   Navbar,
   Toolbar,
