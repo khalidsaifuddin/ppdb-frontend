@@ -9,6 +9,7 @@ const initialState = {
         width: window.innerWidth
     },
     loading: false,
+    keyword: '',
     tabBar:{
         beranda: false,
         kategori: false,
@@ -114,6 +115,13 @@ const appReducer = function (state = initialState, action) {
             return {
                 ...state,
                 loading: action.loading
+            };
+        }
+        case Actions.SET_KEYWORD:
+        {
+            return {
+                ...state,
+                keyword: action.keyword
             };
         }
         case Actions.SET_TAB_ACTIVE:

@@ -3,6 +3,7 @@ import axios from 'axios/index';
 export const GET_JENJANG = '[REF] GET JENJANG';
 export const GET_TINGKAT_PENDIDIKAN = '[REF] GET TINGKAT PENDIDIKAN';
 export const GET_MATA_PELAJARAN = '[REF] GET MATA PELAJARAN';
+export const GET_MST_WILAYAH = '[REF] GET MST WILAYAH';
 
 export function getJenjang(routeParams)
 {
@@ -47,6 +48,23 @@ export function getMataPelajaran(routeParams)
         request.then((response) =>
             dispatch({
                 type   : GET_MATA_PELAJARAN,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function getMstWilayah(routeParams)
+{
+    const request = axios.post(localStorage.getItem('api_base')+'/api/Ref/mst_wilayah', {
+        ...routeParams
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_MST_WILAYAH,
                 payload: response.data,
                 routeParams
             })

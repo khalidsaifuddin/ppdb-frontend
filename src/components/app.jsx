@@ -237,11 +237,22 @@ class app extends Component {
               style={{fontSize:'12px'}} 
             />
             <Link 
+              // href={"/Daftar/"} 
+              // onClick={()=>{this.onClickLinkTab('beranda')}} 
+              // tabLinkActive={this.props.tabBar.beranda} 
+              iconIos="f7:pencil_ellipsis_rectangle" 
+              iconAurora="f7:pencil_ellipsis_rectangle" 
+              iconMd="f7:pencil_ellipsis_rectangle" 
+              text="Form Daftar" 
+              style={{fontSize:'12px'}} 
+              popoverOpen=".popover-menu"
+            />
+            <Link 
               href={"/Daftar/"} 
               iconIos="f7:doc_plaintext" 
               iconAurora="f7:doc_plaintext" 
               iconMd="f7:doc_plaintext" 
-              text="Daftar" 
+              text="Pendaftar" 
               style={{fontSize:'12px'}} 
             />
             {localStorage.getItem('kode_aplikasi') === 'MEJA' &&

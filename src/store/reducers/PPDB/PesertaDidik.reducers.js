@@ -1,53 +1,53 @@
-import * as Actions from '../actions';
+import * as Actions from '../../actions';
 
 const initialState = {
-    jenjang: {
+    peserta_didik: {
         rows: [],
         total: 0
     },
-    tingkat_pendidikan: {
+    calon_peserta_didik: {
         rows: [],
         total: 0
     },
-    mata_pelajaran: {
+    sekolah_pilihan: {
         rows: [],
         total: 0
     },
-    mst_wilayah: {
+    berkas_calon: {
         rows: [],
         total: 0
     }
-};
+}
 
-const RefReducers = function (state = initialState, action) {
+const PPDBPesertaDidikReducer = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_JENJANG:
+        case Actions.GET_PESERTA_DIDIK:
         {
             return {
                 ...state,
-                jenjang: action.payload
+                peserta_didik: action.payload
             };
         }
-        case Actions.GET_TINGKAT_PENDIDIKAN:
+        case Actions.GET_CALON_PESERTA_DIDIK:
         {
             return {
                 ...state,
-                tingkat_pendidikan: action.payload
+                calon_peserta_didik: action.payload
             };
         }
-        case Actions.GET_MATA_PELAJARAN:
+        case Actions.GET_SEKOLAH_PILIHAN:
         {
             return {
                 ...state,
-                mata_pelajaran: action.payload
+                sekolah_pilihan: action.payload
             };
         }
-        case Actions.GET_MST_WILAYAH:
+        case Actions.GET_BERKAS_CALON:
         {
             return {
                 ...state,
-                mst_wilayah: action.payload
+                berkas_calon: action.payload
             };
         }
         default:
@@ -57,4 +57,4 @@ const RefReducers = function (state = initialState, action) {
     }
 }
 
-export default RefReducers;
+export default PPDBPesertaDidikReducer;

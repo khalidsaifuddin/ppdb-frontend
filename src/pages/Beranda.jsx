@@ -89,6 +89,15 @@ class Beranda extends Component {
       this.$f7router.navigate('/login/');
     }
 
+    if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')){
+      console.log(localStorage.getItem('current_url'));
+      
+      this.$f7router.navigate(localStorage.getItem('current_url'))
+    }
+
+    localStorage.setItem('current_url', '/');
+    console.log(localStorage.getItem('current_url'));
+
     let socket = io(localStorage.getItem('socket_url'));
 
     socket.on('updateUserList', (users) => {
@@ -173,32 +182,6 @@ class Beranda extends Component {
           </NavRight>
         </Navbar>
         <div className="contentApp">
-          {/* <Block className="gridMenu">
-            <Link href="/">
-              <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
-              Cari Data
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/formulir.svg" alt="formulir" />
-              Formulir
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/jadwal.svg" alt="jadwal" />
-              Jadwal
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/petunjuk.svg" alt="petunjuk" />
-              Petunjuk
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/kuota.svg" alt="kuota" />
-              Kuota
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/pengumuman.svg" alt="pengumuman" />
-              Pengumuman
-            </Link>
-          </Block> */}
           <Block className="rekapitulasiProgres">
             <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
             <Row>

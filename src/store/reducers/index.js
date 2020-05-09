@@ -5,6 +5,8 @@ import Notifikasi from './Notifikasi.reducers';
 import Ruang from './Ruang.reducers';
 import Kuis from './Kuis.reducers';
 import Ref from './Ref.reducers';
+import PPDBPesertaDidik from './PPDB/PesertaDidik.reducers';
+import PPDBSekolah from './PPDB/Sekolah.reducers';
 
 const rootReducer = combineReducers({
     App,
@@ -12,7 +14,9 @@ const rootReducer = combineReducers({
     Notifikasi,
     Ruang,
     Kuis,
-    Ref
+    Ref,
+    PPDBPesertaDidik,
+    PPDBSekolah
 });
 
 export default rootReducer;
