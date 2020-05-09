@@ -181,6 +181,7 @@ class tambahBerkas extends Component {
         this.setState({
             routeParams: {
                 // ...this.state.routeParams,
+                calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
                 berkas_calon: JSON.stringify(this.state.berkas_calon)
             }
         },()=>{

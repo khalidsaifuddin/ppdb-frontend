@@ -137,7 +137,8 @@ class cari extends Component {
         this.setState({
             routeParams: {
                 ...this.state.routeParams,
-                peserta_didik_id: peserta_didik_id
+                peserta_didik_id: peserta_didik_id,
+                pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id
             }
         },()=>{
             // console.log(this);

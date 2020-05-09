@@ -9,6 +9,8 @@ export const GET_SEKOLAH_PILIHAN = '[PESERTA DIDIK] GET SEKOLAH PILIHAN';
 export const HAPUS_SEKOLAH_PILIHAN = '[PESERTA DIDIK] HAPUS SEKOLAH PILIHAN';
 export const SIMPAN_BERKAS_CALON = '[PESERTA DIDIK] SIMPAN BERKAS CALON';
 export const GET_BERKAS_CALON = '[PESERTA DIDIK] GET BERKAS CALON';
+export const SIMPAN_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] SIMPAN KONFIRMASI PENDAFTARAN';
+export const GET_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] GET KONFIRMASI PENDAFTARAN';
 
 export function getPesertaDidik(routeParams)
 {
@@ -174,6 +176,44 @@ export function getBerkasCalon(routeParams)
         request.then((response) =>
             dispatch({
                 type   : GET_BERKAS_CALON,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+export function simpanKonfirmasiPendaftaran(routeParams)
+{
+    const request = axios.post(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/simpanKonfirmasiPendaftaran', {
+        ...routeParams
+        // params: {
+        //     ...routeParams
+        // }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : SIMPAN_KONFIRMASI_PENDAFTARAN,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function getKonfirmasiPendaftaran(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/getKonfirmasiPendaftaran', {
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_KONFIRMASI_PENDAFTARAN,
                 payload: response.data,
                 routeParams
             })
