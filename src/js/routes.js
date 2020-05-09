@@ -20,6 +20,7 @@ import tambahCalonPesertaDidik from '../pages/PPDB/tambahCalonPesertaDidik';
 import tambahJalurSekolah from '../pages/PPDB/tambahJalurSekolah';
 import tambahBerkas from '../pages/PPDB/tambahBerkas';
 import tambahKonfirmasi from '../pages/PPDB/tambahKonfirmasi';
+import DataPendaftaran from '../pages/PPDB/dataPendaftaran';
 
 var routes = [
   {
@@ -65,6 +66,10 @@ var routes = [
   {
     path: '/tambahBerkas/:peserta_didik_id/:jalur_id',
     component: tambahBerkas
+  },
+  {
+    path: '/Daftar/',
+    component: DataPendaftaran
   },
   {
     path: '/notifikasi',

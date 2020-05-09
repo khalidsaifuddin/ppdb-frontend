@@ -7,6 +7,7 @@ import Kuis from './Kuis.reducers';
 import Ref from './Ref.reducers';
 import PPDBPesertaDidik from './PPDB/PesertaDidik.reducers';
 import PPDBSekolah from './PPDB/Sekolah.reducers';
+import DaftarPendaftaran from './PPDB/daftarPendaftaran.reducers';
 
 const rootReducer = combineReducers({
     App,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     Kuis,
     Ref,
     PPDBPesertaDidik,
-    PPDBSekolah
+    PPDBSekolah,
+    DaftarPendaftaran
 });
 
 export default rootReducer;

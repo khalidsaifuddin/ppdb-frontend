@@ -6,3 +6,4 @@ export * from './Kuis.actions';
 export * from './Ref.actions';
 export * from './PPDB/PesertaDidik.actions';
 export * from './PPDB/Sekolah.actions';
+export * from './PPDB/daftarPendaftaranactions.';
