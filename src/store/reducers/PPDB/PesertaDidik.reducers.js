@@ -16,6 +16,10 @@ const initialState = {
     berkas_calon: {
         rows: [],
         total: 0
+    },
+    cek_nik: {
+        rows: [],
+        total: 0
     }
 }
 
@@ -48,6 +52,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
             return {
                 ...state,
                 berkas_calon: action.payload
+            };
+        }
+        case Actions.CEK_NIK:
+        {
+            return {
+                ...state,
+                cek_nik: action.payload
             };
         }
         default:
