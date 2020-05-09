@@ -90,23 +90,15 @@ class DaftarPendaftaran extends Component {
                                                 Alamat Tempat Tinggal: <b>{ option.alamat_tempat_tinggal }</b> <br/>
                                             </Col>
                                             <Col width="50" className="hilangDiMobile" tabletWidth="50">
-                                                <div className="data-table card">
-                                                    <table>
-                                                        <tbody>
-                                                            {
-                                                                option.pilihan_sekolah.map((n, key) => {
-                                                                    return (
-                                                                        <tr key={key}>
-                                                                            <td>{ key + 1 }</td>
-                                                                            <td>{ n.npsn }</td>
-                                                                            <td>{ n.nama_sekolah }</td>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                <List>
+                                                    {
+                                                        option.pilihan_sekolah.map((n, key) => 
+                                                            <ListItem key={key}>
+                                                                <span style={{ fontSize: 12 }}>{ "(" + n.npsn + ") " + n.nama_sekolah }</span>
+                                                            </ListItem>
+                                                        )
+                                                    }
+                                                </List>
                                             </Col>
                                         </Row>
                                     </Col>
