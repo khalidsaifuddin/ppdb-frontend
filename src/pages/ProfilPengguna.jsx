@@ -544,6 +544,16 @@ class ProfilPengguna extends Component {
                                 <i slot="media" className="f7-icons">doc_person_fill</i>
                             </ListInput> */}
                             <ListInput
+                                label="NIK"
+                                type="number"
+                                placeholder="NIK"
+                                clearButton
+                                value={this.state.pengguna.rows[0].nik}
+                                onChange={this.setValue('nik')}
+                            >
+                                <i slot="media" className="f7-icons">creditcard_fill</i>
+                            </ListInput>
+                            <ListInput
                                 label="Alamat Rumah"
                                 type="text"
                                 placeholder="Alamat Rumah"
