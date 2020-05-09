@@ -17,6 +17,9 @@ import SettingsPage from '../pages/settings.jsx';
 import notifikasi from '../pages/Notifikasi/notifikasi';
 import cari from '../pages/PPDB/cari';
 import tambahCalonPesertaDidik from '../pages/PPDB/tambahCalonPesertaDidik';
+import tambahJalurSekolah from '../pages/PPDB/tambahJalurSekolah';
+import tambahBerkas from '../pages/PPDB/tambahBerkas';
+import tambahKonfirmasi from '../pages/PPDB/tambahKonfirmasi';
 
 var routes = [
   {
@@ -34,6 +37,34 @@ var routes = [
   {
     path: '/tambahCalonPesertaDidik/:peserta_didik_id',
     component: tambahCalonPesertaDidik
+  },
+  {
+    path: '/tambahJalurSekolah',
+    component: tambahJalurSekolah
+  },
+  {
+    path: '/tambahJalurSekolah/:peserta_didik_id',
+    component: tambahJalurSekolah
+  },
+  {
+    path: '/tambahKonfirmasi',
+    component: tambahKonfirmasi
+  },
+  {
+    path: '/tambahKonfirmasi/:peserta_didik_id',
+    component: tambahKonfirmasi
+  },
+  {
+    path: '/tambahBerkas',
+    component: tambahBerkas
+  },
+  {
+    path: '/tambahBerkas/:peserta_didik_id',
+    component: tambahBerkas
+  },
+  {
+    path: '/tambahBerkas/:peserta_didik_id/:jalur_id',
+    component: tambahBerkas
   },
   {
     path: '/notifikasi',

@@ -23,6 +23,17 @@ class tambahCalonPesertaDidik extends Component {
             pendidikan_terakhir_id_wali: 99,
             pekerjaan_id_wali: 98,
             jenis_kelamin: 'L',
+            nama: null,
+            nisn: null,
+            nik: null,
+            tanggal_lahir: null,
+            kode_wilayah_provinsi:null,
+            kode_wilayah_kabupaten:null,
+            kode_wilayah_kecamatan:null,
+            alamat_tempat_tinggal:null,
+            nama_ayah:null,
+            nama_ibu:null,
+            nama_wali:null,
             calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
         },
         sekolah_terpilih: {
@@ -60,6 +71,9 @@ class tambahCalonPesertaDidik extends Component {
     ]
 
     componentDidMount = () => {
+        
+        localStorage.setItem('current_url', this.$f7route.url);
+
         this.setState({
             routeParams: {
                 ...this.state.routeParams
@@ -108,6 +122,26 @@ class tambahCalonPesertaDidik extends Component {
                         // console.log(this.state.routeParams);
                     });
                 });
+            }else{
+                this.setState({
+                    smartSelectJenisKelamin: (<ListItem
+                        title={"Jenis_Kelamin"}
+                        smartSelect
+                        smartSelectParams={{
+                            openIn: 'sheet', 
+                            closeOnSelect: true
+                        }}
+                    >
+                        <select name="jenis_kelamin" value={this.state.routeParams.jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
+                            <option disabled value={"0"}>-</option>
+                            <option value={"L"}>Laki-laki</option>
+                            <option value={"P"}>Perempuan</option>
+                            
+                        </select>
+                    </ListItem>)
+                },()=>{
+                    // console.log(this.state.routeParams);
+                });
             }
         });
 
@@ -149,7 +183,38 @@ class tambahCalonPesertaDidik extends Component {
                 sekolah_asal: null
             }
         },()=>{
-            this.props.simpanCalonPesertaDidik(this.state.routeParams);
+            if(this.state.routeParams.nama === null || this.state.routeParams.nik === null || this.state.routeParams.tempat_lahir === null || this.state.routeParams.tanggal_lahir === null){
+                this.$f7.dialog.alert('Nama/NISN/tempat dan tanggal lahir tidak boleh kosong!','Peringatan');
+                return false;
+            }
+            
+            if(this.state.routeParams.kode_wilayah_provinsi === null || this.state.routeParams.kode_wilayah_kabupaten === null || this.state.routeParams.kode_wilayah_kecamatan === null || this.state.routeParams.alamat_tempat_tinggal === null){
+                this.$f7.dialog.alert('Alamat tidak boleh kosong!','Peringatan');
+                return false;
+            }
+            
+            if(this.state.routeParams.orang_tua_utama === 'ayah' && this.state.routeParams.nama_ayah === null){
+                this.$f7.dialog.alert('Nama ayah tidak boleh kosong!','Peringatan');
+                return false;
+
+            }else if(this.state.routeParams.orang_tua_utama === 'ibu' && this.state.routeParams.nama_ibu === null){
+                this.$f7.dialog.alert('Nama ibu tidak boleh kosong!','Peringatan');
+                return false;
+
+            }else if(this.state.routeParams.orang_tua_utama === 'wali' && this.state.routeParams.nama_wali === null){
+                this.$f7.dialog.alert('Nama wali tidak boleh kosong!','Peringatan');
+                return false;
+
+            }
+
+            this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=>{
+                if(result.payload.peserta_didik_id){
+                    // this.$f7router.navigate('/tambahJalurSekolah/')
+                    this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
+                }else{
+                    this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan internet Anda. Mohon coba beberapa saat lagi');
+                }
+            });
         });
     }    
 
@@ -216,9 +281,9 @@ class tambahCalonPesertaDidik extends Component {
                 </Navbar>
                 <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '8px', marginBottom: '8px'}}>
                     <Button style={{borderRadius:'20px 50px 50px 20px'}} tabLinkActive>Identitas Peserta Didik</Button>
-                    <Button style={{borderRadius:'0px 50px 50px 0px'}}>Kelengkapan Berkas</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}}>Jalur dan Pilihan Sekolah</Button>
-                    <Button style={{borderRadius:'0px 0px 0px 0px'}}>Bukti Pendaftaran</Button>
+                    <Button style={{borderRadius:'0px 50px 50px 0px'}}>Kelengkapan Berkas</Button>
+                    <Button style={{borderRadius:'0px 0px 0px 0px'}}>Konfirmasi</Button>
                 </Segmented>
 
                 <Row noGap>
@@ -759,7 +824,7 @@ class tambahCalonPesertaDidik extends Component {
                         </Card>
                     </Col>
                     <Col width="100" style={{padding:'8px'}}>
-                        <Button raised fill style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
+                        <Button raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
                             Simpan dan Lanjutkan
                         </Button>
                     </Col>
