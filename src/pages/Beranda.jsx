@@ -73,9 +73,9 @@ class Beranda extends Component {
       this.$f7router.navigate('/login/');
     }
 
-    if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')) {
-      this.$f7router.navigate(localStorage.getItem('current_url'))
-    }
+    // if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')) {
+    //   this.$f7router.navigate(localStorage.getItem('current_url'))
+    // }
 
     localStorage.setItem('current_url', '/');
 

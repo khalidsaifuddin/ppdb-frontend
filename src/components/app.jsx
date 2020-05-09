@@ -131,6 +131,7 @@ class app extends Component {
     return (
       <App params={this.state.f7params} hideToolbarOnScroll>
         <Statusbar></Statusbar>
+        {localStorage.getItem('sudah_login') === '1' &&
         <Panel className="mainMenu" left cover>
           <View>
             <Page>
@@ -208,6 +209,7 @@ class app extends Component {
             </Page>
           </View>
         </Panel>
+        }
         <Panel right cover style={{width:'280px'}}>
           <View>
             <Page>

@@ -11,6 +11,7 @@ export const SIMPAN_BERKAS_CALON = '[PESERTA DIDIK] SIMPAN BERKAS CALON';
 export const GET_BERKAS_CALON = '[PESERTA DIDIK] GET BERKAS CALON';
 export const SIMPAN_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] SIMPAN KONFIRMASI PENDAFTARAN';
 export const GET_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] GET KONFIRMASI PENDAFTARAN';
+export const CEK_NIK = '[PESERTA DIDIK] CEK NIK';
 
 export function getPesertaDidik(routeParams)
 {
@@ -214,6 +215,24 @@ export function getKonfirmasiPendaftaran(routeParams)
         request.then((response) =>
             dispatch({
                 type   : GET_KONFIRMASI_PENDAFTARAN,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+export function cekNik(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/cekNik', {
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : CEK_NIK,
                 payload: response.data,
                 routeParams
             })

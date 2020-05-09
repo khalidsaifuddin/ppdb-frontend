@@ -177,7 +177,8 @@ class cari extends Component {
                     </Subnavbar>
                 </Navbar>
                 
-                <Block strong style={{marginTop:'0px', marginBottom:'0px'}}>
+                <Block strong>
+                {/* <Block strong style={{marginTop:'0px', marginBottom:'0px'}}> */}
 
                     Riwayat Pencarian:<br/>
                     <div style={{background:'#FAFAFA',border:'0px solid #ccc', padding:'8px', borderRadius:'4px'}}>
@@ -206,7 +207,7 @@ class cari extends Component {
                         {/* <CariPesertaDidik /> */}
                         <div name="cariPesertaDidik">
                 
-                            <BlockTitle>Hasil Pencarian Peserta Didik</BlockTitle>
+                            <BlockTitle>Hasil Pencarian Peserta Didik (Hanya menampilkan peserta didik yang berada di tingkat akhir jenjangnya)</BlockTitle>
                             {this.props.peserta_didik.count < 1 &&
                             <Card className="demo-card-header-pic" key={null}>
                                 <CardContent style={{textAlign:'center'}}>
@@ -261,8 +262,8 @@ class cari extends Component {
                                                         <Col width="100" className="hilangDiMobile" tabletWidth="30">
                                                             Tingkat Terakhir: Kelas {option.tingkat_pendidikan_id}<br/>
                                                             Status pendaftaran: 
-                                                            {option.flag_pendaftar && <span style={{color:'green',fontWeight:'bold'}}><br/>&nbsp;Sudah mendaftar</span>} 
-                                                            {!option.flag_pendaftar && <span style={{color:'#434343',fontWeight:'bold'}}><br/>&nbsp;Belum mendaftar</span>}
+                                                            {option.flag_pendaftar && <span style={{color:'green',fontWeight:'bold'}}><br/>Sudah mendaftar</span>} 
+                                                            {!option.flag_pendaftar && <span style={{color:'#434343',fontWeight:'bold'}}><br/>Belum mendaftar</span>}
                                                         </Col>
                                                         {/* <Col width="100" style={{marginTop:'10px', border:'1px solid #eceff1', padding:'8px'}}>
                                                             <Row noGap>
@@ -279,12 +280,13 @@ class cari extends Component {
                                             </Row>
                                         </CardContent>
                                         <CardFooter>
-                                            <Button raised fill disabled={(parseInt(option.tingkat_pendidikan_id) === 6 ? false : true)} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
+                                            <Button raised fill disabled={option.flag_pendaftar ? true : (parseInt(option.tingkat_pendidikan_id) === 6 ? false : (parseInt(option.tingkat_pendidikan_id) === 9 ? false : true))} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
                                                 <Icon ios="f7:doc_plaintext" style={{fontSize:'20px'}}/>
                                                 &nbsp; Daftarkan Peserta Didik
                                             </Button>
                                             <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}>
-                                                {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>)}
+                                                {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))}
+                                                {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya oleh pengguna lain</>))}
                                             </div>
                                         </CardFooter>
                                     </Card>
