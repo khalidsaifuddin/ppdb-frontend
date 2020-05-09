@@ -83,10 +83,6 @@ class app extends Component {
     this.props.setTabActive(this.props.tabBar);
   }
 
-  onClickMenu(menu) {
-    console.log(this.props);
-  }
-
   componentDidMount = () => {
     let socket = io(localStorage.getItem('socket_url'));
     let params = {};
@@ -100,7 +96,6 @@ class app extends Component {
 
   gantiSemester = (b) => {
     localStorage.setItem('semester_id_aplikasi', b.target.value);
-    console.log(localStorage.getItem('semester_id_aplikasi'));
   }
 
   keluar = () =>{

@@ -68,44 +68,25 @@ class Beranda extends Component {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
   }
 
-  backClick = () => {
-    let properti = 'beranda';
-
-    for (var property in this.props.tabBar) {
-      this.props.tabBar[property] = false;
-    }
-
-    if(this.props.f7router.url.replace("/","").replace("/","") !== "") {
-      properti = this.props.f7router.url.replace("/","").replace("/","");
-    }
-
-    this.props.tabBar[properti] = true;
-
-    this.props.setTabActive(this.props.tabBar);
-  }   
-
   componentDidMount = () => {
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
       this.$f7router.navigate('/login/');
     }
 
-    if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')){
-      console.log(localStorage.getItem('current_url'));
-      
+    if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')) {
       this.$f7router.navigate(localStorage.getItem('current_url'))
     }
 
     localStorage.setItem('current_url', '/');
-    console.log(localStorage.getItem('current_url'));
 
     let socket = io(localStorage.getItem('socket_url'));
 
     socket.on('updateUserList', (users) => {
-        this.setState({
-          users
-        },()=>{
-          console.log(this.state.users);
-        });
+      this.setState({
+        users
+      },()=>{
+        console.log(this.state.users);
+      });
     });
 
     if(parseInt(localStorage.getItem('sudah_login')) === 1) {
@@ -114,7 +95,7 @@ class Beranda extends Component {
           pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
           dibaca: "1",
         }
-      },()=>{
+      },()=> {
         this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
           this.setState({
             notifikasi: this.props.notifikasi,
@@ -185,7 +166,7 @@ class Beranda extends Component {
           <Block className="rekapitulasiProgres">
             <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
             <Row>
-              <Col>
+              <Col width="50" tabletWidth="25">
                 <div className="rekapItem blue">
                   <div className="rekapDesc">
                     <h4>Jalur Zonasi : <strong>17943</strong></h4>
@@ -198,7 +179,7 @@ class Beranda extends Component {
                   </div>
                 </div>
               </Col>
-              <Col>
+              <Col width="50" tabletWidth="25">
                 <div className="rekapItem red">
                   <div className="rekapDesc">
                     <h4>Jalur Afirmasi : <strong>269</strong></h4>
@@ -211,7 +192,7 @@ class Beranda extends Component {
                   </div>
                 </div>
               </Col>
-              <Col>
+              <Col width="50" tabletWidth="25">
                 <div className="rekapItem deeppurple">
                   <div className="rekapDesc">
                     <h4>Jalur Prestasi : <strong>101</strong></h4>
@@ -224,7 +205,7 @@ class Beranda extends Component {
                   </div>
                 </div>
               </Col>
-              <Col>
+              <Col width="50" tabletWidth="25">
                 <div className="rekapItem green">
                   <div className="rekapDesc">
                     <h4>Jalur Perpindahan Ortu : <strong>26894</strong></h4>
@@ -241,7 +222,7 @@ class Beranda extends Component {
           </Block>
           <Block className="pelaksanaanPpdb">
             <Row>
-              <Col width="33" medium="33">
+              <Col width="100" tabletWidth="33">
                 <BlockHeader>JADWAL SAAT INI</BlockHeader>
                 <div className="jadwalPpdb">
                   <Card>
@@ -275,95 +256,97 @@ class Beranda extends Component {
                   </List>
                 </div>
               </Col>
-              <Col width="66" medium="66">
-                <BlockHeader>RESUME (RINGKASAN)</BlockHeader>
+              <Col width="100" tabletWidth="66">
+                <BlockHeader className="onlyOnDesktop">RESUME (RINGKASAN)</BlockHeader>
                 <div className="resumeTable">
                   <Row>
-                    <Col medium="66">
-                      <div class="data-table card">
+                    <Col width="100" tabletWidth="66">
+                      <BlockHeader className="onlyOnMobile" style={{marginTop: 16}}>JALUR RESUME (RINGKASAN)</BlockHeader>
+                      <div className="data-table card">
                         <table>
                           <thead>
                             <tr>
-                              <th class="label-cell">Jalur</th>
-                              <th class="numeric-cell">Kuota</th>
-                              <th class="numeric-cell">Siswa</th>
-                              <th class="numeric-cell">Lulus</th>
+                              <th className="label-cell">Jalur</th>
+                              <th className="numeric-cell">Kuota</th>
+                              <th className="numeric-cell">Siswa</th>
+                              <th className="numeric-cell">Lulus</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="label-cell">Afirmasi</td>
-                              <td class="numeric-cell">150</td>
-                              <td class="numeric-cell">80</td>
-                              <td class="numeric-cell">75</td>
+                              <td className="label-cell">Afirmasi</td>
+                              <td className="numeric-cell">150</td>
+                              <td className="numeric-cell">80</td>
+                              <td className="numeric-cell">75</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">Pindahan</td>
-                              <td class="numeric-cell">20</td>
-                              <td class="numeric-cell">10</td>
-                              <td class="numeric-cell">10</td>
+                              <td className="label-cell">Pindahan</td>
+                              <td className="numeric-cell">20</td>
+                              <td className="numeric-cell">10</td>
+                              <td className="numeric-cell">10</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">Zonasi</td>
-                              <td class="numeric-cell">320</td>
-                              <td class="numeric-cell">340</td>
-                              <td class="numeric-cell">300</td>
+                              <td className="label-cell">Zonasi</td>
+                              <td className="numeric-cell">320</td>
+                              <td className="numeric-cell">340</td>
+                              <td className="numeric-cell">300</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">Prestasi</td>
-                              <td class="numeric-cell">180</td>
-                              <td class="numeric-cell">150</td>
-                              <td class="numeric-cell">100</td>
+                              <td className="label-cell">Prestasi</td>
+                              <td className="numeric-cell">180</td>
+                              <td className="numeric-cell">150</td>
+                              <td className="numeric-cell">100</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">Tahfiz</td>
-                              <td class="numeric-cell">15</td>
-                              <td class="numeric-cell">13</td>
-                              <td class="numeric-cell">5</td>
+                              <td className="label-cell">Tahfiz</td>
+                              <td className="numeric-cell">15</td>
+                              <td className="numeric-cell">13</td>
+                              <td className="numeric-cell">5</td>
                             </tr>
                             <tr>
-                              <td class="label-cell"><b>Jumlah</b></td>
-                              <td class="numeric-cell"><b>485</b></td>
-                              <td class="numeric-cell"><b>493</b></td>
-                              <td class="numeric-cell"><b>300</b></td>
+                              <td className="label-cell"><b>Jumlah</b></td>
+                              <td className="numeric-cell"><b>485</b></td>
+                              <td className="numeric-cell"><b>493</b></td>
+                              <td className="numeric-cell"><b>300</b></td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </Col>
-                    <Col medium="33">
-                      <div class="data-table card">
+                    <Col width="100" tabletWidth="33">
+                      <BlockHeader className="onlyOnMobile" style={{marginTop: 16}}>JARAK RESUME (RINGKASAN)</BlockHeader>
+                      <div className="data-table card">
                         <table>
                           <thead>
                             <tr>
-                              <th class="label-cell">Jarak</th>
-                              <th class="numeric-cell">Jumlah Siswa</th>
+                              <th className="label-cell">Jarak</th>
+                              <th className="numeric-cell">Jumlah Siswa</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="label-cell">0m - 500m</td>
-                              <td class="numeric-cell">75</td>
+                              <td className="label-cell">0m - 500m</td>
+                              <td className="numeric-cell">75</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">500m - 1km</td>
-                              <td class="numeric-cell">10</td>
+                              <td className="label-cell">500m - 1km</td>
+                              <td className="numeric-cell">10</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">1km - 2km</td>
-                              <td class="numeric-cell">300</td>
+                              <td className="label-cell">1km - 2km</td>
+                              <td className="numeric-cell">300</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">2km - 4km</td>
-                              <td class="numeric-cell">100</td>
+                              <td className="label-cell">2km - 4km</td>
+                              <td className="numeric-cell">100</td>
                             </tr>
                             <tr>
-                              <td class="label-cell">> 4km</td>
-                              <td class="numeric-cell">5</td>
+                              <td className="label-cell">> 4km</td>
+                              <td className="numeric-cell">5</td>
                             </tr>
                             <tr>
-                              <td class="label-cell"><b>Jumlah</b></td>
-                              <td class="numeric-cell"><b>300</b></td>
+                              <td className="label-cell"><b>Jumlah</b></td>
+                              <td className="numeric-cell"><b>300</b></td>
                             </tr>
                           </tbody>
                         </table>

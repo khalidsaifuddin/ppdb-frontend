@@ -99,6 +99,22 @@ class ProfilPengguna extends Component {
         });
     }
 
+    backClick = () => {
+        let properti = 'beranda';
+    
+        for (var property in this.props.tabBar) {
+          this.props.tabBar[property] = false;
+        }
+    
+        if(this.props.f7router.url.replace("/","").replace("/","") !== "") {
+          properti = this.props.f7router.url.replace("/","").replace("/","");
+        }
+    
+        this.props.tabBar[properti] = true;
+    
+        this.props.setTabActive(this.props.tabBar);
+      }
+
     gantiTab = (kode) => {
         
     }

@@ -91,8 +91,6 @@
 
 .pagination{
   display: flex;
-  /* padding-left: 15px; */
-  /* padding-right: 15px; */
   list-style: none;
   border:0px solid #ccc;
   background:white;
@@ -116,17 +114,11 @@
   height: 40px;
 }
 
-.FabSebaranSekolah > a > div {
-  font-size: 12px;
-}
+.FabSebaranSekolah > a > div { font-size: 12px; }
 
-.listSekolah > .item-content > .item-inner > .item-title-row > .item-title {
-  font-size: 12px;
-}
+.listSekolah > .item-content > .item-inner > .item-title-row > .item-title { font-size: 12px; }
 
-.listSekolah > .item-content > .item-inner > .item-subtitle {
-  font-size: 10px;
-}
+.listSekolah > .item-content > .item-inner > .item-subtitle { font-size: 10px; }
 
 .read-more { 
   position: absolute; 
@@ -136,21 +128,94 @@
   text-align: center; 
   margin: 0; padding: 20px 0; 
   height: 100px;
-	
-  /* background-image: linear-gradient(to bottom, transparent 35%, white 65%); */
 }
 
-.mainMenu .page {
-  background-color: #ffffff;
+.page {
+  width: 100%;
+  background-color: #f5f5fb;
 }
 
 .page-content {
   width: 100%;
   padding-top: 44px;
+  padding-bottom: 16px;
 }
 
-.contentApp {
-  padding: 1rem;
+.contentApp { padding: 1rem; }
+
+.mainMenu {
+  display: block;
+  left: 0;
+}
+
+.mainMenu .page { background-color: #ffffff; }
+
+.mainMenu .navbar {
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 10px #00000014;
+}
+
+.mainMenu .navbar .navbar-inner {
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.mainMenu .navbar .navbar-inner .title {
+  text-transform: uppercase;
+  left: 0 !important;
+}
+
+.mainMenu .navbar .navbar-inner img {
+  display: block;
+  margin-right: .375rem;
+}
+
+.mainMenu .list .item-link { font-size: .875rem; }
+
+.mainMenu .list .item-content { min-height: 38px; }
+
+.mainMenu .list .item-media {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mainMenu .list .item-media + .item-inner {
+  margin-left: .375rem;
+  min-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mainMenu .list .item-link .item-inner:before { color: #e6e6e6; }
+
+.mainMenu .list ul li a .item-media .f7-icons {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: #007aff;
+}
+
+.view > .navbar {
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 10px #00000014;
+}
+
+.ios .navbar .left a + a, 
+.ios .navbar .right a + a { margin-left: .25rem; }
+
+.mainMenu::before,
+.mainMenu .navbar::before,
+.mainMenu .navbar::after,
+.view > .navbar::before,
+.view > .navbar::after,
+.mainMenu .list ul:before,
+.mainMenu .list ul:after,
+.mainMenu .list .item-inner:after {
+  content: '';
+  display: none;
 }
 
 .gridMenu {
@@ -206,7 +271,7 @@
   margin-right: 0;
   margin-bottom: 0;
   padding: 0;
-  margin-top: 1rem;
+  margin-top: 0;
   position: relative;
   width: 100%;
 }
@@ -405,81 +470,6 @@
   font-size: .875rem;
 }
 
-.page {
-  width: 100%;
-  background-color: #f5f5fb;
-}
-
-.mainMenu {
-  display: block;
-  left: 0;
-}
-
-.mainMenu .navbar {
-  position: relative;
-  background-color: #fff;
-  box-shadow: 0 0 10px #00000014;
-}
-
-.mainMenu .navbar .navbar-inner {
-  justify-content: center;
-  flex-direction: row-reverse;
-}
-
-.mainMenu .navbar .navbar-inner .title {
-  text-transform: uppercase;
-  left: 0 !important;
-}
-
-.mainMenu .navbar .navbar-inner img {
-  display: block;
-  margin-right: .375rem;
-}
-
-.mainMenu .list .item-link { font-size: .875rem; }
-
-.mainMenu .list .item-content { min-height: 38px; }
-
-.mainMenu .list .item-media {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.mainMenu .list .item-media + .item-inner {
-  margin-left: .375rem;
-  min-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.mainMenu .list .item-link .item-inner:before { color: #e6e6e6; }
-
-.mainMenu .list ul li a .item-media .f7-icons {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  color: #007aff;
-}
-
-.view > .navbar {
-  position: relative;
-  background-color: #fff;
-  box-shadow: 0 0 10px #00000014;
-}
-
-.mainMenu::before,
-.mainMenu .navbar::before,
-.mainMenu .navbar::after,
-.view > .navbar::before,
-.view > .navbar::after,
-.mainMenu .list ul:before,
-.mainMenu .list ul:after,
-.mainMenu .list .item-inner:after {
-  content: '';
-  display: none;
-}
-
 .resumeTable {
   position: relative;
   width: 100%;
@@ -489,4 +479,16 @@
   margin: 0;
   padding: 0;
   box-shadow: none;
+}
+
+.onlyOnDesktop { display: block !important; }
+
+.onlyOnMobile { display: none !important; }
+
+@media only screen and (max-width: 768px) {
+  .onlyOnDesktop { display: none !important; }
+
+  .onlyOnMobile { display: block !important; }
+
+  .page-content { padding-bottom: 60px; }
 }
