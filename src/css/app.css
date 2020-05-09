@@ -371,6 +371,14 @@
   margin: 0;
 }
 
+.jadwalPpdb .list ul:before,
+.jadwalPpdb .list ul:after {
+  content: '';
+  display: none;
+}
+
+.jadwalPpdb .list .item-title-row { font-size: .875rem; }
+
 .formRegisterWidget {
   display: block;
   margin: 4rem auto 0;

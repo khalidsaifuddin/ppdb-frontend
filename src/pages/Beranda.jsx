@@ -173,7 +173,7 @@ class Beranda extends Component {
           </NavRight>
         </Navbar>
         <div className="contentApp">
-          <Block className="gridMenu">
+          {/* <Block className="gridMenu">
             <Link href="/">
               <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
               Cari Data
@@ -198,7 +198,7 @@ class Beranda extends Component {
               <img src="./static/images/icons/pengumuman.svg" alt="pengumuman" />
               Pengumuman
             </Link>
-          </Block>
+          </Block> */}
           <Block className="rekapitulasiProgres">
             <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
             <Row>
