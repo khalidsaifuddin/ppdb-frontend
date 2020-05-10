@@ -97,7 +97,7 @@ class cariSekolah extends Component {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button raised fill>
+                  <Button raised fill color="deeporange">
                     <Icon f7="house_alt" size="16px"/> Daftarkan Peserta Didik ke Sekolah Ini
                   </Button>
                 </CardFooter>

@@ -202,7 +202,7 @@ class app extends Component {
                 <Block className="formRegisterWidget">
                   <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
                   <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
-                  <Button raised fill round>Daftar Sekarang</Button>
+                  <Button raised fill round color="orange">Daftar Sekarang</Button>
                 </Block>
               </Page>
             </View>
