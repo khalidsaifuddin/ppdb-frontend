@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   Icon,
-  Block,
   Button,
   Row,
   Col,
