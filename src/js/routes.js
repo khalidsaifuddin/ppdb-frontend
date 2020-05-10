@@ -22,6 +22,8 @@ import tambahBerkas from '../pages/PPDB/tambahBerkas';
 import tambahKonfirmasi from '../pages/PPDB/tambahKonfirmasi';
 import DataPendaftaran from '../pages/PPDB/dataPendaftaran';
 import petaPD from '../pages/PPDB/petaPD';
+import Detailcalonpdsekolah from '../pages/PPDB/detailcalonpdsekolah';
+import Detailcalonpdsiswa from '../pages/PPDB/detailcalonpdsiswa';
 
 var routes = [
   {
@@ -71,6 +73,14 @@ var routes = [
   {
     path: '/Daftar/',
     component: DataPendaftaran
+  },
+  {
+    path: '/detailCalonpdSekolah/',
+    component: Detailcalonpdsekolah
+  },
+  {
+    path: '/detailCalonpdSekolah/:sekolah_id',
+    component: Detailcalonpdsiswa
   },
   {
     path: '/notifikasi',
