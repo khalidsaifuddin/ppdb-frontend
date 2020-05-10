@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio
+    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, BlockTitle
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
@@ -8,6 +8,12 @@ import { connect } from 'react-redux';
 import * as Actions from '../../store/actions';
 
 import io from 'socket.io-client';
+
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import * as L1 from 'leaflet.markercluster';
+import Routing from 'leaflet-routing-machine';
+import ExtraMarkers from 'leaflet-extra-markers';
 
 class tambahCalonPesertaDidik extends Component {
     state = {
@@ -34,7 +40,8 @@ class tambahCalonPesertaDidik extends Component {
             nama_ayah:null,
             nama_ibu:null,
             nama_wali:null,
-            calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
+            calon_peserta_didik_id: (this.$f7route.params['peserta_didik_id'] !== "null" ? (this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null) : null),
+            // calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? (this.$f7route.params['peserta_didik_id'] !== "null" ? this.$f7route.params['peserta_didik_id'] : null) : null,
         },
         sekolah_terpilih: {
             sekolah_id: null,
@@ -54,7 +61,11 @@ class tambahCalonPesertaDidik extends Component {
         },
         smartSelectJenisKelamin: (<></>),
         disabledInput: true,
-        labelNik: 'NIK yang belum pernah didaftarkan sebelumnya'
+        labelNik: 'NIK yang belum pernah didaftarkan sebelumnya',
+        lng: 113.141552,
+        lat: -8.109038,
+        zoom: 10,
+        map_besar: (<div></div>)
     }
 
     bulan = [
@@ -73,30 +84,92 @@ class tambahCalonPesertaDidik extends Component {
     ]
 
     componentDidMount = () => {
+
+        console.log(this.state.routeParams.calon_peserta_didik_id);
         
+        // console.log(this.$f7route.url);
+        
+        let arrURL = this.$f7route.url.split("#");
+
+        let lintang = -8.109038;
+        let bujur = 113.141552;
+
+        if(arrURL.length > 1){
+            // console.log('ada hashtag');
+            let linbuj = arrURL[1].split(",");
+            lintang = linbuj[0];
+            bujur = linbuj[1];
+
+            // console.log(lintang);
+            // console.log(bujur);
+
+            // this.setState({
+            //     ...this.state,
+            //     routeParams: {
+            //         ...this.state.routeParams,
+            //         lintang: lintang,
+            //         bujur: bujur
+            //     }
+            // },()=>{
+            //     console.log(this.state.routeParams);
+            // });
+        }else{
+            // console.log('nggak ada hashtag');
+            
+        }
+
         localStorage.setItem('current_url', this.$f7route.url);
 
         this.setState({
             routeParams: {
-                ...this.state.routeParams
+                ...this.state.routeParams,
+                lintang: lintang,
+                bujur: bujur
+
             },
+            lintang: lintang,
+            bujur: bujur,
             routeParamsWilayah: {
                 ...this.state.routeParamsWilayah,
                 id_level_wilayah: 1
             }
         },()=>{
+            // console.log(this.state.routeParams);
             this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=>{
                 this.setState({
                     provinsi: this.props.mst_wilayah
                 });
             });
 
-            if(this.state.routeParams.calon_peserta_didik_id){
+            // //peta
+            // let map_besar = L.map('map_besar').setView([this.state.lat, this.state.lng], this.state.zoom);
+
+            // let tile =  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            //     maxZoom: 19,
+            //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            // }).addTo(map_besar);
+
+            // let layerGroup = L.featureGroup().addTo(map_besar);
+            // let markerClusters = new L1.MarkerClusterGroup();
+
+            // // map_besar.fitBounds(layerGroup.getBounds());
+            // var redMarker = L.ExtraMarkers.icon({
+            //     // icon: 'home',
+            //     markerColor: 'cyan',
+            //     shape: 'square',
+            //     prefix: 'f7-icons',
+            //     innerHTML: '<img style="width:70%; padding-top:5px" src="https://image.flaticon.com/icons/png/512/49/49944.png" />'
+            // });
+    
+
+            if(this.state.routeParams.calon_peserta_didik_id && this.state.routeParams.calon_peserta_didik_id !== "null"){
                 this.props.getCalonPesertaDidik(this.state.routeParams).then((result)=>{
                     this.setState({
                         routeParams: {
                             ...this.state.routeParams,
-                            ...this.props.calon_peserta_didik.rows[0]
+                            ...this.props.calon_peserta_didik.rows[0],
+                            lintang: (this.state.lintang ? this.state.lintang : this.props.calon_peserta_didik.rows[0].lintang),
+                            bujur: (this.state.bujur ? this.state.bujur : this.props.calon_peserta_didik.rows[0].bujur)
                         },
                         disabledInput: false,
                         sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal,
@@ -142,6 +215,13 @@ class tambahCalonPesertaDidik extends Component {
                         // )
                     },()=>{
                         // console.log(this.state.routeParams);
+                        // let marker = new L.Marker([this.state.routeParams.lintang, this.state.routeParams.bujur], {icon:redMarker, draggable:false});
+                        // // let marker = new L.Marker([element.lintang, element.bujur], {icon:redMarker, draggable:false}).bindPopup( popup );
+                        // markerClusters.addLayer( marker );
+                        
+                        // layerGroup.addLayer(markerClusters);
+            
+                        // map_besar.fitBounds(layerGroup.getBounds());
                     });
                 });
             }else{
@@ -165,8 +245,16 @@ class tambahCalonPesertaDidik extends Component {
                     </ListItem>)
                 },()=>{
                     // console.log(this.state.routeParams);
+                    // let marker = new L.Marker([this.state.lat, this.state.lng], {icon:redMarker, draggable:false});
+                    // // let marker = new L.Marker([element.lintang, element.bujur], {icon:redMarker, draggable:false}).bindPopup( popup );
+                    // markerClusters.addLayer( marker );
+
+                    // layerGroup.addLayer(markerClusters);
+            
+                    // map_besar.fitBounds(layerGroup.getBounds());
                 });
             }
+
         });
 
     }
@@ -298,7 +386,7 @@ class tambahCalonPesertaDidik extends Component {
         this.setState({
             routeParamsCek: {
                 nik: e.target.value,
-                calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null
+                calon_peserta_didik_id: (this.$f7route.params['peserta_didik_id'] !== "null" ? (this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null) : null),
             }
         },()=>{
             this.props.cekNik(this.state.routeParamsCek).then((result)=>{
@@ -318,6 +406,27 @@ class tambahCalonPesertaDidik extends Component {
             })
         });
     }
+
+    // bukaPeta = () => {
+    //     let markerClusters = new L1.MarkerClusterGroup();
+
+    //     var redMarker = L.ExtraMarkers.icon({
+    //         // icon: 'home',
+    //         markerColor: 'cyan',
+    //         shape: 'square',
+    //         prefix: 'f7-icons',
+    //         innerHTML: '<img style="width:70%; padding-top:5px" src="https://image.flaticon.com/icons/png/512/49/49944.png" />'
+    //     });
+
+    //     let marker = new L.Marker([this.state.routeParams.lintang, this.state.routeParams.bujur], {icon:redMarker, draggable:false});
+    //     // let marker = new L.Marker([element.lintang, element.bujur], {icon:redMarker, draggable:false}).bindPopup( popup );
+    //     markerClusters.addLayer( marker );
+        
+    //     layerGroup.addLayer(markerClusters);
+
+    //     map_besar.fitBounds(layerGroup.getBounds());
+    // }
+
     render()
     {
         return (
@@ -549,6 +658,10 @@ class tambahCalonPesertaDidik extends Component {
                                         clearButton
                                     /> */}
                                 </List>
+                                <br/>
+                                <Button onClick={()=>{this.$f7router.navigate("/petaPD/"+this.state.routeParams.calon_peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur)}}>
+                                    Lihat/Ubah Posisi Koordinat Rumah
+                                </Button>
                             </CardContent>
                         </Card>
                     </Col>
@@ -973,6 +1086,8 @@ class tambahCalonPesertaDidik extends Component {
                     })}
                 </PageContent>
                 </Sheet>
+
+                
             </Page>
         )
     }

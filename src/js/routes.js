@@ -21,6 +21,7 @@ import tambahJalurSekolah from '../pages/PPDB/tambahJalurSekolah';
 import tambahBerkas from '../pages/PPDB/tambahBerkas';
 import tambahKonfirmasi from '../pages/PPDB/tambahKonfirmasi';
 import DataPendaftaran from '../pages/PPDB/dataPendaftaran';
+import petaPD from '../pages/PPDB/petaPD';
 
 var routes = [
   {
@@ -78,6 +79,10 @@ var routes = [
   {
     path: '/login',
     component: login,
+  },
+  {
+    path: '/petaPD/:peserta_didik_id/:lintang/:bujur',
+    component: petaPD,
   },
   {
     path: '/ProfilPengguna',
