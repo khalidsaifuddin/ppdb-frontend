@@ -5,12 +5,10 @@ import {
   Views,
   View,
   Statusbar,
-  Popup,
   Popover,
   Page,
   Navbar,
   Toolbar,
-  NavRight,
   Link,
   Block,
   BlockTitle,
@@ -132,83 +130,83 @@ class app extends Component {
       <App params={this.state.f7params} hideToolbarOnScroll>
         <Statusbar></Statusbar>
         {localStorage.getItem('sudah_login') === '1' &&
-        <Panel className="mainMenu" left cover>
-          <View>
-            <Page>
-              <Navbar title={localStorage.getItem('judul_aplikasi')}>
-                <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
-              </Navbar>
-              <BlockTitle>MENU APLIKASI</BlockTitle>
-              <List>
-                {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                  <ListItem link="/" view=".view-main" panelClose panel-close title="Beranda">
-                    <i slot="media" className="f7-icons">house</i>
+          <Panel className="mainMenu" left cover>
+            <View>
+              <Page>
+                <Navbar title={localStorage.getItem('judul_aplikasi')}>
+                  <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
+                </Navbar>
+                <BlockTitle>MENU APLIKASI</BlockTitle>
+                <List>
+                  {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                    <ListItem link="/" view=".view-main" panelClose panel-close title="Beranda">
+                      <i slot="media" className="f7-icons">house</i>
+                    </ListItem>
+                  }
+                  <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari Data">
+                    <i slot="media" className="f7-icons">search</i>
                   </ListItem>
-                }
-                <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari Data">
-                  <i slot="media" className="f7-icons">search</i>
-                </ListItem>
-                <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
-                  <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
-                </ListItem>
-                <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
-                  <i slot="media" className="f7-icons">doc_plaintext</i>
-                </ListItem>
-                <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
-                  <i slot="media" className="f7-icons">calendar</i>
-                </ListItem>
-                <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
-                  <i slot="media" className="f7-icons">book</i>
-                </ListItem>
-                <ListItem link="/" view=".view-main" panelClose panel-close title="Kuota">
-                  <i slot="media" className="f7-icons">chart_bar</i>
-                </ListItem>
-                <ListItem link="/" view=".view-main" panelClose panel-close title="Pengumuman">
-                  <i slot="media" className="f7-icons">bell</i>
-                </ListItem>
-                {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
-                  <>
-                    {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                      <ListItem link={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Kuis">
-                        <i slot="media" className="f7-icons">pencil_circle_fill</i>
-                      </ListItem>
+                  <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
+                    <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
+                  </ListItem>
+                  <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
+                    <i slot="media" className="f7-icons">doc_plaintext</i>
+                  </ListItem>
+                  <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
+                    <i slot="media" className="f7-icons">calendar</i>
+                  </ListItem>
+                  <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
+                    <i slot="media" className="f7-icons">book</i>
+                  </ListItem>
+                  <ListItem link="/" view=".view-main" panelClose panel-close title="Kuota">
+                    <i slot="media" className="f7-icons">chart_bar</i>
+                  </ListItem>
+                  <ListItem link="/" view=".view-main" panelClose panel-close title="Pengumuman">
+                    <i slot="media" className="f7-icons">bell</i>
+                  </ListItem>
+                  {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+                    <>
+                      {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                        <ListItem link={"/Kuis/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Kuis">
+                          <i slot="media" className="f7-icons">pencil_circle_fill</i>
+                        </ListItem>
+                        }
+                        {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
+                        <ListItem link="/Ruang" view=".view-main" panelClose panel-close title="Ruang">
+                          <i slot="media" className="f7-icons">circle_grid_hex_fill</i>
+                        </ListItem>
                       }
                       {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                      <ListItem link="/Ruang" view=".view-main" panelClose panel-close title="Ruang">
-                        <i slot="media" className="f7-icons">circle_grid_hex_fill</i>
-                      </ListItem>
-                    }
-                    {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                      <ListItem link={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Pertanyaan">
-                        <i slot="media" className="f7-icons">question_square_fill</i>
-                      </ListItem>
-                    }
-                  </>
-                }
-                {localStorage.getItem('sudah_login') === '0' && 
-                  <ListItem link="/login" view=".view-main" panelClose panel-close title="Login/Masuk">
-                    <i slot="media" className="f7-icons">square_arrow_right</i>
-                  </ListItem>
-                }
-                {localStorage.getItem('sudah_login') === '1' && 
-                  <ListItem link="/ProfilPengguna" view=".view-main" panelClose panel-close title="Profil Pengguna">
-                    <i slot="media" className="f7-icons">person</i>
-                  </ListItem>
-                }
-                {localStorage.getItem('sudah_login') === '1' && 
-                  <ListItem link="/" onClick={this.keluar} panelClose panel-close title="Keluar">
-                    <i slot="media" className="f7-icons">square_arrow_left</i>
-                  </ListItem>
-                }
-              </List>
-              <Block className="formRegisterWidget">
-                <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
-                <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
-                <Button raised fill round>Daftar Sekarang</Button>
-              </Block>
-            </Page>
-          </View>
-        </Panel>
+                        <ListItem link={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} view=".view-main" panelClose panel-close title="Pertanyaan">
+                          <i slot="media" className="f7-icons">question_square_fill</i>
+                        </ListItem>
+                      }
+                    </>
+                  }
+                  {localStorage.getItem('sudah_login') === '0' && 
+                    <ListItem link="/login" view=".view-main" panelClose panel-close title="Login/Masuk">
+                      <i slot="media" className="f7-icons">square_arrow_right</i>
+                    </ListItem>
+                  }
+                  {localStorage.getItem('sudah_login') === '1' && 
+                    <ListItem link="/ProfilPengguna" view=".view-main" panelClose panel-close title="Profil Pengguna">
+                      <i slot="media" className="f7-icons">person</i>
+                    </ListItem>
+                  }
+                  {localStorage.getItem('sudah_login') === '1' && 
+                    <ListItem link="/" onClick={this.keluar} panelClose panel-close title="Keluar">
+                      <i slot="media" className="f7-icons">square_arrow_left</i>
+                    </ListItem>
+                  }
+                </List>
+                <Block className="formRegisterWidget">
+                  <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
+                  <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
+                  <Button raised fill round>Daftar Sekarang</Button>
+                </Block>
+              </Page>
+            </View>
+          </Panel>
         }
         <Panel right cover style={{width:'280px'}}>
           <View>
@@ -222,7 +220,7 @@ class app extends Component {
         </Panel>
         <Views tabs className="safe-areas" hideToolbarOnScroll>
           {localStorage.getItem('sudah_login') === '1' &&
-            <Toolbar labels bottom className="mobileTab" hideToolbarOnScroll>
+            <Toolbar className="mobileTab" labels bottom hideToolbarOnScroll>
               {localStorage.getItem('sudah_login') === '1' &&
                 <>
                   <Link 
@@ -231,32 +229,29 @@ class app extends Component {
                     iconIos="f7:house"
                     iconAurora="f7:house" 
                     iconMd="f7:house" 
-                    text="Beranda" 
-                    style={{fontSize:'12px'}} 
+                    text="Beranda"
                   />
                   <Link 
                     href={"/Cari/"} 
                     iconIos="f7:search" 
                     iconAurora="f7:search" 
                     iconMd="f7:search" 
-                    text="Cari" 
-                    style={{fontSize:'12px'}} 
+                    text="Cari"
                   />
                   <Link 
                     iconIos="f7:pencil_ellipsis_rectangle" 
                     iconAurora="f7:pencil_ellipsis_rectangle" 
                     iconMd="f7:pencil_ellipsis_rectangle" 
-                    text="Form Daftar" 
-                    style={{fontSize:'12px'}} 
+                    text="Formulir"
                     popoverOpen=".popover-menu"
+                    className="formulir--menu"
                   />
                   <Link 
                     href={"/Daftar/"} 
                     iconIos="f7:doc_plaintext" 
                     iconAurora="f7:doc_plaintext" 
                     iconMd="f7:doc_plaintext" 
-                    text="Pendaftar" 
-                    style={{fontSize:'12px'}} 
+                    text="Pendaftar"
                   />
                   {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                     <>
@@ -265,57 +260,33 @@ class app extends Component {
                         iconIos="f7:pencil_circle_fill" 
                         iconAurora="f7:pencil_circle_fill" 
                         iconMd="f7:pencil_circle_fill" 
-                        text="Kuis" 
-                        style={{fontSize:'12px'}} 
+                        text="Kuis"
                       />
                       <Link 
                         href="/Ruang" 
                         iconIos="f7:circle_grid_hex_fill" 
                         iconAurora="f7:circle_grid_hex_fill" 
                         iconMd="f7:circle_grid_hex_fill" 
-                        text="Ruang" 
-                        style={{fontSize:'12px'}} 
+                        text="Ruang"
                       />
                     </>
                   }
-                  </>
-                  }
-                  {localStorage.getItem('kode_aplikasi') !== 'SPM' &&
-                  <>
+                </>
+              }
+              {localStorage.getItem('kode_aplikasi') !== 'SPM' &&
+                <>
                   {localStorage.getItem('sudah_login') === '1' &&
                     <>
-                    {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
-                    <Link 
-                      href={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
-                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                      // tabLinkActive={this.props.tabBar.beranda} 
-                      iconIos="f7:question_square_fill" 
-                      iconAurora="f7:question_square_fill" 
-                      iconMd="f7:question_square_fill" 
-                      text="Pertanyaan" 
-                      style={{fontSize:'12px'}} 
-                    />
-                    }
-                    {/* <Link 
-                      href={"/pantauan/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id  :  null)} 
-                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                      // tabLinkActive={this.props.tabBar.beranda} 
-                      iconIos="f7:bell_circle" 
-                      iconAurora="f7:bell_circle" 
-                      iconMd="f7:bell_circle" 
-                      text="Pantau" 
-                      style={{fontSize:'12px'}} 
-                    /> */}
-                    {/* <Link 
-                      href="/ProfilPengguna" 
-                      // onClick={()=>{this.onClickLinkTab('beranda')}} 
-                      tabLinkActive={this.props.tabBar.beranda} 
-                      iconIos="f7:person_alt" 
-                      iconAurora="f7:person_alt" 
-                      iconMd="material:person_alt" 
-                      text="Pengguna" 
-                      style={{fontSize:'12px'}} 
-                    /> */}
+                      {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
+                        <Link 
+                          href={"/pertanyaanPengguna/"+((localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') ? JSON.parse(localStorage.getItem('user')).pengguna_id : null)} 
+                          iconIos="f7:question_square_fill" 
+                          iconAurora="f7:question_square_fill" 
+                          iconMd="f7:question_square_fill" 
+                          text="Pertanyaan" 
+                          style={{fontSize:'12px'}} 
+                        />
+                      }
                     </>
                   }
                 </>
@@ -328,36 +299,19 @@ class app extends Component {
                   iconAurora="f7:square_arrow_right" 
                   iconMd="material:square_arrow_right" 
                   text="Login" 
-                  style={{fontSize:'12px'}} 
                 />
               }
               <Link 
                 iconIos="f7:ellipsis" 
                 iconAurora="f7:ellipsis" 
                 iconMd="material:ellipsis" 
-                text="More"
+                text="Lainnya"
                 panelOpen="left" 
-                style={{fontSize:'12px'}}
               />
             </Toolbar>
           }
-
           <View id="view-beranda" main tab tabActive url="/" />
         </Views>
-        <Popup id="my-popup">
-          <View>
-            <Page>
-              <Navbar title="Popup">
-                <NavRight>
-                  <Link popupClose>Close</Link>
-                </NavRight>
-              </Navbar>
-              <Block>
-                <p>Popup content goes here.</p>
-              </Block>
-            </Page>
-          </View>
-        </Popup>
         <Popover className="popover-menu">
           <List>
             <ListItem link="/Cari/" popoverClose title="Cari dari Dapodik" />

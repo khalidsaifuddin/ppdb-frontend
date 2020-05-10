@@ -135,36 +135,34 @@ class Beranda extends Component {
 
     return (
       <Page name="Beranda" hideBarsOnScroll>
-        <Navbar 
-          sliding={false} 
-          large
-        >
-          <NavLeft>
-            <Link iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" panelOpen="left" className="sideMenuToggle" />
-          </NavLeft>
-          <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
-          <NavRight>
-            {parseInt(localStorage.getItem('sudah_login')) === 1 &&
+        {localStorage.getItem('sudah_login') === '1' &&
+          <Navbar 
+            sliding={false} 
+            large
+          >
+            <NavLeft>
+              <Link iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" panelOpen="left" className="sideMenuToggle" />
+            </NavLeft>
+            <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
+            <NavRight>
               <Link iconOnly href="/notifikasi" style={{marginLeft:'0px'}}> 
                 <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
                   {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}
                 </Icon>
               </Link>
-            }
-            {parseInt(localStorage.getItem('sudah_login')) === 1 &&
               <Link href="/ProfilPengguna">
                 <img style={{height:'30px', borderRadius:'50%', marginLeft:'0px'}} src={JSON.parse(localStorage.getItem('user')).gambar} />
               </Link>
-            }
-          </NavRight>
-        </Navbar>
+            </NavRight>
+          </Navbar>
+        }
         <div className="contentApp">
           <Block className="gridMenu">
-            <Link href="/">
+            <Link href="/Cari">
               <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
               Cari Data
             </Link>
-            <Link href="/">
+            <Link href="/tambahCalonPesertaDidik/">
               <img src="./static/images/icons/formulir.svg" alt="formulir" />
               Formulir
             </Link>
