@@ -50,54 +50,62 @@ class cariSekolah extends Component {
     return (
       <div name="cariSekolah">
         <BlockTitle>Hasil Pencarian Sekolah</BlockTitle>
-        <Block className="pencarianSekolah">
+        <div className="daftarSekolah">
           {this.props.ppdb_sekolah.rows.map((option, key)=> {
             return (
-              <Card key={key} className="demo-card-header-pic">
+              <Card key={key} noShadow noBorder>
                 <CardContent padding={false}>
-                  <Row>
-                    <Col width="30" tabletWidth="20" style={{background:"url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
-                      <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'150px', minHeight:'150px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
-                    </Col>
-                    <Col width="70" tabletWidth="80">
-                      <Row noGap>
-                        <Col width="100">
-                          <Link href={"/ProfilSekolah/"+"sekolah_id"}>
-                            <h3 style={{marginTop: '0px', marginBottom: '0px'}}>
-                              {this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nama.replace(new RegExp(this.props.keyword, "ig"), "<span style='background-color: #FFFF00'>"+this.props.keyword.toUpperCase()+"</span>")}} /> : option.nama} 
-                              &nbsp;
-                              ({this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.npsn.replace(new RegExp(this.props.keyword, "ig"), "<span style='background-color: #FFFF00'>"+this.props.keyword.toUpperCase()+"</span>")}} /> : option.npsn})
-                            </h3>
-                          </Link>
-                        </Col>
-                        <Col width="100" tabletWidth="50">
-                          Kecamatan: <b>{option.kecamatan}</b>
-                          <br/>Kabupaten: <b>{option.kabupaten}</b>
-                          <br/>Provinsi: <b>{option.provinsi}</b>
-                          <br/>Alamat: <b>{option.alamat_jalan}, {option.kode_pos}</b>
-                          <span className="hilangDiDesktop">
-                            Bentuk: <b>{option.bentuk}</b>
-                            <br/>Status: <b>{option.status}</b>
-                          </span>
-                        </Col>
-                        <Col width="50" className="hilangDiMobile" tabletWidth="50">
-                          Bentuk: <b>{option.bentuk}</b>
-                          <br/>Status: <b>{option.status}</b>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
+                  <div className="gambarSekolah" style={{backgroundImage: 'url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)'}}>
+                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}></img> 
+                  </div>
+                  <div className="tentangSekolah">
+                    <Link href={"/ProfilSekolah/"+"sekolah_id"}>
+                      <h3>
+                        {this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nama.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toUpperCase())}} /> : option.nama}
+                        ({this.props.keyword ? <b dangerouslySetInnerHTML= {{__html:option.npsn.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toUpperCase())}} /> : option.npsn})
+                      </h3>
+                    </Link>
+                    <Row>
+                      <Col width="100" tabletWidth="50">
+                        <div className="keteranganSekolah">
+                          <span>Kecamatan</span>
+                          <b>{option.kecamatan}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Kabupaten</span>
+                          <b>{option.kabupaten}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Provinsi</span>
+                          <b>{option.provinsi}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Alamat</span>
+                          <b>{option.alamat_jalan}, {option.kode_pos}</b>
+                        </div>
+                      </Col>
+                      <Col width="100" tabletWidth="50">
+                        <div className="keteranganSekolah">
+                          <span>Bentuk</span>
+                          <b>{option.bentuk}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Status</span>
+                          {option.status}
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
                 </CardContent>
-                <CardFooter className="no-border" style={{display:'-webkit-inline-box', width:'100%'}}>
+                <CardFooter>
                   <Button raised fill>
-                    <Icon ios="f7:doc_plaintext" style={{fontSize:'20px'}}/>
-                    &nbsp; Daftarkan Peserta Didik ke Sekolah Ini
+                    <Icon f7="house_alt" size="16px"/> Daftarkan Peserta Didik ke Sekolah Ini
                   </Button>
                 </CardFooter>
               </Card>
             )
           })}
-        </Block>
+        </div>
       </div>
     )
   }

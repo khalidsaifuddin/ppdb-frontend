@@ -17,7 +17,8 @@ import {
   Searchbar,
   Segmented,
   Tabs,
-  Tab
+  Tab,
+  CardHeader
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -180,7 +181,7 @@ class cari extends Component {
               }
             })}
           </div>
-          <a className="hapusRiwayat" onClick={()=>{localStorage.setItem('riwayat_kata_kunci','');this.setState({riwayat_kata_kunci:[]});}}>Bersihkan riwayat pencarian</a>
+          <a className="hapusRiwayat" onClick={()=>{localStorage.setItem('riwayat_kata_kunci','');this.setState({riwayat_kata_kunci:[]});}}>Bersihkan Riwayat</a>
         </Block>
         <Block className="daftarPencarian">
           <Segmented raised>
@@ -201,59 +202,61 @@ class cari extends Component {
                     </CardContent>
                   </Card>
                 }
-                {this.props.peserta_didik.rows.map((option)=> {
-                  return (
-                    <Card key={option.peserta_didik_id} className="demo-card-header-pic">
-                      <CardContent>
-                        <Row noGap>
-                          <Col width="100">
-                            <Link href="#">
-                              <h3 style={{marginTop: '0px', marginBottom: '0px'}}>
-                                {option.nama &&
-                                  <>
-                                    {this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nama.replace(new RegExp(this.props.keyword, "ig"), "<span style='background-color: #FFFF00'>"+this.props.keyword.toUpperCase()+"</span>")}} /> : option.nama} 
-                                  </>
-                                }
-                                {option.nisn &&
-                                  <>
-                                    ({this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nisn.replace(new RegExp(this.props.keyword, "ig"), "<span style='background-color: #FFFF00'>"+this.props.keyword.toUpperCase()+"</span>")}} /> : option.nisn})
-                                  </>
-                                }
-                              </h3>
-                            </Link>
-                          </Col>
-                          <Col width="100" tabletWidth="70">
-                            NIK: <b>{option.nik && <>{this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nik.replace(new RegExp(this.props.keyword, "ig"), "<span style='background-color: #FFFF00'>"+this.props.keyword.toLowerCase()+"</span>")}} /> : option.nik}</>}</b>
-                            <br/>Asal Sekolah: <b>{option.nama_sekolah} ({option.npsn})</b>
-                            <br/>Alamat Rumah: <b>{option.alamat_jalan_pd} {option.rt && <>RT {option.rt}/{option.rw}</>} {option.desa_kelurahan} {option.kecamatan}, {option.kabupaten}, {option.provinsi} </b>
-                            <span className="hilangDiDesktop">
-                              Tingkat Terakhir: Kelas {option.tingkat_pendidikan_id}<br/>
-                              Status pendaftaran: 
-                              {option.flag_pendaftar && <span>&nbsp;Sudah mendaftar</span>} 
-                              {!option.flag_pendaftar && <span>&nbsp;Belum mendaftar</span>}
-                            </span>
-                          </Col>
-                          <Col width="100" className="hilangDiMobile" tabletWidth="30">
-                            Tingkat Terakhir: Kelas {option.tingkat_pendidikan_id}<br/>
-                            Status pendaftaran: 
-                            {option.flag_pendaftar && <span style={{color:'green',fontWeight:'bold'}}><br/>Sudah mendaftar</span>} 
-                            {!option.flag_pendaftar && <span style={{color:'#434343',fontWeight:'bold'}}><br/>Belum mendaftar</span>}
-                          </Col>
-                        </Row>
-                      </CardContent>
-                      <CardFooter>
-                        <Button raised fill disabled={option.flag_pendaftar ? true : (parseInt(option.tingkat_pendidikan_id) === 6 ? false : (parseInt(option.tingkat_pendidikan_id) === 9 ? false : true))} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
-                          <Icon ios="f7:doc_plaintext" style={{fontSize:'20px'}}/>
-                          &nbsp; Daftarkan Peserta Didik
-                        </Button>
-                        <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}>
-                          {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))}
-                          {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  )
-                })}
+                <div className="daftarPeserta">
+                  {this.props.peserta_didik.rows.map((option)=> {
+                    return (
+                      <Card key={option.peserta_didik_id} noShadow noBorder>
+                        <CardHeader>
+                          <Link href="#">
+                            <Icon f7="person_round_fill" size="20px"></Icon>
+                            <h3>
+                              {option.nama && <span>{this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nama.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toUpperCase())}} /> : option.nama}</span>}
+                              {option.nisn && <b>({this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nisn.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toUpperCase())}} /> : option.nisn})</b>}
+                            </h3>
+                          </Link>
+                        </CardHeader>
+                        <CardContent>
+                          <Row>
+                            <Col width="100" tabletWidth="55">
+                              <div className="tentangPeserta">
+                                <span>NIK</span>
+                                {option.nik && <b>{this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nik.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toLowerCase())}} /> : option.nik}</b>}
+                              </div>
+                              <div className="tentangPeserta">
+                                <span>Asal Sekolah</span>
+                                <b>{option.nama_sekolah} ({option.npsn})</b>
+                              </div>
+                              <div className="tentangPeserta">
+                                <span>Alamat Rumah</span>
+                                <b>{option.alamat_jalan_pd} {option.rt && <>RT {option.rt}/{option.rw}</>} {option.desa_kelurahan} {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b>
+                              </div>
+                            </Col>
+                            <Col width="100" tabletWidth="45">
+                              <div className="tentangPeserta">
+                                <span>Tingkat Terakhir</span>
+                                <b>Kelas {option.tingkat_pendidikan_id}</b>
+                              </div>
+                              <div className="tentangPeserta">
+                                <span>Status pendaftaran</span>
+                                {option.flag_pendaftar && <b className="daftarLabel sudah--daftar">Sudah mendaftar</b>} 
+                                {!option.flag_pendaftar && <b className="daftarLabel belum--daftar">Belum mendaftar</b>}
+                              </div>
+                            </Col>
+                          </Row>
+                        </CardContent>
+                        <CardFooter>
+                          <Button raised fill disabled={option.flag_pendaftar ? true : (parseInt(option.tingkat_pendidikan_id) === 6 ? false : (parseInt(option.tingkat_pendidikan_id) === 9 ? false : true))} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
+                            <Icon f7="person_badge_plus" size="16px"></Icon> Daftarkan Peserta Didik
+                          </Button>
+                          <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}>
+                            {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))}
+                            {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
+                          </div>
+                        </CardFooter>
+                      </Card>
+                    )
+                  })}
+                </div>
               </div>
             </Tab>
             <Tab id="tab-2" className="page-content">

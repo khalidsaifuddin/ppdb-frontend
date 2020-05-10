@@ -192,7 +192,7 @@ class Beranda extends Component {
                 <div className="rekapItem rekap--zonasi">
                   <div className="rekapDesc">
                     <h4>Jalur Zonasi : <strong>17943</strong></h4>
-                    <h5>Pendaftar : 12682 <strong>(70.68%)</strong></h5>
+                    <h5><span>Pendaftar : <i>12682</i></span> <strong>(70.68%)</strong></h5>
                     <Progressbar color="black" progress={70.86}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>11539</strong></p>
@@ -206,7 +206,7 @@ class Beranda extends Component {
                 <div className="rekapItem rekap--afirmasi">
                   <div className="rekapDesc">
                     <h4>Jalur Afirmasi : <strong>269</strong></h4>
-                    <h5>Pendaftar : 248 <strong>(92.19%)</strong></h5>
+                    <h5><span>Pendaftar : <i>248</i></span> <strong>(92.19%)</strong></h5>
                     <Progressbar color="black" progress={92.19}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>208</strong></p>
@@ -220,7 +220,7 @@ class Beranda extends Component {
                 <div className="rekapItem rekap--prestasi">
                   <div className="rekapDesc">
                     <h4>Jalur Prestasi : <strong>101</strong></h4>
-                    <h5>Pendaftar : 34 <strong>(33.66%)</strong></h5>
+                    <h5><span>Pendaftar : <i>34</i></span> <strong>(33.66%)</strong></h5>
                     <Progressbar color="black" progress={33.66}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>34</strong></p>
@@ -234,7 +234,7 @@ class Beranda extends Component {
                 <div className="rekapItem rekap--ortu">
                   <div className="rekapDesc">
                     <h4>Jalur Perpindahan Ortu : <strong>26894</strong></h4>
-                    <h5>Pendaftar : 12217 <strong>(45.43%)</strong></h5>
+                    <h5><span>Pendaftar : <i>12217</i></span> <strong>(45.43%)</strong></h5>
                     <Progressbar color="black" progress={45.43}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>12216</strong></p>

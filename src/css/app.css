@@ -243,18 +243,6 @@
 }
 
 .gridMenu .link:hover {
-  display: flex;
-  width: 96px;
-  height: 96px;
-  margin-right: 1rem;
-  flex-direction: column;
-  overflow: hidden;
-  font-size: .75rem;
-  border-radius: .25rem;
-  font-weight: 600;
-  background: #ffffff;
-  position: relative;
-  color: #1e1e1e;
   box-shadow: 0 0 10px #007aff24;
   border: 1px solid #007aff29;
 }
@@ -324,6 +312,8 @@
   font-weight: 400;
   color: #ffffffdb;
 }
+
+.rekapitulasiProgres .rekapItem .rekapDesc h5 span i { font-style: normal; }
 
 .rekapitulasiProgres .rekapItem .rekapDesc .progressbar { background-color: #ffffff; }
 
@@ -604,16 +594,198 @@
   min-height: 35px;
 }
 
-.pencarianSekolah {
-
+.daftarPeserta {
+  position: relative;
+  width: 100%;
 }
 
-.pencarianSekolah .card {
-  
+.daftarPeserta .card {
+  overflow: hidden;
+  margin: 0 0 1rem;
 }
 
-.pencarianSekolah .card .card-content {
-  
+.daftarPeserta .card:last-child { margin: 0; }
+
+.daftarPeserta .card .card-header {
+  min-height: auto;
+  height: auto;
+  padding: .5rem 1rem;
+  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(239,246,249,1) 0%, rgba(206,239,253,1) 90%);
+}
+
+.daftarPeserta .card .card-header:after {
+  content: '';
+  display: none;
+}
+
+.daftarPeserta .card .card-header a { font-size: 1rem; }
+
+.daftarPeserta .card .card-header a i {
+  background-color: #ffffff;
+  color: #0084ff;
+  padding: .375rem;
+  border-radius: 50%;
+  margin-right: .375rem;
+  box-shadow: 0px 2px 5px #007aff2b;
+}
+
+.daftarPeserta .card .card-header a h3 { margin: 0; }
+
+.daftarPeserta .card .card-header a h3 span {
+  color: #007aff;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: .125rem;
+}
+
+.daftarPeserta .card .card-content { padding: 1rem; }
+
+.daftarPeserta .card .card-content .tentangPeserta {
+  display: flex;
+  line-height: 1.6;
+}
+
+.daftarPeserta .card .card-content .tentangPeserta > span {
+  position: relative;
+  min-width: 130px;
+}
+
+.daftarPeserta .card .card-content .tentangPeserta > span::after {
+  content: ':';
+  display: inline-block;
+  position: absolute;
+  right: 6px;
+}
+
+.daftarPeserta .card .card-content .tentangPeserta .daftarLabel {
+  display: inline-block;
+  padding: 0 .625rem;
+  border-radius: .25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  max-width: 140px;
+  width: 100%;
+  text-align: center;
+}
+
+.daftarPeserta .card .card-content .tentangPeserta .daftarLabel.sudah--daftar {
+  background-color: #008758;
+  color: #fff;
+  box-shadow: 4px 4px 10px #00875840;
+}
+
+.daftarPeserta .card .card-content .tentangPeserta .daftarLabel.belum--daftar {
+  background-color: #eee;
+  color: #7e7e7e;
+  box-shadow: 4px 4px 10px #eeeeee40;
+}
+
+.daftarPeserta .card .card-footer {
+  position: static;
+  min-height: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.daftarPeserta .card .card-footer:before {
+  content: '';
+  display: none;
+}
+
+.daftarPeserta .card .card-footer .button {
+  position: absolute;
+  top: 9px;
+  right: 16px;
+}
+
+.daftarSekolah {
+  position: relative;
+  width: 100%;
+}
+
+.daftarSekolah .card {
+  overflow: hidden;
+  margin: 0 0 1rem;
+}
+
+.daftarSekolah .card:last-child { margin: 0; }
+
+.daftarSekolah .card .card-content {
+  padding: 0;
+  display: flex;
+}
+
+.daftarSekolah .card .card-content .gambarSekolah {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  width: 148px;
+  height: 148px;
+  display: block;
+  position: relative;
+  min-width: 148px;
+}
+
+.daftarSekolah .card .card-content .gambarSekolah img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.daftarSekolah .card .card-content .tentangSekolah {
+  width: 100%;
+  padding: .75rem 1rem;
+}
+
+.daftarSekolah .card .card-content .tentangSekolah h3 {
+  margin: 0 0 .25rem 0;
+  display: block;
+  min-height: 29px;
+  line-height: 29px;
+}
+
+.daftarSekolah .card .card-content .tentangSekolah h3 span { margin-right: .25rem; }
+
+.daftarSekolah .card .card-content .tentangSekolah .keteranganSekolah {
+  display: flex;
+  line-height: 1.6;
+}
+
+.daftarSekolah .card .card-content .tentangSekolah .keteranganSekolah > span {
+  position: relative;
+  min-width: 90px;
+}
+
+.daftarSekolah .card .card-content .tentangSekolah .keteranganSekolah > span::after {
+  content: ':';
+  display: inline-block;
+  position: absolute;
+  right: 6px;
+}
+
+.daftarSekolah .card .card-footer {
+  position: static;
+  min-height: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.daftarSekolah .card .card-footer:before {
+  content: '';
+  display: none;
+}
+
+.daftarSekolah .card .card-footer .button {
+  position: absolute;
+  top: 11px;
+  right: 16px;
 }
 
 .onlyOnDesktop { display: block !important; }
@@ -641,10 +813,128 @@
 
   .rekapitulasiProgres { margin-top: 8px; }
 
+  .rekapitulasiProgres .rekapItem { padding: .625rem; }
+
+  .rekapitulasiProgres .rekapItem .rekapDesc h4 { font-size: .75rem; }
+
+  .rekapitulasiProgres .rekapItem .rekapDesc h5 { align-items: flex-end; }
+
+  .rekapitulasiProgres .rekapItem .rekapDesc h5 span i { display: block; }
+
   .rekapitulasiProgres .rekapItem .bgIcon {
     width: 115px;
     bottom: 10px;
     opacity: .05;
     transform: scale(1.25);
+  }
+
+  .formRegisterWidget { display: none; }
+
+  .riwayatPencarian {
+    padding: .5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .riwayatPencarian .daftarRiwayat { margin-top: .5rem; }
+
+  .riwayatPencarian .daftarRiwayat a:first-child { margin-left: 0; }
+
+  .daftarPeserta .card .card-header { padding: .5rem .75rem; }
+
+  .daftarPeserta .card .card-header a {
+    font-size: .875rem;
+    line-height: 1.2;
+  }
+
+  .daftarPeserta .card .card-header a h3 { font-size: .875rem; }
+
+  .daftarPeserta .card .card-header a h3 b { display: block; }
+
+  .daftarPeserta .card .card-content { padding: .75rem; }
+  
+  .daftarPeserta .card .card-content .tentangPeserta { font-size: .8125rem; }
+
+  .daftarPeserta .card .card-content .tentangPeserta > span { min-width: 125px; }
+
+  .daftarPeserta .card .card-footer {
+    position: relative;
+    padding: 0 .75rem .75rem;
+  }
+
+  .daftarSekolah .card .card-content .gambarSekolah {
+    overflow: hidden;
+    width: 42px;
+    height: 42px;
+    display: block;
+    position: absolute;
+    min-width: 42px;
+    top: 5px;
+    left: 12px;
+    z-index: 2;
+    box-shadow: none;
+    border: none;
+    border-radius: 50%;
+  }
+
+  .daftarSekolah .card .card-content .gambarSekolah img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .daftarSekolah .card .card-content .tentangSekolah { padding: 0; }
+
+  .daftarSekolah .card .card-content .tentangSekolah .link {
+    padding-left: 64px;
+    width: 100%;
+    background-color: #007aff;
+    background-image: radial-gradient(circle farthest-corner at 84.6% 77.8%, rgba(86,89,218,1) 0%, rgba(95,208,248,1) 90%);
+    justify-content: flex-start;
+    color: #fff;
+    min-height: 52px;
+    font-size: .875rem;
+  }
+
+  .daftarSekolah .card .card-content .tentangSekolah h3 {
+    font-size: .875rem;
+    margin: 0;
+    display: block;
+    min-height: auto;
+    line-height: 1.2;
+  }
+
+  .daftarSekolah .card .card-content .tentangSekolah h3 span {
+    margin-right: 0;
+    display: block;
+  }
+
+  .daftarSekolah .card .card-content .tentangSekolah .row { padding: .5rem .75rem; }
+
+  .daftarPeserta .card .card-footer .button {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .daftarSekolah .card .card-footer {
+    position: relative;
+    padding: 0 .75rem .75rem;
+  }
+
+  .daftarSekolah .card .card-footer .button {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
   }
 }
