@@ -303,7 +303,7 @@ class tambahBerkas extends Component {
                 </Segmented>
 
                 <Row noGap>
-                    {this.state.routeParams.jalur_id === '0100' && this.state.routeParams.jalur_id === '0200' && this.state.routeParams.jalur_id === '0400' &&
+                    {/* {this.state.routeParams.jalur_id === '0100' && this.state.routeParams.jalur_id === '0200' && this.state.routeParams.jalur_id === '0400' && */}
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -343,7 +343,7 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
+                    {/* // } */}
                     {this.state.routeParams.jalur_id === '0100' &&
                     <Col width="100" tabletWidth="50">
                         <Card>

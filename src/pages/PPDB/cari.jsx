@@ -286,7 +286,7 @@ class cari extends Component {
                                             </Button>
                                             <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}>
                                                 {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))}
-                                                {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya oleh pengguna lain</>))}
+                                                {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
                                             </div>
                                         </CardFooter>
                                     </Card>

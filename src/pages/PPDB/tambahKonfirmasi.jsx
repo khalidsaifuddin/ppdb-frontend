@@ -94,7 +94,7 @@ class tambahKonfirmasi extends Component {
                         calon_peserta_didik: this.props.calon_peserta_didik.rows[0]
                     },()=>{
                         this.props.getKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
-                            if(result.payload.rows[0].status !== 1){
+                            if(result.payload.count < 1){
                                 //belum konfirmasi
                                 this.setState({
                                     disableButton: false,
@@ -102,10 +102,21 @@ class tambahKonfirmasi extends Component {
                                 })
                             }else{
                                 //sudah konfirmasi
-                                this.setState({
-                                    disableButton: true,
-                                    tampilTerimaKasih: 'block'
-                                });
+
+                                if(result.payload.rows[0].status !== 1){
+                                    //belum konfirmasi
+                                    this.setState({
+                                        disableButton: false,
+                                        tampilTerimaKasih: 'none'
+                                    })
+                                }else{
+                                    //sudah konfirmasi
+                                    this.setState({
+                                        disableButton: true,
+                                        tampilTerimaKasih: 'block'
+                                    });
+                                }
+
                             }
                         });
                     })
@@ -165,7 +176,7 @@ class tambahKonfirmasi extends Component {
                     //konfirmasi
                 }else{
                     //simpan draft
-                    this.$f7router.navigate("/daftarPendaftar");
+                    this.$f7router.navigate("/Daftar/");
                 }
             });
         });

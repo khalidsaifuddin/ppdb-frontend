@@ -98,28 +98,48 @@ class tambahCalonPesertaDidik extends Component {
                             ...this.state.routeParams,
                             ...this.props.calon_peserta_didik.rows[0]
                         },
+                        disabledInput: false,
                         sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal,
-                        smartSelectJenisKelamin: (<ListItem
-                            title={"Jenis_Kelamin"}
-                            smartSelect
-                            smartSelectParams={{
-                                openIn: 'sheet', 
-                                closeOnSelect: true, 
-                                // setValueText:true,
-                                // formatValueText: (values)=>{
-                                //     // return (<h1>haha</h1>)
-                                //     console.log(this.state.routeParams.jenis_kelamin);
-                                //     return [this.state.routeParams.jenis_kelamin];
-                                // }
-                            }}
-                        >
-                            <select name="jenis_kelamin" value={this.props.calon_peserta_didik.rows[0].jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
-                                <option disabled value={"0"}>-</option>
-                                <option value={"L"}>Laki-laki</option>
-                                <option value={"P"}>Perempuan</option>
-                                
-                            </select>
-                        </ListItem>)
+                        smartSelectJenisKelamin: (
+                            <ListItem
+                                title={"Jenis_Kelamin"}
+                                smartSelect
+                                smartSelectParams={{
+                                    openIn: 'sheet', 
+                                    closeOnSelect: true, 
+                                    // setValueText:true,
+                                    // formatValueText: (values)=>{
+                                    //     // return (<h1>haha</h1>)
+                                    //     console.log(this.state.routeParams.jenis_kelamin);
+                                    //     return [this.state.routeParams.jenis_kelamin];
+                                    // }
+                                }}
+                            >
+                                <select name="jenis_kelamin" value={this.props.calon_peserta_didik.rows[0].jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
+                                    <option disabled value={"0"}>-</option>
+                                    <option value={"L"}>Laki-laki</option>
+                                    <option value={"P"}>Perempuan</option>
+                                    
+                                </select>
+                            </ListItem>
+                        )
+                        // ,smartSelectProvinsi: (
+                        //     <ListItem
+                        //         title={"Provinsi"}
+                        //         smartSelect
+                        //         disabled={false}
+                        //         smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
+                        //     >
+                        //         <select name="kode_wilayah_provinsi" defaultValue={"050000"} onChange={this.setSelectValue('kode_wilayah_provinsi')}>
+                        //             <option disabled value={"0"}>-</option>
+                        //             {this.state.provinsi.rows.map((optionProvinsi)=>{
+                        //                 return (
+                        //                     <option value={optionProvinsi.kode_wilayah.trim()}>{optionProvinsi.nama}</option>
+                        //                 )
+                        //             })}
+                        //         </select>
+                        //     </ListItem>
+                        // )
                     },()=>{
                         // console.log(this.state.routeParams);
                     });
@@ -277,7 +297,8 @@ class tambahCalonPesertaDidik extends Component {
         // console.log(e.target.value);
         this.setState({
             routeParamsCek: {
-                nik: e.target.value
+                nik: e.target.value,
+                calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null
             }
         },()=>{
             this.props.cekNik(this.state.routeParamsCek).then((result)=>{
@@ -348,6 +369,17 @@ class tambahCalonPesertaDidik extends Component {
                                         disabled={this.state.disabledInput}
                                     />
                                     
+                                    <ListInput
+                                        label="NISN"
+                                        type="text"
+                                        placeholder="NISN Calon Peserta Didik ..."
+                                        info="Sesuai Ijazah"
+                                        clearButton
+                                        onChange={this.setFieldValue('nisn')}
+                                        defaultValue={this.state.routeParams.nisn}
+                                        disabled={this.state.disabledInput}
+                                    />
+                                    
                                     {this.state.smartSelectJenisKelamin}
                                     {/* <ListItem
                                         title={"Jenis_Kelamin"}
@@ -390,7 +422,7 @@ class tambahCalonPesertaDidik extends Component {
                                         defaultValue={this.state.routeParams.tanggal_lahir}
                                         disabled={this.state.disabledInput}
                                     />
-
+                                    {/* {this.state.smartSelectProvinsi} */}
                                     <ListItem
                                         title={"Provinsi"}
                                         smartSelect

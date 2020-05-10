@@ -506,3 +506,13 @@
 
   .rekapitulasiProgres { margin-top: 8px; }
 }
+
+.daftarSekolah .item-content {
+  min-height: 35px;
+}
+
+.daftarSekolah .item-content .item-inner {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  min-height: 35px;
+}
