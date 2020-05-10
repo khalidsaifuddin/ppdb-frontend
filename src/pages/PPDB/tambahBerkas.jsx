@@ -295,7 +295,7 @@ class tambahBerkas extends Component {
                         Tambah Peserta Didik
                     </NavTitleLarge>
                 </Navbar>
-                <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '8px', marginBottom: '8px'}}>
+                <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
                     <Button style={{borderRadius:'20px 50px 50px 20px'}}>Identitas Peserta Didik</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}}>Jalur dan Pilihan Sekolah</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}} tabLinkActive>Kelengkapan Berkas</Button>
@@ -549,7 +549,7 @@ class tambahBerkas extends Component {
                         </Card>
                     </Col>
                     }
-                    <Col width="100" style={{padding:'8px'}}>
+                    <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
                         <Button raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
                             Simpan dan Lanjutkan
                         </Button>
