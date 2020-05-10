@@ -152,6 +152,9 @@ class app extends Component {
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                     <i slot="media" className="f7-icons">doc_plaintext</i>
                   </ListItem>
+                  <ListItem link="/detailCalonpdSekolah/" view=".view-main" panelClose panel-close title="Calon PD Sekolah">
+                    <i slot="media" className="f7-icons">building_2_fill</i>
+                  </ListItem>
                   <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
