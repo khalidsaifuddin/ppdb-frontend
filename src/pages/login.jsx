@@ -1,26 +1,11 @@
 import React, {Component} from 'react';
 import {
   Page,
-  Navbar,
-  NavLeft,
-  NavTitle,
-  NavTitleLarge,
-  NavRight,
-  Link,
-  Toolbar,
   Block,
-  BlockTitle,
   List,
-  ListItem,
-  Row,
-  Col,
   Button,
-  Searchbar,
-  View,
   LoginScreenTitle,
   ListInput,
-  ListButton,
-  BlockFooter,
   Progressbar
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
