@@ -13,7 +13,7 @@ class DetailcalonpdSekolah extends Component {
         loading: false,
         routeParams:{
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-            searchText : '20520603',
+            searchText : '',
         }
     }
 
