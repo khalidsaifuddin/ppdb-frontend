@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, NavLeft, NavRight
+    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, NavLeft, NavRight, Fab
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
@@ -174,33 +174,33 @@ class petaPD extends Component {
                         </Button>
                     </NavRight>
                 </Navbar>
-
                 {/* <Row noGap> */}
                     {/* <Col width="100" tabletWidth="100" style={{marginTop:'60px', paddingLeft:'10px'}}>
                         Untuk menentukan posisi koordinat rumah Anda, silakan klik titik pada peta
                     </Col> */}
                     {/* <Col width="100" tabletWidth="100"> */}
-                        <Map 
-                            style={{
-                                // paddingBottom: "5%",
-                                height: this.props.window_dimension.height,
-                                width: "100%",
-                                marginTop:'10px',
-                                cursor: 'pointer'
-                            }} 
-                            center={position} zoom={this.state.zoom}
-                            onLocationfound={this.handleLocationFound}
-                            onClick={this.klikPeta}
-                        >
-                            <TileLayer
-                            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                            url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-                            <Marker position={position}>
-                                <Popup>
-                                    Posisi Rumah PD
-                                </Popup>
-                            </Marker>
-                        </Map>
+                <Map 
+                    style={{
+                        // paddingBottom: "5%",
+                        height: this.props.window_dimension.height,
+                        width: "100%",
+                        marginTop:'10px',
+                        cursor: 'pointer'
+                    }} 
+                    center={position} zoom={this.state.zoom}
+                    onLocationfound={this.handleLocationFound}
+                    onClick={this.klikPeta}
+                >
+                    <TileLayer
+                    attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                    url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                    <Marker position={position}>
+                        <Popup>
+                            Posisi Rumah PD
+                        </Popup>
+                    </Marker>
+                </Map>
+                <Fab style={{width:'80%'}} position="center-bottom" slot="fixed" text={"Klik peta untuk menentukan posisi rumah PD"} color="blue" />
                     {/* </Col> */}
                 {/* </Row> */}
             </Page>

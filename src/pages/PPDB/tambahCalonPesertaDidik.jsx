@@ -214,7 +214,7 @@ class tambahCalonPesertaDidik extends Component {
                         //     </ListItem>
                         // )
                     },()=>{
-                        // console.log(this.state.routeParams);
+                        console.log(this.state.sekolah_terpilih);
                         // let marker = new L.Marker([this.state.routeParams.lintang, this.state.routeParams.bujur], {icon:redMarker, draggable:false});
                         // // let marker = new L.Marker([element.lintang, element.bujur], {icon:redMarker, draggable:false}).bindPopup( popup );
                         // markerClusters.addLayer( marker );

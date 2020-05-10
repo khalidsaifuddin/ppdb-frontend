@@ -70,16 +70,25 @@ class DaftarPendaftaran extends Component {
                 <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Daftar Pendaftaran</Block>
                 
                 {this.props.entities.rows.map((option, key)=>{
+
+                    // let sekolah_asal = '';
+
+                    // if(option.sekolah_asal.length > 0){
+                    //     sekolah_asal = option.sekolah_asal.nama;
+                    // }
+
+                    console.log(option.sekolah_asal);
+
                     return (
 
                         <Card className="demo-card-header-pic" key={key}>
                             <CardContent>
                                 <Row>
-                                    <Col width="20" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
+                                    <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
                                         {/* <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'150px', minHeight:'150px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img>  */}
                                         <img src={(option.pas_foto.search("assets") !== -1 ? localStorage.getItem("api_base")+option.pas_foto : option.pas_foto)} style={{maxHeight:'120px', minHeight:'120px', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
                                     </Col>
-                                    <Col width="80" tabletWidth="85">
+                                    <Col width="70" tabletWidth="85">
                                         <Row noGap>
                                             <Col width="100">
                                                 <a href={"/ProfilSekolah/"+ option.sekolah_id}>
@@ -91,10 +100,9 @@ class DaftarPendaftaran extends Component {
                                             <Col width="100" tabletWidth="40">
                                                 NIK: <b>{option.nik}</b> <br/>
                                                 Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
-                                                Tempat Lahir: <b>{ option.tempat_lahir }</b> <br/>
-                                                Tanggal Lahir: <b>{ option.tanggal_lahir }</b> <br/>
-                                                Alamat Tempat Tinggal: <b>{ option.alamat_tempat_tinggal }, {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b> <br/>
-                                                Sekolah Asal: <b>{ option.sekolah_asal }</b> <br/>
+                                                TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
+                                                Alamat: <b>{ option.alamat_tempat_tinggal }, {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b> <br/>
+                                                Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                             </Col>
                                             <Col width="100" tabletWidth="60">
                                                 {/* <div className="data-table card">
