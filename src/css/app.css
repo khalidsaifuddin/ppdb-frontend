@@ -1,9 +1,5 @@
-/* iOS Cordova Tweak */
-.device-cordova.device-ios {
-  height: 100vh;
-}
+.device-cordova.device-ios { height: 100vh; }
 
-/* Left Panel right border when it is visible by breakpoint */
 .panel-left.panel-visible-by-breakpoint:before {
   position: absolute;
   right: 0;
@@ -15,14 +11,8 @@
   z-index: 6000;
 }
 
-/* Hide navbar link which opens left panel when it is visible by breakpoint */
-.panel-left.panel-visible-by-breakpoint ~ .view .navbar .panel-open[data-panel="left"] {
-  display: none;
-}
+.panel-left.panel-visible-by-breakpoint ~ .view .navbar .panel-open[data-panel="left"] { display: none; }
 
-/*
-  Extra borders for main view and left panel for iOS theme when it behaves as panel (before breakpoint size)
-*/
 .ios .panel-left:not(.panel-visible-by-breakpoint).panel-active ~ .view-main:before,
 .ios .panel-left:not(.panel-visible-by-breakpoint).panel-closing ~ .view-main:before {
   position: absolute;
@@ -91,19 +81,13 @@
 .hilangDiMobile { display: block; }
 
 @media only screen and (max-width: 960px) {
-  .mobileTab {
-    display: block;
-  }
+  .mobileTab { display: block; }
 }
 
 @media only screen and (max-width: 768px) {
-  .hilangDiDesktop{
-    display: block;
-  }
+  .hilangDiDesktop{ display: block; }
 
-  .hilangDiMobile{
-    display: none;
-  }
+  .hilangDiMobile{ display: none; }
 }
 
 .MenuDetail > .menu-item-content {
@@ -112,24 +96,24 @@
   border-radius: 6px;
 }
 
-.pagination{
+.pagination {
   display: flex;
   list-style: none;
-  border:0px solid #ccc;
-  background:white;
+  border: 0px solid #ccc;
+  background: white;
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-bottom:0px;
-  right:0px;
+  margin-bottom: 0px;
+  right: 0px;
   padding-left: 8px;
 }
 
 .pagination li {
   display: inline-block;
-  border:0px solid #ccc;
+  border: 0px solid #ccc;
   width: 15px;
   height: 15px;
-  padding:8px;
+  padding: 8px;
   text-align: center;
 }
 
@@ -185,6 +169,7 @@
 .mainMenu .navbar .navbar-inner .title {
   text-transform: uppercase;
   left: 0 !important;
+  color: #125034;
 }
 
 .mainMenu .navbar .navbar-inner img {
@@ -468,7 +453,7 @@
   padding: 1rem;
   border-radius: .625rem;
   position: absolute;
-  bottom: 40px;
+  bottom: 16px;
   left: 0;
   right: 0;
 }
@@ -816,6 +801,66 @@
   top: 11px;
   right: 16px;
 }
+
+.steps {
+  padding: 0;
+  overflow: hidden;
+}
+
+.steps .button {
+  margin-left: 0;
+  width: 25%;
+  height: 40px;
+  padding: 5px 5px 5px 30px;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+  overflow: visible;
+  box-shadow: none;
+  border: none !important;
+}
+
+.steps .button:first-child { padding-left: 5px; }
+
+.steps .button:nth-child(n+2)::before {
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  display: block;
+  border-left: 25px solid #f0f0f2;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  width: 0;
+  height: 0;
+  transition: all .3s ease-in-out;
+}
+
+.steps .button::after {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: -25px;
+  display: block;
+  border-left: 25px solid #7c8437;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  width: 0;
+  height: 0;
+  transition: all .3s ease-in-out;
+}
+
+.steps .button { background-color: #ebebeb; }
+
+.steps .button::after { border-left-color: #ebebeb; }
+
+.steps .button.tab-link-active { background-color: #673ab7; }
+
+.steps .button.tab-link-active::after { border-left-color: #673ab7; }
+
+.steps .button:hover { background-color: #9c27b0; }
+
+.steps .button:hover::after { border-left-color: #9c27b0; }
 
 .loginPage {
   width: 100%;
