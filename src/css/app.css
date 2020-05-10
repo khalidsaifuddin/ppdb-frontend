@@ -277,10 +277,23 @@
 }
 
 .rekapitulasiProgres .rekapItem {
+  overflow: hidden;
+  position: relative;
   padding: .875rem;
   background-color: #2196f31f;
   margin-bottom: 1rem;
   border-radius: .25rem;
+}
+
+.rekapitulasiProgres .rekapItem .bgIcon {
+  position: absolute;
+  width: 128px;
+  right: -16px;
+  bottom: -32px;
+  z-index: 1;
+  opacity: .1;
+  transform: scale(1.5);
+  pointer-events: none;
 }
 
 .rekapitulasiProgres .rekapItem .rekapDesc {
@@ -289,6 +302,7 @@
 }
 
 .rekapitulasiProgres .rekapItem .rekapDesc h4 {
+  color: #ffffff;
   margin-top: 0;
   margin-bottom: .25rem;
   font-size: .875rem;
@@ -308,8 +322,10 @@
   justify-content: space-between;
   font-size: .75rem;
   font-weight: 400;
-  color: #595959;
+  color: #ffffffdb;
 }
+
+.rekapitulasiProgres .rekapItem .rekapDesc .progressbar { background-color: #ffffff; }
 
 .rekapitulasiProgres .rekapItem .rekapDesc .rekapAction {
   display: flex;
@@ -322,32 +338,16 @@
   margin-bottom: 0;
   margin-top: 0;
   font-size: .875rem;
-  color: #000;
+  color: #fefefe;
 }
 
-.rekapitulasiProgres .rekapItem.blue { background-color: #778fa312; }
+.rekapitulasiProgres .rekapItem.rekap--zonasi { background-image: radial-gradient(circle farthest-corner at 5.2% 14.3%,  rgba(255,73,18,1) 0%, rgba(235,118,36,1) 47.4%, rgba(235,69,69,1) 100.2%); }
 
-.rekapitulasiProgres .rekapItem.blue .rekapDesc h4 { color: #2196f3; }
+.rekapitulasiProgres .rekapItem.rekap--afirmasi { background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(15,213,172,1) 0%, rgba(34,182,198,1) 100.2%); }
 
-.rekapitulasiProgres .rekapItem.red { background-color: #ff3b3012; }
+.rekapitulasiProgres .rekapItem.rekap--prestasi { background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(228,118,0,1) 0%, rgba(247,189,2,1) 90%); }
 
-.rekapitulasiProgres .rekapItem.red .rekapDesc h4 { color: #ff3b30; }
-
-.rekapitulasiProgres .rekapItem.pink { background-color: #ff2d5512; }
-
-.rekapitulasiProgres .rekapItem.pink .rekapDesc h4 { color: #ff2d55; }
-
-.rekapitulasiProgres .rekapItem.green { background-color: #4cd96412; }
-
-.rekapitulasiProgres .rekapItem.green .rekapDesc h4 { color: #4cd964; }
-
-.rekapitulasiProgres .rekapItem.deeppurple { background-color: #673ab712; }
-
-.rekapitulasiProgres .rekapItem.deeppurple .rekapDesc h4 { color: #673ab7; }
-
-.rekapitulasiProgres .rekapItem.orange { background-color: #ff950012; }
-
-.rekapitulasiProgres .rekapItem.orange .rekapDesc h4 { color: #ff9500; }
+.rekapitulasiProgres .rekapItem.rekap--ortu { background-image: radial-gradient(circle 997px at 5.8% 11.8%,  rgba(0,201,235,1) 0%, rgba(145,0,228,1) 90%); }
 
 .pelaksanaanPpdb {
   margin: 0;
@@ -373,7 +373,12 @@
   flex-direction: column;
   align-items: flex-start;
   font-weight: 700;
-  padding: .75rem;
+  padding: .875rem .75rem;
+}
+
+.jadwalPpdb .card .card-header:after {
+  content: '';
+  display: none;
 }
 
 .jadwalPpdb .card .card-header .subHeader {
@@ -398,7 +403,7 @@
 }
 
 .jadwalPpdb .card .card-content {
-  padding: .5rem .75rem;
+  padding: 0 .5rem .75rem;
   background-color: #ff9f1c08;
 }
 
@@ -415,20 +420,20 @@
   margin: .25rem;
   font-size: 1.125rem;
   font-weight: 700;
-  background-color: #ffffff2b;
-  color: #515151;
+  background-color: #ff9f1c;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: .4rem;
-  box-shadow: -4px 4px 10px #00000012;
+  box-shadow: -2px 2px 0 1px #e88c0d;
 }
 
 .jadwalPpdb .card .card-content .jadwalCountdown .jadwalItem span {
   display: block;
   font-size: .875rem;
   font-weight: 400;
-  margin-left: .375rem;
+  margin-left: .25rem;
 }
 
 .jadwalPpdb .media-list {
@@ -481,6 +486,136 @@
   box-shadow: none;
 }
 
+.riwayatPencarian {
+  display: flex;
+  margin: 44px 0 0 0;
+  padding: .75rem 1rem;
+  background-color: #fff;
+  position: relative;
+  align-items: center;
+}
+
+.riwayatPencarian span {
+  display: block;
+  min-width: 120px;
+}
+
+.riwayatPencarian .daftarRiwayat {
+  display: block;
+  width: 100%;
+}
+
+.riwayatPencarian .daftarRiwayat a {
+  display: inline-block;
+  padding: .125rem .625rem;
+  background-color: #eee;
+  border-radius: .25rem;
+  color: #444;
+  margin-left: .25rem;
+  border: 1px solid #e0e0e0;
+}
+
+.riwayatPencarian .hapusRiwayat {
+  position: absolute;
+  right: 1rem;
+}
+
+.daftarPencarian {
+  margin: 0;
+  padding: 1rem;
+}
+
+.daftarPencarian .tabs {
+  height: auto;
+  margin-top: 1.5rem;
+}
+
+.daftarPencarian .tabs > .tab {
+  padding: 0;
+  height: auto;
+}
+
+.daftarPencarian .tabs > .tab .block-title {
+  margin: 0 0 1rem;
+}
+
+.daftarPencarian .tabs > .tab .demo-card-header-pic {
+  margin: 0 0 .5rem;
+}
+
+.daftarPencarian .tabs > .tab .demo-card-header-pic:last-child { margin: 0; }
+
+.title-large {
+  background-color: transparent !important;
+}
+
+.title-large .title-large-text {
+  font-size: 1.5rem;
+}
+
+.navbar .title-large:after {
+  content: '';
+  display: none !important;
+}
+
+.pageWithTitle {
+  margin: 53px 0 0 0;
+  padding: .25rem 1rem 1rem;
+}
+
+.pageWithTitle .segmented {
+  margin-bottom: 1rem;
+}
+
+.pageWithTitle .card {
+  position: relative;
+  margin: 0 0 1rem 0;
+  box-shadow: none;
+}
+
+.pageWithTitle .card:last-child { margin: 0; }
+
+.pageWithTitle .card .card-header {
+  background-color: #ff9f1c;
+  color: #fff;
+  font-weight: 600;
+  padding: .5rem 1rem;
+  min-height: auto;
+}
+
+.pageWithTitle .card .card-header:after {
+  content: '';
+  display: none;
+}
+
+.simpanFormulir {
+  margin: 1rem 0 0;
+  padding: 0;
+  width: 100%;
+}
+
+.daftarSekolah .item-content {
+  min-height: 35px;
+}
+
+.daftarSekolah .item-content .item-inner {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  min-height: 35px;
+}
+
+.pencarianSekolah {
+
+}
+
+.pencarianSekolah .card {
+  
+}
+
+.pencarianSekolah .card .card-content {
+  
+}
+
 .onlyOnDesktop { display: block !important; }
 
 .onlyOnMobile { display: none !important; }
@@ -505,14 +640,11 @@
   }
 
   .rekapitulasiProgres { margin-top: 8px; }
-}
 
-.daftarSekolah .item-content {
-  min-height: 35px;
-}
-
-.daftarSekolah .item-content .item-inner {
-  padding-top: 0px;
-  padding-bottom: 0px;
-  min-height: 35px;
+  .rekapitulasiProgres .rekapItem .bgIcon {
+    width: 115px;
+    bottom: 10px;
+    opacity: .05;
+    transform: scale(1.25);
+  }
 }

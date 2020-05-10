@@ -73,10 +73,6 @@ class Beranda extends Component {
       this.$f7router.navigate('/login/');
     }
 
-    // if(localStorage.getItem('current_url') !== '' && localStorage.getItem('current_url')) {
-    //   this.$f7router.navigate(localStorage.getItem('current_url'))
-    // }
-
     localStorage.setItem('current_url', '/');
 
     let socket = io(localStorage.getItem('socket_url'));
@@ -84,7 +80,7 @@ class Beranda extends Component {
     socket.on('updateUserList', (users) => {
       this.setState({
         users
-      },()=>{
+      }, ()=> {
         console.log(this.state.users);
       });
     });
@@ -95,7 +91,7 @@ class Beranda extends Component {
           pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
           dibaca: "1",
         }
-      },()=> {
+      }, ()=> {
         this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
           this.setState({
             notifikasi: this.props.notifikasi,
@@ -110,7 +106,7 @@ class Beranda extends Component {
   }
 
   render() {
-    const Completionist = () => <span>You are good to go!</span>;
+    const Completionist = () => <span>Kegiatan akan segera dimulai!</span>;
     
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
       if (completed) {
@@ -193,55 +189,59 @@ class Beranda extends Component {
             <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
             <Row>
               <Col width="50" tabletWidth="25">
-                <div className="rekapItem blue">
+                <div className="rekapItem rekap--zonasi">
                   <div className="rekapDesc">
                     <h4>Jalur Zonasi : <strong>17943</strong></h4>
                     <h5>Pendaftar : 12682 <strong>(70.68%)</strong></h5>
-                    <Progressbar color="blue" progress={70.86}></Progressbar>
+                    <Progressbar color="black" progress={70.86}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>11539</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="gray"></Icon></Link>
+                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
                     </div>
                   </div>
+                  <img className="bgIcon" src="./static/images/icons/zonasi.svg" alt="zonasi"/>
                 </div>
               </Col>
               <Col width="50" tabletWidth="25">
-                <div className="rekapItem red">
+                <div className="rekapItem rekap--afirmasi">
                   <div className="rekapDesc">
                     <h4>Jalur Afirmasi : <strong>269</strong></h4>
                     <h5>Pendaftar : 248 <strong>(92.19%)</strong></h5>
-                    <Progressbar color="red" progress={92.19}></Progressbar>
+                    <Progressbar color="black" progress={92.19}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>208</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="gray"></Icon></Link>
+                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
                     </div>
                   </div>
+                  <img className="bgIcon" src="./static/images/icons/afirmasi.svg" alt="afirmasi"/>
                 </div>
               </Col>
               <Col width="50" tabletWidth="25">
-                <div className="rekapItem deeppurple">
+                <div className="rekapItem rekap--prestasi">
                   <div className="rekapDesc">
                     <h4>Jalur Prestasi : <strong>101</strong></h4>
                     <h5>Pendaftar : 34 <strong>(33.66%)</strong></h5>
-                    <Progressbar color="deeppurple" progress={33.66}></Progressbar>
+                    <Progressbar color="black" progress={33.66}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>34</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="gray"></Icon></Link>
+                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
                     </div>
                   </div>
+                  <img className="bgIcon" src="./static/images/icons/prestasi.svg" alt="prestasi"/>
                 </div>
               </Col>
               <Col width="50" tabletWidth="25">
-                <div className="rekapItem green">
+                <div className="rekapItem rekap--ortu">
                   <div className="rekapDesc">
                     <h4>Jalur Perpindahan Ortu : <strong>26894</strong></h4>
                     <h5>Pendaftar : 12217 <strong>(45.43%)</strong></h5>
-                    <Progressbar color="green" progress={45.43}></Progressbar>
+                    <Progressbar color="black" progress={45.43}></Progressbar>
                     <div className="rekapAction">
                       <p>Diterima : <strong>12216</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="gray"></Icon></Link>
+                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
                     </div>
                   </div>
+                  <img className="bgIcon" src="./static/images/icons/perpindahan-ortu.svg" alt="perpindahan ortu"/>
                 </div>
               </Col>
             </Row>
