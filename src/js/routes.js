@@ -24,11 +24,16 @@ import DataPendaftaran from '../pages/PPDB/dataPendaftaran';
 import petaPD from '../pages/PPDB/petaPD';
 import Detailcalonpdsekolah from '../pages/PPDB/detailcalonpdsekolah';
 import Detailcalonpdsiswa from '../pages/PPDB/detailcalonpdsiswa';
+import pilihKota from '../pages/PPDB/pilihKota';
 
 var routes = [
   {
     path: '/',
     component: Beranda,
+  },
+  {
+    path: '/pilihKota',
+    component: pilihKota
   },
   {
     path: '/Cari',

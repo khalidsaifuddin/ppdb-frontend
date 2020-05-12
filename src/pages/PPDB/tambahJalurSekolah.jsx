@@ -24,6 +24,8 @@ class tambahJalurSekolah extends Component {
             pekerjaan_id_wali: 98,
             jenis_kelamin: 'L',
             calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
+            kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+            id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
         },
         sekolah_terpilih: {
             sekolah_id: null,
@@ -110,7 +112,7 @@ class tambahJalurSekolah extends Component {
                                                     <Col width="65" style={{paddingLeft:'8px', paddingRight:'8px'}}>
                                                         <b style={{color:'green'}}>Sekolah Pilihan {parseInt(arrSekolah.indexOf(option.sekolah_id))+1}</b><br/>
                                                         <b>{option.nama} ({option.npsn})</b><br/>
-                                                        {option.alamat}<br/>
+                                                        {option.alamat}, {option.kecamatan}, {option.kabupaten}, {option.provinsi}<br/>
                                                         {parseInt(option.bentuk_pendidikan_id) === 5 ? 'SD' : (parseInt(option.bentuk_pendidikan_id) === 6 ? 'SMP' : (parseInt(option.bentuk_pendidikan_id) === 13 ? 'SMA' : (parseInt(option.bentuk_pendidikan_id) === 15 ? 'SMK' : '-')))}&nbsp;
                                                         {parseInt(option.status_sekolah) === 1 ? 'Negeri' : 'Swasta'}
                                                     </Col>
@@ -264,7 +266,9 @@ class tambahJalurSekolah extends Component {
         this.setState({
             routeParamsCariSekolah: {
                 searchText: e.currentTarget.value,
-                status_sekolah: 1
+                status_sekolah: 1,
+                kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+                id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
             }
         });
     }
@@ -370,12 +374,20 @@ class tambahJalurSekolah extends Component {
                         Tambah Peserta Didik
                     </NavTitleLarge>
                 </Navbar>
-                <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
+                {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
                     <Button style={{borderRadius:'20px 50px 50px 20px'}}>Identitas Peserta Didik</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}} tabLinkActive>Jalur dan Pilihan Sekolah</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}}>Kelengkapan Berkas</Button>
                     <Button style={{borderRadius:'0px 0px 0px 0px'}}>Konfirmasi</Button>
-                </Segmented>
+                </Segmented> */}
+                <Block className="pageWithTitle">
+                    <Segmented className="steps" raised>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Identitas Peserta Didik</Button>
+                        <Button tabLinkActive>Jalur dan Pilihan Sekolah</Button>
+                        <Button disabled>Kelengkapan Berkas</Button>
+                        <Button disabled>Konfirmasi</Button>
+                    </Segmented>
+                </Block>
 
                 <Row noGap>
                     <Col width="100" tabletWidth="100">
@@ -416,7 +428,7 @@ class tambahJalurSekolah extends Component {
                         </Button>
                     </Col>
                 </Row>
-                <Sheet opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'50%'}}>
+                <Sheet backdrop opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'50%'}}>
                 <Toolbar>
                     <div className="left"></div>
                     <div className="right">

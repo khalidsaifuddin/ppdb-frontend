@@ -19,6 +19,7 @@ export const GET_PENGGUNA = '[APP] GET PENGGUNA';
 export const SET_PENGGUNA = '[APP] SET PENGGUNA';
 export const BUAT_PENGGUNA = '[APP] BUAT PENGGUNA';
 export const GET_GEOJSON_BASIC = '[APP] GET GEOJSON BASIC';
+export const GET_WILAYAH_KLIEN = '[APP] GET WILAYAH_KLIEN';
 
 export function updateWindowDimension()
 {
@@ -291,6 +292,23 @@ export function getGeoJsonBasic(routeParams)
         request.then((response) =>
             dispatch({
                 type   : GET_GEOJSON_BASIC,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function getWilayahKlien(routeParams)
+{
+    const request = axios.post(localStorage.getItem('api_base')+'/api/app/getWilayahKlien', {
+        ...routeParams
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_WILAYAH_KLIEN,
                 payload: response.data,
                 routeParams
             })

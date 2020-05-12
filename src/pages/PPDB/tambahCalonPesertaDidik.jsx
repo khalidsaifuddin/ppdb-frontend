@@ -304,7 +304,7 @@ class tambahCalonPesertaDidik extends Component {
         [key]: e.target.value,
       }
     }, ()=> {
-      console.log(this.state.routeParams);
+      // console.log(this.state.routeParams);
     });
   }
     
@@ -331,6 +331,10 @@ class tambahCalonPesertaDidik extends Component {
     });
   }
 
+  cekNikEnter = (e) => {
+    // console.log(e);
+  }
+
   render() {
     return (
       <Page name="tambahCalonPesertaDidik" hideBarsOnScroll>
@@ -354,15 +358,23 @@ class tambahCalonPesertaDidik extends Component {
                   Identitas Calon Peserta Didik
                 </CardHeader>
                 <CardContent>
+                  <Button style={{width:'100px', position:'absolute',right:'0px', marginTop:'15px', marginRight:'15px', zIndex:'999999'}} onClick={this.cekNikEnter}>
+                    Cek NIK
+                  </Button>
                   <List>
                     <ListInput
                       label="Nomor Induk Kependudukan / NIK"
-                      type="text"
+                      // type="text"
+                      type="tel"
                       placeholder="Ketikkan NIK dan enter..."
                       clearButton
                       onChange={this.setFieldValue('nik')}
                       onBlur={this.cekNik}
-                      onSubmit={this.cekNik}
+                      // onInput={this.cekNikEnter}
+                      // onSubmit={this.cekNik}
+                      pattern="[0-9]*"
+                      validate
+                      errorMessage="Mohon hanya masukkan Angka!"
                       defaultValue={this.state.routeParams.nik}
                     >
                       <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNik}</b></span>
@@ -850,7 +862,7 @@ class tambahCalonPesertaDidik extends Component {
                 </Card>
             </Col>
             <Col width="100">
-              <Block className="simpanFormulir">
+              <Block className="simpanFormulir" style={{marginBottom:'40px'}}>
                 <Button disabled={this.state.disabledInput} raised fill large onClick={this.simpan}>
                   Simpan dan Lanjutkan
                 </Button>

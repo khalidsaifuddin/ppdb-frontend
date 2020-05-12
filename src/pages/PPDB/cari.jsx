@@ -32,7 +32,10 @@ class cari extends Component {
     this.state = {
       error: null,
       loading: false,
-      routeParams: {},
+      routeParams: {
+        kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+        id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
+      },
       pertanyaan: {
         rows: [],
         total: 0,
