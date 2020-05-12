@@ -196,12 +196,20 @@ class tambahKonfirmasi extends Component {
                         Tambah Peserta Didik
                     </NavTitleLarge>
                 </Navbar>
-                <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
+                {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
                     <Button style={{borderRadius:'20px 50px 50px 20px'}}>Identitas Peserta Didik</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}}>Jalur dan Pilihan Sekolah</Button>
                     <Button style={{borderRadius:'0px 50px 50px 0px'}}>Kelengkapan Berkas</Button>
                     <Button style={{borderRadius:'0px 0px 0px 0px'}} tabLinkActive>Konfirmasi</Button>
-                </Segmented>
+                </Segmented> */}
+                <Block className="pageWithTitle">
+                    <Segmented className="steps" raised>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Identitas Peserta Didik</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Jalur dan Pilihan Sekolah</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahBerkas/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Kelengkapan Berkas</Button>
+                        <Button tabLinkActive>Konfirmasi</Button>
+                    </Segmented>
+                </Block>
 
                 <Row noGap>
                     <Col width="100" tabletWidth="100">

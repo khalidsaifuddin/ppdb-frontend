@@ -71,7 +71,8 @@ class notifikasi extends Component {
                         Notifikasi
                     </NavTitleLarge>
                 </Navbar>
-                <Block strong style={{marginTop:'0px', marginBottom:'8px'}}>
+                <Block className="pageWithTitle">
+                {/* <Block strong style={{marginTop:'0px', marginBottom:'8px'}}> */}
                     {this.props.notifikasi.result_belum_dibaca > 0 &&
                         <span>Ada {this.props.notifikasi.result_belum_dibaca} notifikasi baru untuk Anda</span>
                     }

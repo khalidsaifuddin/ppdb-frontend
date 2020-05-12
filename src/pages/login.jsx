@@ -88,8 +88,9 @@ class login extends Component {
                     socket.emit('login', params, (err) => {
                       if (err) {}
                     });
-                      
+
                     window.location.href="/";
+                      
                   })
                 });
               });

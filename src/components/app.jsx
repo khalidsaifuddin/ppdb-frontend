@@ -104,6 +104,7 @@ class app extends Component {
 
   keluar = () =>{
     localStorage.setItem('sudah_login', '0');
+    localStorage.setItem('sudah_pilih_kota', '0');
     localStorage.setItem('user', '');
     localStorage.setItem('token', '');
 
@@ -129,12 +130,15 @@ class app extends Component {
     return (
       <App params={this.state.f7params} hideToolbarOnScroll>
         <Statusbar></Statusbar>
+        {localStorage.getItem('sudah_pilih_kota') === '1' &&
+        <>
         {localStorage.getItem('sudah_login') === '1' &&
           <Panel className="mainMenu" left cover>
             <View>
               <Page>
                 <Navbar title={localStorage.getItem('judul_aplikasi')}>
-                  <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
+                  <img src={localStorage.getItem('logo_wilayah')} height="25" alt="logo" />
+                  {/* <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" /> */}
                 </Navbar>
                 <BlockTitle>MENU APLIKASI</BlockTitle>
                 <List>
@@ -152,10 +156,10 @@ class app extends Component {
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                     <i slot="media" className="f7-icons">doc_plaintext</i>
                   </ListItem>
-                  <ListItem link="/detailCalonpdSekolah/" view=".view-main" panelClose panel-close title="Calon PD Sekolah">
+                  <ListItem link="/detailCalonpdSekolah/" view=".view-main" panelClose panel-close title="Daftar Sekolah">
                     <i slot="media" className="f7-icons">building_2_fill</i>
                   </ListItem>
-                  <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
+                  {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
                   <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
@@ -166,7 +170,7 @@ class app extends Component {
                   </ListItem>
                   <ListItem link="/" view=".view-main" panelClose panel-close title="Pengumuman">
                     <i slot="media" className="f7-icons">bell</i>
-                  </ListItem>
+                  </ListItem> */}
                   {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                     <>
                       {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
@@ -211,6 +215,8 @@ class app extends Component {
             </View>
           </Panel>
         }
+        </>
+        }
         <Panel right cover style={{width:'280px'}}>
           <View>
             <Page>
@@ -222,6 +228,8 @@ class app extends Component {
           </View>
         </Panel>
         <Views tabs className="safe-areas" hideToolbarOnScroll>
+          {localStorage.getItem('sudah_pilih_kota') === '1' &&
+          <>
           {localStorage.getItem('sudah_login') === '1' &&
             <Toolbar className="mobileTab" labels bottom hideToolbarOnScroll>
               {localStorage.getItem('sudah_login') === '1' &&
@@ -312,6 +320,8 @@ class app extends Component {
                 panelOpen="left" 
               />
             </Toolbar>
+          }
+          </>
           }
           <View id="view-beranda" main tab tabActive url="/" />
         </Views>

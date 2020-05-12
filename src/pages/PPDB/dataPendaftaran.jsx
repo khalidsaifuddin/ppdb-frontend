@@ -48,14 +48,14 @@ class DaftarPendaftaran extends Component {
     render()
     {
         return (
-            <Page name="cari">
+            <Page name="cari" style={{paddingBottom:'40px'}}>
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
-                    <NavTitle sliding>Daftar Pendaftaran</NavTitle>
+                    <NavTitle sliding>Data Pendaftaran</NavTitle>
                     <Subnavbar inner={false}>
                         <Searchbar
                             className="searchbar-demo"
                             // expandable
-                            placeholder="Cari peserta NIK"
+                            placeholder="Cari Peserta Didik (NIK/Nama/NISN)..."
                             searchContainer=".search-list"
                             searchIn=".item-title"
                             onSubmit={this.getData}
@@ -67,7 +67,7 @@ class DaftarPendaftaran extends Component {
                     </Subnavbar>
                 </Navbar>
 
-                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Daftar Pendaftaran</Block>
+                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftaran</Block>
                 
                 {this.props.entities.rows.map((option, key)=>{
 

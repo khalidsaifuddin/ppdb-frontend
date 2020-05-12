@@ -27,8 +27,9 @@ Framework7.use(Framework7React)
 // localStorage.setItem('api_base','http://118.98.166.82:8881');
 localStorage.setItem('google_api','1010108449023-6qolnf5bdkckntc94vq88brt28pgu04n.apps.googleusercontent.com');
 // localStorage.setItem('google_api','188472097829-q54nne8p4mdp0he19pivpg1sf6htd04e.apps.googleusercontent.com');
-localStorage.setItem('api_base','http://localhost:8000/');
+// localStorage.setItem('api_base','http://localhost:8000/');
 // localStorage.setItem('api_base','http://117.53.44.48:8080/');
+localStorage.setItem('api_base','http://117.53.44.48:8080');
 // localStorage.setItem('api_base','http://ppdb:8888');
 // localStorage.setItem('google_api','188472097829-4h5peopg70ndp9g1p9seg1abgkg64ot4.apps.googleusercontent.com');
 
@@ -47,18 +48,20 @@ localStorage.setItem('api_base','http://localhost:8000/');
 // localStorage.setItem('logo_aplikasi',"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png");
 // localStorage.setItem('socket_url',"http://localhost:5000");
 
-localStorage.setItem('judul_aplikasi','PPDB Lumajang');
-localStorage.setItem('sub_judul_aplikasi','PPDB Lumajang');
+// localStorage.setItem('judul_aplikasi','PPDB Lumajang');
+// localStorage.setItem('sub_judul_aplikasi','PPDB Lumajang');
 localStorage.setItem('kode_aplikasi','PPDB');
 localStorage.setItem('tema_warna_aplikasi','biru-1');
-localStorage.setItem('wilayah_aplikasi','Kabupaten Lumajang');
-localStorage.setItem('kode_wilayah_aplikasi','052100');
-localStorage.setItem('id_level_wilayah_aplikasi','2');
+// localStorage.setItem('wilayah_aplikasi','Kabupaten Lumajang');
+// localStorage.setItem('kode_wilayah_aplikasi','052100');
+// localStorage.setItem('id_level_wilayah_aplikasi','2');
 localStorage.setItem('jenjang_aplikasi','5-6-13-15-29'); // 5=SD, 6=SMP, 13=SMA, 15=SMK, 29=SLB, 1=PAUD
-localStorage.setItem('semester_id_aplikasi','20191'); // 5=SD, 6=SMP, 13=SMA, 15=SMK, 29=SLB, 1=PAUD
+localStorage.setItem('semester_id_aplikasi','20192'); // 5=SD, 6=SMP, 13=SMA, 15=SMK, 29=SLB, 1=PAUD
 localStorage.setItem('versi_aplikasi','2020.05.01');
-localStorage.setItem('logo_aplikasi',"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png");
+// localStorage.setItem('logo_aplikasi',"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png");
 localStorage.setItem('socket_url',"http://localhost:5000");
+localStorage.setItem('sudah_pilih_kota', (parseInt(localStorage.getItem('sudah_pilih_kota')) === 1 ? localStorage.getItem('sudah_pilih_kota') : '0'));
+localStorage.setItem('periode_kegiatan_id','2020');
 
 // localStorage.setItem('initial_route','/DataPokokSekolah/');
 // localStorage.setItem('show_toolbar','1');

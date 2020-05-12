@@ -17,7 +17,8 @@ import {
   CardHeader,
   CardContent,
   Badge,
-  Progressbar
+  Progressbar,
+  Button
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -69,6 +70,10 @@ class Beranda extends Component {
   }
 
   componentDidMount = () => {
+    if(parseInt(localStorage.getItem('sudah_pilih_kota')) !== 1) {
+      this.$f7router.navigate('/pilihKota/');
+    }
+
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
       this.$f7router.navigate('/login/');
     }
@@ -90,6 +95,11 @@ class Beranda extends Component {
         routeParamsNotifikasi: {
           pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
           dibaca: "1",
+        },
+        routeParams: {
+          ...this.state.routeParams,
+          limit: 2,
+          pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id
         }
       }, ()=> {
         this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
@@ -98,9 +108,12 @@ class Beranda extends Component {
           });
         });
 
-        this.props.getKuisDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});
+        this.props.getCalonPD(this.state.routeParams);
 
-        this.props.getRuangDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});  
+        // this.props.getKuisDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});
+
+        // this.props.getRuangDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});  
+
       });
     }
   }
@@ -134,7 +147,7 @@ class Beranda extends Component {
     };
 
     return (
-      <Page name="Beranda" hideBarsOnScroll>
+      <Page name="Beranda" hideBarsOnScroll style={{overflowX:'hidden'}}>
         {localStorage.getItem('sudah_login') === '1' &&
           <Navbar 
             sliding={false} 
@@ -144,6 +157,7 @@ class Beranda extends Component {
               <Link iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" panelOpen="left" className="sideMenuToggle" />
             </NavLeft>
             <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
+            {parseInt(localStorage.getItem('sudah_pilih_kota')) === 1  &&
             <NavRight>
               <Link iconOnly href="/notifikasi" style={{marginLeft:'0px'}}> 
                 <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
@@ -154,36 +168,54 @@ class Beranda extends Component {
                 <img style={{height:'30px', borderRadius:'50%', marginLeft:'0px'}} src={JSON.parse(localStorage.getItem('user')).gambar} />
               </Link>
             </NavRight>
+            }
           </Navbar>
         }
         <div className="contentApp">
-          <Block className="gridMenu">
-            <Link href="/Cari">
-              <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
-              Cari Data
-            </Link>
-            <Link href="/tambahCalonPesertaDidik/">
-              <img src="./static/images/icons/formulir.svg" alt="formulir" />
-              Formulir
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/jadwal.svg" alt="jadwal" />
-              Jadwal
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/petunjuk.svg" alt="petunjuk" />
-              Petunjuk
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/kuota.svg" alt="kuota" />
-              Kuota
-            </Link>
-            <Link href="/">
-              <img src="./static/images/icons/pengumuman.svg" alt="pengumuman" />
-              Pengumuman
-            </Link>
+          {/* <Block> */}
+          <div className={"judul_utama"}>
+            {/* <Row> */}
+              {/* <Col width="30"> */}
+                <img src={localStorage.getItem('logo_wilayah')} height="70" alt="logo" /><br/>
+              {/* </Col> */}
+              {/* <Col width="70"> */}
+                {localStorage.getItem('judul_aplikasi')}
+                <div style={{fontSize:'12px'}}>
+                  {localStorage.getItem('sub_judul_aplikasi')}
+                </div>
+              {/* </Col> */}
+            {/* </Row> */}
+          </div>
+          {/* </Block> */}
+          <Block className="gridMenu menuBeranda">
+            <div className="link2" style={{margin:'auto', display:'flex', flexWrap:'wrap'}}>
+              <Link href="/Cari">
+                <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
+                Cari Data
+              </Link>
+              <Link href="/tambahCalonPesertaDidik/">
+                <img src="./static/images/icons/formulir.svg" alt="formulir" />
+                Formulir
+              </Link>
+              <Link href="/">
+                <img src="./static/images/icons/jadwal.svg" alt="jadwal" />
+                Jadwal
+              </Link>
+              <Link href="/">
+                <img src="./static/images/icons/petunjuk.svg" alt="petunjuk" />
+                Petunjuk
+              </Link>
+              <Link href="/">
+                <img src="./static/images/icons/kuota.svg" alt="kuota" />
+                Kuota
+              </Link>
+              <Link href="/">
+                <img src="./static/images/icons/pengumuman.svg" alt="pengumuman" />
+                Pengumuman
+              </Link>
+            </div>
           </Block>
-          <Block className="rekapitulasiProgres">
+          {/* <Block className="rekapitulasiProgres">
             <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
             <Row>
               <Col width="50" tabletWidth="25">
@@ -243,11 +275,53 @@ class Beranda extends Component {
                 </div>
               </Col>
             </Row>
-          </Block>
+          </Block> */}
+
           <Block className="pelaksanaanPpdb">
             <Row>
-              <Col width="100" tabletWidth="33">
-                <BlockHeader>JADWAL SAAT INI</BlockHeader>
+              <Col width="100" tabletWidth="65">
+                <Block className="rekapitulasiProgres">
+                  <BlockHeader>PENDAFTARAN ANDA</BlockHeader>
+                  {this.props.entities.rows.map((option)=>{
+                    return (
+                      <Card key={option.calon_peserta_didik_id} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
+                        <CardHeader>
+                          <Link href="#">
+                            {/* <Icon f7="person_round_fill" size="20px"></Icon> */}
+                            <div>
+                              {option.nama}&nbsp;({option.nisn})
+                            </div>
+                          </Link>
+                        </CardHeader>
+                        <CardContent style={{padding:'4px'}}>
+                          <Row noGap>
+                            {/* <Col width="100" tabletWidth="100" style={{borderBottom:'1px solid #eeeeee',marginBottom:'8px'}}>
+                              Pilihan Sekolah
+                            </Col> */}
+                            {option.pilihan_sekolah.map((optionSekolah)=>{
+                              return (
+                                <Col width="33" tabletWidth="33">
+                                  <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
+                                    <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
+                                      <div style={{fontSize:'12px', color:'white'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                      {/* <div style={{color:'blue'}}>Telah Konfirmasi</div> */}
+                                      <div style={{fontSize:'12px', color:'white'}}>No.Urut</div>
+                                      <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>0</div>
+                                    </CardContent>
+                                  </Card>
+                                </Col>
+                              )
+                            })}
+                          </Row>
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
+                  <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
+                </Block>
+              </Col>
+              <Col width="100" tabletWidth="35">
+                {/* <BlockHeader>JADWAL SAAT INI</BlockHeader>
                 <div className="jadwalPpdb">
                   <Card>
                     <CardHeader>
@@ -270,17 +344,19 @@ class Beranda extends Component {
                       />
                     </CardContent>
                   </Card>
-                </div>
-                <BlockHeader>JADWAL SELANJUTNYA</BlockHeader>
-                <div className="jadwalPpdb">
-                  <List mediaList>
-                    <ListItem link="/" title="Sosialisasi PPDB ke SD" after="13 Mei 2020" />
-                    <ListItem link="/" title="Pendaftaran Periode Pendataan Calon Peserta Didik di Aplikasi PPDB" after="14-22 Mei 2020" />
-                    <ListItem link="/" title="Pendaftaran Periode Seleksi PPDB Online Utama" after="1-6 Juni 2020"/>
-                  </List>
-                </div>
+                </div> */}
+                <Block className="rekapitulasiProgres">
+                  <BlockHeader>JADWAL SELANJUTNYA</BlockHeader>
+                  <div className="jadwalPpdb">
+                    <List mediaList>
+                      <ListItem link="/" title="Sosialisasi PPDB ke SD" after="13 Mei 2020" />
+                      <ListItem link="/" title="Pendaftaran Periode Pendataan Calon Peserta Didik di Aplikasi PPDB" after="14-22 Mei 2020" />
+                      <ListItem link="/" title="Pendaftaran Periode Seleksi PPDB Online Utama" after="1-6 Juni 2020"/>
+                    </List>
+                  </div>
+                </Block>
               </Col>
-              <Col width="100" tabletWidth="66">
+              {/* <Col width="100" tabletWidth="66">
                 <BlockHeader className="onlyOnDesktop">RESUME (RINGKASAN)</BlockHeader>
                 <div className="resumeTable">
                   <Row>
@@ -378,7 +454,7 @@ class Beranda extends Component {
                     </Col>
                   </Row>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
           </Block>
         </div>
@@ -397,10 +473,11 @@ function mapDispatchToProps(dispatch) {
     simpanPantauan: Actions.simpanPantauan,
     getKuisDiikuti: Actions.getKuisDiikuti,
     getRuangDiikuti: Actions.getRuangDiikuti,
+    getCalonPD : Actions.getCalonPD
   }, dispatch);
 }
 
-function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang }) {
+function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang, DaftarPendaftaran }) {
   return {
     window_dimension: App.window_dimension,
     loading: App.loading,
@@ -411,6 +488,7 @@ function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang }) {
     notifikasi: Notifikasi.notifikasi,
     kuis_diikuti: Kuis.kuis_diikuti,
     ruang_diikuti: Ruang.ruang_diikuti,
+    entities : DaftarPendaftaran.entities
   }
 }
 

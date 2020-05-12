@@ -97,7 +97,13 @@ const initialState = {
         }],
         total: 0
     },
-    geojson_basic: []
+    geojson_basic: [],
+    wilayah_klien: {
+        rows: [{
+            kode_wilayah: '---'
+        }],
+        count: 0
+    },
 };
 
 const appReducer = function (state = initialState, action) {
@@ -222,6 +228,13 @@ const appReducer = function (state = initialState, action) {
             return {
                 ...state,
                 geojson_basic: action.payload
+            };
+        }
+        case Actions.GET_WILAYAH_KLIEN:
+        {
+            return {
+                ...state,
+                wilayah_klien: action.payload
             };
         }
         default:
