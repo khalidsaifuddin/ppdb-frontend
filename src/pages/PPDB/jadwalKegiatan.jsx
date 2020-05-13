@@ -54,7 +54,7 @@ class JadwalKegiatan extends Component {
         this.getData();
         this.props.getRefJalurJk();
         this.props.getRefmstwilayahJK({
-            mst_kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi')
+            mst_kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi').substr(0, 2)  + "0000"
         });
     }
 
