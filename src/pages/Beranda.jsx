@@ -31,6 +31,7 @@ class Beranda extends Component {
     this.state = {
       error: null,
       loading: true,
+      loadingPendaftaran : true,
       data: {
         r_kelas: [],
         perpustakaan: [],
@@ -90,6 +91,7 @@ class Beranda extends Component {
 
     if(parseInt(localStorage.getItem('sudah_login')) === 1) {
       this.setState({
+        loadingPendaftaran: true,
         routeParamsNotifikasi: {
           pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
           dibaca: "1",
@@ -106,7 +108,9 @@ class Beranda extends Component {
           });
         });
 
-        this.props.getCalonPD(this.state.routeParams);
+        this.props.getCalonPD(this.state.routeParams).then(e => {
+          this.setState({ loadingPendaftaran: false });
+        });
       });
     }
   }
@@ -175,7 +179,8 @@ class Beranda extends Component {
               <Col width="100" tabletWidth="65">
                 <Block className="rekapitulasiProgres">
                   <BlockHeader>PENDAFTARAN ANDA</BlockHeader>
-                  {this.props.entities.rows.length === 0 ? (
+                  {this.state.loadingPendaftaran && (<div>Loading...</div>)}
+                  {!this.state.loadingPendaftaran && this.props.entities.rows.length === 0 ? (
                     <Card className="noRegistration" noShadow noBorder>
                       <CardContent padding={false}>
                         <img src="/static/images/icons/sekolah.svg" height="32" alt="sekolah"/>
@@ -184,7 +189,7 @@ class Beranda extends Component {
                       </CardContent>
                     </Card>
                   ) : ''}
-                  {this.props.entities.rows.map((option)=> {
+                  {!this.state.loadingPendaftaran && this.props.entities.rows.map((option)=> {
                     return (
                       <Card key={option.calon_peserta_didik_id} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
                         <CardHeader>
