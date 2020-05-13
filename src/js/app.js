@@ -27,9 +27,9 @@ Framework7.use(Framework7React)
 // localStorage.setItem('api_base','http://118.98.166.82:8881');
 localStorage.setItem('google_api','1010108449023-6qolnf5bdkckntc94vq88brt28pgu04n.apps.googleusercontent.com');
 // localStorage.setItem('google_api','188472097829-q54nne8p4mdp0he19pivpg1sf6htd04e.apps.googleusercontent.com');
-// localStorage.setItem('api_base','http://localhost:8000/');
+localStorage.setItem('api_base','http://localhost:8000/');
 // localStorage.setItem('api_base','http://117.53.44.48:8080/');
-localStorage.setItem('api_base','http://117.53.44.48:8080');
+// localStorage.setItem('api_base','http://117.53.44.48:8080');
 // localStorage.setItem('api_base','http://ppdb:8888');
 // localStorage.setItem('google_api','188472097829-4h5peopg70ndp9g1p9seg1abgkg64ot4.apps.googleusercontent.com');
 

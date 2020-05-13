@@ -137,8 +137,7 @@ class app extends Component {
             <View>
               <Page>
                 <Navbar title={localStorage.getItem('judul_aplikasi')}>
-                  <img src={localStorage.getItem('logo_wilayah')} height="25" alt="logo" />
-                  {/* <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" /> */}
+                  <img src={localStorage.getItem('logo_wilayah')} height="25" alt={localStorage.getItem('judul_aplikasi')} />
                 </Navbar>
                 <BlockTitle>MENU APLIKASI</BlockTitle>
                 <List>
@@ -147,10 +146,10 @@ class app extends Component {
                       <i slot="media" className="f7-icons">house</i>
                     </ListItem>
                   }
-                  <ListItem link="/Cari" view=".view-main" panelClose panel-close title="Cari Data">
+                  <ListItem link="/Cari/" view=".view-main" panelClose panel-close title="Cari Data">
                     <i slot="media" className="f7-icons">search</i>
                   </ListItem>
-                  <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Form Pendaftaran">
+                  <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Formulir Pendaftaran">
                     <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
                   </ListItem>
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
@@ -162,10 +161,7 @@ class app extends Component {
                   <ListItem link="/JadwalKegiatan/" view=".view-main" panelClose panel-close title="Jadwal Kegiatan">
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
-                  {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Jadwal">
-                    <i slot="media" className="f7-icons">calendar</i>
-                  </ListItem>
-                  <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
+                  {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
                     <i slot="media" className="f7-icons">book</i>
                   </ListItem>
                   <ListItem link="/" view=".view-main" panelClose panel-close title="Kuota">
@@ -182,7 +178,7 @@ class app extends Component {
                         </ListItem>
                         }
                         {(localStorage.getItem('user') !== null && localStorage.getItem('user') !== '') &&
-                        <ListItem link="/Ruang" view=".view-main" panelClose panel-close title="Ruang">
+                        <ListItem link="/Ruang/" view=".view-main" panelClose panel-close title="Ruang">
                           <i slot="media" className="f7-icons">circle_grid_hex_fill</i>
                         </ListItem>
                       }
@@ -194,12 +190,12 @@ class app extends Component {
                     </>
                   }
                   {localStorage.getItem('sudah_login') === '0' && 
-                    <ListItem link="/login" view=".view-main" panelClose panel-close title="Login/Masuk">
+                    <ListItem link="/login/" view=".view-main" panelClose panel-close title="Login/Masuk">
                       <i slot="media" className="f7-icons">square_arrow_right</i>
                     </ListItem>
                   }
                   {localStorage.getItem('sudah_login') === '1' && 
-                    <ListItem link="/ProfilPengguna" view=".view-main" panelClose panel-close title="Profil Pengguna">
+                    <ListItem link="/ProfilPengguna/" view=".view-main" panelClose panel-close title="Profil Pengguna">
                       <i slot="media" className="f7-icons">person</i>
                     </ListItem>
                   }
@@ -212,7 +208,7 @@ class app extends Component {
                 <Block className="formRegisterWidget">
                   <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
                   <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
-                  <Button raised fill round color="orange">Daftar Sekarang</Button>
+                  <Button href="/tambahCalonPesertaDidik/" view=".view-main" raised fill round color="orange">Daftar Sekarang</Button>
                 </Block>
               </Page>
             </View>

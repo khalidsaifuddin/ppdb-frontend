@@ -146,9 +146,11 @@
   padding-bottom: 16px;
 }
 
-.contentApp { 
-  padding: 1rem; 
-  /* margin-top: -100px; */
+.contentApp {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  margin-top: -44px;
 }
 
 .mainMenu {
@@ -227,14 +229,56 @@
   display: none;
 }
 
+.bgMain {
+  position: absolute;
+  top: 0;
+  height: 290px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  width: 100%;
+  z-index: -1;
+  background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+  transform: scaleX(1.2);
+}
+
+.titleMain {
+  font-weight: bold;
+  color: white;
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 74px;
+  margin-top: 0;
+  padding-bottom: 0;
+  border-radius: 0;
+}
+
+.titleMain img { margin-bottom: .25rem; }
+
+.titleMain h2 {
+  margin: 0;
+  font-size: 1.875rem;
+}
+
+.titleMain h6 {
+  margin: 0;
+  font-size: .75rem;
+  display: block;
+}
+
 .gridMenu {
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: 20px 10px 0;
+  justify-content: center;
 }
 
 .gridMenu .link {
   display: flex;
+  text-align: center;
   width: 96px;
   height: 96px;
   margin-right: 1rem;
@@ -245,11 +289,14 @@
   font-weight: 600;
   background: #ffffff;
   position: relative;
+  line-height: 1.2;
   color: #1e1e1e;
   transition: all .3s ease-in-out;
   box-shadow: 0 0 0 #007aff24;
   border: 1px solid transparent;
 }
+
+.gridMenu .link:last-child { margin-right: 0; }
 
 .gridMenu .link:hover {
   box-shadow: 0 0 10px #007aff24;
@@ -258,7 +305,6 @@
 
 .gridMenu .link img {
   height: 36px;
-  margin-right: .375rem;
   position: relative;
   margin-bottom: .375rem;
 }
@@ -350,7 +396,7 @@
 
 .pelaksanaanPpdb {
   margin: 0;
-  padding: 0;
+  padding: 1rem;
 }
 
 .jadwalPpdb {
@@ -865,6 +911,34 @@
 
 .steps .button:hover::after { border-left-color: #9c27b0; }
 
+.noRegistration {
+  width: 100%;
+  margin: 0;
+}
+
+.noRegistration .card-content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.noRegistration .card-content img {
+  height: 76px;
+  opacity: .375;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto .625rem;
+}
+
+.noRegistration .card-content h4 {
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+
+.noRegistration .card-content a {
+  display: inline-block;
+  padding: 0 1rem;
+}
+
 .loginPage {
   width: 100%;
   position: relative;
@@ -1019,13 +1093,24 @@
 
   .page-content { padding-bottom: 60px; }
 
+  .bgMain { height: 260px; }
+
+  .titleMain img {
+    height: 48px;
+    margin-bottom: 0;;
+  }
+
+  .titleMain h2 { font-size: 1.5rem; }
+
+  .titleMain h6 { font-size: .625rem; }
+
   .gridMenu {
-    margin: -2% -2% 0;
+    margin: 0;
     flex-wrap: wrap;
   }
 
   .gridMenu .link {
-    width: 100%;
+    width: auto;
     margin: 2%;
     max-width: 29.333333%;
     flex: 0 0 29.333333%;
@@ -1217,49 +1302,16 @@
   }
 }
 
-.pilih_kota .smart-select .item-content .item-inner .item-title{
-  display: none;
-}
+.pilih_kota .smart-select .item-content .item-inner .item-title { display: none; }
 
-.pilih_kota .smart-select .item-content .item-inner .item-after{
-  /* display: none; */
+.pilih_kota .smart-select .item-content .item-inner .item-after {
   text-align: left;
   width: 100%;
   max-width: 100%;
   padding-left: 0px;
 }
 
-.judul_utama {
-  font-weight: bold;
-  color:white;
-  font-size: 30px;
-  margin-bottom: 20px;
-  width: 103%;
-  text-align: center;
-  /* background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); */
-  background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
-  /* background-image; ; */
-  position: absolute;
-  margin-left: -5%;
-  margin-right: -5%;
-  margin-top: -15px;
-  padding-top: 20px;
-  margin-top:-15px;
-  padding-bottom: 100px;
-  border-radius: 0px 0px 50% 50%;
-}
-
-.menuBeranda {
-  padding-top: 160px;
-}
-
 .link2 .link {
   flex-direction: column;
   overflow: hidden;
-}
-
-@media only screen and (min-width: 768px) {
-  .judul_utama {
-    width: 104%;
-  }
 }
