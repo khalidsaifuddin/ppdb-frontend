@@ -46,6 +46,10 @@ class Beranda extends Component {
         rows: [],
         total: 0,
       },
+      entities:{
+        rows:[],
+        count: 0
+      }
     };
   }
   
@@ -109,7 +113,10 @@ class Beranda extends Component {
         });
 
         this.props.getCalonPD(this.state.routeParams).then(e => {
-          this.setState({ loadingPendaftaran: false });
+          this.setState({ 
+            loadingPendaftaran: false ,
+            entities: this.props.entities
+          });
         });
       });
     }
@@ -180,7 +187,7 @@ class Beranda extends Component {
                 <Block className="rekapitulasiProgres">
                   <BlockHeader>PENDAFTARAN ANDA</BlockHeader>
                   {this.state.loadingPendaftaran && (<div>Loading...</div>)}
-                  {!this.state.loadingPendaftaran && this.props.entities.rows.length === 0 ? (
+                  {!this.state.loadingPendaftaran && this.state.entities.rows.length === 0 ? (
                     <Card className="noRegistration" noShadow noBorder>
                       <CardContent padding={false}>
                         <img src="/static/images/icons/sekolah.svg" height="32" alt="sekolah"/>
@@ -206,20 +213,20 @@ class Beranda extends Component {
                                 <Col width="33" tabletWidth="33">
                                   <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                     <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
-                                      <div style={{fontSize:'12px', color:'white'}}><b>{optionSekolah.nama_sekolah}</b></div>
-                                      <div style={{fontSize:'12px', color:'white'}}>No.Urut</div>
-                                      <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>0</div>
+                                      <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                      <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
+                                      <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
                                     </CardContent>
                                   </Card>
                                 </Col>
                               )
                             })}
                           </Row>
-                          <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
                         </CardContent>
                       </Card>
                     )
                   })}
+                  <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
                 </Block>
               </Col>
               <Col width="100" tabletWidth="35">

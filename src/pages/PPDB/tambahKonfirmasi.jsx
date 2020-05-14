@@ -174,6 +174,7 @@ class tambahKonfirmasi extends Component {
             this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
                 if(parseInt(this.state.routeParams.status) === 1){
                     //konfirmasi
+                    this.$f7router.navigate("/Daftar/");
                 }else{
                     //simpan draft
                     this.$f7router.navigate("/Daftar/");

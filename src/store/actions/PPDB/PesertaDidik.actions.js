@@ -13,6 +13,7 @@ export const SIMPAN_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] SIMPAN KONFIRMASI 
 export const GET_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] GET KONFIRMASI PENDAFTARAN';
 export const CEK_NIK = '[PESERTA DIDIK] CEK NIK';
 export const CEK_NISN = '[PESERTA DIDIK] CEK NISN';
+export const SIMPAN_LINTANG_BUJUR = '[PESERTA DIDIK] SIMPAN LINTANG BUJUR';
 
 export function getPesertaDidik(routeParams)
 {
@@ -252,6 +253,26 @@ export function cekNISN(routeParams)
         request.then((response) =>
             dispatch({
                 type   : CEK_NISN,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function simpanLintangBujur(routeParams)
+{
+    const request = axios.post(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/simpanLintangBujur', {
+        ...routeParams
+        // params: {
+        //     ...routeParams
+        // }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : SIMPAN_LINTANG_BUJUR,
                 payload: response.data,
                 routeParams
             })

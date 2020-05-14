@@ -81,7 +81,7 @@ class DaftarPendaftaran extends Component {
 
                     return (
 
-                        <Card className="demo-card-header-pic" key={key}>
+                        <Card className="demo-card-header-pic" key={key} style={{borderTop:'3px solid #00BCD4'}}>
                             <CardContent>
                                 <Row>
                                     <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
@@ -101,7 +101,7 @@ class DaftarPendaftaran extends Component {
                                                 NIK: <b>{option.nik}</b> <br/>
                                                 Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
                                                 TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
-                                                {/* Alamat: <b>{ option.alamat_tempat_tinggal }, {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b> <br/> */}
+                                                Titik Koordinat: <b>{ option.lintang }, {option.bujur}</b> <br/>
                                                 Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                             </Col>
                                             <Col width="100" tabletWidth="60">
@@ -122,19 +122,33 @@ class DaftarPendaftaran extends Component {
                                                         </tbody>
                                                     </table>
                                                 </div> */}
-                                                <List>
+                                                {/* <List>
                                                     {option.pilihan_sekolah.map((n, key) => {
                                                         return (
-                                                            // <ListItem className={"daftarSekolah"} style={{fontSize:'12px'}}>
-                                                            //     {key+1}. {n.nama_sekolah} ({n.npsn}) = No.Urut 0
-                                                            // </ListItem>
                                                             <ListItem className={"daftarSekolah"} style={{fontSize:'12px'}} title={key+1+". "+n.nama_sekolah + "("+n.npsn+")"} after={"No.Urut 0"}>
-                                                                {/* <Icon slot="media" icon="demo-list-icon"></Icon> */}
+                                                                
                                                             </ListItem>
                                                         )
                                                     })}
-                                                </List>
+                                                </List> */}
                                             </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col width={100} style={{border:'1px solid #ccceee', marginTop:'8px'}}>
+                                        <Row noGap>
+                                            {option.pilihan_sekolah.map((optionSekolah)=>{
+                                            return (
+                                                <Col width="33" tabletWidth="33">
+                                                <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
+                                                    <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
+                                                    <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                                    <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
+                                                    <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
+                                                    </CardContent>
+                                                </Card>
+                                                </Col>
+                                            )
+                                            })}
                                         </Row>
                                     </Col>
                                 </Row>

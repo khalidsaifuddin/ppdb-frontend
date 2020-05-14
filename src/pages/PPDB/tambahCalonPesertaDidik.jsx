@@ -108,25 +108,25 @@ class tambahCalonPesertaDidik extends Component {
   componentDidMount = () => {
     let arrURL = this.$f7route.url.split("#");
 
-    let lintang = -8.109038;
-    let bujur = 113.141552;
+    // let lintang = -8.109038;
+    // let bujur = 113.141552;
 
-    if(arrURL.length > 1) {
-      let linbuj = arrURL[1].split(",");
-      lintang = linbuj[0];
-      bujur = linbuj[1];
-    }
+    // if(arrURL.length > 1) {
+    //   let linbuj = arrURL[1].split(",");
+    //   lintang = linbuj[0];
+    //   bujur = linbuj[1];
+    // }
 
     localStorage.setItem('current_url', this.$f7route.url);
 
     this.setState({
       routeParams: {
         ...this.state.routeParams,
-        lintang: lintang,
-        bujur: bujur,
+        // lintang: lintang,
+        // bujur: bujur,
       },
-      lintang: lintang,
-      bujur: bujur,
+      // lintang: lintang,
+      // bujur: bujur,
       routeParamsWilayah: {
         ...this.state.routeParamsWilayah,
         id_level_wilayah: 1,
@@ -145,8 +145,8 @@ class tambahCalonPesertaDidik extends Component {
             routeParams: {
               ...this.state.routeParams,
               ...this.props.calon_peserta_didik.rows[0],
-              lintang: (this.state.lintang ? this.state.lintang : this.props.calon_peserta_didik.rows[0].lintang),
-              bujur: (this.state.bujur ? this.state.bujur : this.props.calon_peserta_didik.rows[0].bujur),
+              // lintang: (this.state.lintang ? this.state.lintang : this.props.calon_peserta_didik.rows[0].lintang),
+              // bujur: (this.state.bujur ? this.state.bujur : this.props.calon_peserta_didik.rows[0].bujur),
             },
             disabledInput: false,
             sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal
@@ -474,15 +474,15 @@ class tambahCalonPesertaDidik extends Component {
                       label="NISN"
                       type="text"
                       placeholder="NISN Calon Peserta Didik..."
-                      // info="Sesuai Ijazah"
+                      info="Sesuai Ijazah"
                       clearButton
                       onChange={this.setFieldValue('nisn')}
                       defaultValue={this.state.routeParams.nisn}
                       disabled={this.state.disabledInput}
-                      onBlur={this.cekNISN}
-                    >
-                      <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNISN}</b></span>
-                    </ListInput>
+                      // onBlur={this.cekNISN}
+                    />
+                      {/* <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNISN}</b></span> */}
+                    {/* </ListInput> */}
                     <ListInput
                       label="Nama Calon Peserta Didik"
                       type="text"

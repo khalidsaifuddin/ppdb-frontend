@@ -278,7 +278,7 @@ class cari extends Component {
                             <Col width="100" tabletWidth="45">
                               <div className="tentangPeserta">
                                 <span>Tingkat Terakhir</span>
-                                <b>Kelas {option.tingkat_pendidikan_id}</b>
+                                <b>Kelas {parseInt(option.tingkat_pendidikan_id) > 6 ? (parseInt(option.tingkat_pendidikan_id) === 71 ? 'TK Kelompok A' : (parseInt(option.tingkat_pendidikan_id) === 72 ? 'TK Kelompok B' : (parseInt(option.tingkat_pendidikan_id) === 73 ? 'KB' : option.tingkat_pendidikan_id))) : option.tingkat_pendidikan_id}</b>
                               </div>
                               <div className="tentangPeserta">
                                 <span>Status pendaftaran</span>

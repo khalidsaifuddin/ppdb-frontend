@@ -156,7 +156,19 @@ class petaPD extends Component {
     }
 
     konfirmasiKoordinat = () => {
-        this.$f7router.navigate("/tambahCalonPesertaDidik/"+this.state.routeParams.calon_peserta_didik_id+"#"+this.state.lintang+","+this.state.bujur+"")
+
+        this.setState({
+            routeParams:{
+                calon_peserta_didik_id: this.state.routeParams.calon_peserta_didik_id,
+                lintang: this.state.lintang,
+                bujur: this.state.bujur
+            }
+        },()=>{
+            this.props.simpanLintangBujur(this.state.routeParams).then((result)=>{
+                this.$f7router.navigate("/tambahCalonPesertaDidik/"+this.state.routeParams.calon_peserta_didik_id);
+            });
+        });
+
     }
 
     ketikCari = (e) => {
@@ -317,7 +329,8 @@ function mapDispatchToProps(dispatch) {
       getGeocode: Actions.getGeocode,
       panelKananBuka: Actions.panelKananBuka,
       setJudulKanan: Actions.setJudulKanan,
-      setIsiKanan: Actions.setIsiKanan
+      setIsiKanan: Actions.setIsiKanan,
+      simpanLintangBujur: Actions.simpanLintangBujur
     }, dispatch);
 }
 

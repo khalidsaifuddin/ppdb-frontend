@@ -48,7 +48,8 @@ class tambahJalurSekolah extends Component {
         arrSekolahPilihan: [],
         listSekolahPilihan: [],
         sheetOpened: false,
-        displaySekolahPilihan: {}
+        displaySekolahPilihan: {},
+        objSekolahPilihan: []
     }
 
     bulan = [
@@ -89,7 +90,7 @@ class tambahJalurSekolah extends Component {
                             jalur_id: '0100'
                         }
                     },()=>{
-                        // console.log(this.state.routeParams);
+                        console.log(this.state.routeParams);
 
                         //hitung umur
                         console.log(this.state.routeParams.tanggal_lahir);
@@ -103,6 +104,8 @@ class tambahJalurSekolah extends Component {
                         this.setState({
                             ...this.state,
                             usia: usia
+                        },()=>{
+                            console.log*('usia: '+this.state.usia);
                         });
                         //end of hitung umur
 
@@ -146,9 +149,10 @@ class tambahJalurSekolah extends Component {
                                 this.setState({
                                     routeParams: {
                                         ...this.state.routeParams,
-                                        pilihan_sekolah: this.props.sekolah_pilihan.rows,
+                                        // pilihan_sekolah: this.props.sekolah_pilihan.rows,
                                         jalur_id: this.props.sekolah_pilihan.rows[0].jalur_id
                                     },
+                                    objSekolahPilihan: this.props.sekolah_pilihan.rows,
                                     sekuen_sekolah_pilihan: this.props.sekolah_pilihan.count,
                                     smartSelectJalur: (<ListItem
                                             title={"Jalur Pendaftaran"}
@@ -206,7 +210,8 @@ class tambahJalurSekolah extends Component {
 
     simpan = () => {
 
-        // console.log(this.state.sekuen_sekolah_pilihan);
+        // console.log(this.state.objSekolahPilihan);
+        // return true;
 
         // if(this.state.sekuen_sekolah_pilihan < 3){
         //     this.$f7.dialog.alert('Mohon pilih 3 sekolah!','Peringatan');
@@ -222,7 +227,8 @@ class tambahJalurSekolah extends Component {
             routeParams: {
                 ...this.state.routeParams,
                 sekolah_asal: null,
-                sekolah_pilihan: this.state.arrSekolahPilihan
+                sekolah_pilihan: this.state.arrSekolahPilihan,
+                obj_sekolah_pilihan: this.state.objSekolahPilihan
             }
         },()=>{
             // console.log(this.state.routeParams);
@@ -242,14 +248,14 @@ class tambahJalurSekolah extends Component {
         },()=>{
             // console.log(this.state.arrSekolahPilihan);
             // console.log(this.state);
-            for (let index = 0; index < this.state.routeParams.pilihan_sekolah.length; index++) {
-                const element = this.state.routeParams.pilihan_sekolah[index];
+            for (let index = 0; index < this.state.objSekolahPilihan.length; index++) {
+                const element = this.state.objSekolahPilihan[index];
 
-                this.state.routeParams.pilihan_sekolah[index].jalur_id = this.state.routeParams.jalur_id;
+                this.state.objSekolahPilihan[index].jalur_id = this.state.routeParams.jalur_id;
                 
             }
 
-            console.log(this.state.routeParams.pilihan_sekolah);
+            console.log(this.state.objSekolahPilihan);
         });
     }
 
@@ -333,6 +339,12 @@ class tambahJalurSekolah extends Component {
             });
         }else{
 
+            let objSekolahPilihan = {
+                sekolah_id: sekolah_id,
+                nama: nama,
+                urut_pilihan: (parseInt(this.state.arrSekolahPilihan.length)+1)
+            };
+
             let arrSekolah = this.state.arrSekolahPilihan;
             let listSekolah = this.state.listSekolahPilihan;
     
@@ -367,12 +379,16 @@ class tambahJalurSekolah extends Component {
                 arrSekolahPilihan: arrSekolah,
                 listSekolahPilihan: listSekolah,
                 sheetOpened: false,
+                objSekolahPilihan: [
+                    ...this.state.objSekolahPilihan,
+                    objSekolahPilihan
+                ],
                 displaySekolahPilihan: {
                     ...this.state.displaySekolahPilihan,
                     [sekolah_id] : 'block'
                 }
             },()=>{
-                console.log(this.state.arrSekolahPilihan);
+                console.log(this.state);
             });
         }
 
