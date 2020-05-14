@@ -78,7 +78,7 @@ class TambahJadwalkegiatan extends Component {
         this.props.saveJadwalKegiatan(params).then(e => {
             this.$f7router.navigate("/jadwalKegiatan/");
             this.$f7.dialog.alert("Simpan Berhasil", "Simpan");
-            this.getItem();
+            // this.getData();
         }).catch(error => {
             this.$f7.dialog.alert("Simpan data gagal !", "Error");
             console.log(error)
