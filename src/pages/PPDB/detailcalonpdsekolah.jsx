@@ -4,7 +4,6 @@ import {
   Icon,
   Navbar,
   NavTitle,
-  Block,
   Button,
   Row,
   Col,
