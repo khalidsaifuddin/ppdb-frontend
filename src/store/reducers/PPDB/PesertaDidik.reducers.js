@@ -20,6 +20,10 @@ const initialState = {
     cek_nik: {
         rows: [],
         total: 0
+    },
+    cek_nisn: {
+        rows: [],
+        total: 0
     }
 }
 
@@ -59,6 +63,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
             return {
                 ...state,
                 cek_nik: action.payload
+            };
+        }
+        case Actions.CEK_NISN:
+        {
+            return {
+                ...state,
+                cek_nisn: action.payload
             };
         }
         default:

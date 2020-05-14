@@ -70,9 +70,9 @@ class Beranda extends Component {
   }
 
   componentDidMount = () => {
-    if(parseInt(localStorage.getItem('sudah_pilih_kota')) !== 1) {
-      this.$f7router.navigate('/pilihKota/');
-    }
+    // if(parseInt(localStorage.getItem('sudah_pilih_kota')) !== 1) {
+    //   this.$f7router.navigate('/pilihKota/');
+    // }
 
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
       this.$f7router.navigate('/login/');

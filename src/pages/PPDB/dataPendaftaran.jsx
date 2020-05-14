@@ -101,7 +101,7 @@ class DaftarPendaftaran extends Component {
                                                 NIK: <b>{option.nik}</b> <br/>
                                                 Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
                                                 TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
-                                                Alamat: <b>{ option.alamat_tempat_tinggal }, {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b> <br/>
+                                                {/* Alamat: <b>{ option.alamat_tempat_tinggal }, {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b> <br/> */}
                                                 Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                             </Col>
                                             <Col width="100" tabletWidth="60">

@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 const initialState = {
     judul_panel_kanan: 'Judulnya kanan',
     isi_panel_kanan: (<div>isinya panel kanan dari redux</div>),
+    panel_kanan_buka: false,
     window_dimension : {
         height: window.innerHeight,
         width: window.innerWidth
@@ -104,6 +105,13 @@ const initialState = {
         }],
         count: 0
     },
+    berkas_jalur: {
+        rows: [{
+            jalur_id: '---',
+        }],
+        count: 0
+    },
+    geocode: []
 };
 
 const appReducer = function (state = initialState, action) {
@@ -209,6 +217,13 @@ const appReducer = function (state = initialState, action) {
                 isi_panel_kanan: action.isi_panel_kanan
             };
         }
+        case Actions.PANEL_KANAN_BUKA:
+        {
+            return {
+                ...state,
+                panel_kanan_buka: action.panel_kanan_buka
+            };
+        }
         case Actions.GET_PENGGUNA:
         {
             return {
@@ -235,6 +250,20 @@ const appReducer = function (state = initialState, action) {
             return {
                 ...state,
                 wilayah_klien: action.payload
+            };
+        }
+        case Actions.GET_BERKAS_JALUR:
+        {
+            return {
+                ...state,
+                berkas_jalur: action.payload
+            };
+        }
+        case Actions.GEOCODE:
+        {
+            return {
+                ...state,
+                geocode: action.payload
             };
         }
         default:

@@ -20,7 +20,8 @@ import {
   Toolbar,
   PageContent,
   Radio,
-  Block
+  Block,
+  AccordionContent
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -80,7 +81,8 @@ class tambahCalonPesertaDidik extends Component {
       },
       smartSelectJenisKelamin: (<></>),
       disabledInput: true,
-      labelNik: 'NIK yang belum pernah didaftarkan sebelumnya',
+      labelNik: 'NIK belum pernah didaftarkan sebelumnya',
+      labelNISN: 'NISN belum pernah didaftarkan sebelumnya',
       lng: 113.141552,
       lat: -8.109038,
       zoom: 10,
@@ -137,6 +139,7 @@ class tambahCalonPesertaDidik extends Component {
       });
 
       if(this.state.routeParams.calon_peserta_didik_id && this.state.routeParams.calon_peserta_didik_id !== "null") {
+
         this.props.getCalonPesertaDidik(this.state.routeParams).then((result)=> {
           this.setState({
             routeParams: {
@@ -146,47 +149,43 @@ class tambahCalonPesertaDidik extends Component {
               bujur: (this.state.bujur ? this.state.bujur : this.props.calon_peserta_didik.rows[0].bujur),
             },
             disabledInput: false,
-            sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal,
-            smartSelectJenisKelamin: (
-              <ListItem
-                title={"Jenis_Kelamin"}
-                smartSelect
-                smartSelectParams={{
-                  openIn: 'sheet', 
-                  closeOnSelect: true,
-                }}
-              >
-                <select name="jenis_kelamin" value={this.props.calon_peserta_didik.rows[0].jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
-                  <option disabled value={"0"}>-</option>
-                  <option value={"L"}>Laki-laki</option>
-                  <option value={"P"}>Perempuan</option>
-                </select>
-              </ListItem>
-            )
+            sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal
           }, ()=> {
-            console.log(this.state.sekolah_terpilih);
+            // console.log(this.state.sekolah_terpilih);
+            // console.log(this.state.routeParams.kode_wilayah_kabupaten);
+            // console.log(this.state.routeParams.kode_wilayah_provinsi);
+            this.setState({
+              routeParamsKabupaten:{
+                mst_kode_wilayah: this.state.routeParams.kode_wilayah_provinsi
+              },
+              routeParamsKecamatan:{
+                mst_kode_wilayah: this.state.routeParams.kode_wilayah_kabupaten
+              }
+            },()=>{
+              this.props.getMstWilayah(this.state.routeParamsKabupaten).then((result)=>{
+                this.setState({
+                  kabupaten: this.props.mst_wilayah
+                },()=>{
+                  this.props.getMstWilayah(this.state.routeParamsKecamatan).then((result)=>{
+                    this.setState({
+                      kecamatan: this.props.mst_wilayah
+                    });
+                  });
+                });
+              });
+            });
+
           });
         });
+
       } else {
+
         this.setState({
-          smartSelectJenisKelamin: (<ListItem
-            title={"Jenis_Kelamin"}
-            smartSelect
-            disabled={this.state.disabledInput}
-            smartSelectParams={{
-              openIn: 'sheet', 
-              closeOnSelect: true,
-            }}
-          >
-            <select name="jenis_kelamin" value={this.state.routeParams.jenis_kelamin} onChange={this.setSelectValue('jenis_kelamin')}>
-              <option disabled value={"0"}>-</option>
-              <option value={"L"}>Laki-laki</option>
-              <option value={"P"}>Perempuan</option>
-            </select>
-          </ListItem>)
+          ...this.state
         }, ()=> {
-          console.log(this.state.routeParams);
+          // console.log(this.state.routeParams);
         });
+
       }
     });
   }
@@ -261,6 +260,7 @@ class tambahCalonPesertaDidik extends Component {
   }    
 
   setSelectValue = (key) => (b) => {
+    // console.log(c);
     this.setState({
       routeParams: {
         ...this.state.routeParams,
@@ -268,10 +268,21 @@ class tambahCalonPesertaDidik extends Component {
       }
     }, ()=> {
       if(key === 'kode_wilayah_provinsi') {
+        let prov = '';
+        this.state.provinsi.rows.map((op)=>{
+          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_provinsi){
+            prov = op.nama;
+          }
+        });
+
         this.setState({
           routeParamsWilayah: {
             id_level_wilayah: 2,
             mst_kode_wilayah: this.state.routeParams.kode_wilayah_provinsi,
+          },
+          routeParams:{
+            ...this.state.routeParams,
+            provinsi: prov
           }
         }, ()=> {
           this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=> {
@@ -280,11 +291,22 @@ class tambahCalonPesertaDidik extends Component {
             })
           });
         });
-      } else if(key === 'kode_wilayah_kabupaten') {
+      } else if (key === 'kode_wilayah_kabupaten') {
+        let kab = '';
+        this.state.kabupaten.rows.map((op)=>{
+          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_kabupaten){
+            kab = op.nama;
+          }
+        });
+
         this.setState({
           routeParamsWilayah: {
             id_level_wilayah: 3,
             mst_kode_wilayah: this.state.routeParams.kode_wilayah_kabupaten,
+          },
+          routeParams: {
+            ...this.state.routeParams,
+            kabupaten: kab
           }
         }, ()=> {
           this.props.getMstWilayah(this.state.routeParamsWilayah).then((result)=> {
@@ -292,6 +314,20 @@ class tambahCalonPesertaDidik extends Component {
               kecamatan: this.props.mst_wilayah,
             })
           });
+        });
+      } else if(key === 'kode_wilayah_kecamatan'){
+        let kec = '';
+        this.state.kecamatan.rows.map((op)=>{
+          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_kecamatan){
+            kec = op.nama;
+          }
+        });
+
+        this.setState({
+          routeParams: {
+            ...this.state.routeParams,
+            kecamatan: kec
+          }
         });
       }
     });
@@ -304,7 +340,7 @@ class tambahCalonPesertaDidik extends Component {
         [key]: e.target.value,
       }
     }, ()=> {
-      // console.log(this.state.routeParams);
+      console.log(this.state.routeParams);
     });
   }
     
@@ -331,8 +367,60 @@ class tambahCalonPesertaDidik extends Component {
     });
   }
 
+  cekNISN = (e) => {
+    this.setState({
+      routeParamsCek: {
+        nisn: e.target.value,
+        calon_peserta_didik_id: (this.$f7route.params['peserta_didik_id'] !== "null" ? (this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null) : null),
+      }
+    }, ()=> {
+      this.props.cekNISN(this.state.routeParamsCek).then((result)=>{
+        if(this.props.cek_nisn.count > 0) {
+          this.setState({
+            disabledInput: true,
+            labelNISN: 'NISN yang dimasukkan telah terdaftar sebelumnya. Mohon masukkan NISN lain',
+          });
+        } else {
+          this.setState({
+            disabledInput: false,
+            labelNISN: 'NISN valid dan dapat didaftarkan',
+          });
+        }
+      })
+    });
+  }
+
   cekNikEnter = (e) => {
     // console.log(e);
+  }
+
+  bukaPeta = () => {
+    this.setState({
+      routeParams: {
+        ...this.state.routeParams,
+        sekolah_asal: null,
+      }
+    }, ()=> {
+      if(this.state.routeParams.nama === null || this.state.routeParams.nik === null || this.state.routeParams.tempat_lahir === null || this.state.routeParams.tanggal_lahir === null) {
+        this.$f7.dialog.alert('Mohon lengkapi Nama/NISN/tempat dan tanggal lahir sebelum mengisi titik koordinat!','Peringatan');
+        return false;
+      }
+      
+      if(this.state.routeParams.kode_wilayah_provinsi === null || this.state.routeParams.kode_wilayah_kabupaten === null || this.state.routeParams.kode_wilayah_kecamatan === null || this.state.routeParams.alamat_tempat_tinggal === null) {
+        this.$f7.dialog.alert('Mohon lengkapi alamat sebelum mengisi titik koordinat!','Peringatan');
+        return false;
+      }
+
+      this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
+        if(result.payload.peserta_didik_id) {
+          // this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
+          this.$f7router.navigate("/petaPD/"+result.payload.peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur);
+          // this.$f7router.navigate("/petaPD/"+this.state.routeParams.calon_peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur);
+        } else {
+          this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan internet Anda. Mohon coba beberapa saat lagi');
+        }
+      });
+    });
   }
 
   render() {
@@ -361,6 +449,9 @@ class tambahCalonPesertaDidik extends Component {
                   <Button style={{width:'100px', position:'absolute',right:'0px', marginTop:'15px', marginRight:'15px', zIndex:'999999'}} onClick={this.cekNikEnter}>
                     Cek NIK
                   </Button>
+                  <Button style={{width:'100px', position:'absolute',right:'0px', marginTop:'95px', marginRight:'15px', zIndex:'999999'}} onClick={this.cekNisnEnter}>
+                    Cek NISN
+                  </Button>
                   <List>
                     <ListInput
                       label="Nomor Induk Kependudukan / NIK"
@@ -380,6 +471,19 @@ class tambahCalonPesertaDidik extends Component {
                       <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNik}</b></span>
                     </ListInput>
                     <ListInput
+                      label="NISN"
+                      type="text"
+                      placeholder="NISN Calon Peserta Didik..."
+                      // info="Sesuai Ijazah"
+                      clearButton
+                      onChange={this.setFieldValue('nisn')}
+                      defaultValue={this.state.routeParams.nisn}
+                      disabled={this.state.disabledInput}
+                      onBlur={this.cekNISN}
+                    >
+                      <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNISN}</b></span>
+                    </ListInput>
+                    <ListInput
                       label="Nama Calon Peserta Didik"
                       type="text"
                       placeholder="Nama Calon Peserta Didik..."
@@ -389,17 +493,27 @@ class tambahCalonPesertaDidik extends Component {
                       defaultValue={this.state.routeParams.nama}
                       disabled={this.state.disabledInput}
                     />
-                    <ListInput
-                      label="NISN"
-                      type="text"
-                      placeholder="NISN Calon Peserta Didik..."
-                      info="Sesuai Ijazah"
-                      clearButton
-                      onChange={this.setFieldValue('nisn')}
-                      defaultValue={this.state.routeParams.nisn}
-                      disabled={this.state.disabledInput}
-                    />
-                    {this.state.smartSelectJenisKelamin}
+                    {/* {this.state.smartSelectJenisKelamin} */}
+                    <ListItem accordionItem title={"Jenis Kelamin"} after={this.state.routeParams.jenis_kelamin}>
+                      <AccordionContent>
+                        <ListItem
+                          title={"Edit"}
+                          smartSelect
+                          smartSelectParams={{
+                            openIn: 'sheet', 
+                            closeOnSelect: true,
+                          }}
+                        >
+                          <select name="jenis_kelamin" defaultValue={0} onChange={this.setSelectValue('jenis_kelamin')}>
+                            <option disabled value={"0"}>-</option>
+                            <option value={"L"}>Laki-laki</option>
+                            <option value={"P"}>Perempuan</option>
+                          </select>
+                        </ListItem>
+                      </AccordionContent>
+                    </ListItem>
+
+
                     <ListInput
                       label="Tempat Lahir"
                       type="text"
@@ -417,51 +531,7 @@ class tambahCalonPesertaDidik extends Component {
                       defaultValue={this.state.routeParams.tanggal_lahir}
                       disabled={this.state.disabledInput}
                     />
-                    <ListItem
-                      title={"Provinsi"}
-                      smartSelect
-                      disabled={this.state.disabledInput}
-                      smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
-                    >
-                      <select name="kode_wilayah_provinsi" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_provinsi')}>
-                        <option disabled value={"0"}>-</option>
-                        {this.state.provinsi.rows.map((optionProvinsi)=> {
-                          return (
-                            <option key={optionProvinsi.kode_wilayah} value={optionProvinsi.kode_wilayah}>{optionProvinsi.nama}</option>
-                          )
-                        })}
-                      </select>
-                    </ListItem>
-                    <ListItem
-                      title={"Kabupaten/Kota"}
-                      smartSelect
-                      disabled={this.state.disabledInput}
-                      smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
-                    >
-                      <select name="kode_wilayah_kabupaten" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kabupaten')}>
-                        <option value={"0"}>-</option>
-                        {this.state.kabupaten.rows.map((optionKabupaten)=> {
-                          return (
-                            <option key={optionKabupaten.kode_wilayah} value={optionKabupaten.kode_wilayah}>{optionKabupaten.nama}</option>
-                          )
-                        })}
-                      </select>
-                    </ListItem>
-                    <ListItem
-                      title={"Kecamatan"}
-                      smartSelect
-                      disabled={this.state.disabledInput}
-                      smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
-                    >
-                      <select name="kode_wilayah_kecamatan" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kecamatan')}>
-                        <option value={"0"}>-</option>
-                        {this.state.kecamatan.rows.map((optionKecamatan)=> {
-                          return (
-                            <option key={optionKecamatan.kode_wilayah} value={optionKecamatan.kode_wilayah}>{optionKecamatan.nama}</option>
-                          )
-                        })}
-                      </select>
-                    </ListItem>
+                    
                     <ListInput
                       label="Alamat Tempat Tinggal"
                       type="textarea"
@@ -503,6 +573,63 @@ class tambahCalonPesertaDidik extends Component {
                       defaultValue={this.state.routeParams.desa_kelurahan}
                       disabled={this.state.disabledInput}
                     />
+                    <ListItem accordionItem title={"Provinsi"} after={this.state.routeParams.provinsi}>
+                      <AccordionContent>
+                        <ListItem
+                          title={"Edit"}
+                          smartSelect
+                          disabled={this.state.disabledInput}
+                          smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
+                        >
+                          <select name="kode_wilayah_provinsi" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_provinsi')}>
+                            <option disabled value={"0"}>-</option>
+                            {this.state.provinsi.rows.map((optionProvinsi)=> {
+                              return (
+                                <option key={optionProvinsi.kode_wilayah} value={optionProvinsi.kode_wilayah}>{optionProvinsi.nama}</option>
+                              )
+                            })}
+                          </select>
+                        </ListItem>
+                      </AccordionContent>
+                    </ListItem>
+                    <ListItem accordionItem title={"Kabupaten/Kota"} after={this.state.routeParams.kabupaten}>
+                      <AccordionContent>
+                        <ListItem
+                          title={"Edit"}
+                          smartSelect
+                          disabled={this.state.disabledInput}
+                          smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
+                        >
+                          <select name="kode_wilayah_kabupaten" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kabupaten')}>
+                            <option value={"0"}>-</option>
+                            {this.state.kabupaten.rows.map((optionKabupaten)=> {
+                              return (
+                                <option key={optionKabupaten.kode_wilayah} value={optionKabupaten.kode_wilayah}>{optionKabupaten.nama}</option>
+                              )
+                            })}
+                          </select>
+                        </ListItem>
+                      </AccordionContent>
+                    </ListItem>
+                    <ListItem accordionItem title={"Kecamatan"} after={this.state.routeParams.kecamatan}>
+                      <AccordionContent>
+                        <ListItem
+                          title={"Edit"}
+                          smartSelect
+                          disabled={this.state.disabledInput}
+                          smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
+                        >
+                          <select name="kode_wilayah_kecamatan" defaultValue={"0"} onChange={this.setSelectValue('kode_wilayah_kecamatan')}>
+                            <option value={"0"}>-</option>
+                            {this.state.kecamatan.rows.map((optionKecamatan)=> {
+                              return (
+                                <option key={optionKecamatan.kode_wilayah} value={optionKecamatan.kode_wilayah}>{optionKecamatan.nama}</option>
+                              )
+                            })}
+                          </select>
+                        </ListItem>
+                      </AccordionContent>
+                    </ListItem>
                     <ListInput
                       label="Koordinat Rumah Tinggal (Lintang)"
                       type="text"
@@ -520,7 +647,7 @@ class tambahCalonPesertaDidik extends Component {
                       disabled={this.state.disabledInput}
                     />
                   </List>
-                  <Button onClick={()=>{this.$f7router.navigate("/petaPD/"+this.state.routeParams.calon_peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur)}}>
+                  <Button onClick={this.bukaPeta}>
                     Lihat / Ubah Posisi Koordinat Rumah
                   </Button>
                 </CardContent>
@@ -922,6 +1049,7 @@ function mapDispatchToProps(dispatch) {
     getCalonPesertaDidik: Actions.getCalonPesertaDidik,
     simpanCalonPesertaDidik: Actions.simpanCalonPesertaDidik,
     cekNik: Actions.cekNik,
+    cekNISN: Actions.cekNISN,
   }, dispatch);
 }
 
@@ -933,6 +1061,7 @@ function mapStateToProps({ App, PPDBSekolah, Ref, PPDBPesertaDidik }) {
     mst_wilayah: Ref.mst_wilayah,
     calon_peserta_didik: PPDBPesertaDidik.calon_peserta_didik,
     cek_nik: PPDBPesertaDidik.cek_nik,
+    cek_nisn: PPDBPesertaDidik.cek_nisn
   }
 }
 

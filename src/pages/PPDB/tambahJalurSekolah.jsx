@@ -90,6 +90,22 @@ class tambahJalurSekolah extends Component {
                         }
                     },()=>{
                         // console.log(this.state.routeParams);
+
+                        //hitung umur
+                        console.log(this.state.routeParams.tanggal_lahir);
+                        let tanggal_lahir = new Date(this.state.routeParams.tanggal_lahir);
+                        let ageDifMs = Date.now() - tanggal_lahir.getTime();
+                        let ageDate = new Date(ageDifMs);
+                        let usia = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+                        console.log(usia);
+                        
+                        this.setState({
+                            ...this.state,
+                            usia: usia
+                        });
+                        //end of hitung umur
+
                         this.props.getSekolahPilihan(this.state.routeParams).then((result)=>{
                             
                             let arrSekolah = this.state.arrSekolahPilihan;
@@ -128,6 +144,11 @@ class tambahJalurSekolah extends Component {
                                 });
                                 
                                 this.setState({
+                                    routeParams: {
+                                        ...this.state.routeParams,
+                                        pilihan_sekolah: this.props.sekolah_pilihan.rows,
+                                        jalur_id: this.props.sekolah_pilihan.rows[0].jalur_id
+                                    },
                                     sekuen_sekolah_pilihan: this.props.sekolah_pilihan.count,
                                     smartSelectJalur: (<ListItem
                                             title={"Jalur Pendaftaran"}
@@ -137,7 +158,7 @@ class tambahJalurSekolah extends Component {
                                                 closeOnSelect: true
                                             }}
                                         >
-                                            <select name="jalur_id" value={this.props.sekolah_pilihan.rows[0].jalur_id} onChange={this.setSelectValue('jalur_id')}>
+                                            <select name="jalur_id" defaultValue={this.props.sekolah_pilihan.rows[0].jalur_id} onChange={this.setSelectValue('jalur_id')}>
                                                 <option disabled value={"0"}>-</option>
                                                 <option value={"0100"}>Affirmasi</option>
                                                 <option value={"0200"}>Perpindahan Orang Tua</option>
@@ -161,7 +182,7 @@ class tambahJalurSekolah extends Component {
                                             closeOnSelect: true
                                         }}
                                     >
-                                        <select name="jalur_id" value={this.state.routeParams.jalur_id} onChange={this.setSelectValue('jalur_id')}>
+                                        <select name="jalur_id" defaultValue={this.state.routeParams.jalur_id} onChange={this.setSelectValue('jalur_id')}>
                                             <option disabled value={"0"}>-</option>
                                             <option value={"0100"}>Affirmasi</option>
                                             <option value={"0200"}>Perpindahan Orang Tua</option>
@@ -187,7 +208,12 @@ class tambahJalurSekolah extends Component {
 
         // console.log(this.state.sekuen_sekolah_pilihan);
 
-        if(this.state.sekuen_sekolah_pilihan < 3){
+        // if(this.state.sekuen_sekolah_pilihan < 3){
+        //     this.$f7.dialog.alert('Mohon pilih 3 sekolah!','Peringatan');
+        //     return false;
+        // }
+
+        if(this.state.arrSekolahPilihan.length < 3){
             this.$f7.dialog.alert('Mohon pilih 3 sekolah!','Peringatan');
             return false;
         }
@@ -214,7 +240,16 @@ class tambahJalurSekolah extends Component {
                 [key]: b.target.value
             }
         },()=>{
-            
+            // console.log(this.state.arrSekolahPilihan);
+            // console.log(this.state);
+            for (let index = 0; index < this.state.routeParams.pilihan_sekolah.length; index++) {
+                const element = this.state.routeParams.pilihan_sekolah[index];
+
+                this.state.routeParams.pilihan_sekolah[index].jalur_id = this.state.routeParams.jalur_id;
+                
+            }
+
+            console.log(this.state.routeParams.pilihan_sekolah);
         });
     }
 
@@ -231,12 +266,14 @@ class tambahJalurSekolah extends Component {
 
     tambahSekolahPilihan = () => {
 
-        if(parseInt(this.state.sekuen_sekolah_pilihan) < 3){
+        if(parseInt(this.state.arrSekolahPilihan.length) < 3){
+        // if(parseInt(this.state.sekuen_sekolah_pilihan) < 3){
             
             this.setState({
                 routeParams: {
                     ...this.state.routeParams,
-                    searchText: 'apcbdfd' 
+                    searchText: 'apcbdfd',
+                    bentuk_pendidikan_id: (this.state.usia < 11 ? 5 : 6)
                 }
             },()=>{
                 this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
@@ -267,6 +304,7 @@ class tambahJalurSekolah extends Component {
             routeParamsCariSekolah: {
                 searchText: e.currentTarget.value,
                 status_sekolah: 1,
+                bentuk_pendidikan_id: (this.state.usia < 11 ? 5 : 6),
                 kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
                 id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
             }
@@ -364,6 +402,10 @@ class tambahJalurSekolah extends Component {
         });
     }
 
+    tutupSheet = () => {
+
+    }
+
     render()
     {
         return (
@@ -430,9 +472,11 @@ class tambahJalurSekolah extends Component {
                 </Row>
                 <Sheet backdrop opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'50%'}}>
                 <Toolbar>
-                    <div className="left"></div>
+                    <div className="left">
+                        <span>Menampilkan sekolah jenjang {(this.state.usia < 11 ? 'SD' : 'SMP')}</span>
+                    </div>
                     <div className="right">
-                    <Link sheetClose>Tutup</Link>
+                        <Link sheetClose onClick={this.tutupSheet}>Tutup</Link>
                     </div>
                 </Toolbar>
                 <PageContent>

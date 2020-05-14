@@ -50,6 +50,7 @@ class tambahBerkas extends Component {
         listSekolahPilihan: [],
         sheetOpened: false,
         displaySekolahPilihan: {},
+        
         file_gambar_pas_foto: '',
         gambar_pas_foto: '',
         file_gambar_kk: '',
@@ -92,6 +93,8 @@ class tambahBerkas extends Component {
                 id_level_wilayah: 1
             }
         },()=>{
+
+            this.props.getBerkasJalur(this.state.routeParams);
 
             if(this.state.routeParams.calon_peserta_didik_id){
                 this.props.getCalonPesertaDidik(this.state.routeParams).then((result)=>{
@@ -311,8 +314,51 @@ class tambahBerkas extends Component {
                 </Block>
 
                 <Row noGap>
+                    {this.props.berkas_jalur.rows.map((option)=>{
+                        return (
+                            <Col width="100" tabletWidth="50">
+                                <Card>
+                                    <CardHeader>
+                                        {option.nama}
+                                    </CardHeader>
+                                    <CardContent>
+                                        <Dropzone className="droping" onDrop={this.acceptedFile('gambar_'+option.kode)}>
+                                            {({getRootProps, getInputProps}) => (
+                                                <section>
+                                                    <div {...getRootProps()} style={{height:'250px',border:'4px dashed #ccc', textAlign: 'center', paddingTop:(this.state["file_gambar_"+option.kode] !== '' ? '16px' : '10%'), paddingLeft:'16px', paddingRight:'16px'}}>
+                                                        <input {...getInputProps()} />
+                                                        {this.state["file_gambar_"+option.kode] === '' &&
+                                                        <i slot="media" className="f7-icons" style={{fontSize:'60px', color:'#434343'}}>square_arrow_up</i>
+                                                        }
+                                                        {this.state["file_gambar_"+option.kode] !== '' &&
+                                                        <>
+                                                        <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state["file_gambar_"+option.kode]} />
+                                                        <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                                        </>
+                                                        }
+                                                        {this.state["gambar_"+option.kode] === '' &&
+                                                        <>
+                                                        <p>Tarik dan seret gambar {option.nama} Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
+                                                        <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 2MB, dan hanya dalam format .jpg, atau .png</p>
+                                                        </>
+                                                        }
+                                                        {this.state["gambar_"+option.kode] !== '' && this.state["file_gambar_"+option.kode] === '' &&
+                                                        <>
+                                                        <p style={{fontSize:'20px'}}>{this.state["gambar_"+option.kode]}</p>
+                                                        <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                                        </>
+                                                        }
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </Dropzone>
+                                    </CardContent>
+                                </Card>
+                            </Col>
+                        )
+                    })}
                     {/* {this.state.routeParams.jalur_id === '0100' && this.state.routeParams.jalur_id === '0200' && this.state.routeParams.jalur_id === '0400' && */}
-                    <Col width="100" tabletWidth="50">
+                    {/* <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
                                 Pas Foto
@@ -350,9 +396,9 @@ class tambahBerkas extends Component {
                                 </Dropzone>
                             </CardContent>
                         </Card>
-                    </Col>
+                    </Col> */}
                     {/* // } */}
-                    {this.state.routeParams.jalur_id === '0100' &&
+                    {/* {this.state.routeParams.jalur_id === '0100' &&
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -392,8 +438,8 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
-                    {this.state.routeParams.jalur_id === '0100' &&
+                    } */}
+                    {/* {this.state.routeParams.jalur_id === '0100' &&
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -433,8 +479,8 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
-                    {this.state.routeParams.jalur_id === '0100' &&
+                    } */}
+                    {/* {this.state.routeParams.jalur_id === '0100' &&
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -474,8 +520,8 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
-                    {this.state.routeParams.jalur_id === '0200' &&
+                    } */}
+                    {/* {this.state.routeParams.jalur_id === '0200' &&
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -515,8 +561,8 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
-                    {this.state.routeParams.jalur_id === '0500' && this.state.routeParams.jalur_id === '0300' &&
+                    } */}
+                    {/* {this.state.routeParams.jalur_id === '0500' && this.state.routeParams.jalur_id === '0300' &&
                     <Col width="100" tabletWidth="50">
                         <Card>
                             <CardHeader>
@@ -556,7 +602,7 @@ class tambahBerkas extends Component {
                             </CardContent>
                         </Card>
                     </Col>
-                    }
+                    } */}
                     <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
                         <Button raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
                             Simpan dan Lanjutkan
@@ -589,7 +635,8 @@ function mapDispatchToProps(dispatch) {
       simpanCalonPesertaDidik: Actions.simpanCalonPesertaDidik,
       simpanSekolahPilihan: Actions.simpanSekolahPilihan,
       simpanBerkasCalon: Actions.simpanBerkasCalon,
-      getBerkasCalon: Actions.getBerkasCalon
+      getBerkasCalon: Actions.getBerkasCalon,
+      getBerkasJalur: Actions.getBerkasJalur
     }, dispatch);
 }
 
@@ -600,7 +647,8 @@ function mapStateToProps({ App, PPDBSekolah, Ref, PPDBPesertaDidik }) {
         ppdb_sekolah: PPDBSekolah.ppdb_sekolah,
         mst_wilayah: Ref.mst_wilayah,
         calon_peserta_didik: PPDBPesertaDidik.calon_peserta_didik,
-        berkas_calon: PPDBPesertaDidik.berkas_calon
+        berkas_calon: PPDBPesertaDidik.berkas_calon,
+        berkas_jalur: App.berkas_jalur
     }
 }
 

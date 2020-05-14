@@ -217,7 +217,7 @@ class app extends Component {
         }
         </>
         }
-        <Panel right cover style={{width:'280px'}}>
+        <Panel right cover style={{width:'280px'}} opened={this.props.panel_kanan_buka}>
           <View>
             <Page>
               <Navbar title={this.props.judul_panel_kanan}/>
@@ -354,6 +354,7 @@ function mapStateToProps({ App }) {
     tabBar: App.tabBar,
     judul_panel_kanan: App.judul_panel_kanan,
     isi_panel_kanan: App.isi_panel_kanan,
+    panel_kanan_buka: App.panel_kanan_buka
   }
 }
 

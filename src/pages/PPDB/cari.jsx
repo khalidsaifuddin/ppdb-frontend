@@ -34,13 +34,19 @@ class cari extends Component {
       loading: false,
       routeParams: {
         kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
-        id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
+        id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
+        start: 0,
+        limit: 20
       },
       pertanyaan: {
         rows: [],
         total: 0,
       },
       riwayat_kata_kunci: [],
+      peserta_didik: {
+        rows:[],
+        count: 0
+      }
     }
   }
 
@@ -104,10 +110,16 @@ class cari extends Component {
         ...this.state.routeParams,
         keyword: event.target[0].value,
         searchText: event.target[0].value,
+        id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
+        kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi')
       }
     }, ()=> {
       this.props.setKeyword(this.state.routeParams.keyword);
-      this.props.getPesertaDidik(this.state.routeParams);
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
+        this.setState({
+          peserta_didik: this.props.peserta_didik
+        })
+      });
       this.props.getPPDBSekolah(this.state.routeParams);
     });
   }
@@ -134,7 +146,11 @@ class cari extends Component {
       }
     }, ()=> {
       this.props.setKeyword(kata_kunci);
-      this.props.getPesertaDidik(this.state.routeParams);
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
+        this.setState({
+          peserta_didik: this.props.peserta_didik
+        })
+      });
       this.props.getPPDBSekolah(this.state.routeParams);
     });
   }
@@ -152,6 +168,31 @@ class cari extends Component {
           this.$f7router.navigate('/tambahCalonPesertaDidik/' + peserta_didik_id);
         }
       });
+    });
+  }
+
+  muatSelanjutnya = () => {
+    this.setState({
+      routeParams: {
+        ...this.state.routeParams,
+        start: parseInt(this.state.routeParams.start)+parseInt(this.state.routeParams.limit)
+      }
+    },()=>{
+
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
+        
+        this.setState({
+          peserta_didik: {
+            ...this.state.peserta_didik,
+            rows: [
+              ...this.state.peserta_didik.rows,
+              ...this.props.peserta_didik.rows
+            ]
+          }
+        });
+
+      });
+
     });
   }
 
@@ -188,14 +229,14 @@ class cari extends Component {
         </Block>
         <Block className="daftarPencarian">
           <Segmented raised>
-            <Button tabLink="#tab-1" tabLinkActive>Peserta Didik ({this.props.peserta_didik.countAll ? this.props.peserta_didik.countAll : "0"})</Button>
+            <Button tabLink="#tab-1" tabLinkActive>Peserta Didik ({this.state.peserta_didik.countAll ? this.state.peserta_didik.countAll : "0"})</Button>
             <Button tabLink="#tab-2">Sekolah ({this.props.ppdb_sekolah.countAll ? this.props.ppdb_sekolah.countAll : "0"})</Button>
           </Segmented>
           <Tabs>
             <Tab id="tab-1" className="page-content" tabActive>
               <div name="cariPesertaDidik">
                 <BlockTitle>Hasil Pencarian Peserta Didik (Hanya menampilkan peserta didik yang berada di tingkat akhir jenjangnya)</BlockTitle>
-                {this.props.peserta_didik.count < 1 &&
+                {this.state.peserta_didik.count < 1 &&
                   <Card className="demo-card-header-pic" key={null}>
                     <CardContent style={{textAlign:'center'}}>
                       <h4>Data peserta didik tidak ditemukan</h4>
@@ -206,9 +247,9 @@ class cari extends Component {
                   </Card>
                 }
                 <div className="daftarPeserta">
-                  {this.props.peserta_didik.rows.map((option)=> {
+                  {this.state.peserta_didik.rows.map((option)=> {
                     return (
-                      <Card key={option.peserta_didik_id} noShadow noBorder>
+                      <Card key={option.peserta_didik_id} noShadow noBorder style={{borderTop:'3px solid #90CAF9'}}>
                         <CardHeader>
                           <Link href="#">
                             <Icon f7="person_round_fill" size="20px"></Icon>
@@ -229,10 +270,10 @@ class cari extends Component {
                                 <span>Asal Sekolah</span>
                                 <b>{option.nama_sekolah} ({option.npsn})</b>
                               </div>
-                              <div className="tentangPeserta">
+                              {/* <div className="tentangPeserta">
                                 <span>Alamat Rumah</span>
                                 <b>{option.alamat_jalan_pd} {option.rt && <>RT {option.rt}/{option.rw}</>} {option.desa_kelurahan} {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b>
-                              </div>
+                              </div> */}
                             </Col>
                             <Col width="100" tabletWidth="45">
                               <div className="tentangPeserta">
@@ -248,17 +289,18 @@ class cari extends Component {
                           </Row>
                         </CardContent>
                         <CardFooter>
-                          <Button raised fill disabled={option.flag_pendaftar ? true : (parseInt(option.tingkat_pendidikan_id) === 6 ? false : (parseInt(option.tingkat_pendidikan_id) === 9 ? false : true))} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
-                            <Icon f7="person_badge_plus" size="16px"></Icon> Daftarkan Peserta Didik
+                          <Button raised fill disabled={(option.flag_pendaftar ? true : false)} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
+                            <Icon f7="person_badge_plus" size="16px"></Icon> {((!option.flag_pendaftar ? <>Daftarkan Peserta Didik</> : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
                           </Button>
-                          <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}>
-                            {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))}
-                            {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
-                          </div>
+                          {/* <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}> */}
+                            {/* {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))} */}
+                            {/* {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))} */}
+                          {/* </div> */}
                         </CardFooter>
                       </Card>
                     )
                   })}
+                  <Button onClick={this.muatSelanjutnya}>Muat hasil selanjutnya</Button>
                 </div>
               </div>
             </Tab>

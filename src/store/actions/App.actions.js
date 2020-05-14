@@ -14,12 +14,15 @@ export const GET_KABUPATEN = '[APP] GET KABUPATEN';
 export const GET_KECAMATAN = '[APP] GET KECAMATAN';
 export const SET_JUDUL_KANAN = '[APP] SET JUDUL KANAN';
 export const SET_ISI_KANAN = '[APP] SET ISI KANAN';
+export const PANEL_KANAN_BUKA = '[APP] PANEL KANAN BUKA';
 export const LOGIN = '[APP] LOGIN';
 export const GET_PENGGUNA = '[APP] GET PENGGUNA';
 export const SET_PENGGUNA = '[APP] SET PENGGUNA';
 export const BUAT_PENGGUNA = '[APP] BUAT PENGGUNA';
 export const GET_GEOJSON_BASIC = '[APP] GET GEOJSON BASIC';
 export const GET_WILAYAH_KLIEN = '[APP] GET WILAYAH_KLIEN';
+export const GET_BERKAS_JALUR = '[APP] GET BERKAS JALUR';
+export const GEOCODE = '[APP] GEOCODE';
 
 export function updateWindowDimension()
 {
@@ -233,6 +236,17 @@ export function setIsiKanan(object)
     }
 }
 
+export function panelKananBuka(boolean)
+{
+    
+    return (dispatch) => {
+        return dispatch ({
+            type: PANEL_KANAN_BUKA,
+            panel_kanan_buka: boolean
+        })
+    }
+}
+
 export function login(routeParams)
 {
     const request = axios.post(localStorage.getItem('api_base')+'/api/Otentikasi/masuk', {
@@ -309,6 +323,36 @@ export function getWilayahKlien(routeParams)
         request.then((response) =>
             dispatch({
                 type   : GET_WILAYAH_KLIEN,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+export function getBerkasJalur(routeParams)
+{
+    const request = axios.post(localStorage.getItem('api_base')+'/api/app/getBerkasJalur', {
+        ...routeParams
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_BERKAS_JALUR,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+export function getGeocode(routeParams)
+{
+    const request = axios.get('https://nominatim.openstreetmap.org/search.php?q='+routeParams.keyword+'&format=json');
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GEOCODE,
                 payload: response.data,
                 routeParams
             })
