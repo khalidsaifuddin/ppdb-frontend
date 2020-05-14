@@ -41,6 +41,16 @@ class DaftarPendaftaran extends Component {
         })
     }
 
+    cetakFormulir = (n) => {
+        const link = localStorage.getItem('api_base') + "api/CalonPesertaDidik/print/formulir/" + n.calon_peserta_didik_id;
+        window.open(link, '_blank');
+    }
+
+    cetakBukti = (n) => {
+        const link = localStorage.getItem('api_base') + "api/CalonPesertaDidik/print/bukti/" + n.calon_peserta_didik_id;
+        window.open(link, '_blank');
+    }
+
     componentDidMount = () => {
         this.getData();
     }
@@ -77,7 +87,7 @@ class DaftarPendaftaran extends Component {
                     //     sekolah_asal = option.sekolah_asal.nama;
                     // }
 
-                    console.log(option.sekolah_asal);
+                    // console.log(option.sekolah_asal);
 
                     return (
 
@@ -163,6 +173,18 @@ class DaftarPendaftaran extends Component {
                                 </Button>
                                 <Button>
                                     Tanggal Konfirmasi: {option.status_konfirmasi === 1 ? option.tanggal_konfirmasi : '-'}
+                                </Button>
+                                <Button
+                                    fillIos
+                                    onClick={e => this.cetakFormulir(option) }
+                                >
+                                    Cetak Formulir
+                                </Button>
+                                <Button
+                                    fillIos
+                                    onClick={e => this.cetakBukti(option) }
+                                >
+                                    Cetak Bukti Pendaftaran
                                 </Button>
                             </CardFooter>
                         </Card>
