@@ -42,12 +42,14 @@
   top: auto;
   overflow: visible;
   background-color: #fff;
+  -webkit-box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.07843);
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.07843);
 }
 
 .mobileTab > .toolbar-inner > a { padding: 4px 0 !important; }
 
 .mobileTab > .toolbar-inner > a.formulir--menu {
+  background-image: -o-linear-gradient(328.3deg, rgba(41,116,250,1) 22.9%, rgba(67,212,255,1) 69%);
   background-image: linear-gradient(121.7deg, rgba(41,116,250,1) 22.9%, rgba(67,212,255,1) 69%);
   color: #fff;
   height: 60px;
@@ -97,6 +99,8 @@
 }
 
 .pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   list-style: none;
   border: 0px solid #ccc;
@@ -163,11 +167,17 @@
 .mainMenu .navbar {
   position: relative;
   background-color: #fff;
+  -webkit-box-shadow: 0 0 10px #00000014;
   box-shadow: 0 0 10px #00000014;
 }
 
 .mainMenu .navbar .navbar-inner {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
 }
 
@@ -211,6 +221,7 @@
 .view > .navbar {
   position: relative;
   background-color: #fff;
+  -webkit-box-shadow: 0 0 10px #00000014;
   box-shadow: 0 0 10px #00000014;
 }
 
@@ -237,7 +248,10 @@
   border-bottom-right-radius: 50%;
   width: 100%;
   z-index: -1;
+  background-image: -o-linear-gradient(110deg, #b721ff 0%, #21d4fd 100%);
   background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+  -webkit-transform: scaleX(1.2);
+  -ms-transform: scaleX(1.2);
   transform: scaleX(1.2);
 }
 
@@ -270,18 +284,27 @@
 }
 
 .gridMenu {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin: 0;
   padding: 20px 10px 0;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
 }
 
 .gridMenu .link {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   text-align: center;
   width: 96px;
   height: 96px;
   margin-right: 1rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
   font-size: .75rem;
@@ -291,7 +314,10 @@
   position: relative;
   line-height: 1.2;
   color: #1e1e1e;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
+  -webkit-box-shadow: 0 0 0 #007aff24;
   box-shadow: 0 0 0 #007aff24;
   border: 1px solid transparent;
 }
@@ -299,6 +325,7 @@
 .gridMenu .link:last-child { margin-right: 0; }
 
 .gridMenu .link:hover {
+  -webkit-box-shadow: 0 0 10px #007aff24;
   box-shadow: 0 0 10px #007aff24;
   border: 1px solid #007aff29;
 }
@@ -335,6 +362,8 @@
   bottom: -32px;
   z-index: 1;
   opacity: .1;
+  -webkit-transform: scale(1.5);
+  -ms-transform: scale(1.5);
   transform: scale(1.5);
   pointer-events: none;
 }
@@ -361,7 +390,11 @@
   margin-top: 0;
   margin-bottom: .5rem;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
   font-size: .75rem;
   font-weight: 400;
@@ -373,8 +406,14 @@
 .rekapitulasiProgres .rekapItem .rekapDesc .progressbar { background-color: #ffffff; }
 
 .rekapitulasiProgres .rekapItem .rekapDesc .rekapAction {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   margin-top: .625rem;
 }
@@ -386,13 +425,13 @@
   color: #fefefe;
 }
 
-.rekapitulasiProgres .rekapItem.rekap--zonasi { background-image: radial-gradient(circle farthest-corner at 5.2% 14.3%,  rgba(255,73,18,1) 0%, rgba(235,118,36,1) 47.4%, rgba(235,69,69,1) 100.2%); }
+.rekapitulasiProgres .rekapItem.rekap--zonasi { background-image: -o-radial-gradient(5.2% 14.3%,  circle farthest-corner,  rgba(255,73,18,1) 0%, rgba(235,118,36,1) 47.4%, rgba(235,69,69,1) 100.2%); background-image: radial-gradient(circle farthest-corner at 5.2% 14.3%,  rgba(255,73,18,1) 0%, rgba(235,118,36,1) 47.4%, rgba(235,69,69,1) 100.2%); }
 
-.rekapitulasiProgres .rekapItem.rekap--afirmasi { background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(15,213,172,1) 0%, rgba(34,182,198,1) 100.2%); }
+.rekapitulasiProgres .rekapItem.rekap--afirmasi { background-image: -o-radial-gradient(10% 20%,  circle farthest-corner,  rgba(15,213,172,1) 0%, rgba(34,182,198,1) 100.2%); background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(15,213,172,1) 0%, rgba(34,182,198,1) 100.2%); }
 
-.rekapitulasiProgres .rekapItem.rekap--prestasi { background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(228,118,0,1) 0%, rgba(247,189,2,1) 90%); }
+.rekapitulasiProgres .rekapItem.rekap--prestasi { background-image: -o-radial-gradient(10% 20%,  circle farthest-corner,  rgba(228,118,0,1) 0%, rgba(247,189,2,1) 90%); background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(228,118,0,1) 0%, rgba(247,189,2,1) 90%); }
 
-.rekapitulasiProgres .rekapItem.rekap--ortu { background-image: radial-gradient(circle 997px at 5.8% 11.8%,  rgba(0,201,235,1) 0%, rgba(145,0,228,1) 90%); }
+.rekapitulasiProgres .rekapItem.rekap--ortu { background-image: -o-radial-gradient(5.8% 11.8%,  circle 997px,  rgba(0,201,235,1) 0%, rgba(145,0,228,1) 90%); background-image: radial-gradient(circle 997px at 5.8% 11.8%,  rgba(0,201,235,1) 0%, rgba(145,0,228,1) 90%); }
 
 .pelaksanaanPpdb {
   margin: 0;
@@ -410,12 +449,18 @@
   margin-left: 0;
   margin-right: 0;
   overflow: hidden;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .jadwalPpdb .card .card-header {
   color: #ff9f1c;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
   align-items: flex-start;
   font-weight: 700;
   padding: .875rem .75rem;
@@ -427,13 +472,19 @@
 }
 
 .jadwalPpdb .card .card-header .subHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
   margin-top: .5rem;
 }
 
 .jadwalPpdb .card .card-header .subHeader > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: relative;
 }
@@ -453,7 +504,11 @@
 }
 
 .jadwalPpdb .card .card-content .jadwalCountdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
 }
 
@@ -467,10 +522,17 @@
   font-weight: 700;
   background-color: #ff9f1c;
   color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   border-radius: .4rem;
+  -webkit-box-shadow: -2px 2px 0 1px #e88c0d;
   box-shadow: -2px 2px 0 1px #e88c0d;
 }
 
@@ -532,15 +594,20 @@
 .resumeTable .data-table {
   margin: 0;
   padding: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .riwayatPencarian {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin: 44px 0 0 0;
   padding: .75rem 1rem;
   background-color: #fff;
   position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -584,23 +651,15 @@
   height: auto;
 }
 
-.daftarPencarian .tabs > .tab .block-title {
-  margin: 0 0 1rem;
-}
+.daftarPencarian .tabs > .tab .block-title { margin: 0 0 1rem; }
 
-.daftarPencarian .tabs > .tab .demo-card-header-pic {
-  margin: 0 0 .5rem;
-}
+.daftarPencarian .tabs > .tab .demo-card-header-pic { margin: 0 0 .5rem; }
 
 .daftarPencarian .tabs > .tab .demo-card-header-pic:last-child { margin: 0; }
 
-.title-large {
-  background-color: transparent !important;
-}
+.title-large { background-color: transparent !important; }
 
-.title-large .title-large-text {
-  font-size: 1.5rem;
-}
+.title-large .title-large-text { font-size: 1.5rem; }
 
 .navbar .title-large:after {
   content: '';
@@ -612,13 +671,12 @@
   padding: .25rem 1rem 1rem;
 }
 
-.pageWithTitle .segmented {
-  margin-bottom: 1rem;
-}
+.pageWithTitle .segmented { margin-bottom: 1rem; }
 
 .pageWithTitle .card {
   position: relative;
   margin: 0 0 1rem 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -643,9 +701,7 @@
   width: 100%;
 }
 
-.daftarSekolah .item-content {
-  min-height: 35px;
-}
+.daftarSekolah .item-content { min-height: 35px; }
 
 .daftarSekolah .item-content .item-inner {
   padding-top: 0px;
@@ -661,6 +717,7 @@
 .daftarPeserta .card {
   overflow: hidden;
   margin: 0 0 1rem;
+  border-top: 2px solid #007aff61;
 }
 
 .daftarPeserta .card:last-child { margin: 0; }
@@ -669,6 +726,7 @@
   min-height: auto;
   height: auto;
   padding: .5rem 1rem;
+  background-image: -o-radial-gradient(25.3% 13.8%, circle 621px, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
   background-image: radial-gradient(circle 621px at 25.3% 13.8%, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
 }
 
@@ -688,6 +746,7 @@
   padding: .375rem;
   border-radius: 50%;
   margin-right: .375rem;
+  -webkit-box-shadow: 0px 2px 5px #007aff2b;
   box-shadow: 0px 2px 5px #007aff2b;
 }
 
@@ -703,6 +762,8 @@
 .daftarPeserta .card .card-content { padding: 1rem; }
 
 .daftarPeserta .card .card-content .tentangPeserta {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   line-height: 1.6;
 }
@@ -733,12 +794,14 @@
 .daftarPeserta .card .card-content .tentangPeserta .daftarLabel.sudah--daftar {
   background-color: #008758;
   color: #fff;
+  -webkit-box-shadow: 4px 4px 10px #00875840;
   box-shadow: 4px 4px 10px #00875840;
 }
 
 .daftarPeserta .card .card-content .tentangPeserta .daftarLabel.belum--daftar {
   background-color: #f0f0f0;
   color: #ff3b30;
+  -webkit-box-shadow: 4px 4px 10px #f0f0f040;
   box-shadow: 4px 4px 10px #f0f0f040;
 }
 
@@ -766,15 +829,86 @@
   width: 100%;
 }
 
+.daftarSekolah.daftarPdSekolah {
+  position: relative;
+  padding: 1rem;
+  margin-top: 44px;
+  width: auto;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: .25rem;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p {
+  font-size: .75rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 58px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  line-height: 1.2;
+  border-radius: 0;
+  margin: 0;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  -webkit-box-shadow: 0 0 20px #0000003b;
+  box-shadow: 0 0 20px #0000003b;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p:nth-of-type(1) {
+  background-color: #ff9500;
+  color: #f1f1f1;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p:nth-of-type(2) {
+  background-color: #673ab7;
+  color: #f1f1f1;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p:nth-of-type(3) {
+  background-color: #2196f3;
+  color: #f1f1f1;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p:nth-of-type(4) {
+  background-color: #009688;
+  color: #f1f1f1;
+}
+
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p b {
+  display: block;
+  font-size: 1.25rem;
+}
+
 .daftarSekolah .card {
   overflow: hidden;
   margin: 0 0 1rem;
+  border-top: 2px solid #ff6b2261;
 }
 
 .daftarSekolah .card:last-child { margin: 0; }
 
 .daftarSekolah .card .card-content {
   padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -816,6 +950,8 @@
 .daftarSekolah .card .card-content .tentangSekolah h3 span { margin-right: .25rem; }
 
 .daftarSekolah .card .card-content .tentangSekolah .keteranganSekolah {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   line-height: 1.6;
 }
@@ -862,8 +998,11 @@
   height: 40px;
   padding: 5px 5px 5px 30px;
   text-decoration: none;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
   overflow: visible;
+  -webkit-box-shadow: none;
   box-shadow: none;
   border: none !important;
 }
@@ -881,6 +1020,8 @@
   border-bottom: 20px solid transparent;
   width: 0;
   height: 0;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
 }
 
@@ -896,6 +1037,8 @@
   border-bottom: 20px solid transparent;
   width: 0;
   height: 0;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
 }
 
@@ -939,6 +1082,163 @@
   padding: 0 1rem;
 }
 
+.daftarKegiatan {
+  position: relative;
+  padding: 1rem;
+  margin-top: 44px;
+}
+
+.daftarKegiatan .judulKegiatan {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-image: -o-radial-gradient(10% 20%,  circle farthest-corner,  rgb(0, 178, 236) 0%, rgba(152,70,242,1) 100.2%);
+  background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgb(0, 178, 236) 0%, rgba(152,70,242,1) 100.2%);
+}
+
+.daftarKegiatan .judulKegiatan h3 {
+  margin: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.daftarKegiatan .judulKegiatan .tautanKegiatan {
+  position: relative;
+  display: block;
+}
+
+.daftarKegiatan .judulKegiatan .tautanKegiatan .button {
+  margin-left: .5rem;
+  display: inline-block;
+}
+
+.daftarKegiatan .card {
+  overflow: hidden;
+  margin: 0 0 1rem;
+  border-top: 2px solid #9648f261;
+}
+
+.daftarKegiatan .card:last-child { margin: 0; }
+
+.daftarKegiatan .card .card-header {
+  min-height: auto;
+  height: auto;
+  padding: .5rem 1rem;
+  background-image: -o-radial-gradient(25.3% 13.8%, circle 621px, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
+  background-image: radial-gradient(circle 621px at 25.3% 13.8%, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
+}
+
+.daftarKegiatan .card .card-header:after {
+  content: '';
+  display: none;
+}
+
+.daftarKegiatan .card .card-header a {
+  font-size: .875rem;
+  color: #007aff;
+}
+
+.daftarKegiatan .card .card-header a i {
+  background-color: #ffffff;
+  color: #9846f2;
+  padding: .375rem;
+  border-radius: 50%;
+  margin-right: .375rem;
+  -webkit-box-shadow: 0px 2px 5px #007aff2b;
+  box-shadow: 0px 2px 5px #007aff2b;
+}
+
+.daftarKegiatan .card .card-header a h3 { margin: 0; }
+
+.daftarKegiatan .card .card-header a h3 span {
+  color: #252525;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: .125rem;
+}
+
+.daftarKegiatan .card .card-content { padding: 1rem; }
+
+.daftarKegiatan .card .card-content .tentangKegiatan {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: 1.6;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan > span {
+  position: relative;
+  min-width: 110px;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan > span::after {
+  content: ':';
+  display: inline-block;
+  position: absolute;
+  right: 6px;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel {
+  display: inline-block;
+  padding: 0 .625rem;
+  border-radius: .25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  max-width: 140px;
+  width: 100%;
+  text-align: center;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel.sudah--daftar {
+  background-color: #008758;
+  color: #fff;
+  -webkit-box-shadow: 4px 4px 10px #00875840;
+  box-shadow: 4px 4px 10px #00875840;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel.belum--daftar {
+  background-color: #f0f0f0;
+  color: #ff3b30;
+  -webkit-box-shadow: 4px 4px 10px #f0f0f040;
+  box-shadow: 4px 4px 10px #f0f0f040;
+}
+
+.daftarKegiatan .card .card-footer {
+  position: static;
+  min-height: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.daftarKegiatan .card .card-footer:before {
+  content: '';
+  display: none;
+}
+
+.daftarKegiatan .card .card-footer .cardActions {
+  position: absolute;
+  top: 9px;
+  right: 16px;
+}
+
+.daftarKegiatan .card .card-footer .cardActions .button {
+  display: inline-block;
+  margin-left: .5rem;
+}
+
+.daftarKegiatan .card .card-footer .cardActions .button:first-child { margin-left: 0; }
+
 .loginPage {
   width: 100%;
   position: relative;
@@ -946,9 +1246,16 @@
 
 .loginPage .page-content {
   padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  background-image: -o-linear-gradient(328.3deg, rgba(41,116,250,1) 22.9%, rgba(67,212,255,1) 69%);
   background-image: linear-gradient(121.7deg, rgba(41,116,250,1) 22.9%, rgba(67,212,255,1) 69%);
   overflow: hidden;
 }
@@ -969,6 +1276,7 @@
   padding: 3rem 2rem;
   border-radius: 1rem;
   overflow: hidden;
+  -webkit-box-shadow: 0px 9px 50px #0000001f;
   box-shadow: 0px 9px 50px #0000001f;
 }
 
@@ -992,24 +1300,18 @@
   text-transform: uppercase;
 }
 
-.loginPage .page-content .loginBox .list li {
-  margin-bottom: .5rem;
-}
+.loginPage .page-content .loginBox .list li { margin-bottom: .5rem; }
 
-.loginPage .page-content .loginBox .list .item-content {
-  padding-left: 0;
-}
+.loginPage .page-content .loginBox .list .item-content { padding-left: 0; }
 
-.loginPage .page-content .loginBox .list .item-input .item-inner {
-  padding-right: 0;
-}
+.loginPage .page-content .loginBox .list .item-input .item-inner { padding-right: 0; }
 
-.loginPage .page-content .loginBox .loginActions {
-  display: block;
-}
+.loginPage .page-content .loginBox .loginActions { display: block; }
 
 .loginPage .page-content .loginBox .loginActions .loginBtn {
   height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -1023,8 +1325,11 @@
 
 .loginPage .page-content .loginBox .loginActions .googleBtn {
   background-color: rgb(255, 255, 255);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   color: rgba(0, 0, 0, 0.54);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
   padding: 0px;
   border: 1px solid transparent;
@@ -1032,7 +1337,11 @@
   font-weight: 500;
   font-family: Roboto, sans-serif;
   height: 40px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   border-radius: .25rem !important;
 }
@@ -1063,6 +1372,7 @@
 }
 
 .animatedWave.wave--1 {
+  -webkit-animation: wave 45s infinite linear;
   animation: wave 45s infinite linear;
   border-radius: 43%;
   bottom: -230%;
@@ -1070,16 +1380,52 @@
 }
 
 .animatedWave.wave--2 {
+  -webkit-animation: wave 32s infinite linear;
   animation: wave 32s infinite linear;
   border-radius: 50%;
   bottom: -240%;
   left: -50%;
 }
 
-@keyframes wave {
-  from { transform: rotate(0deg); }
+@-webkit-keyframes wave {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
 
-  from { transform: rotate(360deg); }
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wave {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.pilih_kota .smart-select .item-content .item-inner .item-title { display: none; }
+
+.pilih_kota .smart-select .item-content .item-inner .item-after {
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0px;
+}
+
+.link2 .link {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .onlyOnDesktop { display: block !important; }
@@ -1106,6 +1452,7 @@
 
   .gridMenu {
     margin: 0;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 
@@ -1113,6 +1460,8 @@
     width: auto;
     margin: 2%;
     max-width: 29.333333%;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 29.333333%;
     flex: 0 0 29.333333%;
   }
 
@@ -1123,8 +1472,14 @@
 
   .loginPage .page-content .loginBox .logoApp {
     position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
   }
 
@@ -1161,6 +1516,7 @@
   }
 
   .animatedWave.wave--1 {
+    -webkit-animation: wave 45s infinite linear;
     animation: wave 45s infinite linear;
     border-radius: 43%;
     bottom: -150%;
@@ -1168,6 +1524,7 @@
   }
 
   .animatedWave.wave--2 {
+    -webkit-animation: wave 32s infinite linear;
     animation: wave 32s infinite linear;
     border-radius: 50%;
     bottom: -190%;
@@ -1180,7 +1537,7 @@
 
   .rekapitulasiProgres .rekapItem .rekapDesc h4 { font-size: .75rem; }
 
-  .rekapitulasiProgres .rekapItem .rekapDesc h5 { align-items: flex-end; }
+  .rekapitulasiProgres .rekapItem .rekapDesc h5 { -webkit-box-align: end; -ms-flex-align: end; align-items: flex-end; }
 
   .rekapitulasiProgres .rekapItem .rekapDesc h5 span i { display: block; }
 
@@ -1188,6 +1545,8 @@
     width: 115px;
     bottom: 10px;
     opacity: .05;
+    -webkit-transform: scale(1.25);
+    -ms-transform: scale(1.25);
     transform: scale(1.25);
   }
 
@@ -1195,7 +1554,12 @@
 
   .riwayatPencarian {
     padding: .5rem;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
     align-items: flex-start;
   }
 
@@ -1235,6 +1599,7 @@
     top: 5px;
     left: 12px;
     z-index: 2;
+    -webkit-box-shadow: none;
     box-shadow: none;
     border: none;
     border-radius: 50%;
@@ -1258,11 +1623,19 @@
     padding-left: 64px;
     width: 100%;
     background-color: #007aff;
+    background-image: -o-radial-gradient(84.6% 77.8%, circle farthest-corner, rgba(86,89,218,1) 0%, rgba(95,208,248,1) 90%);
     background-image: radial-gradient(circle farthest-corner at 84.6% 77.8%, rgba(86,89,218,1) 0%, rgba(95,208,248,1) 90%);
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
     color: #fff;
     min-height: 52px;
     font-size: .875rem;
+  }
+
+  .daftarSekolah.daftarPdSekolah .card .card-content .tentangSekolah .link { 
+    background-image: -o-linear-gradient(340.4deg, rgb(254, 245, 232) 11.2%, rgb(254, 255, 216) 100.2%);
+    background-image: linear-gradient(109.6deg, rgb(254, 245, 232) 11.2%, rgb(254, 255, 216) 100.2%);
   }
 
   .daftarSekolah .card .card-content .tentangSekolah h3 {
@@ -1271,7 +1644,10 @@
     display: block;
     min-height: auto;
     line-height: 1.2;
+    color: #fff;
   }
+
+  .daftarSekolah.daftarPdSekolah .card .card-content .tentangSekolah h3 { color: #ff6b22; }
 
   .daftarSekolah .card .card-content .tentangSekolah h3 span {
     margin-right: 0;
@@ -1300,18 +1676,33 @@
     width: 100%;
     min-width: 100%;
   }
-}
 
-.pilih_kota .smart-select .item-content .item-inner .item-title { display: none; }
+  .daftarKegiatan .card .card-header a { font-size: .75rem; }
 
-.pilih_kota .smart-select .item-content .item-inner .item-after {
-  text-align: left;
-  width: 100%;
-  max-width: 100%;
-  padding-left: 0px;
-}
+  .daftarSekolah.daftarPdSekolah .sekolahStatistik { margin-top: .5rem; }
 
-.link2 .link {
-  flex-direction: column;
-  overflow: hidden;
+  .daftarKegiatan .judulKegiatan .tautanKegiatan .button {
+    margin-left: .5rem;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+  }
+
+  .daftarKegiatan .judulKegiatan .tautanKegiatan .button span { display: none; }
+
+  .daftarKegiatan .card .card-footer {
+    position: relative;
+    padding: 0 .75rem .75rem;
+  }
+
+  .daftarKegiatan .card .card-footer .cardActions {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+  }
 }

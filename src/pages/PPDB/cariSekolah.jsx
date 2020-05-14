@@ -50,9 +50,9 @@ class cariSekolah extends Component {
       <div name="cariSekolah">
         <BlockTitle>Hasil Pencarian Sekolah</BlockTitle>
         <div className="daftarSekolah">
-          {this.props.ppdb_sekolah.rows.map((option, key)=> {
+          {this.props.ppdb_sekolah.rows.map((option)=> {
             return (
-              <Card key={key} noShadow noBorder>
+              <Card key={option.sekolah_id} noShadow noBorder>
                 <CardContent padding={false}>
                   <div className="gambarSekolah" style={{backgroundImage: 'url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)'}}>
                     <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}></img> 
@@ -97,7 +97,7 @@ class cariSekolah extends Component {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button raised fill color="deeporange">
+                  <Button raised fill color="deeporange" href={"/detailCalonpdSekolah/" + option.sekolah_id}>
                     <Icon f7="house_alt" size="16px"/> Daftar ke Sekolah Ini
                   </Button>
                 </CardFooter>

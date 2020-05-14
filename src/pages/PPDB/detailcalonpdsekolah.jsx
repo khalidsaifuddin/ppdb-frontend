@@ -4,14 +4,15 @@ import {
   Icon,
   Navbar,
   NavTitle,
-  Block,
   Button,
   Row,
   Col,
   Card,
   CardContent,
+  CardFooter,
   Subnavbar,
   Searchbar,
+  Link
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -71,53 +72,70 @@ class DetailcalonpdSekolah extends Component {
             />
           </Subnavbar>
         </Navbar>
-        <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Daftar Sekolah</Block>
-        {this.props.sekolah_calonpd.rows.map((option, key)=>{
-          return (
-            <Card className="demo-card-header-pic" key={key}>
-              <CardContent>
-                <Row>
-                  <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden', margin: '-15px'}}>
-                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'136px', minHeight:'136px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}/>
-                  </Col>
-                  <Col width="70" tabletWidth="85">
-                    <Row noGap>
-                      <Col width="100">
-                        <a href="#">
-                          <h2 style={{marginTop: '0px', marginBottom: '0px'}}>
-                            {option.nama + " (" + option.npsn + ")"}
-                          </h2>
-                        </a>
+        <div className="daftarSekolah daftarPdSekolah">
+          {this.props.sekolah_calonpd.rows.map((option)=> {
+            return (
+              <Card key={option.sekolah_id} noShadow noBorder>
+                <CardContent padding={false}>
+                  <div className="gambarSekolah" style={{backgroundImage: 'url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)'}}>
+                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}></img> 
+                  </div>
+                  <div className="tentangSekolah">
+                    <Link href={"/ProfilSekolah/"+"sekolah_id"}>
+                      <h3>
+                        <span>{option.nama}</span>
+                        <b>({option.npsn})</b>
+                      </h3>
+                    </Link>
+                    <Row>
+                      <Col width="100" tabletWidth="30">
+                        <div className="keteranganSekolah">
+                          <span>Kecamatan</span>
+                          <b>{option.kecamatan}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Kabupaten</span>
+                          <b>{option.kabupaten}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Provinsi</span>
+                          <b>{option.provinsi}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Alamat</span>
+                          <b>{option.alamat_jalan}</b>
+                        </div>
                       </Col>
                       <Col width="100" tabletWidth="25">
-                        Kecamatan: <b>{ option.kecamatan }</b> <br/>
-                        Kabupaten: <b>{ option.kabupaten }</b> <br/>
-                        Provinsi: <b>{ option.provinsi }</b> <br/>
-                        Alamat: <b>{ option.alamat_jalan }</b> <br/>
+                        <div className="keteranganSekolah">
+                          <span>Bentuk</span>
+                          <b>{option.bentuk}</b>
+                        </div>
+                        <div className="keteranganSekolah">
+                          <span>Status</span>
+                          {option.status}
+                        </div>
                       </Col>
-                      <Col width="100" tabletWidth="25">
-                        Bentuk: <b>{ option.bentuk }</b> <br/>
-                        Status: <b>{ option.status }</b> <br/>
-                      </Col>
-                      <Col width="100" tabletWidth="25">
-                        Kouta: <b>{ option.kouta }</b> <br/>
-                        Pendaftar: <b>{ option.pendaftar }</b> <br/>
-                        Diterima: <b>{ option.terima }</b> <br/>
-                        Sisa Kouta: <b>{ option.sisa_kouta }</b> <br/>
-                      </Col>
-                      <Col width="100" tabletWidth="25">
-                        <Button raised fill href={"/detailCalonpdSekolah/" + option.sekolah_id}>
-                          <Icon ios="f7:doc_plaintext" style={{fontSize:'20px'}}/>
-                          &nbsp; Daftarkan Calon Peserta Didik ke Sekolah Ini
-                        </Button>
+                      <Col width="100" tabletWidth="45">
+                        <div className="sekolahStatistik">
+                          <p>Kouta <b>{option.kouta}</b></p>
+                          <p>Pendaftar <b>{option.pendaftar}</b></p>
+                          <p>Diterima <b>{option.terima}</b></p>
+                          <p>Sisa Kouta <b>{option.sisa_kouta}</b></p>
+                        </div>
                       </Col>
                     </Row>
-                  </Col>
-                </Row>
-              </CardContent>
-            </Card>
-          )
-        })}
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button raised fill color="deeporange" href={"/detailCalonpdSekolah/" + option.sekolah_id}>
+                    <Icon f7="house_alt" size="16px"/> Daftarkan Calon PD ke Sekolah Ini
+                  </Button>
+                </CardFooter>
+              </Card>
+            )
+          })}
+        </div>
       </Page>
     )
   }

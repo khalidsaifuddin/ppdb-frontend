@@ -111,15 +111,17 @@ class cari extends Component {
         keyword: event.target[0].value,
         searchText: event.target[0].value,
         id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
-        kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi')
+        kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
       }
     }, ()=> {
       this.props.setKeyword(this.state.routeParams.keyword);
-      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
+
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=> {
         this.setState({
           peserta_didik: this.props.peserta_didik
         })
       });
+
       this.props.getPPDBSekolah(this.state.routeParams);
     });
   }
@@ -146,11 +148,13 @@ class cari extends Component {
       }
     }, ()=> {
       this.props.setKeyword(kata_kunci);
-      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
+
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=> {
         this.setState({
           peserta_didik: this.props.peserta_didik
         })
       });
+
       this.props.getPPDBSekolah(this.state.routeParams);
     });
   }
@@ -177,29 +181,25 @@ class cari extends Component {
         ...this.state.routeParams,
         start: parseInt(this.state.routeParams.start)+parseInt(this.state.routeParams.limit)
       }
-    },()=>{
-
-      this.props.getPesertaDidik(this.state.routeParams).then((result)=>{
-        
+    }, ()=> {
+      this.props.getPesertaDidik(this.state.routeParams).then((result)=> {
         this.setState({
           peserta_didik: {
             ...this.state.peserta_didik,
             rows: [
               ...this.state.peserta_didik.rows,
-              ...this.props.peserta_didik.rows
+              ...this.props.peserta_didik.rows,
             ]
           }
         });
-
       });
-
     });
   }
 
   render() {
     return (
       <Page name="cari" hideBarsOnScroll>
-        <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
+        <Navbar sliding={false} backLink="Kembali">
           <NavTitle sliding>Pencarian</NavTitle>
           <Subnavbar inner={false}>
             <Searchbar
@@ -249,7 +249,7 @@ class cari extends Component {
                 <div className="daftarPeserta">
                   {this.state.peserta_didik.rows.map((option)=> {
                     return (
-                      <Card key={option.peserta_didik_id} noShadow noBorder style={{borderTop:'3px solid #90CAF9'}}>
+                      <Card key={option.peserta_didik_id} noShadow noBorder>
                         <CardHeader>
                           <Link href="#">
                             <Icon f7="person_round_fill" size="20px"></Icon>
@@ -270,10 +270,6 @@ class cari extends Component {
                                 <span>Asal Sekolah</span>
                                 <b>{option.nama_sekolah} ({option.npsn})</b>
                               </div>
-                              {/* <div className="tentangPeserta">
-                                <span>Alamat Rumah</span>
-                                <b>{option.alamat_jalan_pd} {option.rt && <>RT {option.rt}/{option.rw}</>} {option.desa_kelurahan} {option.kecamatan}, {option.kabupaten}, {option.provinsi}</b>
-                              </div> */}
                             </Col>
                             <Col width="100" tabletWidth="45">
                               <div className="tentangPeserta">
@@ -292,15 +288,13 @@ class cari extends Component {
                           <Button raised fill disabled={(option.flag_pendaftar ? true : false)} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
                             <Icon f7="person_badge_plus" size="16px"></Icon> {((!option.flag_pendaftar ? <>Daftarkan Peserta Didik</> : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
                           </Button>
-                          {/* <div style={{fontStyle:'italic', fontSize:'12px', paddingLeft:'8px'}}> */}
-                            {/* {(parseInt(option.tingkat_pendidikan_id) === 6 ? '' : (parseInt(option.tingkat_pendidikan_id) === 9 ? '' : <>Belum dapat mendaftar karena tidak berada pada tingkat akhir jenjang pendidikannya</>))} */}
-                            {/* {((!option.flag_pendaftar ? '' : <>Peserta didik ini sudah didaftarkan sebelumnya</>))} */}
-                          {/* </div> */}
                         </CardFooter>
                       </Card>
                     )
                   })}
-                  <Button onClick={this.muatSelanjutnya}>Muat hasil selanjutnya</Button>
+                  {this.state.peserta_didik.count > 1 &&
+                    <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat Hasil Lainnya</Button>
+                  }
                 </div>
               </div>
             </Tab>
