@@ -292,7 +292,9 @@ class cari extends Component {
                       </Card>
                     )
                   })}
-                  <Button onClick={this.muatSelanjutnya}>Muat hasil selanjutnya</Button>
+                  {this.state.peserta_didik.count > 1 &&
+                    <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat Hasil Lainnya</Button>
+                  }
                 </div>
               </div>
             </Tab>
