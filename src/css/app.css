@@ -661,6 +661,7 @@
 .daftarPeserta .card {
   overflow: hidden;
   margin: 0 0 1rem;
+  border-top: '3px solid #90CAF9';
 }
 
 .daftarPeserta .card:last-child { margin: 0; }
@@ -938,6 +939,150 @@
   display: inline-block;
   padding: 0 1rem;
 }
+
+.daftarKegiatan {
+  position: relative;
+  padding: 1rem;
+  margin-top: 44px;
+}
+
+.daftarKegiatan .judulKegiatan {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  align-items: center;
+  background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgb(0, 178, 236) 0%, rgba(152,70,242,1) 100.2%);
+}
+
+.daftarKegiatan .judulKegiatan h3 {
+  margin: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.daftarKegiatan .judulKegiatan .tautanKegiatan {
+  position: relative;
+  display: block;
+}
+
+.daftarKegiatan .judulKegiatan .tautanKegiatan .button {
+  margin-left: .5rem;
+  display: inline-block;
+}
+
+.daftarKegiatan .card {
+  overflow: hidden;
+  margin: 0 0 1rem;
+  border-top: 2px solid #9648f2;
+}
+
+.daftarKegiatan .card:last-child { margin: 0; }
+
+.daftarKegiatan .card .card-header {
+  min-height: auto;
+  height: auto;
+  padding: .5rem 1rem;
+  background-image: radial-gradient(circle 621px at 25.3% 13.8%, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
+}
+
+.daftarKegiatan .card .card-header:after {
+  content: '';
+  display: none;
+}
+
+.daftarKegiatan .card .card-header a {
+  font-size: .875rem;
+  color: #007aff;
+}
+
+.daftarKegiatan .card .card-header a i {
+  background-color: #ffffff;
+  color: #9846f2;
+  padding: .375rem;
+  border-radius: 50%;
+  margin-right: .375rem;
+  box-shadow: 0px 2px 5px #007aff2b;
+}
+
+.daftarKegiatan .card .card-header a h3 { margin: 0; }
+
+.daftarKegiatan .card .card-header a h3 span {
+  color: #252525;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: .125rem;
+}
+
+.daftarKegiatan .card .card-content { padding: 1rem; }
+
+.daftarKegiatan .card .card-content .tentangKegiatan {
+  display: flex;
+  line-height: 1.6;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan > span {
+  position: relative;
+  min-width: 110px;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan > span::after {
+  content: ':';
+  display: inline-block;
+  position: absolute;
+  right: 6px;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel {
+  display: inline-block;
+  padding: 0 .625rem;
+  border-radius: .25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  max-width: 140px;
+  width: 100%;
+  text-align: center;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel.sudah--daftar {
+  background-color: #008758;
+  color: #fff;
+  box-shadow: 4px 4px 10px #00875840;
+}
+
+.daftarKegiatan .card .card-content .tentangKegiatan .daftarLabel.belum--daftar {
+  background-color: #f0f0f0;
+  color: #ff3b30;
+  box-shadow: 4px 4px 10px #f0f0f040;
+}
+
+.daftarKegiatan .card .card-footer {
+  position: static;
+  min-height: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.daftarKegiatan .card .card-footer:before {
+  content: '';
+  display: none;
+}
+
+.daftarKegiatan .card .card-footer .cardActions {
+  position: absolute;
+  top: 9px;
+  right: 16px;
+}
+
+.daftarKegiatan .card .card-footer .cardActions .button {
+  display: inline-block;
+  margin-left: .5rem;
+}
+
+.daftarKegiatan .card .card-footer .cardActions .button:first-child { margin-left: 0; }
 
 .loginPage {
   width: 100%;
@@ -1294,6 +1439,33 @@
   }
 
   .daftarSekolah .card .card-footer .button {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .daftarKegiatan .card .card-header a { font-size: .75rem; }
+
+  .daftarKegiatan .judulKegiatan .tautanKegiatan .button {
+    margin-left: .5rem;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+  }
+
+  .daftarKegiatan .judulKegiatan .tautanKegiatan .button span { display: none; }
+
+  .daftarKegiatan .card .card-footer {
+    position: relative;
+    padding: 0 .75rem .75rem;
+  }
+
+  .daftarKegiatan .card .card-footer .cardActions {
     position: relative;
     top: 0;
     right: 0;
