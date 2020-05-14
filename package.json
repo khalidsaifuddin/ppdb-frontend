@@ -58,6 +58,7 @@
     "framework7-react": "^4.5.2",
     "leaflet": "^1.6.0",
     "leaflet-extra-markers": "^1.2.1",
+    "leaflet-geosearch": "^2.7.0",
     "leaflet-routing-machine": "^3.2.12",
     "leaflet.markercluster": "^1.4.1",
     "material-ui-flat-pagination": "^4.0.0",
