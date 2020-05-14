@@ -6,6 +6,7 @@ export const DELETE_JADWAL_KEGIATAN = '[JADWAL_KEGIATAN] DELETE JADWAL KEGIATAN'
 export const REF_JALUR_JADWAL_KEGIATAN = '[JADWAL_KEGIATAN] REF JALUR JADWAL KEGIATAN';
 export const REF_MST_WILAYAH_JADWAL_KEGIATAN = '[JADWAL KEGIATAN] REF MST WILAYAH JADWAL KEGIATAN';
 export const PER_JADWAL_KEGIATAN = '[JADWAL KEGIATAN] PER JADWAL KEGIATAN';
+export const GET_JADWAL_KEGIATAN_BERANDA = '[JADWAL_KEGIATAN] GET JADWAL KEGIATAN BERANDA';
 
 export function getJadwalKegiatan(routeParams)
 {
@@ -84,4 +85,18 @@ export function perJadwalkegiatan(params) {
         type: PER_JADWAL_KEGIATAN,
         payload: params,
     }
+}
+
+export function getJKberanda(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/JadwalKegiatan/beranda');
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_JADWAL_KEGIATAN_BERANDA,
+                payload: response.data,
+                routeParams
+            })
+        );
 }

@@ -8,7 +8,8 @@ const initialState = {
     },
     perJadwalkegiatan : [],
     ref_jalur: [],
-    ref_wilayah: []
+    ref_wilayah: [],
+    beranda: []
 }
 
 const JadwalKegiatanReducer = function (state = initialState, action) {
@@ -40,6 +41,13 @@ const JadwalKegiatanReducer = function (state = initialState, action) {
             return {
                 ...state,
                 perJadwalkegiatan: action.payload
+            }
+        }
+        case Actions.GET_JADWAL_KEGIATAN_BERANDA:
+        {
+            return {
+                ...state,
+                beranda: action.payload.rows 
             }
         }
         default:

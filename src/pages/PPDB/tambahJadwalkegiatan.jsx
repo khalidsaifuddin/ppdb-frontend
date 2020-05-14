@@ -231,17 +231,17 @@ class TambahJadwalkegiatan extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    saveJadwalKegiatan: Actions.saveJadwalKegiatan,
-    getJadwalKegiatan: Actions.getJadwalKegiatan,
+    saveJadwalKegiatan                          : Actions.saveJadwalKegiatan,
+    getJadwalKegiatan                           : Actions.getJadwalKegiatan,
   }, dispatch);
 }
 
 function mapStateToProps({ App, JadwalKegiatan }) {
   return {
-    window_dimension: App.window_dimension,
-    perJadwalkegiatan: JadwalKegiatan.perJadwalkegiatan,
-    ref_jalur: JadwalKegiatan.ref_jalur,
-    ref_wilayah: JadwalKegiatan.ref_wilayah,
+    window_dimension                            : App.window_dimension,
+    perJadwalkegiatan                           : JadwalKegiatan.perJadwalkegiatan,
+    ref_jalur                                   : JadwalKegiatan.ref_jalur,
+    ref_wilayah                                 : JadwalKegiatan.ref_wilayah,
   }
 }
 
