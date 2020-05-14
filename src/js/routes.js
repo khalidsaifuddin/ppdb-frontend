@@ -25,6 +25,8 @@ import petaPD from '../pages/PPDB/petaPD';
 import Detailcalonpdsekolah from '../pages/PPDB/detailcalonpdsekolah';
 import Detailcalonpdsiswa from '../pages/PPDB/detailcalonpdsiswa';
 import pilihKota from '../pages/PPDB/pilihKota';
+import JadwalKegiatan from '../pages/PPDB/jadwalKegiatan';
+import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 
 var routes = [
   {
@@ -86,6 +88,14 @@ var routes = [
   {
     path: '/detailCalonpdSekolah/:sekolah_id',
     component: Detailcalonpdsiswa
+  },
+  {
+    path: '/JadwalKegiatan/',
+    component: JadwalKegiatan
+  },
+  {
+    path: '/JadwalKegiatan/:jadwal_kegiatan_id',
+    component: TambahJadwalkegiatan
   },
   {
     path: '/notifikasi',

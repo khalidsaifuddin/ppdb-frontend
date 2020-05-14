@@ -17,14 +17,12 @@ import {
   CardHeader,
   CardContent,
   Badge,
-  Progressbar,
   Button
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../store/actions';
 import io from 'socket.io-client';
-import Countdown from 'react-countdown';
 
 class Beranda extends Component {
   constructor(props) {
@@ -33,6 +31,7 @@ class Beranda extends Component {
     this.state = {
       error: null,
       loading: true,
+      loadingPendaftaran : true,
       data: {
         r_kelas: [],
         perpustakaan: [],
@@ -92,6 +91,7 @@ class Beranda extends Component {
 
     if(parseInt(localStorage.getItem('sudah_login')) === 1) {
       this.setState({
+        loadingPendaftaran: true,
         routeParamsNotifikasi: {
           pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
           dibaca: "1",
@@ -108,46 +108,16 @@ class Beranda extends Component {
           });
         });
 
-        this.props.getCalonPD(this.state.routeParams);
-
-        // this.props.getKuisDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});
-
-        // this.props.getRuangDiikuti(this.state.routeParamsNotifikasi).then((result)=> {});  
-
+        this.props.getCalonPD(this.state.routeParams).then(e => {
+          this.setState({ loadingPendaftaran: false });
+        });
       });
     }
   }
 
   render() {
-    const Completionist = () => <span>Kegiatan akan segera dimulai!</span>;
-    
-    const renderer = ({ days, hours, minutes, seconds, completed }) => {
-      if (completed) {
-        return <Completionist />;
-      } else {
-        return <div className="jadwalCountdown">
-          <div className="jadwalItem">
-            {days}
-            <span>Hari</span>
-          </div>
-          <div className="jadwalItem">
-            {hours}
-            <span>Jam</span>
-          </div>
-          <div className="jadwalItem">
-            {minutes}
-            <span>Menit</span>
-          </div>
-          <div className="jadwalItem">
-            {seconds}
-            <span>Detik</span>
-          </div>
-        </div>;
-      }
-    };
-
     return (
-      <Page name="Beranda" hideBarsOnScroll style={{overflowX:'hidden'}}>
+      <Page name="Beranda" hideBarsOnScroll>
         {localStorage.getItem('sudah_login') === '1' &&
           <Navbar 
             sliding={false} 
@@ -158,136 +128,72 @@ class Beranda extends Component {
             </NavLeft>
             <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
             {parseInt(localStorage.getItem('sudah_pilih_kota')) === 1  &&
-            <NavRight>
-              <Link iconOnly href="/notifikasi" style={{marginLeft:'0px'}}> 
-                <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
-                  {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}
-                </Icon>
-              </Link>
-              <Link href="/ProfilPengguna">
-                <img style={{height:'30px', borderRadius:'50%', marginLeft:'0px'}} src={JSON.parse(localStorage.getItem('user')).gambar} />
-              </Link>
-            </NavRight>
+              <NavRight>
+                <Link iconOnly href="/notifikasi/">
+                  <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
+                    {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}
+                  </Icon>
+                </Link>
+                <Link href="/ProfilPengguna/">
+                  <img style={{height:'30px', borderRadius:'50%', marginLeft:'0px'}} src={JSON.parse(localStorage.getItem('user')).gambar} />
+                </Link>
+              </NavRight>
             }
           </Navbar>
         }
         <div className="contentApp">
-          {/* <Block> */}
-          <div className={"judul_utama"}>
-            {/* <Row> */}
-              {/* <Col width="30"> */}
-                <img src={localStorage.getItem('logo_wilayah')} height="70" alt="logo" /><br/>
-              {/* </Col> */}
-              {/* <Col width="70"> */}
-                {localStorage.getItem('judul_aplikasi')}
-                <div style={{fontSize:'12px'}}>
-                  {localStorage.getItem('sub_judul_aplikasi')}
-                </div>
-              {/* </Col> */}
-            {/* </Row> */}
+          <div className="bgMain"></div>
+          <div className="titleMain">
+            <img src={localStorage.getItem('logo_wilayah')} height="70" alt="logo" />
+            <h2>{localStorage.getItem('judul_aplikasi')}</h2>
+            <h6>{localStorage.getItem('sub_judul_aplikasi')}</h6>
           </div>
-          {/* </Block> */}
-          <Block className="gridMenu menuBeranda">
-            <div className="link2" style={{margin:'auto', display:'flex', flexWrap:'wrap'}}>
-              <Link href="/Cari">
-                <img src="./static/images/icons/cari-data.svg" alt="cari-data" />
-                Cari Data
-              </Link>
-              <Link href="/tambahCalonPesertaDidik/">
-                <img src="./static/images/icons/formulir.svg" alt="formulir" />
-                Formulir
-              </Link>
-              <Link href="/">
-                <img src="./static/images/icons/jadwal.svg" alt="jadwal" />
-                Jadwal
-              </Link>
-              <Link href="/">
-                <img src="./static/images/icons/petunjuk.svg" alt="petunjuk" />
-                Petunjuk
-              </Link>
-              <Link href="/">
-                <img src="./static/images/icons/kuota.svg" alt="kuota" />
-                Kuota
-              </Link>
-              <Link href="/">
-                <img src="./static/images/icons/pengumuman.svg" alt="pengumuman" />
-                Pengumuman
-              </Link>
-            </div>
+          <Block className="gridMenu">
+            <Link href="/Cari/">
+              <img src="./static/images/icons/cari-data.svg" alt="cari data" />
+              Cari<br/>Data
+            </Link>
+            <Link href="/tambahCalonPesertaDidik/">
+              <img src="./static/images/icons/formulir-pendaftaran.svg" alt="formulir pendaftaran" />
+              Formulir<br/> Pendaftaran
+            </Link>
+            <Link href="/Daftar/">
+              <img src="./static/images/icons/data-pendaftar.svg" alt="data pendaftar" />
+              Data<br/>Pendaftar
+            </Link>
+            <Link href="/detailCalonpdSekolah/">
+              <img src="./static/images/icons/daftar-sekolah.svg" alt="daftar sekolah" />
+              Daftar<br/>Sekolah
+            </Link>
+            <Link href="/JadwalKegiatan/">
+            <img src="./static/images/icons/jadwal-kegiatan.svg" alt="jadwal kegiatan" />
+              Jadwal<br/>Kegiatan
+            </Link>
+            <Link href="/ProfilPengguna/">
+              <img src="./static/images/icons/profil-pengguna.svg" alt="profil pengguna" />
+              Profil<br/>Pengguna
+            </Link>
           </Block>
-          {/* <Block className="rekapitulasiProgres">
-            <BlockHeader>JALUR PENDAFTARAN PROGRES</BlockHeader>
-            <Row>
-              <Col width="50" tabletWidth="25">
-                <div className="rekapItem rekap--zonasi">
-                  <div className="rekapDesc">
-                    <h4>Jalur Zonasi : <strong>17943</strong></h4>
-                    <h5><span>Pendaftar : <i>12682</i></span> <strong>(70.68%)</strong></h5>
-                    <Progressbar color="black" progress={70.86}></Progressbar>
-                    <div className="rekapAction">
-                      <p>Diterima : <strong>11539</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
-                    </div>
-                  </div>
-                  <img className="bgIcon" src="./static/images/icons/zonasi.svg" alt="zonasi"/>
-                </div>
-              </Col>
-              <Col width="50" tabletWidth="25">
-                <div className="rekapItem rekap--afirmasi">
-                  <div className="rekapDesc">
-                    <h4>Jalur Afirmasi : <strong>269</strong></h4>
-                    <h5><span>Pendaftar : <i>248</i></span> <strong>(92.19%)</strong></h5>
-                    <Progressbar color="black" progress={92.19}></Progressbar>
-                    <div className="rekapAction">
-                      <p>Diterima : <strong>208</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
-                    </div>
-                  </div>
-                  <img className="bgIcon" src="./static/images/icons/afirmasi.svg" alt="afirmasi"/>
-                </div>
-              </Col>
-              <Col width="50" tabletWidth="25">
-                <div className="rekapItem rekap--prestasi">
-                  <div className="rekapDesc">
-                    <h4>Jalur Prestasi : <strong>101</strong></h4>
-                    <h5><span>Pendaftar : <i>34</i></span> <strong>(33.66%)</strong></h5>
-                    <Progressbar color="black" progress={33.66}></Progressbar>
-                    <div className="rekapAction">
-                      <p>Diterima : <strong>34</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
-                    </div>
-                  </div>
-                  <img className="bgIcon" src="./static/images/icons/prestasi.svg" alt="prestasi"/>
-                </div>
-              </Col>
-              <Col width="50" tabletWidth="25">
-                <div className="rekapItem rekap--ortu">
-                  <div className="rekapDesc">
-                    <h4>Jalur Perpindahan Ortu : <strong>26894</strong></h4>
-                    <h5><span>Pendaftar : <i>12217</i></span> <strong>(45.43%)</strong></h5>
-                    <Progressbar color="black" progress={45.43}></Progressbar>
-                    <div className="rekapAction">
-                      <p>Diterima : <strong>12216</strong></p>
-                      <Link href="/"><Icon f7="arrow_right_circle" size="18px" color="white"></Icon></Link>
-                    </div>
-                  </div>
-                  <img className="bgIcon" src="./static/images/icons/perpindahan-ortu.svg" alt="perpindahan ortu"/>
-                </div>
-              </Col>
-            </Row>
-          </Block> */}
-
           <Block className="pelaksanaanPpdb">
             <Row>
               <Col width="100" tabletWidth="65">
                 <Block className="rekapitulasiProgres">
                   <BlockHeader>PENDAFTARAN ANDA</BlockHeader>
-                  {this.props.entities.rows.map((option)=>{
+                  {this.state.loadingPendaftaran && (<div>Loading...</div>)}
+                  {!this.state.loadingPendaftaran && this.props.entities.rows.length === 0 ? (
+                    <Card className="noRegistration" noShadow noBorder>
+                      <CardContent padding={false}>
+                        <img src="/static/images/icons/sekolah.svg" height="32" alt="sekolah"/>
+                        <h4>Anda belum mendaftar ke sekolah manapun.</h4>
+                        <Button raised fill onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/")}>Daftar disini!</Button>
+                      </CardContent>
+                    </Card>
+                  ) : ''}
+                  {!this.state.loadingPendaftaran && this.props.entities.rows.map((option)=> {
                     return (
                       <Card key={option.calon_peserta_didik_id} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
                         <CardHeader>
                           <Link href="#">
-                            {/* <Icon f7="person_round_fill" size="20px"></Icon> */}
                             <div>
                               {option.nama}&nbsp;({option.nisn})
                             </div>
@@ -295,16 +201,12 @@ class Beranda extends Component {
                         </CardHeader>
                         <CardContent style={{padding:'4px'}}>
                           <Row noGap>
-                            {/* <Col width="100" tabletWidth="100" style={{borderBottom:'1px solid #eeeeee',marginBottom:'8px'}}>
-                              Pilihan Sekolah
-                            </Col> */}
                             {option.pilihan_sekolah.map((optionSekolah)=>{
                               return (
                                 <Col width="33" tabletWidth="33">
                                   <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                     <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                       <div style={{fontSize:'12px', color:'white'}}><b>{optionSekolah.nama_sekolah}</b></div>
-                                      {/* <div style={{color:'blue'}}>Telah Konfirmasi</div> */}
                                       <div style={{fontSize:'12px', color:'white'}}>No.Urut</div>
                                       <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>0</div>
                                     </CardContent>
@@ -313,38 +215,14 @@ class Beranda extends Component {
                               )
                             })}
                           </Row>
+                          <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
                         </CardContent>
                       </Card>
                     )
                   })}
-                  <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
                 </Block>
               </Col>
               <Col width="100" tabletWidth="35">
-                {/* <BlockHeader>JADWAL SAAT INI</BlockHeader>
-                <div className="jadwalPpdb">
-                  <Card>
-                    <CardHeader>
-                      Sosialisasi PPDB ke SMP
-                      <div className="subHeader">
-                        <div>
-                          <Icon f7="location" size="18px"></Icon>
-                          <span>Video Conference</span>
-                        </div>
-                        <div>
-                          <Icon f7="calendar" size="18px"></Icon>
-                          <span>12 Mei 2020</span>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <Countdown
-                        date={Date.now() + 259200000}
-                        renderer={renderer}
-                      />
-                    </CardContent>
-                  </Card>
-                </div> */}
                 <Block className="rekapitulasiProgres">
                   <BlockHeader>JADWAL SELANJUTNYA</BlockHeader>
                   <div className="jadwalPpdb">
@@ -356,105 +234,6 @@ class Beranda extends Component {
                   </div>
                 </Block>
               </Col>
-              {/* <Col width="100" tabletWidth="66">
-                <BlockHeader className="onlyOnDesktop">RESUME (RINGKASAN)</BlockHeader>
-                <div className="resumeTable">
-                  <Row>
-                    <Col width="100" tabletWidth="66">
-                      <BlockHeader className="onlyOnMobile" style={{marginTop: 16}}>JALUR RESUME (RINGKASAN)</BlockHeader>
-                      <div className="data-table card">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th className="label-cell">Jalur</th>
-                              <th className="numeric-cell">Kuota</th>
-                              <th className="numeric-cell">Siswa</th>
-                              <th className="numeric-cell">Lulus</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td className="label-cell">Afirmasi</td>
-                              <td className="numeric-cell">150</td>
-                              <td className="numeric-cell">80</td>
-                              <td className="numeric-cell">75</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">Pindahan</td>
-                              <td className="numeric-cell">20</td>
-                              <td className="numeric-cell">10</td>
-                              <td className="numeric-cell">10</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">Zonasi</td>
-                              <td className="numeric-cell">320</td>
-                              <td className="numeric-cell">340</td>
-                              <td className="numeric-cell">300</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">Prestasi</td>
-                              <td className="numeric-cell">180</td>
-                              <td className="numeric-cell">150</td>
-                              <td className="numeric-cell">100</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">Tahfiz</td>
-                              <td className="numeric-cell">15</td>
-                              <td className="numeric-cell">13</td>
-                              <td className="numeric-cell">5</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell"><b>Jumlah</b></td>
-                              <td className="numeric-cell"><b>485</b></td>
-                              <td className="numeric-cell"><b>493</b></td>
-                              <td className="numeric-cell"><b>300</b></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </Col>
-                    <Col width="100" tabletWidth="33">
-                      <BlockHeader className="onlyOnMobile" style={{marginTop: 16}}>JARAK RESUME (RINGKASAN)</BlockHeader>
-                      <div className="data-table card">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th className="label-cell">Jarak</th>
-                              <th className="numeric-cell">Jumlah Siswa</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td className="label-cell">0m - 500m</td>
-                              <td className="numeric-cell">75</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">500m - 1km</td>
-                              <td className="numeric-cell">10</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">1km - 2km</td>
-                              <td className="numeric-cell">300</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">2km - 4km</td>
-                              <td className="numeric-cell">100</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell">> 4km</td>
-                              <td className="numeric-cell">5</td>
-                            </tr>
-                            <tr>
-                              <td className="label-cell"><b>Jumlah</b></td>
-                              <td className="numeric-cell"><b>300</b></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Col> */}
             </Row>
           </Block>
         </div>

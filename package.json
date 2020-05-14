@@ -70,6 +70,7 @@
     "react-dom": "^16.11.0",
     "react-dropzone": "^10.2.0",
     "react-google-login": "^5.0.7",
+    "react-infinite-scroll-component": "^5.0.4",
     "react-js-pagination": "^3.0.2",
     "react-leaflet": "^2.6.1",
     "react-paginate": "^6.3.0",
