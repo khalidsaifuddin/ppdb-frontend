@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import {
   Page,
   Navbar,
-  NavLeft,
   NavTitle,
-  NavTitleLarge,
-  NavRight,
-  Link,
-  Toolbar,
   Block,
   BlockTitle,
   List,
@@ -15,21 +10,12 @@ import {
   Row,
   Col,
   Button,
-  Searchbar,
   Card,
-  CardHeader,
   CardContent,
-  CardFooter,
-  Icon,
-  MenuItem,
-  MenuDropdown,
-  MenuDropdownItem,
   Tabs,
   Tab,
-  Segmented,
   ListInput,
-  Progressbar,
-  ListItemContent
+  Progressbar
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -131,190 +117,136 @@ class ProfilPengguna extends Component {
   }
 
   simpanPengguna = () => {
-      console.log(this.state.data);
+    if(typeof(this.state.data.peran_id) !== 'undefined') {
+      this.$f7.dialog.confirm('Pastikan peran dan wilayah Anda telah sesuai. Isian Anda tidak akan bisa diubah setelah tersimpan', 'Perhatian', () => {
+        this.setState({
+          loading: true,
+          routeParams:{
+            ...this.state.routeParams,
+            pengguna_id: this.state.pengguna.rows[0].pengguna_id,
+            data: this.state.data,
+          }
+        }, ()=> {
+          this.props.setPengguna(this.state.routeParams).then((result)=> {
+            this.setState({
+              loading: false,
+            }, ()=> {
+              if(result.payload.status === 'berhasil') {
+                this.$f7.dialog.alert('Perubahan berhasil disimpan!', 'Berhasil');
+                let sp= false;
+                let spi= false;
 
-      // if((this.state.data.password && this.state.data.password_ulang) && this.state.data.password !== this.state.data.password_ulang){
-      //     this.$f7.dialog.alert('Password ulang tidak sama!', 'Peringatan');
-      //     return true;
-      // }
+                if(this.state.data.password) {
+                  sp= true;
+                }
 
-      // if(this.state.data.password_ulang){
-      //     this.state.data.password_ulang = null;
-      // }
+                if(this.state.data.peran_id && this.state.data.kode_wilayah) {
+                  spi= true;
+                }
 
-      // if(parseInt(this.props.pengguna.rows[0].verified) === 0){
-      //     if(this.state.gambar_ktp === '' && this.state.gambar_sk === ''){
-      //         this.$f7.dialog.alert('Mohon lengkapi upload berkas verifikasi sebelum melanjutkan!', 'Peringatan');
-      //         return true;
-      //     }
-      // }
-
-      if(typeof(this.state.data.peran_id) !== 'undefined'){
-
-          this.$f7.dialog.confirm('Pastikan peran dan wilayah Anda telah sesuai. Isian Anda tidak akan bisa diubah setelah tersimpan', 'Perhatian', () => {
-              // app.dialog.alert('Great!');
-              this.setState({
-                  loading: true,
-                  routeParams:{
-                      ...this.state.routeParams,
-                      pengguna_id: this.state.pengguna.rows[0].pengguna_id,
-                      data: this.state.data
-                  }
-              },()=>{
-                  this.props.setPengguna(this.state.routeParams).then((result)=>{
-                      this.setState({
-                          loading:false
-                      },()=>{
-                          // console.log(result.payload.status);
-      
-                          if(result.payload.status === 'berhasil'){
-                              this.$f7.dialog.alert('Perubahan berhasil disimpan!', 'Berhasil');
-                              let sp = false;
-                              let spi = false;
-
-                              if(this.state.data.password){
-                                  sp = true;
-                              }
-
-                              if(this.state.data.peran_id && this.state.data.kode_wilayah){
-                                  spi = true;
-                              }
-
-                              this.setState({
-                                  ...this.state,
-                                  set_password: sp,
-                                  set_peran_id: spi
-                              });
-
-                          }else{
-                              this.$f7.dialog.alert('Perubahan gagal disimpan! Silakan coba beberapa saat lagi', 'Gagal');
-                          }
-      
-                      })
-                  })
-              });
-          });
-      }else{
-          this.setState({
-              loading: true,
-              routeParams:{
-                  ...this.state.routeParams,
-                  pengguna_id: this.state.pengguna.rows[0].pengguna_id,
-                  data: this.state.data
+                this.setState({
+                  ...this.state,
+                  set_password: sp,
+                  set_peran_id: spi,
+                });
+              } else {
+                this.$f7.dialog.alert('Perubahan gagal disimpan! Silakan coba beberapa saat lagi', 'Gagal');
               }
-          },()=>{
-              this.props.setPengguna(this.state.routeParams).then((result)=>{
-                  this.setState({
-                      loading:false
-                  },()=>{
-                      // console.log(result.payload.status);
-  
-                      if(result.payload.status === 'berhasil'){
-                          this.$f7.dialog.alert('Perubahan berhasil disimpan!', 'Berhasil');
-                      }else{
-                          this.$f7.dialog.alert('Perubahan gagal disimpan! Silakan coba beberapa saat lagi', 'Gagal');
-                      }
-  
-                  })
-              })
-          });
-      }
-
-      // console.log(this.state.data);
+            })
+          })
+        });
+      });
+    } else {
+      this.setState({
+        loading: true,
+        routeParams: {
+          ...this.state.routeParams,
+          pengguna_id: this.state.pengguna.rows[0].pengguna_id,
+          data: this.state.data,
+        }
+      }, ()=> {
+        this.props.setPengguna(this.state.routeParams).then((result)=> {
+          this.setState({
+            loading: false,
+          }, ()=> {
+            if(result.payload.status === 'berhasil') {
+              this.$f7.dialog.alert('Perubahan berhasil disimpan!', 'Berhasil');
+            } else {
+              this.$f7.dialog.alert('Perubahan gagal disimpan! Silakan coba beberapa saat lagi', 'Gagal');
+            }
+          })
+        })
+      });
+    }
   }
 
   gantiPeran = (b) => {
-      // localStorage.setItem('semester_id_aplikasi', b.target.value);
+    let tampilKab = 'block';
 
-      // alert(b.target.value);return true;
+    if(parseInt(b.target.value) === 6) {
+      tampilKab = 'none';
+    } else if(parseInt(b.target.value) === 54) {
+      tampilKab = 'none';
+    } else if(parseInt(b.target.value) === 8) {
+      tampilKab = 'block';
+    } else if(parseInt(b.target.value) === 1) {
+      tampilKab = 'none';
+    }
 
-      let tampilKab = 'block';
-
-      if(parseInt(b.target.value) === 6){
-          tampilKab = 'none';
-      }else if(parseInt(b.target.value) === 54){
-          tampilKab = 'none';
-      }else if(parseInt(b.target.value) === 8){
-          tampilKab = 'block';
-      }else if(parseInt(b.target.value) === 1){
-          tampilKab = 'none';
-      }
-
-      this.setState({
-          ...this.state,
-          show:{
-              ...this.state.show,
-              kabupaten: tampilKab
-          },
-          pengguna:{
-              ...this.state.pengguna,
-              rows: [{
-                  ...this.state.pengguna.rows[0],
-                  peran_id: b.target.value
-              }]
-          },
-          data:{
-              ...this.state.data,
-              peran_id: b.target.value
-          }
-      },()=>{
-          //after this
-      });
-
-      // this.setState({
-      //     ...this.state,
-      //     pengguna:{
-      //         ...this.state.pengguna,
-      //         rows: [{
-      //             ...this.state.pengguna.rows[0],
-      //             [kolom]: e.target.value
-      //         }]
-      //     },
-      //     data:{
-      //         ...this.state.data,
-      //         [kolom]: e.target.value
-      //     }
-      // });
-
+    this.setState({
+      ...this.state,
+      show: {
+        ...this.state.show,
+        kabupaten: tampilKab,
+      },
+      pengguna: {
+        ...this.state.pengguna,
+        rows: [{
+          ...this.state.pengguna.rows[0],
+          peran_id: b.target.value,
+        }]
+      },
+      data:{
+        ...this.state.data,
+        peran_id: b.target.value,
+      },
+    }, ()=> {});
   }
 
   setParamValue = (b) => {
-      this.setState({
+    this.setState({
+      ...this.state,
+      routeParams: {
+        ...this.state.routeParams,
+        params_wilayah: b.target.getAttribute('name'),
+        [b.target.getAttribute('name')]: b.target.value,
+      },
+      pengguna: {
+        ...this.state.pengguna,
+        rows: [{
+          ...this.state.pengguna.rows[0],
+          kode_wilayah: b.target.value.trim(),
+        }]
+      },
+      data: {
+        ...this.state.data,
+        kode_wilayah: b.target.value.trim(),
+      }
+    }, ()=> {
+      if(this.state.routeParams.params_wilayah === 'propinsi'){
+        this.setState({
           ...this.state,
           routeParams: {
-              ...this.state.routeParams,
-              params_wilayah: b.target.getAttribute('name'),
-              [b.target.getAttribute('name')]: b.target.value
-          },
-          pengguna:{
-              ...this.state.pengguna,
-              rows: [{
-                  ...this.state.pengguna.rows[0],
-                  kode_wilayah: b.target.value.trim()
-              }]
-          },
-          data:{
-              ...this.state.data,
-              kode_wilayah: b.target.value.trim()
+            id_level_wilayah: 2,
+            mst_kode_wilayah: this.state.routeParams.propinsi.trim(),
           }
-      },()=>{
-          console.log(this.state);
-          
-          if(this.state.routeParams.params_wilayah === 'propinsi'){
-              this.setState({
-                  ...this.state,
-                  routeParams: {
-                      // ...this.state.routeParams,
-                      id_level_wilayah: 2,
-                      mst_kode_wilayah: this.state.routeParams.propinsi.trim()
-                  }
-              },()=>{
-                  this.props.getKabupaten(this.state.routeParams).then((result)=>{
-                      console.log(this.state);
-                  });
-              });
-          }
-      });
+        }, ()=> {
+          this.props.getKabupaten(this.state.routeParams).then((result)=> {
+            console.log(this.state);
+          });
+        });
+      }
+    });
   }
 
   uploadBerhasil = (xhr) => {
@@ -424,40 +356,6 @@ class ProfilPengguna extends Component {
         {this.state.loading &&
           <Progressbar className="profileProgress" infinite color="blue" />
         }
-        {/* {parseInt(this.state.pengguna.rows[0].verified) === 0 && !this.$f7route.params['pengguna_id'] &&
-        <>
-        <Card
-        style={{background:'#b71c1c', color:'white'}}
-        content="Akun Anda belum terverifikasi. Untuk melakukan verifikasi akun, silakan lengkapi identitas Anda, dan tunggu hingga Administrator selesai memverifikasi Anda"
-        ></Card>
-        </>
-        } */}
-        {/* {parseInt(this.state.pengguna.rows[0].verified) === 10 && !this.$f7route.params['pengguna_id'] &&
-        <>
-        <Card
-        style={{background:'#B9A43F', color:'white'}}
-        content="Akun Anda sedang dalam proses verifikasi oleh Administator"
-        ></Card>
-        </>
-        } */}
-        {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '8px', marginBottom: '8px'}}>
-            <Button tabLink="#tab-1" tabLinkActive>Identitas</Button>
-            <Button tabLink="#tab-2">Peran</Button>
-            {!this.$f7route.params['pengguna_id'] && <Button tabLink="#tab-3">Keamanan</Button>}
-            {!this.$f7route.params['pengguna_id'] && <Button tabLink="#tab-4">Verifikasi</Button>}
-        </Segmented> */}
-        <Row>
-          {/* <Col width="100" tabletWidth="100" style={{padding:'8px'}}>
-              {parseInt(this.state.pengguna.rows[0].verified) === 1 &&
-              <p style={{fontStyle:'italic'}}>Akun terverifikasi</p>
-              }
-          </Col> */}
-          {/* {!this.$f7route.params['pengguna_id'] && 
-          <Col width="100" tabletWidth="20" style={{padding:'8px', marginTop:'0px'}}>
-              <Button disabled={(this.state.loading ? true : false)} raised fill onClick={this.simpanPengguna}><i className="f7-icons" style={{fontSize:'17px'}}>floppy_disk</i>&nbsp;Simpan</Button>
-          </Col>
-          } */}
-        </Row>
         <Tabs>
           <Tab id="tab-1" className="page-content no-padding-top" tabActive>
             <Block className="userProfile">
@@ -470,8 +368,17 @@ class ProfilPengguna extends Component {
                       </div>
                       <img src={JSON.parse(localStorage.getItem('user')).gambar} />
                       <div className="userNameBlock">
-                        <h1>{this.state.pengguna.rows[0].nama}</h1>
-                        <span>{this.state.pengguna.rows[0].username}</span>
+                        {this.state.loading ? (
+                          <>
+                            <h1 className="skeleton-text skeleton-effect-blink">Nama Pengguna</h1>
+                            <span className="skeleton-text skeleton-effect-blink">Email Pengguna</span>
+                          </>
+                        ) : (
+                          <>
+                            <h1>{this.state.pengguna.rows[0].nama}</h1>
+                            <span>{this.state.pengguna.rows[0].username}</span>
+                          </>
+                        )}
                         {!this.$f7route.params['pengguna_id'] && 
                           <Button disabled={(this.state.loading ? true : false)} raised fill onClick={this.simpanPengguna}><i className="f7-icons" style={{fontSize:'17px'}}>floppy_disk</i>&nbsp;Simpan</Button>
                         }
@@ -584,21 +491,13 @@ class ProfilPengguna extends Component {
                   title="Peran"
                   smartSelect
                 >
-                  {/* {typeof(this.state.pengguna.rows[0].peran_id) === 'undefined' || this.state.pengguna.rows[0].peran_id === '' && */}
                   <select onChange={this.gantiPeran} name="peran_id" defaultValue={"-"}>
-                      <option value={"-"} disabled>Pilih Peran</option>
-                      <option value={"1"}>Administrator</option>
-                      <option value={"54"}>Operator LPMP</option>
-                      <option value={"6"}>Operator Disdik Provinsi</option>
-                      <option value={"8"}>Operator Disdik Kabupaten/Kota</option>
+                    <option value={"-"} disabled>Pilih Peran</option>
+                    <option value={"1"}>Administrator</option>
+                    <option value={"54"}>Operator LPMP</option>
+                    <option value={"6"}>Operator Disdik Provinsi</option>
+                    <option value={"8"}>Operator Disdik Kabupaten/Kota</option>
                   </select>
-                  {/* } */}
-
-                  {/* {typeof(this.state.pengguna.rows[0].peran_id) !== 'undefined' &&
-                  <>
-                  {this.state.pengguna.rows[0].peran_id}
-                  </>
-                  } */}
                 </ListItem>
                 <ListItem
                   title="Provinsi"
@@ -620,7 +519,6 @@ class ProfilPengguna extends Component {
                   title="Kabupaten"
                   smartSelect
                   style={{display:this.state.show.kabupaten}}
-                  // style={{display:this.state.show.kabupaten}}
                   smartSelectParams={{searchbar: true, searchbarPlaceholder: 'Cari Kabupaten'}}
                 >
                   <select onChange={this.setParamValue} name="kabupaten" defaultValue={"-"}>
@@ -632,7 +530,7 @@ class ProfilPengguna extends Component {
                     })}
                   </select>
                 </ListItem>
-            </List>
+              </List>
             }
             {this.state.set_peran_id !== false &&
               <List inlineLabels noHairlinesMd style={{width:'100%',marginBottom:'0px',marginTop:'0px'}}>
@@ -642,18 +540,14 @@ class ProfilPengguna extends Component {
                   placeholder="Peran"
                   clearButton
                   value={this.state.pengguna.rows[0].peran}
-                  // onChange={this.setValue('peran')}
-                >
-                </ListInput>
+                />
                 <ListInput
                   label="Wilayah"
                   type="text"
                   placeholder="Wilayah"
                   clearButton
                   value={this.state.pengguna.rows[0].wilayah}
-                  // onChange={this.setValue('peran')}
-                >
-                </ListInput>
+                />
               </List>
             }
           </Tab>
@@ -662,7 +556,7 @@ class ProfilPengguna extends Component {
               <Card
                 style={{background:'#b71c1c', color:'white'}}
                 content="Anda belum mengatur password  untuk akun Anda. Demi keamanan, silakan atur password terlebih dahulu"
-              ></Card>
+              />
             }
             <List noHairlinesMd style={{width:'100%',marginBottom:'0px',marginTop:'0px'}}>
               <ListInput
@@ -670,138 +564,112 @@ class ProfilPengguna extends Component {
                 type="password"
                 placeholder="Password Baru"
                 clearButton
-                // value={this.state.pengguna.rows[0].peran}
                 onChange={this.setValue('password')}
-              >
-              </ListInput>
+              />
               <ListInput
                 label="Ulangi Password Baru"
                 type="password"
                 placeholder="Ulangi Password Baru"
                 clearButton
-                // value={this.state.pengguna.rows[0].wilayah}
                 onChange={this.setValue('password_ulang')}
-              >
-              </ListInput>
+              />
             </List>    
           </Tab>
           <Tab id="tab-4" className="page-content" style={{padding:'0px', overflow:'hidden'}}>
             <Row noGap>
               {parseInt(this.state.pengguna.rows[0].verified) === 1 &&
-                  <>
-                  <Col width={100} tabletWidth={100}>
-                      {/* checkmark_shield_fill */}
-
-                      <Card
-                      style={{background:'#7DB53F', color:'white'}}
-                      // content="Akun Anda telah terverifikasi!"
-                      >
-                          <CardContent>
-                              <i className="f7-icons" style={{fontSize:'60px', color:'white'}}>checkmark_shield</i>
-                              <h4>Akun Anda telah terverifikasi!</h4>
-                          </CardContent>
-                      </Card>
-                  </Col>
-                  </>
-                  }
-                  {parseInt(this.state.pengguna.rows[0].verified) === 10 &&
-                  <>
-                  <Col width={100} tabletWidth={100}>
-                      <Card
-                      style={{background:'#B9A43F', color:'white'}}
-                      content="Terima kasih telah mengupload berkas verifikasi! Silakan menunggu hingga Administrator memverifikasi akun Anda"
-                      ></Card>
-                  </Col>
-                  </>
-                  }
-                  {parseInt(this.state.pengguna.rows[0].verified) === 0 &&
-                  <>
+                <Col width={100}>
+                  <Card style={{background:'#7DB53F', color:'white'}}>
+                    <CardContent>
+                      <i className="f7-icons" style={{fontSize:'60px', color:'white'}}>checkmark_shield</i>
+                      <h4>Akun Anda telah terverifikasi!</h4>
+                    </CardContent>
+                  </Card>
+                </Col>
+              }
+              {parseInt(this.state.pengguna.rows[0].verified) === 10 &&
+                <Col width={100}>
+                  <Card
+                    style={{background:'#B9A43F', color:'white'}}
+                    content="Terima kasih telah mengupload berkas verifikasi! Silakan menunggu hingga Administrator memverifikasi akun Anda"
+                  />
+                </Col>
+              }
+              {parseInt(this.state.pengguna.rows[0].verified) === 0 &&
+                <>
                   <Col width={100} tabletWidth={50}>
-                      <BlockTitle>Upload Gambar KTP</BlockTitle>
-                      <Card>
-                          <Dropzone className="droping" onDrop={this.acceptedFile}>
-                          {({getRootProps, getInputProps}) => (
-                              <section>
-                                  <div {...getRootProps()} style={{height:'250px',border:'4px dashed #ccc', textAlign: 'center', paddingTop:(this.state.file_gambar_ktp !== '' ? '16px' : '10%'), paddingLeft:'16px', paddingRight:'16px'}}>
-                                      <input {...getInputProps()} />
-                                      {this.state.file_gambar_ktp === '' &&
-                                      <i slot="media" className="f7-icons" style={{fontSize:'60px', color:'#434343'}}>square_arrow_up</i>
-                                      }
-                                      {this.state.file_gambar_ktp !== '' &&
-                                      <>
-                                      <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state.file_gambar_ktp} />
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                      {this.state.gambar_ktp === '' &&
-                                      <>
-                                      <p>Tarik dan seret gambar KTP Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                      {this.state.gambar_ktp !== '' && this.state.file_gambar_ktp === '' &&
-                                      <>
-                                      <p style={{fontSize:'20px'}}>{this.state.gambar_ktp}</p>
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                  </div>
-                              </section>
-                          )}
-                          </Dropzone>
-                      </Card>
+                    <BlockTitle>Upload Gambar KTP</BlockTitle>
+                    <Card>
+                      <Dropzone className="droping" onDrop={this.acceptedFile}>
+                        {({getRootProps, getInputProps}) => (
+                          <section>
+                            <div {...getRootProps()} style={{height:'250px',border:'4px dashed #ccc', textAlign: 'center', paddingTop:(this.state.file_gambar_ktp !== '' ? '16px' : '10%'), paddingLeft:'16px', paddingRight:'16px'}}>
+                              <input {...getInputProps()} />
+                              {this.state.file_gambar_ktp === '' &&
+                                <i slot="media" className="f7-icons" style={{fontSize:'60px', color:'#434343'}}>square_arrow_up</i>
+                              }
+                              {this.state.file_gambar_ktp !== '' &&
+                                <>
+                                  <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state.file_gambar_ktp} />
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                              {this.state.gambar_ktp === '' &&
+                                <>
+                                  <p>Tarik dan seret gambar KTP Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                              {this.state.gambar_ktp !== '' && this.state.file_gambar_ktp === '' &&
+                                <>
+                                  <p style={{fontSize:'20px'}}>{this.state.gambar_ktp}</p>
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                            </div>
+                          </section>
+                        )}
+                      </Dropzone>
+                    </Card>
                   </Col>
                   <Col width={100} tabletWidth={50}>
-                      <BlockTitle>Upload Gambar SK Pengangkatan</BlockTitle>
-                      <Card>
-                          <Dropzone className="droping" onDrop={this.acceptedFileSk}>
-                          {({getRootProps, getInputProps}) => (
-                              <section>
-                                  <div {...getRootProps()} style={{height:'250px',border:'4px dashed #ccc', textAlign: 'center', paddingTop:(this.state.file_gambar_ktp !== '' ? '16px' : '10%'), paddingLeft:'16px', paddingRight:'16px'}}>
-                                      <input {...getInputProps()} />
-                                      {this.state.file_gambar_sk === '' &&
-                                      <i slot="media" className="f7-icons" style={{fontSize:'60px', color:'#434343'}}>square_arrow_up</i>
-                                      }
-                                      {this.state.file_gambar_sk !== '' &&
-                                      <>
-                                      <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state.file_gambar_sk} />
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                      {this.state.gambar_sk === '' &&
-                                      <>
-                                      <p>Tarik dan seret gambar KTP Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                      {this.state.gambar_sk !== '' && this.state.file_gambar_sk === '' &&
-                                      <>
-                                      <p style={{fontSize:'20px'}}>{this.state.gambar_sk}</p>
-                                      <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
-                                      </>
-                                      }
-                                  </div>
-                              </section>
-                          )}
-                          </Dropzone>
-                      </Card>
+                    <BlockTitle>Upload Gambar SK Pengangkatan</BlockTitle>
+                    <Card>
+                      <Dropzone className="droping" onDrop={this.acceptedFileSk}>
+                        {({getRootProps, getInputProps}) => (
+                          <section>
+                            <div {...getRootProps()} style={{height:'250px',border:'4px dashed #ccc', textAlign: 'center', paddingTop:(this.state.file_gambar_ktp !== '' ? '16px' : '10%'), paddingLeft:'16px', paddingRight:'16px'}}>
+                              <input {...getInputProps()} />
+                              {this.state.file_gambar_sk === '' &&
+                                <i slot="media" className="f7-icons" style={{fontSize:'60px', color:'#434343'}}>square_arrow_up</i>
+                              }
+                              {this.state.file_gambar_sk !== '' &&
+                                <>
+                                  <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state.file_gambar_sk} />
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                              {this.state.gambar_sk === '' &&
+                                <>
+                                  <p>Tarik dan seret gambar KTP Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                              {this.state.gambar_sk !== '' && this.state.file_gambar_sk === '' &&
+                                <>
+                                  <p style={{fontSize:'20px'}}>{this.state.gambar_sk}</p>
+                                  <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                </>
+                              }
+                            </div>
+                          </section>
+                        )}
+                      </Dropzone>
+                    </Card>
                   </Col>
-                  </>
-                  }
-              </Row>
-                  {/* <input 
-                  accept=".pdf, .doc, .docx, .xls, .xlsx, .png, .jpeg"
-                  inputlabelprops={{
-                      shrink: true
-                  }}
-                  name="berkas_pendukung"
-                  style={{ display: 'none' }}
-                  id="berkas_pendukung"
-                  onChange={this.file_dokumen_pendukung}
-                  multiple
-                  type="file"
-                  /> */}
-              {/* <br/> */}
+                </>
+              }
+            </Row>
           </Tab>
         </Tabs>
       </Page>
@@ -825,7 +693,7 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-function mapStateToProps({ App, PesertaDidik, Gtk, RaporDapodik }) {
+function mapStateToProps({ App }) {
   return {
     window_dimension: App.window_dimension,
     loading: App.loading,
