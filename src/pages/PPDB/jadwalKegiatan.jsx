@@ -185,7 +185,7 @@ class JadwalKegiatan extends Component {
 
 					{
 						this.state.loading && (
-							<center><div class="preloader"></div></center>
+							<center><div className="preloader"></div></center>
 							// <center><div>Loading...</div></center>
 						)
 					}

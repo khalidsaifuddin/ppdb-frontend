@@ -80,7 +80,7 @@ class cari extends Component {
     this.setState({
       riwayat_kata_kunci: objRiwayat
     }, ()=> {
-      console.log(this.state.riwayat_kata_kunci);
+      // console.log(this.state.riwayat_kata_kunci);
     });
   }
 
@@ -101,7 +101,7 @@ class cari extends Component {
     this.setState({
       riwayat_kata_kunci: objRiwayat,
     }, ()=> {
-      console.log(this.state.riwayat_kata_kunci);
+      // console.log(this.state.riwayat_kata_kunci);
     });
 
     this.setState({

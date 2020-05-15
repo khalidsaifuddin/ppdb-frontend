@@ -96,7 +96,7 @@ class Beranda extends Component {
       this.setState({
         users
       }, ()=> {
-        console.log(this.state.users);
+        // console.log(this.state.users);
       });
     });
 
@@ -211,9 +211,9 @@ class Beranda extends Component {
                       </CardContent>
                     </Card>
                   ) : ''}
-                  {!this.state.loadingPendaftaran && this.props.entities.rows.map((option)=> {
+                  {!this.state.loadingPendaftaran && this.props.entities.rows.map((option, key)=> {
                     return (
-                      <Card key={option.calon_peserta_didik_id} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
+                      <Card key={key} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
                         <CardHeader>
                           <Link href="#">
                             <div>
@@ -223,9 +223,9 @@ class Beranda extends Component {
                         </CardHeader>
                         <CardContent style={{padding:'4px'}}>
                           <Row noGap>
-                            {option.pilihan_sekolah.map((optionSekolah)=>{
+                            {option.pilihan_sekolah.map((optionSekolah, key)=>{
                               return (
-                                <Col width="33" tabletWidth="33">
+                                <Col width="33" tabletWidth="33" key={key}>
                                   <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                     <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                       <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
@@ -254,7 +254,7 @@ class Beranda extends Component {
                       }
                       {
                         !this.state.loadingJadwal && jkBeranda.map((n, key) => 
-                          <ListItem link="/" title={ n.nama } after={ this.formatTanggal(n.tanggal_mulai) } />
+                          <ListItem link="/" title={ n.nama } key={key} after={ this.formatTanggal(n.tanggal_mulai) } />
                         )
                       }
                       {/* <ListItem link="/" title="Sosialisasi PPDB ke SD" after="13 Mei 2020" />
