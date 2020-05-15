@@ -42,12 +42,12 @@ class DaftarPendaftaran extends Component {
     }
 
     cetakFormulir = (n) => {
-        const link = localStorage.getItem('api_base') + "api/CalonPesertaDidik/print/formulir/" + n.calon_peserta_didik_id;
+        const link = localStorage.getItem('api_base') + "/api/CalonPesertaDidik/print/formulir/" + n.calon_peserta_didik_id;
         window.open(link, '_blank');
     }
 
     cetakBukti = (n) => {
-        const link = localStorage.getItem('api_base') + "api/CalonPesertaDidik/print/bukti/" + n.calon_peserta_didik_id;
+        const link = localStorage.getItem('api_base') + "/api/CalonPesertaDidik/print/bukti/" + n.calon_peserta_didik_id;
         window.open(link, '_blank');
     }
 
@@ -146,16 +146,16 @@ class DaftarPendaftaran extends Component {
                                     </Col>
                                     <Col width={100} style={{border:'1px solid #ccceee', marginTop:'8px'}}>
                                         <Row noGap>
-                                            {option.pilihan_sekolah.map((optionSekolah)=>{
+                                            {option.pilihan_sekolah.map((optionSekolah, key1)=>{
                                             return (
-                                                <Col width="33" tabletWidth="33">
-                                                <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
-                                                    <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
-                                                    <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
-                                                    <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
-                                                    <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
-                                                    </CardContent>
-                                                </Card>
+                                                <Col width="33" tabletWidth="33" key={key1}>
+                                                    <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
+                                                        <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
+                                                        <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                                        <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
+                                                        <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
+                                                        </CardContent>
+                                                    </Card>
                                                 </Col>
                                             )
                                             })}
