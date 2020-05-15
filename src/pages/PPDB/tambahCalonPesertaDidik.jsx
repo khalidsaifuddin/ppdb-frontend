@@ -455,34 +455,31 @@ class tambahCalonPesertaDidik extends Component {
                   <List>
                     <ListInput
                       label="Nomor Induk Kependudukan / NIK"
-                      // type="text"
-                      type="tel"
+                      type="number"
                       placeholder="Ketikkan NIK dan enter..."
                       clearButton
                       onChange={this.setFieldValue('nik')}
                       onBlur={this.cekNik}
-                      // onInput={this.cekNikEnter}
-                      // onSubmit={this.cekNik}
                       pattern="[0-9]*"
                       validate
-                      errorMessage="Mohon hanya masukkan Angka!"
+                      data-error-message="Mohon hanya masukkan Angka!"
                       defaultValue={this.state.routeParams.nik}
+                      data-validate-on-blur="true"
                     >
                       <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNik}</b></span>
                     </ListInput>
                     <ListInput
                       label="NISN"
-                      type="text"
+                      type="number"
                       placeholder="NISN Calon Peserta Didik..."
                       info="Sesuai Ijazah"
                       clearButton
                       onChange={this.setFieldValue('nisn')}
+                      data-error-message="Mohon masukkan NISN dengan benar!"
                       defaultValue={this.state.routeParams.nisn}
                       disabled={this.state.disabledInput}
-                      // onBlur={this.cekNISN}
+                      data-validate-on-blur="true"
                     />
-                      {/* <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNISN}</b></span> */}
-                    {/* </ListInput> */}
                     <ListInput
                       label="Nama Calon Peserta Didik"
                       type="text"
@@ -493,7 +490,6 @@ class tambahCalonPesertaDidik extends Component {
                       defaultValue={this.state.routeParams.nama}
                       disabled={this.state.disabledInput}
                     />
-                    {/* {this.state.smartSelectJenisKelamin} */}
                     <ListItem accordionItem title={"Jenis Kelamin"} after={this.state.routeParams.jenis_kelamin}>
                       <AccordionContent>
                         <ListItem
@@ -759,7 +755,7 @@ class tambahCalonPesertaDidik extends Component {
                       <ListInput
                         label="Nomor Telepon Ayah"
                         type="tel"
-                        errorMessage="Mohon isikan nomor telepon yang benar!"
+                        data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Ayah..."
                         clearButton
                         validate
@@ -856,7 +852,7 @@ class tambahCalonPesertaDidik extends Component {
                       <ListInput
                         label="Nomor Telepon Ibu"
                         type="tel"
-                        errorMessage="Mohon isikan nomor telepon yang benar!"
+                        data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Ibu..."
                         clearButton
                         validate
@@ -953,7 +949,7 @@ class tambahCalonPesertaDidik extends Component {
                       <ListInput
                         label="Nomor Telepon Wali"
                         type="tel"
-                        errorMessage="Mohon isikan nomor telepon yang benar!"
+                        data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Wali..."
                         clearButton
                         validate
@@ -989,7 +985,7 @@ class tambahCalonPesertaDidik extends Component {
                 </Card>
             </Col>
             <Col width="100">
-              <Block className="simpanFormulir" style={{marginBottom:'40px'}}>
+              <Block className="simpanFormulir">
                 <Button disabled={this.state.disabledInput} raised fill large onClick={this.simpan}>
                   Simpan dan Lanjutkan
                 </Button>
