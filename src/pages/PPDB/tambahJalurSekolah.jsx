@@ -15,18 +15,14 @@ class tambahJalurSekolah extends Component {
         loading: false,
         routeParams:{
             pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-            orang_tua_utama: 'ayah',
-            pendidikan_terakhir_id_ayah: 99,
-            pekerjaan_id_ayah: 98,
-            pendidikan_terakhir_id_ibu: 99,
-            pekerjaan_id_ibu: 98,
-            pendidikan_terakhir_id_wali: 99,
-            pekerjaan_id_wali: 98,
-            jenis_kelamin: 'L',
             calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
             kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
-            id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
+            id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
+            start: 0,
+            limit: 10
         },
+        start: 0,
+        limit: 10,
         sekolah_terpilih: {
             sekolah_id: null,
             nama: null
@@ -49,7 +45,12 @@ class tambahJalurSekolah extends Component {
         listSekolahPilihan: [],
         sheetOpened: false,
         displaySekolahPilihan: {},
-        objSekolahPilihan: []
+        objSekolahPilihan: [],
+        ppdb_sekolah: {
+            rows: [],
+            count: 0,
+            countAll: 0
+        }
     }
 
     bulan = [
@@ -87,15 +88,19 @@ class tambahJalurSekolah extends Component {
                         routeParams: {
                             ...this.state.routeParams,
                             ...this.props.calon_peserta_didik.rows[0],
-                            jalur_id: '0100'
-                        }
+                            jalur_id: '0100',
+                            pilihan_sekolah: []
+                        },
+                        lintang: this.props.calon_peserta_didik.rows[0].lintang,
+                        bujur: this.props.calon_peserta_didik.rows[0].bujur
                     },()=>{
                         console.log(this.state.routeParams);
 
                         //hitung umur
                         console.log(this.state.routeParams.tanggal_lahir);
                         let tanggal_lahir = new Date(this.state.routeParams.tanggal_lahir);
-                        let ageDifMs = Date.now() - tanggal_lahir.getTime();
+                        let ageDifMs = new Date('2020-07-01 00:00:00') - tanggal_lahir.getTime();
+                        // let ageDifMs = Date.now() - tanggal_lahir.getTime();
                         let ageDate = new Date(ageDifMs);
                         let usia = Math.abs(ageDate.getUTCFullYear() - 1970);
 
@@ -128,15 +133,19 @@ class tambahJalurSekolah extends Component {
                                                     <Col width="15" style={{background:"url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
                                                         <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'100px', minHeight:'100px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
                                                     </Col>
-                                                    <Col width="65" style={{paddingLeft:'8px', paddingRight:'8px'}}>
+                                                    <Col width="55" style={{paddingLeft:'8px', paddingRight:'8px'}}>
                                                         <b style={{color:'green'}}>Sekolah Pilihan {parseInt(arrSekolah.indexOf(option.sekolah_id))+1}</b><br/>
                                                         <b>{option.nama} ({option.npsn})</b><br/>
                                                         {option.alamat}, {option.kecamatan}, {option.kabupaten}, {option.provinsi}<br/>
                                                         {parseInt(option.bentuk_pendidikan_id) === 5 ? 'SD' : (parseInt(option.bentuk_pendidikan_id) === 6 ? 'SMP' : (parseInt(option.bentuk_pendidikan_id) === 13 ? 'SMA' : (parseInt(option.bentuk_pendidikan_id) === 15 ? 'SMK' : '-')))}&nbsp;
                                                         {parseInt(option.status_sekolah) === 1 ? 'Negeri' : 'Swasta'}
                                                     </Col>
-                                                    <Col width="20">
-                                                        <Button raised fill onClick={()=>this.hapusPilihanSekolah(option.sekolah_id)}>
+                                                    <Col width="15" style={{textAlign:'right'}}>
+                                                        Jarak<br/>
+                                                        <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(option.jarak).toFixed(1)}</b> KM
+                                                    </Col>
+                                                    <Col width="15">
+                                                        <Button style={{marginLeft:'8px'}} raised fill onClick={()=>this.hapusPilihanSekolah(option.sekolah_id)}>
                                                             Hapus
                                                         </Button>
                                                     </Col>
@@ -166,7 +175,7 @@ class tambahJalurSekolah extends Component {
                                                 <option disabled value={"0"}>-</option>
                                                 <option value={"0100"}>Affirmasi</option>
                                                 <option value={"0200"}>Perpindahan Orang Tua</option>
-                                                <option value={"0300"}>Prestasi</option>
+                                                <option value={"0300"}>Minat dan Bakat</option>
                                                 <option value={"0400"}>Zonasi</option>
                                                 <option value={"0500"}>Tahfidz</option>
                                             </select>
@@ -190,7 +199,7 @@ class tambahJalurSekolah extends Component {
                                             <option disabled value={"0"}>-</option>
                                             <option value={"0100"}>Affirmasi</option>
                                             <option value={"0200"}>Perpindahan Orang Tua</option>
-                                            <option value={"0300"}>Prestasi</option>
+                                            <option value={"0300"}>Minat dan Bakat</option>
                                             <option value={"0400"}>Zonasi</option>
                                             <option value={"0500"}>Tahfidz</option>
                                         </select>
@@ -278,15 +287,16 @@ class tambahJalurSekolah extends Component {
             this.setState({
                 routeParams: {
                     ...this.state.routeParams,
-                    searchText: 'apcbdfd',
-                    bentuk_pendidikan_id: (this.state.usia < 11 ? 5 : 6)
+                    searchText: 'apcbdfd'
+                    // bentuk_pendidikan_id: (this.state.usia <= 12 ? '5' : '5-6')
                 }
             },()=>{
                 this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
 
                     this.setState({
                         sekuen_sekolah_pilihan: (parseInt(this.state.sekuen_sekolah_pilihan)+1),
-                        sheetOpened: true
+                        sheetOpened: true,
+                        ppdb_sekolah: this.props.ppdb_sekolah
                     },()=>{
                         console.log(this.state.sekuen_sekolah_pilihan);
                     });
@@ -302,7 +312,23 @@ class tambahJalurSekolah extends Component {
     }
 
     cariSekolah = () => {
-        this.props.getPPDBSekolah(this.state.routeParamsCariSekolah);
+        this.setState({
+            routeParamsCariSekolah: {
+                ...this.state.routeParamsCariSekolah,
+                lintang: this.state.lintang,
+                bujur: this.state.bujur,
+                start:0
+            }
+        },()=>{
+
+            this.props.getPPDBSekolah(this.state.routeParamsCariSekolah).then((result)=>{
+                this.setState({
+                    ...this.state,
+                    ppdb_sekolah: this.props.ppdb_sekolah
+                })
+            });
+
+        });
     }
 
     ketikCariSekolah = (e) => {
@@ -310,14 +336,14 @@ class tambahJalurSekolah extends Component {
             routeParamsCariSekolah: {
                 searchText: e.currentTarget.value,
                 status_sekolah: 1,
-                bentuk_pendidikan_id: (this.state.usia < 11 ? 5 : 6),
+                // bentuk_pendidikan_id: (this.state.usia <= 12 ? '5' : '5-6'),
                 kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
                 id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
             }
         });
     }
 
-    klikPilihSekolah = (sekolah_id, nama, npsn, alamat, bentuk_pendidikan_id, status_sekolah) => {
+    klikPilihSekolah = (sekolah_id, nama, npsn, alamat, bentuk_pendidikan_id, status_sekolah, jarak) => {
 
         let ketemu_sama = 0;
 
@@ -358,14 +384,18 @@ class tambahJalurSekolah extends Component {
                             <Col width="15" style={{background:"url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
                                 <img src={"http://foto.data.kemdikbud.go.id/getImage/" + npsn + "/1.jpg"} style={{maxHeight:'100px', minHeight:'100px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
                             </Col>
-                            <Col width="65" style={{paddingLeft:'8px', paddingRight:'8px'}}>
+                            <Col width="55" style={{paddingLeft:'8px', paddingRight:'8px'}}>
                                 <b style={{color:'green'}}>Sekolah Pilihan {parseInt(arrSekolah.indexOf(sekolah_id))+1}</b><br/>
                                 <b>{nama} ({npsn})</b><br/>
                                 {alamat}<br/>
                                 {parseInt(bentuk_pendidikan_id) === 5 ? 'SD' : (parseInt(bentuk_pendidikan_id) === 6 ? 'SMP' : (parseInt(bentuk_pendidikan_id) === 13 ? 'SMA' : (parseInt(bentuk_pendidikan_id) === 15 ? 'SMK' : '-')))}&nbsp;
                                 {parseInt(status_sekolah) === 1 ? 'Negeri' : 'Swasta'}
                             </Col>
-                            <Col width="20">
+                            <Col width="15" style={{textAlign:'right'}}>
+                                Jarak<br/>
+                                <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(option.jarak).toFixed(1)}</b> KM
+                            </Col>
+                            <Col width="15">
                                 <Button raised fill onClick={()=>this.hapusPilihanSekolah(sekolah_id)}>
                                     Hapus
                                 </Button>
@@ -421,6 +451,46 @@ class tambahJalurSekolah extends Component {
     tutupSheet = () => {
 
     }
+
+    muatSelanjutnya = () => {
+        this.setState({
+            routeParamsCariSekolah: {
+                // ...this.state.routeParams,
+                searchText: this.state.routeParamsCariSekolah.searchText,
+                status_sekolah: 1,
+                // bentuk_pendidikan_id: (this.state.usia <= 12 ? '5' : '5-6'),
+                kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+                id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
+                start: parseInt(this.state.start)+parseInt(this.state.limit),
+                lintang: this.state.lintang,
+                bujur: this.state.bujur
+            },
+            start: parseInt(this.state.start)+parseInt(this.state.limit)
+        }, ()=> {
+            // this.props.getPesertaDidik(this.state.routeParams).then((result)=> {
+            //     this.setState({
+            //         peserta_didik: {
+            //             ...this.state.peserta_didik,
+            //             rows: [
+            //                 ...this.state.peserta_didik.rows,
+            //                 ...this.props.peserta_didik.rows,
+            //             ]
+            //         }   
+            //     });
+            // });
+            this.props.getPPDBSekolah(this.state.routeParamsCariSekolah).then((result)=>{
+                this.setState({
+                    ppdb_sekolah: {
+                        ...this.state.ppdb_sekolah,
+                        rows: [
+                            ...this.state.ppdb_sekolah.rows,
+                            ...this.props.ppdb_sekolah.rows
+                        ]
+                    }
+                })
+            });
+        });
+      }
 
     render()
     {
@@ -486,10 +556,11 @@ class tambahJalurSekolah extends Component {
                         </Button>
                     </Col>
                 </Row>
-                <Sheet backdrop opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'50%'}}>
+                <Sheet backdrop opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'70%'}}>
                 <Toolbar>
                     <div className="left">
-                        <span>Menampilkan sekolah jenjang {(this.state.usia < 11 ? 'SD' : 'SMP')}</span>
+                        <span>Menampilkan sekolah jenjang SD dan SMP</span>
+                        {/* <span>Menampilkan sekolah jenjang {(this.state.usia <= 12 ? 'SD' : 'SD dan SMP')}</span> */}
                     </div>
                     <div className="right">
                         <Link sheetClose onClick={this.tutupSheet}>Tutup</Link>
@@ -503,7 +574,10 @@ class tambahJalurSekolah extends Component {
                         customSearch={true}
                         onChange={this.ketikCariSekolah}
                     ></Searchbar>
-                    {this.props.ppdb_sekolah.rows.map((option)=>{
+                    <Block strong style={{marginTop:'0px', marginBottom:'8px'}}>
+                        Menampilkan {this.state.ppdb_sekolah.countAll ? this.state.ppdb_sekolah.countAll : '0'} hasil pencarian
+                    </Block>
+                    {this.state.ppdb_sekolah.rows.map((option)=>{
                         return (
                             <Card>
                                 <CardContent>
@@ -511,19 +585,23 @@ class tambahJalurSekolah extends Component {
                                         <Col width="20" style={{background:"url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
                                             <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'100px', minHeight:'100px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
                                         </Col>
-                                        <Col width="60">
+                                        <Col width="50">
                                             <b>{option.nama} ({option.npsn})</b><br/>
                                             {option.alamat_jalan}, {option.kecamatan}, {option.kabupaten}, {option.provinsi}<br/>
                                             {parseInt(option.bentuk_pendidikan_id) === 5 ? 'SD' : (parseInt(option.bentuk_pendidikan_id) === 6 ? 'SMP' : (parseInt(option.bentuk_pendidikan_id) === 13 ? 'SMA' : (parseInt(option.bentuk_pendidikan_id) === 15 ? 'SMK' : '-')))}&nbsp;
                                             {parseInt(option.status_sekolah) === 1 ? 'Negeri' : 'Swasta'}
                                         </Col>
                                         <Col width="20" style={{textAlign:'right'}}>
+                                            Jarak<br/>
+                                            <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(option.jarak).toFixed(1)}</b> KM
+                                        </Col>
+                                        <Col width="10" style={{textAlign:'right'}}>
                                             <Radio 
                                                 // style={{marginTop:'15px'}} 
                                                 name={"pilih-sekolah"} 
                                                 value={option.sekolah_id} 
                                                 // slot="media"
-                                                onChange={()=>this.klikPilihSekolah(option.sekolah_id, option.nama, option.npsn, (option.alamat_jalan + ", " + option.kecamatan + ", " + option.kabupaten + ", " + option.provinsi), option.bentuk_pendidikan_id, option.status_sekolah)}
+                                                onChange={()=>this.klikPilihSekolah(option.sekolah_id, option.nama, option.npsn, (option.alamat_jalan + ", " + option.kecamatan + ", " + option.kabupaten + ", " + option.provinsi), option.bentuk_pendidikan_id, option.status_sekolah, option.jarak)}
                                             />
                                         </Col>
                                     </Row>
@@ -531,6 +609,11 @@ class tambahJalurSekolah extends Component {
                             </Card>
                         )
                     })}
+                    {this.props.ppdb_sekolah.count > 1 &&
+                    <Block strong style={{marginTop:'8px', marginBottom:'0px'}}>
+                        <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat Hasil Lainnya</Button>
+                    </Block>
+                    }
                 </PageContent>
                 </Sheet>
             </Page>
