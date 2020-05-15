@@ -25,11 +25,14 @@ class JadwalKegiatan extends Component {
 		
 		this.state = {
 			error: null,
-			loading: false,
+			loading: true,
 			routeParams: {
 				pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
 				searchText : '',
-			}
+				limit: 20,
+				page: 0
+			},
+			items: [], //Array.from({ length: 20 }),
 		}
 	}
 
@@ -37,9 +40,15 @@ class JadwalKegiatan extends Component {
 		this.setState({
 			routeParams: {
 				...this.state.routeParams,
-			}
+			},
+			loading: true
 		}, ()=> {
-			this.props.getJadwalKegiatan(this.state.routeParams);
+			this.props.getJadwalKegiatan(this.state.routeParams).then(e => {
+				this.setState({
+					items: this.state.items.concat(this.props.entities.rows),
+					loading: false
+				});
+			});
 		});
 	}
 
@@ -66,6 +75,16 @@ class JadwalKegiatan extends Component {
 		});
 	}
 
+	fetchMoreData = () => {
+		this.setState({
+			routeParams: {
+				...this.state.routeParams,
+				page: this.state.routeParams.page + 1,
+			}
+		})
+		this.getData();
+	}
+
 	componentDidMount = () => {
 		this.getData();
 		this.props.getRefJalurJk();
@@ -75,7 +94,7 @@ class JadwalKegiatan extends Component {
 	}
 
 	render() {
-		const { entities } = this.props;
+		// const { entities } = this.props;
 
 		return (
 			<Page name="cari">
@@ -103,7 +122,9 @@ class JadwalKegiatan extends Component {
 							</Button>
 						</div>
 					</div>
-					{entities.rows.map((option)=> {
+					{
+					// entities.rows.
+					this.state.items.map((option)=> {
 						return (
 							<Card key={option.jadwal_kegiatan_id} noShadow noBorder>
 								<CardHeader>
@@ -155,6 +176,19 @@ class JadwalKegiatan extends Component {
 							</Card>
 						)
 					})}
+
+					{
+						!this.state.loading && (this.props.entities.countAll !== this.state.items.length) && (
+							<Button fillIos onClick={e => this.fetchMoreData()}>See more</Button>
+						)
+					}
+
+					{
+						this.state.loading && (
+							<center><div class="preloader"></div></center>
+							// <center><div>Loading...</div></center>
+						)
+					}
 				</div>
 			</Page>
 		)
@@ -163,18 +197,18 @@ class JadwalKegiatan extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		getJadwalKegiatan: Actions.getJadwalKegiatan,
-		getRefJalurJk: Actions.getRefJalurJk,
-		getRefmstwilayahJK: Actions.getRefmstwilayahJK,
-		perJadwalkegiatan: Actions.perJadwalkegiatan,
-		deleteJadwalKegiatan: Actions.deleteJadwalKegiatan,
+		getJadwalKegiatan 							: Actions.getJadwalKegiatan,
+		getRefJalurJk 								: Actions.getRefJalurJk,
+		getRefmstwilayahJK 							: Actions.getRefmstwilayahJK,
+		perJadwalkegiatan 							: Actions.perJadwalkegiatan,
+		deleteJadwalKegiatan 						: Actions.deleteJadwalKegiatan,
 	}, dispatch);
 }
 
 function mapStateToProps({ App, JadwalKegiatan }) {
 	return {
-		window_dimension: App.window_dimension,
-		entities: JadwalKegiatan.entities,
+		window_dimension 							: App.window_dimension,
+		entities 									: JadwalKegiatan.entities,
 	}
 }
 
