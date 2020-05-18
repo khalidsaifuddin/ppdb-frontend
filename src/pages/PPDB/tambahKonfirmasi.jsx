@@ -191,7 +191,8 @@ class tambahKonfirmasi extends Component {
 
         return (
             <Page name="tambahKonfirmasi" hideBarsOnScroll>
-                <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
+                <Navbar sliding={false}>
+                {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
                     <NavTitle sliding>Tambah Peserta Didik</NavTitle>
                     <NavTitleLarge>
                         Tambah Peserta Didik

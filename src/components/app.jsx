@@ -87,14 +87,14 @@ class app extends Component {
   }
 
   componentDidMount = () => {
-    let socket = io(localStorage.getItem('socket_url'));
-    let params = {};
+    // let socket = io(localStorage.getItem('socket_url'));
+    // let params = {};
 
-    socket.emit('online', params, function (err) {
-      if (err) {
-        this.props.history.push('/');
-      }
-    });
+    // socket.emit('online', params, function (err) {
+    //   if (err) {
+    //     this.props.history.push('/');
+    //   }
+    // });
   }
 
   gantiSemester = (b) => {

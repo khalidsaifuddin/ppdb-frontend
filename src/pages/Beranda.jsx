@@ -217,7 +217,7 @@ class Beranda extends Component {
                         <CardHeader>
                           <Link href="#">
                             <div>
-                              {option.nama}&nbsp;({option.nisn})
+                              {option.nama}&nbsp;({option.nik})
                             </div>
                           </Link>
                         </CardHeader>
@@ -229,6 +229,7 @@ class Beranda extends Component {
                                   <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                     <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                       <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                      <div style={{fontSize:'12px', color:'#FFF9C4', fontWeight:'bold'}}>Jalur {optionSekolah.jalur}</div>
                                       <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
                                       <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
                                     </CardContent>

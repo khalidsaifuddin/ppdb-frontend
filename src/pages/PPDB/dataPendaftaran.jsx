@@ -15,6 +15,15 @@ class DaftarPendaftaran extends Component {
             pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
             // pantauan: 1
             keyword : '',
+            start: 0,
+            limit: 20
+        },
+        start: 0,
+        limit: 20,
+        entities: {
+            rows: [],
+            count: 0,
+            countAll: 0
         }
     }
 
@@ -24,10 +33,15 @@ class DaftarPendaftaran extends Component {
         // }
         this.setState({
             routeParams: {
-                ...this.state.routeParams
+                ...this.state.routeParams,
+                start: 0
             }
         },()=>{
-            this.props.getCalonPD(this.state.routeParams);
+            this.props.getCalonPD(this.state.routeParams).then((result)=>{
+                this.setState({
+                    entities: this.props.entities
+                });
+            });
         });
 
     }
@@ -36,9 +50,9 @@ class DaftarPendaftaran extends Component {
         this.setState({
             routeParams: {
                 ...this.state.routeParams,
-                keyword: e.target.value,
+                searchText: e.target.value,
             }
-        })
+        });
     }
 
     cetakFormulir = (n) => {
@@ -53,6 +67,39 @@ class DaftarPendaftaran extends Component {
 
     componentDidMount = () => {
         this.getData();
+    }
+
+    muatSelanjutnya = () => {
+        this.setState({
+            routeParams: {
+                ...this.state.routeParams,
+                start: parseInt(this.state.start)+parseInt(this.state.limit)
+            },
+            start: parseInt(this.state.start)+parseInt(this.state.limit)
+        }, ()=> {
+            this.props.getCalonPD(this.state.routeParams).then((result)=>{
+                this.setState({
+                    entities: {
+                        ...this.state.entities,
+                        rows: [
+                            ...this.state.entities.rows,
+                            ...this.props.entities.rows
+                        ]
+                    }
+                });
+            });
+            // this.props.getPPDBSekolah(this.state.routeParamsCariSekolah).then((result)=>{
+            //     this.setState({
+            //         ppdb_sekolah: {
+            //             ...this.state.ppdb_sekolah,
+            //             rows: [
+            //                 ...this.state.ppdb_sekolah.rows,
+            //                 ...this.props.ppdb_sekolah.rows
+            //             ]
+            //         }
+            //     })
+            // });
+        });
     }
 
     render()
@@ -71,15 +118,17 @@ class DaftarPendaftaran extends Component {
                             onSubmit={this.getData}
                             customSearch={true}
                             onChange={this.ketikCari}
-                            value={this.state.routeParams.keyword}
+                            defaultValue={this.state.routeParams.keyword}
                             // clickClear={this.clickClear}
                         ></Searchbar>
                     </Subnavbar>
                 </Navbar>
 
                 <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftaran</Block>
-                
-                {this.props.entities.rows.map((option, key)=>{
+                <Block strong style={{marginTop:'0px', marginBottom:'8px'}}>
+                    Menampilkan {this.props.entities.countAll ? this.props.entities.countAll : '0'} data pendaftar
+                </Block>
+                {this.state.entities.rows.map((option, key)=>{
 
                     // let sekolah_asal = '';
 
@@ -152,6 +201,7 @@ class DaftarPendaftaran extends Component {
                                                     <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                                         <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                                         <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
+                                                        <div style={{fontSize:'12px', color:'#FFF9C4', fontWeight:'bold'}}>Jalur {optionSekolah.jalur}</div>
                                                         <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
                                                         <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
                                                         </CardContent>
@@ -190,7 +240,11 @@ class DaftarPendaftaran extends Component {
                         </Card>
                     )
                 })}
-                
+                {this.props.entities.count > 1 &&
+                <Block strong style={{marginTop:'8px', marginBottom:'0px'}}>
+                    <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat data selanjutnya</Button>
+                </Block>
+                }
             </Page>
         )
     }

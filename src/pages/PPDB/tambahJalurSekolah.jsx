@@ -88,7 +88,7 @@ class tambahJalurSekolah extends Component {
                         routeParams: {
                             ...this.state.routeParams,
                             ...this.props.calon_peserta_didik.rows[0],
-                            jalur_id: '0100',
+                            jalur_id: '0',
                             pilihan_sekolah: []
                         },
                         lintang: this.props.calon_peserta_didik.rows[0].lintang,
@@ -172,7 +172,7 @@ class tambahJalurSekolah extends Component {
                                             }}
                                         >
                                             <select name="jalur_id" defaultValue={this.props.sekolah_pilihan.rows[0].jalur_id} onChange={this.setSelectValue('jalur_id')}>
-                                                <option disabled value={"0"}>-</option>
+                                                <option disabled value={"0"}>Mohon Pilih Jalur Terlebih Dahulu ...</option>
                                                 <option value={"0100"}>Affirmasi</option>
                                                 <option value={"0200"}>Perpindahan Orang Tua</option>
                                                 <option value={"0300"}>Minat dan Bakat</option>
@@ -196,7 +196,7 @@ class tambahJalurSekolah extends Component {
                                         }}
                                     >
                                         <select name="jalur_id" defaultValue={this.state.routeParams.jalur_id} onChange={this.setSelectValue('jalur_id')}>
-                                            <option disabled value={"0"}>-</option>
+                                            <option disabled value={"0"}>Mohon Pilih Jalur Terlebih Dahulu ...</option>
                                             <option value={"0100"}>Affirmasi</option>
                                             <option value={"0200"}>Perpindahan Orang Tua</option>
                                             <option value={"0300"}>Minat dan Bakat</option>
@@ -281,6 +281,12 @@ class tambahJalurSekolah extends Component {
 
     tambahSekolahPilihan = () => {
 
+        if(this.state.routeParams.jalur_id === '0'){
+            this.$f7.dialog.alert('Mohon pilih jalur pendaftaran terlebih dahulu!','Peringatan');
+            return false;
+        }
+
+
         if(parseInt(this.state.arrSekolahPilihan.length) < 3){
         // if(parseInt(this.state.sekuen_sekolah_pilihan) < 3){
             
@@ -294,11 +300,11 @@ class tambahJalurSekolah extends Component {
                 this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
 
                     this.setState({
-                        sekuen_sekolah_pilihan: (parseInt(this.state.sekuen_sekolah_pilihan)+1),
+                        // sekuen_sekolah_pilihan: (parseInt(this.state.sekuen_sekolah_pilihan)+1),
                         sheetOpened: true,
                         ppdb_sekolah: this.props.ppdb_sekolah
                     },()=>{
-                        console.log(this.state.sekuen_sekolah_pilihan);
+                        // console.log(this.state.sekuen_sekolah_pilihan);
                     });
                 
                 });
@@ -359,7 +365,7 @@ class tambahJalurSekolah extends Component {
             this.$f7.dialog.alert('Mohon pilih sekolah yang berbeda dengan pilihan sebelumnya!','Peringatan');
 
             this.setState({
-                sekuen_sekolah_pilihan: parseInt(this.state.sekuen_sekolah_pilihan)-1
+                // sekuen_sekolah_pilihan: parseInt(this.state.sekuen_sekolah_pilihan)-1
             },()=>{
                 return false;
             });
@@ -393,7 +399,7 @@ class tambahJalurSekolah extends Component {
                             </Col>
                             <Col width="15" style={{textAlign:'right'}}>
                                 Jarak<br/>
-                                <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(option.jarak).toFixed(1)}</b> KM
+                                <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(jarak).toFixed(1)}</b> KM
                             </Col>
                             <Col width="15">
                                 <Button raised fill onClick={()=>this.hapusPilihanSekolah(sekolah_id)}>
@@ -409,6 +415,7 @@ class tambahJalurSekolah extends Component {
                 arrSekolahPilihan: arrSekolah,
                 listSekolahPilihan: listSekolah,
                 sheetOpened: false,
+                sekuen_sekolah_pilihan: parseInt(this.state.sekuen_sekolah_pilihan)-1,
                 objSekolahPilihan: [
                     ...this.state.objSekolahPilihan,
                     objSekolahPilihan
@@ -429,6 +436,10 @@ class tambahJalurSekolah extends Component {
             return value !== sekolah_id;
         });
         
+        var filteredObj = this.state.objSekolahPilihan.filter(function(value, index, arr){
+            return value.sekolah_id !== sekolah_id;
+        });
+        
         var filteredDisplay = this.state.listSekolahPilihan.filter(function(value, index, arr){
             return value.sekolah_id !== sekolah_id;
         });
@@ -436,6 +447,7 @@ class tambahJalurSekolah extends Component {
         this.setState({
             arrSekolahPilihan: filtered,
             listSekolahPilihan: filteredDisplay,
+            objSekolahPilihan: filteredObj,
             sekuen_sekolah_pilihan: parseInt(this.state.sekuen_sekolah_pilihan-1),
             routeParamsHapus: {
                 sekolah_id: sekolah_id,
@@ -449,7 +461,9 @@ class tambahJalurSekolah extends Component {
     }
 
     tutupSheet = () => {
-
+        this.setState({
+            sheetOpened: false
+        });
     }
 
     muatSelanjutnya = () => {
@@ -496,7 +510,8 @@ class tambahJalurSekolah extends Component {
     {
         return (
             <Page name="tambahJalurSekolah" hideBarsOnScroll>
-                <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
+                <Navbar sliding={false}>
+                {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
                     <NavTitle sliding>Tambah Peserta Didik</NavTitle>
                     <NavTitleLarge>
                         Tambah Peserta Didik

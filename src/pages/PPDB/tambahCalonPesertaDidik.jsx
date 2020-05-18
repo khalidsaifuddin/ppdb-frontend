@@ -219,6 +219,26 @@ class tambahCalonPesertaDidik extends Component {
     });
   }
 
+  occurrences = (string, subString, allowOverlapping) => {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+  }
+
   simpan = () => {
     this.setState({
       routeParams: {
@@ -226,8 +246,47 @@ class tambahCalonPesertaDidik extends Component {
         sekolah_asal: null,
       }
     }, ()=> {
+      
       if(this.state.routeParams.nama === null || this.state.routeParams.nik === null || this.state.routeParams.tempat_lahir === null || this.state.routeParams.tanggal_lahir === null) {
         this.$f7.dialog.alert('Nama/NISN/tempat dan tanggal lahir tidak boleh kosong!','Peringatan');
+        return false;
+      }
+  
+      if(this.state.routeParams.lintang){
+        
+        if(this.state.routeParams.lintang.search(",") !== -1) {
+          this.$f7.dialog.alert('Isian lintang tidak boleh menggunakan tanda koma (,). Silakan gunakan titik untuk indikator desimal (.)!','Peringatan');
+          return false;
+        }
+
+        if(this.occurrences(this.state.routeParams.lintang,".") > 1){
+          this.$f7.dialog.alert('Isian lintang harus sesuai dengan format yang benar (Contoh: "-8.1010")!','Peringatan');
+          return false;
+        }
+
+        // let count = (this.state.routeParams.lintang.match(/./g) || []).length;
+        // console.log(count);
+        // console.log(this.occurrences(this.state.routeParams.lintang,"."));
+
+      }else{
+        this.$f7.dialog.alert('Mohon isi titik koordinat rumah terlebih dahulu!','Peringatan');
+        return false;
+      }
+
+      if(this.state.routeParams.bujur){
+        
+        if(this.state.routeParams.bujur.search(",") !== -1) {
+          this.$f7.dialog.alert('Isian lintang tidak boleh menggunakan tanda koma (,). Silakan gunakan titik untuk indikator desimal (.)!','Peringatan');
+          return false;
+        }
+
+        if(this.occurrences(this.state.routeParams.bujur,".") > 1){
+          this.$f7.dialog.alert('Isian bujur harus sesuai dengan format yang benar (Contoh: "113.1010")!','Peringatan');
+          return false;
+        }
+
+      }else{
+        this.$f7.dialog.alert('Mohon isi titik koordinat rumah terlebih dahulu!','Peringatan');
         return false;
       }
       
@@ -248,6 +307,8 @@ class tambahCalonPesertaDidik extends Component {
         this.$f7.dialog.alert('Nama wali tidak boleh kosong!','Peringatan');
         return false;
       }
+
+      return true;
 
       this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
         if(result.payload.peserta_didik_id) {
@@ -426,7 +487,8 @@ class tambahCalonPesertaDidik extends Component {
   render() {
     return (
       <Page name="tambahCalonPesertaDidik" hideBarsOnScroll>
-        <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
+        <Navbar sliding={false}>
+        {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
           <NavTitle sliding>Tambah Peserta Didik</NavTitle>
           <NavTitleLarge>
             Tambah Peserta Didik
@@ -656,17 +718,36 @@ class tambahCalonPesertaDidik extends Component {
                 </CardHeader>
                 <CardContent>
                   <List>
-                    <ListItem
+                    {/* <ListItem
                       title={"Orang Tua Penanggung Jawab"}
                       smartSelect
                       disabled={this.state.disabledInput}
                       smartSelectParams={{openIn: 'sheet', closeOnSelect: true}}
                     >
-                      <select name="orang_tua_utama" defaultValue={"ayah"} onChange={this.setSelectValue('orang_tua_utama')}>
+                      <select name="orang_tua_utama" defaultValue={this.state.routeParams.orang_tua_utama} onChange={this.setSelectValue('orang_tua_utama')}>
                         <option value={"ayah"}>Ayah</option>
                         <option value={"ibu"}>Ibu</option>
                         <option value={"wali"}>Wali</option>
                       </select>
+                    </ListItem> */}
+                    <ListItem accordionItem title={"Orang Tua Penanggung Jawab"} after={this.state.routeParams.orang_tua_utama}>
+                      <AccordionContent>
+                        <ListItem
+                          title={"Edit"}
+                          smartSelect
+                          smartSelectParams={{
+                            openIn: 'sheet', 
+                            closeOnSelect: true,
+                          }}
+                        >
+                          <select name="orang_tua_utama" defaultValue={"0"} onChange={this.setSelectValue('orang_tua_utama')}>
+                            <option disabled value={"0"}>Pilih ...</option>
+                            <option value={"ayah"}>Ayah</option>
+                            <option value={"ibu"}>Ibu</option>
+                            <option value={"wali"}>Wali</option>
+                          </select>
+                        </ListItem>
+                      </AccordionContent>
                     </ListItem>
                     {this.state.routeParams.orang_tua_utama === 'ayah' &&
                       <ListInput

@@ -292,7 +292,8 @@ class tambahBerkas extends Component {
     {
         return (
             <Page name="tambahBerkas" hideBarsOnScroll>
-                <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
+                <Navbar sliding={false}>
+                {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
                     <NavTitle sliding>Tambah Peserta Didik</NavTitle>
                     <NavTitleLarge>
                         Tambah Peserta Didik

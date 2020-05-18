@@ -1804,3 +1804,16 @@
 
   .userProfile .profileActions { display: block; }
 }
+
+.pagination {
+  margin-top: 44px;
+  text-align:right;
+}
+
+.pagination li.active {
+  font-weight: bold;
+}
+
+.pagination li.active a{
+  color: #FF6B22;
+}
