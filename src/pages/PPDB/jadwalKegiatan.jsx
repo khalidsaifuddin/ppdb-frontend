@@ -165,9 +165,9 @@ class JadwalKegiatan extends Component {
 								</CardContent>
 								<CardFooter>
 									<div className="cardActions">
-										<Button raised fill onClick={e => this.handleLink(option, ("/jadwalKegiatan/" + option.jadwal_kegiatan_id))}>
+										{/* <Button raised fill onClick={e => this.handleLink(option, ("/jadwalKegiatan/" + option.jadwal_kegiatan_id))}>
 											<Icon ios="f7:pencil_circle_fill" size="20px"/> Ubah
-										</Button>
+										</Button> */}
 										<Button raised fill color="red" onClick={e => this.handleDelete(option)}>
 											<Icon ios="f7:xmark_circle_fill" size="20px"/> Hapus
 										</Button>
