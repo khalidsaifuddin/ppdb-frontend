@@ -1065,7 +1065,7 @@
 }
 
 .noRegistration .card-content img {
-  height: 76px;
+  height: 128px;
   opacity: .375;
   display: block;
   max-width: 100%;
@@ -1238,6 +1238,35 @@
 }
 
 .daftarKegiatan .card .card-footer .cardActions .button:first-child { margin-left: 0; }
+
+.noDaftarKegiatan {
+  width: 100%;
+  margin: 0;
+}
+
+.noDaftarKegiatan .card-content {
+  padding: 1rem !important;
+  text-align: center;
+  background-color: #fff !important;
+}
+
+.noDaftarKegiatan .card-content img {
+  height: 128px;
+  opacity: .375;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto .625rem;
+}
+
+.noDaftarKegiatan .card-content h4 {
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+
+.noDaftarKegiatan .card-content a {
+  display: inline-block;
+  padding: 0 1rem;
+}
 
 .profileProgress {
   height: 4px;
@@ -1520,6 +1549,23 @@
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+.headerWidget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.headerWidget h2 {
+  margin: 0;
+  font-size: 14px;
+  color: #8f8f94;
+  font-weight: 400;
 }
 
 .onlyOnDesktop { display: block !important; }
