@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../store/actions';
 
+import Pagination from "react-js-pagination";
+
 class DetailcalonpdSiswa extends Component {
     state = {
         error: null,
@@ -15,13 +17,18 @@ class DetailcalonpdSiswa extends Component {
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
             sekolah_id: this.$f7route.params['sekolah_id'] ? this.$f7route.params['sekolah_id'] : null,
             searchText : '',
-        }
+        },
+        activePage: 1,
+        start: 0,
+        limit: 10
     }
 
     getData = () => {
         this.setState({
             routeParams: {
-                ...this.state.routeParams
+                ...this.state.routeParams,
+                start: 0,
+                limit: this.state.limit
             }
         },()=>{
             this.props.getCalonpdSekolah(this.state.routeParams).then(e => {
@@ -47,12 +54,30 @@ class DetailcalonpdSiswa extends Component {
         });
     }
 
+    handlePageChange = (pageNumber) => {
+        this.setState({
+          start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit)),
+        //   start: (parseInt(this.state.start)+parseInt(this.state.limit)),
+          routeParams: {
+            ...this.state.routeParams,
+            start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit))
+            // start: (parseInt(this.state.start)+parseInt(this.state.limit))
+          },
+          activePage: pageNumber,
+          loading: true
+        },()=>{
+            this.props.getCalonpdSekolah(this.state.routeParams).then(e => {
+                this.setState({ loading: false });
+            });
+        });
+    }
+
     render()
     {
         const sekolah = this.props.sekolah_calonpd.rows[0]
 
         return (
-            <Page name="cari">
+            <Page name="cari" style={{paddingBottom:'50px'}}>
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
                     <NavTitle sliding>Daftar Calon Peserta Didik</NavTitle>
                     <Subnavbar inner={false}>
@@ -71,20 +96,28 @@ class DetailcalonpdSiswa extends Component {
                     </Subnavbar>
                 </Navbar>
 
-                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>-</Block>
+                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>
 
-                <List mediaList>
-                    <ListItem
-                        // link="#"
-                        title={ sekolah.nama }
-                        // after="$15"
-                        subtitle={ sekolah.npsn }
-                        text={ "Alamat Jalan : " + sekolah.alamat_jalan + " " + sekolah.kecamatan + " -> " + sekolah.kabupaten + " -> " + sekolah.provinsi }
-                    >
-                        <img slot="media" src={"http://foto.data.kemdikbud.go.id/getImage/" + sekolah.npsn + "/1.jpg"} width="80" />
-                    </ListItem>
-                </List>
-                
+                    <List mediaList>
+                        <ListItem
+                            // link="#"
+                            title={ sekolah.nama }
+                            // after="$15"
+                            subtitle={ sekolah.npsn }
+                            text={ "Alamat Jalan : " + sekolah.alamat_jalan + " " + sekolah.kecamatan + ", " + sekolah.kabupaten + ", " + sekolah.provinsi }
+                        >
+                            <img slot="media" src={"http://foto.data.kemdikbud.go.id/getImage/" + sekolah.npsn + "/1.jpg"} width="80" />
+                        </ListItem>
+                    </List>
+                </Block>
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={this.state.limit}
+                    totalItemsCount={this.props.calonpd_sekolah.countAll}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                    // style={{marginTop:'44px'}}
+                />
                 {this.props.calonpd_sekolah.rows.map((option, key)=>{
 
                     return (
@@ -107,16 +140,31 @@ class DetailcalonpdSiswa extends Component {
                                             </Col>
                                             <Col width="100" tabletWidth="30">
                                                 Tempat/Tanggal Lahir: <b>{ option.tempat_lahir + " / " + option.tanggal_lahir }</b> <br/>
-                                                Alamat: <b>{ option.alamat_tempat_tinggal }</b> <br/>
+                                                lintang: <b>{ option.lintang }</b> <br/>
+                                                bujur: <b>{ option.bujur }</b> <br/>
                                             </Col>
                                             <Col width="100" tabletWidth="30">
                                                 Jenis Kelamin: <b>{ option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' }</b> <br/>
                                                 Umur: <b>{ option.umur }</b> <br/>
                                             </Col>
-                                            <Col width="100" tabletWidth="30">
-                                                Tanggal Pengisian Formulir: <b>{ option.create_date }</b> <br/>
-                                                Asal Sekolah: <b>{ "(" + option.npsn_sekolah_asal + ") " + option.nama_sekolah_asal }</b> <br/>
-                                                Jalur: <b>{ option.nama_jalur }</b> <br/>
+                                            <Col width="100" tabletWidth="30" style={{textAlign:'center'}}>
+                                                {/* Tanggal Pengisian Formulir: <b>{ option.create_date }</b> <br/> */}
+                                                {/* Asal Sekolah: <b>{ "(" + option.npsn_sekolah_asal + ") " + option.nama_sekolah_asal }</b> <br/> */}
+                                                Jalur <b>{ option.jalur }</b> <br/>
+                                                No Urut<br/>
+                                                <b style={{fontSize:'25px'}}>{ option.urutan }</b> <br/>
+                                            </Col>
+                                            <Col width="100" style={{borderTop:'0px solid #ccc', paddingBottom:'8px'}}>
+                                                <Row noGap>
+                                                    <Col width="50" style={{paddingTop:'8px'}}>
+                                                        {parseInt(option.konfirmasi) === 1 &&
+                                                        <Button raised fill small>Tanggal Konfirmasi: {option.last_update}</Button>
+                                                        }
+                                                        {parseInt(option.konfirmasi) !== 1 &&
+                                                        <Button raised fill small disabled>Belum Konfirmasi</Button>
+                                                        }
+                                                    </Col>
+                                                </Row>
                                             </Col>
                                         </Row>
                                     </Col>
@@ -131,7 +179,14 @@ class DetailcalonpdSiswa extends Component {
                         </Card>
                     )
                 })}
-                
+                <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={this.state.limit}
+                totalItemsCount={this.props.calonpd_sekolah.countAll}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                // style={{marginTop:'44px'}}
+                />
             </Page>
         )
     }

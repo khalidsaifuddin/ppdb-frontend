@@ -95,6 +95,7 @@ class app extends Component {
     //     this.props.history.push('/');
     //   }
     // });
+    // console.log(this);
   }
 
   gantiSemester = (b) => {

@@ -24,6 +24,10 @@ const initialState = {
     cek_nisn: {
         rows: [],
         total: 0
+    },
+    validasi_berkas: {
+        rows: [],
+        total: 0
     }
 }
 
@@ -70,6 +74,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
             return {
                 ...state,
                 cek_nisn: action.payload
+            };
+        }
+        case Actions.VALIDASI_BERKAS:
+        {
+            return {
+                ...state,
+                validasi_berkas: action.payload
             };
         }
         default:

@@ -112,6 +112,7 @@ class cari extends Component {
         searchText: event.target[0].value,
         id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
         kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+        status_sekolah: 1
       }
     }, ()=> {
       this.props.setKeyword(this.state.routeParams.keyword);

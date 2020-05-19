@@ -21,7 +21,8 @@ import {
   PageContent,
   Radio,
   Block,
-  AccordionContent
+  AccordionContent,
+  Preloader
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -243,9 +244,19 @@ class tambahCalonPesertaDidik extends Component {
     this.setState({
       routeParams: {
         ...this.state.routeParams,
-        sekolah_asal: null,
+        sekolah_asal: null
       }
     }, ()=> {
+
+      if(this.state.routeParams.nik.length > 16){
+        this.$f7.dialog.alert('NIK tidak boleh lebih dari 16 digit!','Peringatan');
+        return false;
+      }
+      
+      if(this.state.routeParams.nik.length < 16){
+        this.$f7.dialog.alert('NIK tidak boleh kurang dari 16 digit!','Peringatan');
+        return false;
+      }
       
       if(this.state.routeParams.nama === null || this.state.routeParams.nik === null || this.state.routeParams.tempat_lahir === null || this.state.routeParams.tanggal_lahir === null) {
         this.$f7.dialog.alert('Nama/NISN/tempat dan tanggal lahir tidak boleh kosong!','Peringatan');
@@ -308,15 +319,28 @@ class tambahCalonPesertaDidik extends Component {
         return false;
       }
 
-      return true;
+      // return true;
 
-      this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
-        if(result.payload.peserta_didik_id) {
-          this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
-        } else {
-          this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan internet Anda. Mohon coba beberapa saat lagi');
-        }
+      this.setState({
+        ...this.state,
+        loading: true,
+        disabledInput: true
+      },()=>{
+        this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
+          if(result.payload.peserta_didik_id) {
+            this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
+          } else {
+            this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan internet Anda. Mohon coba beberapa saat lagi');
+            
+            this.setState({
+              ...this.state,
+              loading:false,
+              disabledInput: false
+            });
+          }
+        });
       });
+
     });
   }    
 
@@ -1066,9 +1090,9 @@ class tambahCalonPesertaDidik extends Component {
                 </Card>
             </Col>
             <Col width="100">
-              <Block className="simpanFormulir">
+              <Block className="simpanFormulir" style={{marginBottom:'50px'}}>
                 <Button disabled={this.state.disabledInput} raised fill large onClick={this.simpan}>
-                  Simpan dan Lanjutkan
+                  {this.state.disabledInput && <Preloader color="white"></Preloader>} Simpan dan Lanjutkan
                 </Button>
               </Block>
             </Col>

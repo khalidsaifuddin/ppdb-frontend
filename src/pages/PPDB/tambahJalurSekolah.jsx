@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio
+    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, Preloader
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
@@ -50,7 +50,8 @@ class tambahJalurSekolah extends Component {
             rows: [],
             count: 0,
             countAll: 0
-        }
+        },
+        disabledInput: false
     }
 
     bulan = [
@@ -175,7 +176,7 @@ class tambahJalurSekolah extends Component {
                                                 <option disabled value={"0"}>Mohon Pilih Jalur Terlebih Dahulu ...</option>
                                                 <option value={"0100"}>Affirmasi</option>
                                                 <option value={"0200"}>Perpindahan Orang Tua</option>
-                                                <option value={"0300"}>Minat dan Bakat</option>
+                                                <option value={"0300"}>Minat Bakat (SMPN 3 Lumajang / SMPN 2 Tempeh)</option>
                                                 <option value={"0400"}>Zonasi</option>
                                                 <option value={"0500"}>Tahfidz</option>
                                             </select>
@@ -199,7 +200,7 @@ class tambahJalurSekolah extends Component {
                                             <option disabled value={"0"}>Mohon Pilih Jalur Terlebih Dahulu ...</option>
                                             <option value={"0100"}>Affirmasi</option>
                                             <option value={"0200"}>Perpindahan Orang Tua</option>
-                                            <option value={"0300"}>Minat dan Bakat</option>
+                                            <option value={"0300"}>Minat Bakat (SMPN 3 Lumajang / SMPN 2 Tempeh)</option>
                                             <option value={"0400"}>Zonasi</option>
                                             <option value={"0500"}>Tahfidz</option>
                                         </select>
@@ -238,7 +239,8 @@ class tambahJalurSekolah extends Component {
                 sekolah_asal: null,
                 sekolah_pilihan: this.state.arrSekolahPilihan,
                 obj_sekolah_pilihan: this.state.objSekolahPilihan
-            }
+            },
+            disabledInput: true
         },()=>{
             // console.log(this.state.routeParams);
             this.props.simpanSekolahPilihan(this.state.routeParams).then((result)=>{
@@ -566,8 +568,8 @@ class tambahJalurSekolah extends Component {
                         </Card>
                     </Col>
                     <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
-                        <Button raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
-                            Simpan dan Lanjutkan
+                        <Button disabled={this.state.disabledInput} raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
+                            {this.state.disabledInput && <Preloader color="white"></Preloader>} Simpan dan Lanjutkan
                         </Button>
                     </Col>
                 </Row>

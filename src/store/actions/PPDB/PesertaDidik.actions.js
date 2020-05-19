@@ -14,6 +14,7 @@ export const GET_KONFIRMASI_PENDAFTARAN = '[PESERTA DIDIK] GET KONFIRMASI PENDAF
 export const CEK_NIK = '[PESERTA DIDIK] CEK NIK';
 export const CEK_NISN = '[PESERTA DIDIK] CEK NISN';
 export const SIMPAN_LINTANG_BUJUR = '[PESERTA DIDIK] SIMPAN LINTANG BUJUR';
+export const VALIDASI_BERKAS = '[PESERTA DIDIK] VALIDASI BERKAS';
 
 export function getPesertaDidik(routeParams)
 {
@@ -273,6 +274,26 @@ export function simpanLintangBujur(routeParams)
         request.then((response) =>
             dispatch({
                 type   : SIMPAN_LINTANG_BUJUR,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function validasiBerkas(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/validasiBerkas', {
+        // ...routeParams
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : VALIDASI_BERKAS,
                 payload: response.data,
                 routeParams
             })

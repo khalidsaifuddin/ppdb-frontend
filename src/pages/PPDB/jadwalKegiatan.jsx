@@ -116,11 +116,11 @@ class JadwalKegiatan extends Component {
 				<div className="daftarKegiatan">
 					<div className="judulKegiatan">
 						<h3>Daftar Jadwal Kegiatan</h3>
-						<div className="tautanKegiatan">
+						{/* <div className="tautanKegiatan">
 							<Button raised fill color="deeppurple" onClick={e => this.handleLink([], "/jadwalKegiatan/create")}>
 								<Icon f7="calendar_badge_plus" size="18px" /> <span>BUAT JADWAL</span>
 							</Button>
-						</div>
+						</div> */}
 					</div>
 					{
 					// entities.rows.

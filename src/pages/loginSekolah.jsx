@@ -14,7 +14,7 @@ import * as Actions from '../store/actions';
 import GoogleLogin from 'react-google-login';
 import io from 'socket.io-client';
 
-class login extends Component {
+class loginSekolah extends Component {
   constructor(props) {
     super(props);
     
@@ -26,42 +26,6 @@ class login extends Component {
         password: '',
       }
     }
-  }
-
-  componentDidMount = () => {
-    // console.log(window.location.href.split("#"));
-
-    // let arrUrl = window.location.href.split("#");
-
-    // if(arrUrl.length > 1){
-    //   switch (arrUrl[1]) {
-    //     case 'loginsekolah':
-    //       this.$f7router.navigate('/loginSekolah/');
-    //       break;
-      
-    //     default:
-    //       this.$f7router.navigate('/loginSekolah/');
-    //       break;
-    //   }
-    // }
-
-    
-    // let arrURL = this.$f7route.url;
-    // console.log(arrURL);
-    // console.log(this.$f7route);
-    // let jenis = this.$f7route.params['jenis'] ? this.$f7route.params['jenis'] : null;
-
-    // if(jenis){
-    //   switch (jenis) {
-    //     case 'sekolah':
-    //         this.$f7router.navigate("/loginSekolah/");
-    //       break;
-        
-    //     default:
-    //       this.$f7router.navigate("/loginSekolah/")
-    //       break;
-    //   }
-    // }
   }
   
   backClick = () => {
@@ -112,20 +76,21 @@ class login extends Component {
                     loading: false,
                   }, ()=> {
                     localStorage.setItem('user', JSON.stringify(this.props.pengguna.rows[0]));
-                    localStorage.setItem('sudah_login',  '1');
+                    localStorage.setItem('sudah_login',  '0');
+                    localStorage.setItem('pengguna_sekolah',  '1');
 
-                    this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil');
+                    // this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil');
                     
                     let params = {
                       nama: JSON.parse(localStorage.getItem('user')).nama,
                       id: JSON.parse(localStorage.getItem('user')).pengguna_id,
                     };
 
-                    socket.emit('login', params, (err) => {
-                      if (err) {}
-                    });
+                    // socket.emit('login', params, (err) => {
+                    //   if (err) {}
+                    // });
 
-                    window.location.href="/";
+                    // window.location.href="/";
                       
                   })
                 });
@@ -193,75 +158,49 @@ class login extends Component {
 
   render() {
     return (
-      <Page className="loginPage" name="RaporDapodik" hideBarsOnScroll>
+      <Page name="loginSekolah" hideBarsOnScroll>
         {this.state.loading &&
           <Progressbar className="loginProgress" infinite color="blue" />
         }
         <Block className="loginBox">
           <div className="logoApp">
-            <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
-            <LoginScreenTitle>{localStorage.getItem('judul_aplikasi')}</LoginScreenTitle>
+            {/* <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" /> */}
+            {/* <LoginScreenTitle>{localStorage.getItem('judul_aplikasi')}</LoginScreenTitle> */}
+            <LoginScreenTitle style={{fontStyle:'20px'}}>Masuk Dasbor Sekolah</LoginScreenTitle>
           </div>
           <List form>
             <ListInput
-              label="Username"
+              label="NPSN"
               type="text"
-              name="username"
-              placeholder="Masukkan Username Anda..."
+              name="npsn"
+              placeholder="Masukkan NPSN Sekolah Anda..."
               disabled={(this.state.loading ? true : false)}
-              value={this.state.routeParams.username}
-              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,username: e.target.value}})}
+              value={this.state.routeParams.npsn}
+              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,npsn: e.target.value}})}
             />
             <ListInput
-              label="Kata Sandi"
-              type="password"
-              name="password"
+              label="Kode Registrasi"
+              type="text"
+              name="kode_registrasi"
               disabled={(this.state.loading ? true : false)}
-              placeholder="Masukkan Kata Sandi Anda..."
+              placeholder="Masukkan Kode Registrasi Dapodik..."
               value={this.state.routeParams.password}
-              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,password: e.target.value}})}
+              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,koreg: e.target.value}})}
             />
           </List>
-          <div className="loginActions">
             <Button 
-              fill 
-              className="loginBtn"
-              iconIos="f7:square_arrow_right" 
-              iconAurora="f7:square_arrow_right" 
-              iconMd="material:enter"  
-              title="Masuk" 
-              disabled={(this.state.loading ? true : false)}
-              onClick={this.doLogin}
+                fill 
+                large
+                className="loginBtn"
+                iconIos="f7:square_arrow_right" 
+                iconAurora="f7:square_arrow_right" 
+                iconMd="material:enter"  
+                title="Masuk" 
+                disabled={(this.state.loading ? true : false)}
+                onClick={this.doLogin}
             >
-              Masuk Aplikasi
+                &nbsp; Masuk Dasbor Sekolah
             </Button>
-            <div className="loginDivider">Atau</div>
-            <GoogleLogin
-              className="googleBtn"
-              clientId={localStorage.getItem('google_api')}
-              buttonText="Daftar / Masuk dengan Google"
-              onSuccess={this.responseGoogle}
-              onFailure={this.responseGoogle}
-              cookiePolicy={'single_host_origin'}
-            />
-            {/* <br/>
-            <br/>
-            <br/>
-            <div className="loginDivider">Login sebagai sekolah?</div>
-            <Button 
-              fill 
-              className="loginBtn"
-              iconIos="f7:building_2_fill" 
-              iconAurora="f7:building_2_fill" 
-              iconMd="material:building_2_fill"  
-              title="Masuk" 
-              disabled={(this.state.loading ? true : false)}
-              onClick={()=>window.open("/#loginsekolah")}
-            >
-              Login sebagai sekolah
-            </Button> */}
-            <p className="loginFooter">Disdik Kabupaten Lumajang ©2020</p>
-          </div>
         </Block>
         <div className="animatedWave wave--1"></div>
         <div className="animatedWave wave--2"></div>
@@ -290,5 +229,5 @@ function mapStateToProps({ App }) {
   }
 }
 
-export default (connect(mapStateToProps, mapDispatchToProps)(login));
+export default (connect(mapStateToProps, mapDispatchToProps)(loginSekolah));
   

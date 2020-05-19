@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio
+    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, Preloader
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
@@ -63,6 +63,7 @@ class tambahBerkas extends Component {
         gambar_surat_pindah: '',
         file_gambar_piagam: '',
         gambar_piagam: '',
+        disabledInput: false
     }
 
     bulan = [
@@ -176,8 +177,6 @@ class tambahBerkas extends Component {
         });
 
     }
-    
-    
 
     simpan = () => {
 
@@ -186,7 +185,8 @@ class tambahBerkas extends Component {
                 // ...this.state.routeParams,
                 calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
                 berkas_calon: JSON.stringify(this.state.berkas_calon)
-            }
+            },
+            disabledInput: true
         },()=>{
             // console.log(this.state.routeParams);
             this.props.simpanBerkasCalon(this.state.routeParams).then((result)=>{
@@ -221,8 +221,8 @@ class tambahBerkas extends Component {
     acceptedFile = (jenis) => (file) => {
         console.log(jenis);
 
-        if(file[0].size >= 2000000){ //2Mb
-            this.$f7.dialog.alert('Ukuran gambar tidak boleh melebihi 2MB!', 'Peringatan');
+        if(file[0].size >= 1000000){ //2Mb
+            this.$f7.dialog.alert('Ukuran gambar tidak boleh melebihi 1MB!', 'Peringatan');
             return true;
         }
 
@@ -244,7 +244,7 @@ class tambahBerkas extends Component {
                         xhr.onerror = this.uploadGagal;
                         const data = new FormData();
                         data.append('image', file[0]);
-                        // data.append('pengguna_id', JSON.parse(localStorage.getItem('user')).pengguna_id);
+                        data.append('id', this.$f7route.params['peserta_didik_id']);
                         data.append('jenis', 'file_'+jenis);
                         xhr.send(data);
                     }
@@ -605,8 +605,8 @@ class tambahBerkas extends Component {
                     </Col>
                     } */}
                     <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
-                        <Button raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
-                            Simpan dan Lanjutkan
+                        <Button disabled={this.state.disabledInput} raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
+                            {this.state.disabledInput && <Preloader color="white"></Preloader>} Simpan dan Lanjutkan
                         </Button>
                     </Col>
                 </Row>

@@ -27,6 +27,7 @@ import Detailcalonpdsiswa from '../pages/PPDB/detailcalonpdsiswa';
 import pilihKota from '../pages/PPDB/pilihKota';
 import JadwalKegiatan from '../pages/PPDB/jadwalKegiatan';
 import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
+import loginSekolah from '../pages/loginSekolah';
 
 var routes = [
   {
@@ -104,6 +105,14 @@ var routes = [
   {
     path: '/login',
     component: login,
+  },
+  {
+    path: '/login/:jenis',
+    component: login,
+  },
+  {
+    path: '/loginSekolah',
+    component: loginSekolah,
   },
   {
     path: '/petaPD/:peserta_didik_id/:lintang/:bujur',

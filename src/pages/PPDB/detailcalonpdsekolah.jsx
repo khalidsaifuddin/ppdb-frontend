@@ -99,10 +99,10 @@ class DetailcalonpdSekolah extends Component {
 
   handlePageChange = (pageNumber) => {
     this.setState({
-      start: (pageNumber*this.state.limit),
+      start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit)),
       routeParams: {
         ...this.state.routeParams,
-        start: (pageNumber*this.state.limit)
+        start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit))
       },
       activePage: pageNumber,
       loading: true
@@ -259,7 +259,7 @@ class DetailcalonpdSekolah extends Component {
                       <Col width="100" tabletWidth="45">
                         <div className="sekolahStatistik">
                           <p>Kouta <b>{option.kouta}</b></p>
-                          <p>Pendaftar <b>{option.pendaftar}</b></p>
+                          <p>Pendaftar<Link href={"/detailCalonpdSekolah/" + option.sekolah_id} style={{color:'white'}}><b>{option.pendaftar}</b></Link></p>
                           <p>Diterima <b>{option.terima}</b></p>
                           <p>Sisa Kouta <b>{option.sisa_kouta}</b></p>
                         </div>
@@ -269,7 +269,7 @@ class DetailcalonpdSekolah extends Component {
                 </CardContent>
                 <CardFooter>
                   <Button raised fill color="deeporange" href={"/detailCalonpdSekolah/" + option.sekolah_id}>
-                    <Icon f7="house_alt" size="16px"/> Daftarkan Calon PD ke Sekolah Ini
+                    <Icon f7="house_alt" size="16px"/> Daftar Calon PD
                   </Button>
                 </CardFooter>
               </Card>

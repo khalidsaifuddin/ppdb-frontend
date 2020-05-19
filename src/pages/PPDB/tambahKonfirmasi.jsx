@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio
+    Page, Navbar, NavTitle, NavTitleLarge, Block, Link, Icon, Segmented, Button, CardContent, Row, Col, Card, CardHeader, List, ListInput, ListItem, Searchbar, Sheet, Toolbar, PageContent, Radio, Preloader
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
@@ -164,23 +164,107 @@ class tambahKonfirmasi extends Component {
     }
 
     simpanKonfirmasi = (status) => {
+
         this.setState({
-            routeParams:{
-                status: status,
-                pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-                calon_peserta_didik_id: this.state.calon_peserta_didik.calon_peserta_didik_id
-            }
+            ...this.state,
+            disableButton: true
         },()=>{
-            this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
-                if(parseInt(this.state.routeParams.status) === 1){
-                    //konfirmasi
-                    this.$f7router.navigate("/Daftar/");
-                }else{
-                    //simpan draft
-                    this.$f7router.navigate("/Daftar/");
+
+            if(parseInt(status) === 1){
+                if(this.state.calon_peserta_didik.pilihan_sekolah.length < 3){
+                    this.$f7.dialog.alert('Mohon pilih 3 sekolah sebelum melakukan konfirmasi!','Peringatan');
+                    this.setState({
+                        ...this.state,
+                        disableButton: false
+                    });
+                    return false;
                 }
+            }
+    
+            this.props.validasiBerkas(this.state.routeParams).then((result)=>{
+    
+                console.log(this.props.validasi_berkas);
+    
+                if(this.props.validasi_berkas.count < 1){
+                    //datanya nggak ada
+                    this.$f7.dialog.alert('Mohon lengkapi berkas persyaratan sebelum melakukan konfirmasi!','Peringatan');
+                    this.setState({
+                        ...this.state,
+                        disableButton: false
+                    });
+                    return false;
+                }else{
+                    //datanya ada
+                    let totalValidasi = 0;
+                    let yangHarus = 0;
+                    this.props.validasi_berkas.rows.map((option)=>{
+                        if(parseInt(option.wajib) === 1){
+                            yangHarus++;
+                            
+                            if(option.nama_file){
+                                totalValidasi++;
+                            }
+                        }
+
+                    });
+    
+                    console.log(totalValidasi);
+                    
+                    if(totalValidasi < yangHarus){
+                        //belum lengkap
+                        this.$f7.dialog.alert('Mohon lengkapi berkas persyaratan sebelum melakukan konfirmasi!','Peringatan');
+                        this.setState({
+                            ...this.state,
+                            disableButton: false
+                        });
+                        return false;
+                    }else{
+                        //sudah lengkap
+                        // console.log('sudah lengkap');
+                        this.$f7.dialog.confirm('Apakah Anda yakin ingin konfirmasi?','Konfirmasi',()=>{
+
+                            this.setState({
+                                routeParams:{
+                                    status: status,
+                                    pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+                                    calon_peserta_didik_id: this.state.calon_peserta_didik.calon_peserta_didik_id
+                                }
+                            },()=>{
+                                this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
+                                    if(parseInt(this.state.routeParams.status) === 1){
+                                        //konfirmasi
+                                        this.setState({
+                                            ...this.state,
+                                            disableButton: false
+                                        });
+                                        this.$f7router.navigate("/Daftar/");
+                                    }else{
+                                        //simpan draft
+                                        this.setState({
+                                            ...this.state,
+                                            disableButton: false
+                                        });
+                                        this.$f7router.navigate("/Daftar/");
+                                    }
+                                });
+                            });
+                            
+                        },()=>{
+                            this.setState({
+                                ...this.state,
+                                disableButton: false
+                            });
+                        });
+
+                    }
+    
+                }
+    
             });
+
         });
+
+
     }
 
     render()
@@ -262,12 +346,12 @@ class tambahKonfirmasi extends Component {
                                 <Row>
                                     <Col width="50" style={{padding:'16px'}}>
                                         <Button raised fill onClick={()=>this.simpanKonfirmasi("1")} disabled={this.state.disableButton}>
-                                            Saya Konfirmasi
+                                            {this.state.disableButton && <Preloader color="white"></Preloader>} Saya Konfirmasi
                                         </Button>
                                     </Col>
                                     <Col width="50" style={{padding:'16px'}}>
                                         <Button raised fill style={{background:'#aaaaaa'}} onClick={()=>this.simpanKonfirmasi("0")} disabled={this.state.disableButton}>
-                                            Simpan sebagai Draft
+                                            {this.state.disableButton && <Preloader color="white"></Preloader>} Simpan sebagai Draft
                                         </Button>
                                     </Col>
                                     <Col width="100" style={{padding:'16px'}} style={{display:this.state.tampilTerimaKasih}}>
@@ -308,7 +392,8 @@ function mapDispatchToProps(dispatch) {
       getSekolahPilihan: Actions.getSekolahPilihan,
       hapusSekolahPilihan: Actions.hapusSekolahPilihan,
       simpanKonfirmasiPendaftaran: Actions.simpanKonfirmasiPendaftaran,
-      getKonfirmasiPendaftaran: Actions.getKonfirmasiPendaftaran
+      getKonfirmasiPendaftaran: Actions.getKonfirmasiPendaftaran,
+      validasiBerkas: Actions.validasiBerkas
     }, dispatch);
 }
 
@@ -319,7 +404,8 @@ function mapStateToProps({ App, PPDBSekolah, Ref, PPDBPesertaDidik }) {
         ppdb_sekolah: PPDBSekolah.ppdb_sekolah,
         mst_wilayah: Ref.mst_wilayah,
         calon_peserta_didik: PPDBPesertaDidik.calon_peserta_didik,
-        sekolah_pilihan: PPDBPesertaDidik.sekolah_pilihan
+        sekolah_pilihan: PPDBPesertaDidik.sekolah_pilihan,
+        validasi_berkas: PPDBPesertaDidik.validasi_berkas
     }
 }
 

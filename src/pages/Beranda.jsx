@@ -85,7 +85,24 @@ class Beranda extends Component {
     // }
 
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
-      this.$f7router.navigate('/login/');
+      // console.log(this.$f7route.url);
+      let arrUrl = window.location.href.split("#");
+
+      if(arrUrl.length > 1){
+        switch (arrUrl[1]) {
+          case 'loginsekolah':
+            this.$f7router.navigate('/loginSekolah/');
+            break;
+        
+          default:
+            // this.$f7router.navigate('/loginSekolah/');
+            this.$f7router.navigate('/login/');
+            break;
+        }
+      }else{
+        this.$f7router.navigate('/login/');
+      }
+
     }
 
     localStorage.setItem('current_url', '/');
@@ -151,6 +168,10 @@ class Beranda extends Component {
             <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
             {parseInt(localStorage.getItem('sudah_pilih_kota')) === 1  &&
               <NavRight>
+                {/* <Button raised fill href="/loginSekolah/">
+                  <Icon ios="f7:building_2_fill" style={{fontSize:'17px'}} tooltip="Notifikasi"/>
+                  Dasbor Sekolah
+                </Button> */}
                 <Link iconOnly href="/notifikasi/">
                   <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
                     {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}

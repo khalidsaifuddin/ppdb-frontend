@@ -227,16 +227,23 @@ class DaftarPendaftaran extends Component {
                                 <Button
                                     fillIos
                                     onClick={e => this.cetakFormulir(option) }
+                                    disabled={(option.status_konfirmasi === 1 ? false : true)}
                                 >
                                     Cetak Formulir
                                 </Button>
                                 <Button
                                     fillIos
                                     onClick={e => this.cetakBukti(option) }
+                                    disabled={(option.status_konfirmasi === 1 ? false : true)}
                                 >
                                     Cetak Bukti Pendaftaran
                                 </Button>
                             </CardFooter>
+                            {option.status_konfirmasi !== 1 &&
+                            <CardFooter className="no-border" style={{minHeight:'10px',fontSize:'10px',padding:'8px', fontStyle:'italic',paddingLeft:'16px'}}>
+                                <span>*Formulir dan Bukti Pendaftaran belum dapat dicetak sebelum pendaftar melakukan konfirmasi</span>
+                            </CardFooter>
+                            }
                         </Card>
                     )
                 })}
