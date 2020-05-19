@@ -98,7 +98,7 @@ class JadwalKegiatan extends Component {
 		// const { entities } = this.props;
 
 		return (
-			<Page name="cari">
+			<Page name="jadwal-kegiatan">
 				<Navbar sliding={false} backLink="Kembali">
 					<NavTitle sliding>Jadwal Kegiatan</NavTitle>
 					<Subnavbar inner={false}>
@@ -129,7 +129,7 @@ class JadwalKegiatan extends Component {
 					{this.state.items.length === 0 ? (
 						<Card className="noLoadContent" noShadow noBorder key={null}>
 							<CardContent padding={false}>
-								<img src="/static/images/icons/no-jadwal.svg" alt="sekolah"/>
+								<img src="/static/images/icons/no-jadwal.svg" alt="jadwal"/>
 								<h4 className="display-block text-align-center">Jadwal kegiatan belum ditemukan!</h4>
 							</CardContent>
 						</Card>
