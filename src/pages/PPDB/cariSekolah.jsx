@@ -50,9 +50,10 @@ class cariSekolah extends Component {
       <div name="cariSekolah">
         <BlockTitle>Hasil Pencarian Sekolah</BlockTitle>
         {this.props.ppdb_sekolah.rows.length === 0 ? (
-          <Card className="demo-card-header-pic" key={null}>
-            <CardContent className="text-align-center">
-              <h4>Sekolah tidak ditemukan!</h4>
+          <Card className="noLoadContent" noShadow noBorder key={null}>
+            <CardContent padding={false}>
+              <img src="/static/images/icons/no-sekolah.svg" alt="sekolah"/>
+              <h4 className="display-block text-align-center">Sekolah belum ditemukan!</h4>
             </CardContent>
           </Card>
         ) : ''}

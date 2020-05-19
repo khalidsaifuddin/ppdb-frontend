@@ -13,7 +13,8 @@ import {
 	Row,
 	Col,
 	Icon,
-	Link
+	Link,
+	Progressbar
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -113,6 +114,9 @@ class JadwalKegiatan extends Component {
 						/>
 					</Subnavbar>
 				</Navbar>
+				{this.state.loading && (
+					<Progressbar className="listProgressBar" infinite></Progressbar>
+				)}
 				<div className="daftarKegiatan">
 					<div className="judulKegiatan">
 						<h3>Daftar Jadwal Kegiatan</h3>
@@ -122,9 +126,15 @@ class JadwalKegiatan extends Component {
 							</Button>
 						</div> */}
 					</div>
-					{
-					// entities.rows.
-					this.state.items.map((option)=> {
+					{this.state.items.length === 0 ? (
+						<Card className="noLoadContent" noShadow noBorder key={null}>
+							<CardContent padding={false}>
+								<img src="/static/images/icons/no-jadwal.svg" alt="sekolah"/>
+								<h4 className="display-block text-align-center">Jadwal kegiatan belum ditemukan!</h4>
+							</CardContent>
+						</Card>
+					) : ''}
+					{this.state.items.map((option)=> {
 						return (
 							<Card key={option.jadwal_kegiatan_id} noShadow noBorder>
 								<CardHeader>
@@ -176,19 +186,9 @@ class JadwalKegiatan extends Component {
 							</Card>
 						)
 					})}
-
-					{
-						!this.state.loading && (this.props.entities.countAll !== this.state.items.length) && (
-							<Button fillIos onClick={e => this.fetchMoreData()}>See more</Button>
-						)
-					}
-
-					{
-						this.state.loading && (
-							<center><div className="preloader"></div></center>
-							// <center><div>Loading...</div></center>
-						)
-					}
+					{!this.state.loading && (this.props.entities.countAll !== this.state.items.length) && (
+						<Button fillIos onClick={e => this.fetchMoreData()}>Muat lebih banyak</Button>
+					)}
 				</div>
 			</Page>
 		)
@@ -197,18 +197,18 @@ class JadwalKegiatan extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		getJadwalKegiatan 							: Actions.getJadwalKegiatan,
-		getRefJalurJk 								: Actions.getRefJalurJk,
-		getRefmstwilayahJK 							: Actions.getRefmstwilayahJK,
-		perJadwalkegiatan 							: Actions.perJadwalkegiatan,
-		deleteJadwalKegiatan 						: Actions.deleteJadwalKegiatan,
+		getJadwalKegiatan: Actions.getJadwalKegiatan,
+		getRefJalurJk: Actions.getRefJalurJk,
+		getRefmstwilayahJK: Actions.getRefmstwilayahJK,
+		perJadwalkegiatan: Actions.perJadwalkegiatan,
+		deleteJadwalKegiatan: Actions.deleteJadwalKegiatan,
 	}, dispatch);
 }
 
 function mapStateToProps({ App, JadwalKegiatan }) {
 	return {
-		window_dimension 							: App.window_dimension,
-		entities 									: JadwalKegiatan.entities,
+		window_dimension: App.window_dimension,
+		entities: JadwalKegiatan.entities,
 	}
 }
 

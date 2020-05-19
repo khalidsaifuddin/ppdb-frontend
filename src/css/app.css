@@ -1387,6 +1387,40 @@
   height: 35px;
 }
 
+.noLoadContent {
+  position: relative;
+  border-top: 0 solid transparent !important;
+}
+
+.noLoadContent .card-content {
+  display: block;
+  padding: 2rem !important;
+  text-align: center;
+}
+
+.noLoadContent .card-content img {
+  max-width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+.noLoadContent .card-content h4 {
+  margin: 10px 0 0;
+  font-weight: 400;
+  color: #6d6d72;
+  font-size: 16px;
+}
+
+.noLoadContent .card-content .button { margin-top: 10px; }
+
+.listProgressBar {
+  position: absolute;
+  top: 88px;
+  width: 100%;
+  height: 3px;
+  border-radius: 0;
+}
+
 .loginPage {
   width: 100%;
   position: relative;
