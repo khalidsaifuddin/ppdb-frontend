@@ -146,10 +146,10 @@ class DetailcalonpdSekolah extends Component {
         <div className="daftarSekolah daftarPdSekolah" style={{marginTop:'0px'}}>
           {this.state.loading &&
           <>
-          {this.state.dummy_rows.map((opt)=>{
+          {this.state.dummy_rows.map((opt, key)=>{
             return (
 
-              <Card key={"option.sekolah_id"} noShadow noBorder className={"skeleton-text skeleton-effect-blink"}>
+              <Card key={key} noShadow noBorder className={"skeleton-text skeleton-effect-blink"}>
                 <CardContent padding={false}>
                   <div className="gambarSekolah" style={{background: '#cccccc'}}>
                     {/* <img src={"http://foto.data.kemdikbud.go.id/getImage/" + "option.npsn" + "/1.jpg"}></img>  */}
@@ -203,7 +203,7 @@ class DetailcalonpdSekolah extends Component {
                 </CardContent>
                 <CardFooter>
                   <Button raised fill color="deeporange" href={"/detailCalonpdSekolah/" + "option.sekolah_id"} style={{backgroundColor:'#cccccc'}}>
-                    <Icon f7="house_alt" size="16px"/> Daftarkan Calon PD ke Sekolah Ini
+                    <Icon f7="house_alt" size="16px"/> Lihat Data Pendaftar Sekolah Ini
                   </Button>
                 </CardFooter>
               </Card>
@@ -269,7 +269,7 @@ class DetailcalonpdSekolah extends Component {
                 </CardContent>
                 <CardFooter>
                   <Button raised fill color="deeporange" href={"/detailCalonpdSekolah/" + option.sekolah_id}>
-                    <Icon f7="house_alt" size="16px"/> Daftar Calon PD
+                    <Icon f7="house_alt" size="16px"/> Lihat Data Pendaftar Sekolah Ini
                   </Button>
                 </CardFooter>
               </Card>

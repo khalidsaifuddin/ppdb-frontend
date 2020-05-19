@@ -8,7 +8,6 @@ import {
   Link,
   Block,
   Card,
-  BlockHeader,
   List,
   ListItem,
   Row,
@@ -63,8 +62,8 @@ class Beranda extends Component {
         total: 0,
       },
       entities:{
-        rows:[],
-        count: 0
+        rows: [],
+        count: 0,
       }
     };
   }
@@ -80,10 +79,6 @@ class Beranda extends Component {
   }
 
   componentDidMount = () => {
-    // if(parseInt(localStorage.getItem('sudah_pilih_kota')) !== 1) {
-    //   this.$f7router.navigate('/pilihKota/');
-    // }
-
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
       // console.log(this.$f7route.url);
       let arrUrl = window.location.href.split("#");
@@ -112,9 +107,7 @@ class Beranda extends Component {
     socket.on('updateUserList', (users) => {
       this.setState({
         users
-      }, ()=> {
-        // console.log(this.state.users);
-      });
+      }, ()=> {});
     });
 
     if(parseInt(localStorage.getItem('sudah_login')) === 1) {
@@ -128,7 +121,7 @@ class Beranda extends Component {
         routeParams: {
           ...this.state.routeParams,
           limit: 2,
-          pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id
+          pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
         }
       }, ()=> {
         this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
@@ -140,14 +133,15 @@ class Beranda extends Component {
         this.props.getCalonPD(this.state.routeParams).then(e => {
           this.setState({ 
             loadingPendaftaran: false ,
-            entities: this.props.entities
+            entities: this.props.entities,
           });
         });
 
         this.props.getJKberanda().then(e => {
-          this.setState({ loadingJadwal: false });
+          this.setState({
+            loadingJadwal: false,
+          });
         });
-
       });
     }
   }
@@ -221,12 +215,15 @@ class Beranda extends Component {
             <Row>
               <Col width="100" tabletWidth="65">
                 <Block className="rekapitulasiProgres">
-                  <BlockHeader>PENDAFTARAN ANDA</BlockHeader>
+                  <div className="headerWidget">
+                    <h2>PENDAFTARAN ANDA</h2>
+                    <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
+                  </div>
                   {this.state.loadingPendaftaran && (<div>Loading...</div>)}
                   {!this.state.loadingPendaftaran && this.state.entities.rows.length === 0 ? (
                     <Card className="noRegistration" noShadow noBorder>
                       <CardContent padding={false}>
-                        <img src="/static/images/icons/sekolah.svg" height="32" alt="sekolah"/>
+                        <img src="/static/images/icons/no-sekolah.svg" alt="sekolah"/>
                         <h4>Anda belum mendaftar ke sekolah manapun.</h4>
                         <Button raised fill onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/")}>Daftar disini!</Button>
                       </CardContent>
@@ -263,25 +260,30 @@ class Beranda extends Component {
                       </Card>
                     )
                   })}
-                  <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
                 </Block>
               </Col>
               <Col width="100" tabletWidth="35">
                 <Block className="rekapitulasiProgres">
-                  <BlockHeader>JADWAL SELANJUTNYA</BlockHeader>
+                  <div className="headerWidget">
+                    <h2>JADWAL KEGIATAN</h2>
+                  </div>
                   <div className="jadwalPpdb">
+                    {this.state.loadingJadwal && (<div>Loading...</div>)}
+                    {!this.state.loadingJadwal && jkBeranda.length === 0 ? (
+                      <Card className="noDaftarKegiatan" noShadow noBorder>
+                        <CardContent padding={false}>
+                          <img src="/static/images/icons/no-jadwal.svg" alt="jadwal"/>
+                          <h4>Belum ada kegiatan untuk saat ini.</h4>
+                          <Button raised fill onClick={()=>this.$f7router.navigate("/JadwalKegiatan/")} color="deeppurple">Buat jadwal disini!</Button>
+                        </CardContent>
+                      </Card>
+                    ) : ''}
                     <List mediaList>
-                      {
-                        this.state.loadingJadwal && (<div>Loading...</div>)
-                      }
-                      {
-                        !this.state.loadingJadwal && jkBeranda.map((n, key) => 
+                      {!this.state.loadingJadwal && jkBeranda.map((n, key)=> {
+                        return (
                           <ListItem link="/" title={ n.nama } key={key} after={ this.formatTanggal(n.tanggal_mulai) } />
                         )
-                      }
-                      {/* <ListItem link="/" title="Sosialisasi PPDB ke SD" after="13 Mei 2020" />
-                      <ListItem link="/" title="Pendaftaran Periode Pendataan Calon Peserta Didik di Aplikasi PPDB" after="14-22 Mei 2020" />
-                      <ListItem link="/" title="Pendaftaran Periode Seleksi PPDB Online Utama" after="1-6 Juni 2020"/> */}
+                      })}
                     </List>
                   </div>
                 </Block>
@@ -296,32 +298,32 @@ class Beranda extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateWindowDimension               : Actions.updateWindowDimension,
-    setLoading                          : Actions.setLoading,
-    setTabActive                        : Actions.setTabActive,
-    getPertanyaan                       : Actions.getPertanyaan,
-    getNotifikasi                       : Actions.getNotifikasi,
-    simpanPantauan                      : Actions.simpanPantauan,
-    getKuisDiikuti                      : Actions.getKuisDiikuti,
-    getRuangDiikuti                     : Actions.getRuangDiikuti,
-    getCalonPD                          : Actions.getCalonPD,
-    getJKberanda                        : Actions.getJKberanda
+    updateWindowDimension: Actions.updateWindowDimension,
+    setLoading: Actions.setLoading,
+    setTabActive: Actions.setTabActive,
+    getPertanyaan: Actions.getPertanyaan,
+    getNotifikasi: Actions.getNotifikasi,
+    simpanPantauan: Actions.simpanPantauan,
+    getKuisDiikuti: Actions.getKuisDiikuti,
+    getRuangDiikuti: Actions.getRuangDiikuti,
+    getCalonPD: Actions.getCalonPD,
+    getJKberanda: Actions.getJKberanda,
   }, dispatch);
 }
 
 function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang, DaftarPendaftaran, JadwalKegiatan }) {
   return {
-    window_dimension                    : App.window_dimension,
-    loading                             : App.loading,
-    tabBar                              : App.tabBar,
-    wilayah                             : App.wilayah,
-    dummy_rows                          : App.dummy_rows,
-    pertanyaan                          : Pertanyaan.pertanyaan,
-    notifikasi                          : Notifikasi.notifikasi,
-    kuis_diikuti                        : Kuis.kuis_diikuti,
-    ruang_diikuti                       : Ruang.ruang_diikuti,
-    entities                            : DaftarPendaftaran.entities,
-    jkBeranda                           : JadwalKegiatan.beranda
+    window_dimension: App.window_dimension,
+    loading: App.loading,
+    tabBar: App.tabBar,
+    wilayah: App.wilayah,
+    dummy_rows: App.dummy_rows,
+    pertanyaan: Pertanyaan.pertanyaan,
+    notifikasi: Notifikasi.notifikasi,
+    kuis_diikuti: Kuis.kuis_diikuti,
+    ruang_diikuti: Ruang.ruang_diikuti,
+    entities: DaftarPendaftaran.entities,
+    jkBeranda: JadwalKegiatan.beranda,
   }
 }
 

@@ -107,7 +107,7 @@ class DaftarPendaftaran extends Component {
         return (
             <Page name="cari" style={{paddingBottom:'40px'}}>
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
-                    <NavTitle sliding>Data Pendaftaran</NavTitle>
+                    <NavTitle sliding>Data Pendaftar</NavTitle>
                     <Subnavbar inner={false}>
                         <Searchbar
                             className="searchbar-demo"
@@ -124,7 +124,7 @@ class DaftarPendaftaran extends Component {
                     </Subnavbar>
                 </Navbar>
 
-                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftaran</Block>
+                <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftar</Block>
                 <Block strong style={{marginTop:'0px', marginBottom:'8px'}}>
                     Menampilkan {this.props.entities.countAll ? this.props.entities.countAll : '0'} data pendaftar
                 </Block>
