@@ -80,24 +80,20 @@ class Beranda extends Component {
 
   componentDidMount = () => {
     if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
-      // console.log(this.$f7route.url);
       let arrUrl = window.location.href.split("#");
 
-      if(arrUrl.length > 1){
+      if(arrUrl.length > 1) {
         switch (arrUrl[1]) {
           case 'loginsekolah':
             this.$f7router.navigate('/loginSekolah/');
             break;
-        
           default:
-            // this.$f7router.navigate('/loginSekolah/');
             this.$f7router.navigate('/login/');
             break;
         }
-      }else{
+      } else {
         this.$f7router.navigate('/login/');
       }
-
     }
 
     localStorage.setItem('current_url', '/');
@@ -162,10 +158,6 @@ class Beranda extends Component {
             <NavTitle sliding>{localStorage.getItem('judul_aplikasi')}</NavTitle>
             {parseInt(localStorage.getItem('sudah_pilih_kota')) === 1  &&
               <NavRight>
-                {/* <Button raised fill href="/loginSekolah/">
-                  <Icon ios="f7:building_2_fill" style={{fontSize:'17px'}} tooltip="Notifikasi"/>
-                  Dasbor Sekolah
-                </Button> */}
                 <Link iconOnly href="/notifikasi/">
                   <Icon ios={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} aurora={this.state.notifikasi.result > 0 ? "f7:bell_fill" : "f7:bell"} md={this.state.notifikasi.result > 0 ? "material:bell_fill" : "material:bell"} tooltip="Notifikasi">
                     {this.state.notifikasi.result > 0 && <Badge color="red">{this.state.notifikasi.result}</Badge>}
@@ -231,27 +223,35 @@ class Beranda extends Component {
                   ) : ''}
                   {!this.state.loadingPendaftaran && this.props.entities.rows.map((option, key)=> {
                     return (
-                      <Card key={key} noShadow noBorder style={{marginLeft:'0px', marginRight:'0px'}}>
+                      <Card key={key} className="registrationDashboard" noShadow noBorder>
                         <CardHeader>
                           <Link href="#">
-                            <div>
-                              {option.nama}&nbsp;({option.nik})
-                            </div>
+                            <Icon f7="person_round_fill" size="20px"></Icon>
+                            <h3>{option.nama} <span>({option.nik})</span></h3>
                           </Link>
                         </CardHeader>
-                        <CardContent style={{padding:'4px'}}>
-                          <Row noGap>
-                            {option.pilihan_sekolah.map((optionSekolah, key)=>{
+                        <CardContent padding={false}>
+                          <Row>
+                            {option.pilihan_sekolah.map((optionSekolah, key)=> {
                               return (
-                                <Col width="33" tabletWidth="33" key={key}>
-                                  <Card style={{minHeight:'100px', margin:'8px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
+                                <Col width="100" tabletWidth="33" key={key}>
+                                  <div className="registrationItem">
+                                    <div className="registrationImage" style={{backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)'}}></div>
+                                    <div className="registrationDesc">
+                                      <h4>{optionSekolah.nama_sekolah}<span>Jalur {optionSekolah.jalur}</span></h4>
+                                      <p>No. Urut Sementara</p>
+                                      <h2>{optionSekolah.urutan}/{optionSekolah.kuota}</h2>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* <Card style={{minHeight:'100px', textAlign:'center', backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)', backgroundSize:'cover'}}>
                                     <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                       <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
                                       <div style={{fontSize:'12px', color:'#FFF9C4', fontWeight:'bold'}}>Jalur {optionSekolah.jalur}</div>
                                       <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
                                       <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
                                     </CardContent>
-                                  </Card>
+                                  </Card> */}
                                 </Col>
                               )
                             })}

@@ -518,7 +518,7 @@ class tambahCalonPesertaDidik extends Component {
                 <CardContent>
                   <List>
                     <ListInput
-                      className="inputNumber"
+                      className="inputNumber inputNik"
                       label="Nomor Induk Kependudukan / NIK"
                       type="number"
                       placeholder="Ketikkan NIK dan enter..."
@@ -537,6 +537,7 @@ class tambahCalonPesertaDidik extends Component {
                       </Button>
                     </ListInput>
                     <ListInput
+                      className="inputNumber inputNisn"
                       label="NISN"
                       type="number"
                       placeholder="NISN Calon Peserta Didik..."
