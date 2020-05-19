@@ -217,7 +217,7 @@ class Beranda extends Component {
                 <Block className="rekapitulasiProgres">
                   <div className="headerWidget">
                     <h2>PENDAFTARAN ANDA</h2>
-                    <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")}>Selengkapnya</Button>
+                    <Button raised fill onClick={()=>this.$f7router.navigate("/Daftar/")} color="gray">Selengkapnya</Button>
                   </div>
                   {this.state.loadingPendaftaran && (<div>Loading...</div>)}
                   {!this.state.loadingPendaftaran && this.state.entities.rows.length === 0 ? (

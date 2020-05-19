@@ -49,6 +49,13 @@ class cariSekolah extends Component {
     return (
       <div name="cariSekolah">
         <BlockTitle>Hasil Pencarian Sekolah</BlockTitle>
+        {this.props.ppdb_sekolah.rows.length === 0 ? (
+          <Card className="demo-card-header-pic" key={null}>
+            <CardContent className="text-align-center">
+              <h4>Sekolah tidak ditemukan!</h4>
+            </CardContent>
+          </Card>
+        ) : ''}
         <div className="daftarSekolah">
           {this.props.ppdb_sekolah.rows.map((option)=> {
             return (
