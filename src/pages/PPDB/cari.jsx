@@ -238,10 +238,11 @@ class cari extends Component {
               <div name="cariPesertaDidik">
                 <BlockTitle>Hasil Pencarian Peserta Didik (Hanya menampilkan peserta didik yang berada di tingkat akhir jenjangnya)</BlockTitle>
                 {this.state.peserta_didik.count < 1 &&
-                  <Card className="demo-card-header-pic" key={null}>
-                    <CardContent style={{textAlign:'center'}}>
-                      <h4>Data peserta didik tidak ditemukan</h4>
-                      <Button raised fill style={{maxWidth:'400px', margin:'auto'}}>
+                  <Card className="noLoadContent" noShadow noBorder key={null}>
+                    <CardContent padding={false}>
+                      <img src="/static/images/icons/no-peserta.svg" alt="peserta"/>
+                      <h4 className="display-block text-align-center">Data peserta didik belum ditemukan!</h4>
+                      <Button raised fill className="display-inline-block">
                         Tambahkan Peserta Didik Secara Manual
                       </Button>
                     </CardContent>

@@ -395,7 +395,7 @@ class ProfilPengguna extends Component {
                           type="number"
                           placeholder="NIK"
                           clearButton
-                          value={this.state.pengguna.rows[0].nik}
+                          value={this.state.pengguna.rows[0].nik || ''}
                           onChange={this.setValue('nik')}
                         >
                           <i slot="media" className="f7-icons">creditcard_fill</i>
@@ -405,7 +405,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Alamat Rumah"
                           clearButton
-                          value={this.state.pengguna.rows[0].alamat}
+                          value={this.state.pengguna.rows[0].alamat || ''}
                           onChange={this.setValue('alamat')}
                         >
                           <i slot="media" className="f7-icons">house_alt_fill</i>
@@ -415,7 +415,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Instansi/Sekolah"
                           clearButton
-                          value={this.state.pengguna.rows[0].jabatan_lembaga}
+                          value={this.state.pengguna.rows[0].jabatan_lembaga || ''}
                           onChange={this.setValue('jabatan_lembaga')}
                         >
                           <i slot="media" className="f7-icons">building_2_fill</i>
@@ -427,7 +427,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Nomor HP"
                           clearButton
-                          value={this.state.pengguna.rows[0].no_hp}
+                          value={this.state.pengguna.rows[0].no_hp || ''}
                           onChange={this.setValue('no_hp')}
                         >
                           <i slot="media" className="f7-icons">phone_circle_fill</i>
@@ -437,7 +437,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Email"
                           clearButton
-                          value={this.state.pengguna.rows[0].no_telepon}
+                          value={this.state.pengguna.rows[0].no_telepon || ''}
                           onChange={this.setValue('no_telepon')}
                         >
                           <i slot="media" className="f7-icons">envelope_fill</i>
@@ -447,7 +447,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Twitter"
                           clearButton
-                          value={this.state.pengguna.rows[0].ym}
+                          value={this.state.pengguna.rows[0].ym || ''}
                           onChange={this.setValue('ym')}
                         >
                           <i slot="media" className="f7-icons">logo_twitter</i>
@@ -457,7 +457,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Instagram"
                           clearButton
-                          value={this.state.pengguna.rows[0].skype}
+                          value={this.state.pengguna.rows[0].skype || ''}
                           onChange={this.setValue('skype')}
                         >
                           <i slot="media" className="f7-icons">logo_instagram</i>
@@ -467,7 +467,7 @@ class ProfilPengguna extends Component {
                           type="text"
                           placeholder="Akun Google"
                           clearButton
-                          value={this.state.pengguna.rows[0].akun_google}
+                          value={this.state.pengguna.rows[0].akun_google || ''}
                           onChange={this.setValue('skype')}
                         >
                           <i slot="media" className="f7-icons">logo_google</i>
@@ -508,9 +508,9 @@ class ProfilPengguna extends Component {
                   <select onChange={this.setParamValue} name="propinsi" defaultValue={"-"}>
                     <option value="-" disabled>Pilih Provinsi</option>
                     {parseInt(this.state.data.peran_id) === 1 && <option value="000000">Indonesia</option>}
-                    {this.props.provinsi.rows.map((option)=>{
+                    {this.props.provinsi.rows.map((option)=> {
                       return(
-                        <option value={option.kode_wilayah}>{option.nama}</option>
+                        <option key={option.kode_wilayah} value={option.kode_wilayah}>{option.nama}</option>
                       )
                     })}
                   </select>
@@ -523,9 +523,9 @@ class ProfilPengguna extends Component {
                 >
                   <select onChange={this.setParamValue} name="kabupaten" defaultValue={"-"}>
                     <option value="-">Pilih Kabupaten</option>
-                    {this.props.kabupaten.rows.map((option)=>{
+                    {this.props.kabupaten.rows.map((option)=> {
                       return(
-                        <option value={option.kode_wilayah}>{option.nama}</option>
+                        <option key={option.kode_wilayah} value={option.kode_wilayah}>{option.nama}</option>
                       )
                     })}
                   </select>
@@ -539,14 +539,14 @@ class ProfilPengguna extends Component {
                   type="text"
                   placeholder="Peran"
                   clearButton
-                  value={this.state.pengguna.rows[0].peran}
+                  value={this.state.pengguna.rows[0].peran || ''}
                 />
                 <ListInput
                   label="Wilayah"
                   type="text"
                   placeholder="Wilayah"
                   clearButton
-                  value={this.state.pengguna.rows[0].wilayah}
+                  value={this.state.pengguna.rows[0].wilayah || ''}
                 />
               </List>
             }

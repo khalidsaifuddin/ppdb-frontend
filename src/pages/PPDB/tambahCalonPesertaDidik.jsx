@@ -222,7 +222,6 @@ class tambahCalonPesertaDidik extends Component {
   }
 
   occurrences = (string, subString, allowOverlapping) => {
-
     string += "";
     subString += "";
     if (subString.length <= 0) return (string.length + 1);
@@ -232,11 +231,12 @@ class tambahCalonPesertaDidik extends Component {
         step = allowOverlapping ? 1 : subString.length;
 
     while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
+      pos = string.indexOf(subString, pos);
+
+      if (pos >= 0) {
+        ++n;
+        pos += step;
+      } else break;
     }
     return n;
   }
@@ -245,16 +245,15 @@ class tambahCalonPesertaDidik extends Component {
     this.setState({
       routeParams: {
         ...this.state.routeParams,
-        sekolah_asal: null
+        sekolah_asal: null,
       }
     }, ()=> {
-
-      if(this.state.routeParams.nik.length > 16){
+      if(this.state.routeParams.nik.length > 16) {
         this.$f7.dialog.alert('NIK tidak boleh lebih dari 16 digit!','Peringatan');
         return false;
       }
       
-      if(this.state.routeParams.nik.length < 16){
+      if(this.state.routeParams.nik.length < 16) {
         this.$f7.dialog.alert('NIK tidak boleh kurang dari 16 digit!','Peringatan');
         return false;
       }
@@ -271,33 +270,26 @@ class tambahCalonPesertaDidik extends Component {
           return false;
         }
 
-        if(this.occurrences(this.state.routeParams.lintang,".") > 1){
+        if(this.occurrences(this.state.routeParams.lintang,".") > 1) {
           this.$f7.dialog.alert('Isian lintang harus sesuai dengan format yang benar (Contoh: "-8.1010")!','Peringatan');
           return false;
         }
-
-        // let count = (this.state.routeParams.lintang.match(/./g) || []).length;
-        // console.log(count);
-        // console.log(this.occurrences(this.state.routeParams.lintang,"."));
-
-      }else{
+      } else {
         this.$f7.dialog.alert('Mohon isi titik koordinat rumah terlebih dahulu!','Peringatan');
         return false;
       }
 
-      if(this.state.routeParams.bujur){
-        
+      if(this.state.routeParams.bujur) {
         if(this.state.routeParams.bujur.search(",") !== -1) {
           this.$f7.dialog.alert('Isian lintang tidak boleh menggunakan tanda koma (,). Silakan gunakan titik untuk indikator desimal (.)!','Peringatan');
           return false;
         }
 
-        if(this.occurrences(this.state.routeParams.bujur,".") > 1){
+        if(this.occurrences(this.state.routeParams.bujur,".") > 1) {
           this.$f7.dialog.alert('Isian bujur harus sesuai dengan format yang benar (Contoh: "113.1010")!','Peringatan');
           return false;
         }
-
-      }else{
+      } else {
         this.$f7.dialog.alert('Mohon isi titik koordinat rumah terlebih dahulu!','Peringatan');
         return false;
       }
@@ -320,13 +312,11 @@ class tambahCalonPesertaDidik extends Component {
         return false;
       }
 
-      // return true;
-
       this.setState({
         ...this.state,
         loading: true,
-        disabledInput: true
-      },()=>{
+        disabledInput: true,
+      }, ()=> {
         this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
           if(result.payload.peserta_didik_id) {
             this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
@@ -336,17 +326,15 @@ class tambahCalonPesertaDidik extends Component {
             this.setState({
               ...this.state,
               loading:false,
-              disabledInput: false
+              disabledInput: false,
             });
           }
         });
       });
-
     });
   }    
 
   setSelectValue = (key) => (b) => {
-    // console.log(c);
     this.setState({
       routeParams: {
         ...this.state.routeParams,
@@ -356,7 +344,7 @@ class tambahCalonPesertaDidik extends Component {
       if(key === 'kode_wilayah_provinsi') {
         let prov = '';
         this.state.provinsi.rows.map((op)=>{
-          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_provinsi){
+          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_provinsi) {
             prov = op.nama;
           }
         });
@@ -366,7 +354,7 @@ class tambahCalonPesertaDidik extends Component {
             id_level_wilayah: 2,
             mst_kode_wilayah: this.state.routeParams.kode_wilayah_provinsi,
           },
-          routeParams:{
+          routeParams: {
             ...this.state.routeParams,
             provinsi: prov
           }
@@ -380,7 +368,7 @@ class tambahCalonPesertaDidik extends Component {
       } else if (key === 'kode_wilayah_kabupaten') {
         let kab = '';
         this.state.kabupaten.rows.map((op)=>{
-          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_kabupaten){
+          if(op.kode_wilayah === this.state.routeParams.kode_wilayah_kabupaten) {
             kab = op.nama;
           }
         });
@@ -401,8 +389,9 @@ class tambahCalonPesertaDidik extends Component {
             })
           });
         });
-      } else if(key === 'kode_wilayah_kecamatan'){
+      } else if(key === 'kode_wilayah_kecamatan') {
         let kec = '';
+
         this.state.kecamatan.rows.map((op)=>{
           if(op.kode_wilayah === this.state.routeParams.kode_wilayah_kecamatan){
             kec = op.nama;
@@ -412,7 +401,7 @@ class tambahCalonPesertaDidik extends Component {
         this.setState({
           routeParams: {
             ...this.state.routeParams,
-            kecamatan: kec
+            kecamatan: kec,
           }
         });
       }
@@ -460,7 +449,7 @@ class tambahCalonPesertaDidik extends Component {
         calon_peserta_didik_id: (this.$f7route.params['peserta_didik_id'] !== "null" ? (this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null) : null),
       }
     }, ()=> {
-      this.props.cekNISN(this.state.routeParamsCek).then((result)=>{
+      this.props.cekNISN(this.state.routeParamsCek).then((result)=> {
         if(this.props.cek_nisn.count > 0) {
           this.setState({
             disabledInput: true,
@@ -476,9 +465,7 @@ class tambahCalonPesertaDidik extends Component {
     });
   }
 
-  cekNikEnter = (e) => {
-    // console.log(e);
-  }
+  cekNikEnter = (e) => {}
 
   bukaPeta = () => {
     this.setState({
@@ -499,9 +486,7 @@ class tambahCalonPesertaDidik extends Component {
 
       this.props.simpanCalonPesertaDidik(this.state.routeParams).then((result)=> {
         if(result.payload.peserta_didik_id) {
-          // this.$f7router.navigate('/tambahJalurSekolah/'+result.payload.peserta_didik_id)
           this.$f7router.navigate("/petaPD/"+result.payload.peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur);
-          // this.$f7router.navigate("/petaPD/"+this.state.routeParams.calon_peserta_didik_id+"/"+this.state.routeParams.lintang+"/"+this.state.routeParams.bujur);
         } else {
           this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan internet Anda. Mohon coba beberapa saat lagi');
         }
@@ -512,8 +497,7 @@ class tambahCalonPesertaDidik extends Component {
   render() {
     return (
       <Page name="tambahCalonPesertaDidik" hideBarsOnScroll>
-        <Navbar sliding={false}>
-        {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
+        <Navbar sliding={false} backLink="Kembali">
           <NavTitle sliding>Tambah Peserta Didik</NavTitle>
           <NavTitleLarge>
             Tambah Peserta Didik
@@ -533,14 +517,9 @@ class tambahCalonPesertaDidik extends Component {
                   Identitas Calon Peserta Didik
                 </CardHeader>
                 <CardContent>
-                  <Button style={{width:'100px', position:'absolute',right:'0px', marginTop:'15px', marginRight:'15px', zIndex:'999999'}} onClick={this.cekNikEnter}>
-                    Cek NIK
-                  </Button>
-                  <Button style={{width:'100px', position:'absolute',right:'0px', marginTop:'95px', marginRight:'15px', zIndex:'999999'}} onClick={this.cekNisnEnter}>
-                    Cek NISN
-                  </Button>
                   <List>
                     <ListInput
+                      className="inputNumber inputNik"
                       label="Nomor Induk Kependudukan / NIK"
                       type="number"
                       placeholder="Ketikkan NIK dan enter..."
@@ -554,8 +533,12 @@ class tambahCalonPesertaDidik extends Component {
                       data-validate-on-blur="true"
                     >
                       <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNik}</b></span>
+                      <Button raised fill small slot="inner" className="checkBtn" color="orange" onClick={this.cekNikEnter}>
+                        Cek NIK
+                      </Button>
                     </ListInput>
                     <ListInput
+                      className="inputNumber inputNisn"
                       label="NISN"
                       type="number"
                       placeholder="NISN Calon Peserta Didik..."
@@ -566,7 +549,11 @@ class tambahCalonPesertaDidik extends Component {
                       defaultValue={this.state.routeParams.nisn}
                       disabled={this.state.disabledInput}
                       data-validate-on-blur="true"
-                    />
+                    >
+                      <Button raised fill small slot="inner" className="checkBtn" color="orange" onClick={this.cekNisnEnter}>
+                        Cek NISN
+                      </Button>
+                    </ListInput>
                     <ListInput
                       label="Nama Calon Peserta Didik"
                       type="text"

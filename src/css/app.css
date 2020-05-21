@@ -1,3 +1,19 @@
+.inputNumber input[type="number"]::-webkit-outer-spin-button,
+.inputNumber input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputNumber input[type="number"] { -moz-appearance: textfield; }
+
+.checkBtn {
+  position: absolute;
+  width: 85px;
+  right: 0;
+  margin-top: 24px;
+  margin-right: 15px;
+}
+
 .device-cordova.device-ios { height: 100vh; }
 
 .panel-left.panel-visible-by-breakpoint:before {
@@ -892,6 +908,16 @@
   color: #f1f1f1;
 }
 
+.daftarSekolah.daftarPdSekolah .sekolahStatistik p a {
+  background-image: none !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
 .daftarSekolah.daftarPdSekolah .sekolahStatistik p b {
   display: block;
   font-size: 1.25rem;
@@ -1066,7 +1092,7 @@
 
 .noRegistration .card-content img {
   height: 128px;
-  opacity: .375;
+  opacity: .75;
   display: block;
   max-width: 100%;
   margin: 0 auto .625rem;
@@ -1252,7 +1278,7 @@
 
 .noDaftarKegiatan .card-content img {
   height: 128px;
-  opacity: .375;
+  opacity: .75;
   display: block;
   max-width: 100%;
   margin: 0 auto .625rem;
@@ -1359,6 +1385,146 @@
   display: flex;
   font-size: 1rem;
   height: 35px;
+}
+
+.noLoadContent {
+  position: relative;
+  border-top: 0 solid transparent !important;
+}
+
+.noLoadContent .card-content {
+  display: block;
+  padding: 2rem !important;
+  text-align: center;
+}
+
+.noLoadContent .card-content img {
+  max-width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+.noLoadContent .card-content h4 {
+  margin: 10px 0 0;
+  font-weight: 400;
+  color: #6d6d72;
+  font-size: 16px;
+}
+
+.noLoadContent .card-content .button { margin-top: 10px; }
+
+.listProgressBar {
+  position: absolute;
+  top: 88px;
+  width: 100%;
+  height: 3px;
+  border-radius: 0;
+}
+
+.inputNik .item-input-wrap input,
+.inputNisn .item-input-wrap input { padding-right: 130px; }
+
+.inputNik .item-input-wrap .input-clear-button,
+.inputNisn .item-input-wrap .input-clear-button {
+  right: 100px;
+  top: 24px;
+}
+
+.registrationDashboard {
+  width: 100%;
+  position: relative;
+  margin: 0;
+}
+
+.registrationDashboard .card-header {
+  min-height: auto;
+  height: auto;
+  padding: .5rem 1rem;
+  background-image: radial-gradient(circle 621px at 25.3% 13.8%, rgba(255,255,255,1) 0%, rgb(234, 243, 255) 90%);
+}
+
+.registrationDashboard .card-header:after {
+  content: '';
+  display: none;
+}
+
+.registrationDashboard .card-header .link {
+  font-size: 1rem;
+  color: #007aff;
+}
+
+.registrationDashboard .card-header .link i {
+  background-color: #ffffff;
+  color: #007aff;
+  padding: .25rem;
+  border-radius: 50%;
+  margin-right: .375rem;
+  box-shadow: 0px 2px 5px rgba(0,122,255,0.16863);
+}
+
+.registrationDashboard .card-header .link h3 {
+  margin: 0;
+  color: #007aff;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: .125rem;
+  font-size: 1rem;
+}
+
+.registrationDashboard .card-content {
+  position: relative;
+  padding: 15px;
+}
+
+.registrationDashboard .card-content .registrationItem {
+  overflow: hidden;
+  border-radius: .25rem;
+  background-color: #ededed;
+  box-shadow: 0 0 10px #00000014;
+}
+
+.registrationDashboard .card-content .registrationItem .registrationImage {
+  width: 100%;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+}
+
+.registrationDashboard .card-content .registrationItem .registrationDesc {
+  max-width: calc(100% - 40px);
+  display: block;
+  background-color: #ffffffe3;
+  margin: -40px auto 10px;
+  padding: 10px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: .25rem;
+  box-shadow: 0px -5px 10px rgba(0,0,0,0.1098);
+}
+
+.registrationDashboard .card-content .registrationItem .registrationDesc h4 {
+  margin: 0;
+  display: block;
+  font-weight: 400;
+  color: #000;
+}
+
+.registrationDashboard .card-content .registrationItem .registrationDesc h4 span {
+  display: block;
+  font-weight: 700;
+  color: #007aff;
+}
+
+.registrationDashboard .card-content .registrationItem .registrationDesc p {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.registrationDashboard .card-content .registrationItem .registrationDesc h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
 }
 
 .loginPage {
@@ -1567,6 +1733,15 @@
   color: #8f8f94;
   font-weight: 400;
 }
+
+.pagination {
+  margin-top: 44px;
+  text-align:right;
+}
+
+.pagination li.active { font-weight: 700; }
+
+.pagination li.active a{ color: #FF6B22; }
 
 .onlyOnDesktop { display: block !important; }
 
@@ -1849,17 +2024,11 @@
   .userProfile .userImage .userNameBlock .button { display: none; }
 
   .userProfile .profileActions { display: block; }
-}
 
-.pagination {
-  margin-top: 44px;
-  text-align:right;
-}
+  .registrationDashboard .card-content .registrationItem { margin-bottom: 15px; }
 
-.pagination li.active {
-  font-weight: bold;
-}
-
-.pagination li.active a{
-  color: #FF6B22;
+  .registrationDashboard .card-header .link h3 span {
+    display: block;
+    font-size: 12px;
+  }
 }
