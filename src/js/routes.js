@@ -28,6 +28,7 @@ import pilihKota from '../pages/PPDB/pilihKota';
 import JadwalKegiatan from '../pages/PPDB/jadwalKegiatan';
 import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 import loginSekolah from '../pages/loginSekolah';
+import loginDinas from '../pages/loginDinas';
 
 var routes = [
   {
@@ -104,7 +105,7 @@ var routes = [
   },
   {
     path: '/login',
-    component: login,
+    component: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? login : (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? loginDinas : loginSekolah)),
   },
   {
     path: '/login/:jenis',

@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../store/actions';
 import io from 'socket.io-client';
+import PPDBPesertaDidikReducer from '../store/reducers/PPDB/PesertaDidik.reducers';
 
 const bulan = [
   'Januari',
@@ -64,6 +65,9 @@ class Beranda extends Component {
       entities:{
         rows: [],
         count: 0,
+      },
+      rekap_total: {
+        total: 0
       }
     };
   }
@@ -144,6 +148,15 @@ class Beranda extends Component {
         });
       });
     }
+
+    if(localStorage.getItem('kode_aplikasi') === 'PPDB-dinas'){
+      this.props.getRekapTotal(this.state.routeParams).then((result)=>{
+        this.setState({
+          ...this.state,
+          rekap_total: this.props.rekap_total[0]
+        })
+      });
+    }
   }
 
   render() {
@@ -185,6 +198,45 @@ class Beranda extends Component {
             <h2>{localStorage.getItem('judul_aplikasi')}</h2>
             <h6>{localStorage.getItem('sub_judul_aplikasi')}</h6>
           </div>
+          {localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
+          // <Block className="gridMenu">
+          <Row noGap>
+            <Col width="50" tabletWidth="25">
+              <Card style={{minWidth:'200px'}}>
+                <CardContent style={{textAlign:'center'}}>
+                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.total ? this.formatAngka(this.state.rekap_total.total) : '0'}</b><br/>
+                  Pendaftar
+                </CardContent>
+              </Card>
+            </Col>
+            <Col width="50" tabletWidth="25">
+              <Card style={{minWidth:'200px'}}>
+                <CardContent style={{textAlign:'center'}}>
+                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.berkas_valid ? this.formatAngka(this.state.rekap_total.berkas_valid) : '0'}</b><br/>
+                  Pendaftar Berkas Lengkap
+                </CardContent>
+              </Card>
+            </Col>
+            <Col width="50" tabletWidth="25">
+              <Card style={{minWidth:'200px'}}>
+                <CardContent style={{textAlign:'center'}}>
+                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.konfirmasi ? this.formatAngka(this.state.rekap_total.konfirmasi) : '0'}</b><br/>
+                  Pendaftar Terkonfirmasi
+                </CardContent>
+              </Card>
+            </Col>
+            <Col width="50" tabletWidth="25">
+              <Card style={{minWidth:'200px'}}>
+                <CardContent style={{textAlign:'center'}}>
+                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.diterima ? this.formatAngka(this.state.rekap_total.diterima) : '0'}</b><br/>
+                  Pendaftar Diterima
+                </CardContent>
+              </Card>
+            </Col>
+          </Row>
+          // </Block>
+          }
+          {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
           <Block className="gridMenu">
             <Link href="/Cari/">
               <img src="./static/images/icons/cari-data.svg" alt="cari data" />
@@ -211,6 +263,8 @@ class Beranda extends Component {
               Profil<br/>Pengguna
             </Link>
           </Block>
+          }
+          {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
           <Block className="pelaksanaanPpdb">
             <Row>
               <Col width="100" tabletWidth="65">
@@ -290,6 +344,7 @@ class Beranda extends Component {
               </Col>
             </Row>
           </Block>
+          }
         </div>
       </Page>
     )
@@ -308,10 +363,11 @@ function mapDispatchToProps(dispatch) {
     getRuangDiikuti: Actions.getRuangDiikuti,
     getCalonPD: Actions.getCalonPD,
     getJKberanda: Actions.getJKberanda,
+    getRekapTotal: Actions.getRekapTotal
   }, dispatch);
 }
 
-function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang, DaftarPendaftaran, JadwalKegiatan }) {
+function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang, DaftarPendaftaran, JadwalKegiatan, PPDBPesertaDidik }) {
   return {
     window_dimension: App.window_dimension,
     loading: App.loading,
@@ -324,6 +380,7 @@ function mapStateToProps({ App, Pertanyaan, Notifikasi, Kuis, Ruang, DaftarPenda
     ruang_diikuti: Ruang.ruang_diikuti,
     entities: DaftarPendaftaran.entities,
     jkBeranda: JadwalKegiatan.beranda,
+    rekap_total: PPDBPesertaDidik.rekap_total
   }
 }
 

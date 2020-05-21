@@ -1,30 +1,45 @@
 import React, {Component} from 'react';
 import {
-    Page, Icon, Navbar, NavTitle, NavTitleLarge, List, ListInput, ListItem, ListItemContent, Block, Button, CardHeader, Row, Col, Card, CardContent, CardFooter, Link, NavRight, Subnavbar, BlockTitle, Searchbar, Segmented, Tabs, Tab
+    Page, Icon, Navbar, NavTitle, NavTitleLarge, List, ListInput, ListItem, ListItemContent, Block, Button, CardHeader, Row, Col, Card, CardContent, CardFooter, Link, NavRight, Subnavbar, BlockTitle, Searchbar, Segmented, Tabs, Tab, Preloader
 } from 'framework7-react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../store/actions';
 
+import Pagination from "react-js-pagination";
+
 class DaftarPendaftaran extends Component {
     state = {
         error: null,
-        loading: false,
+        loading: true,
         routeParams:{
-            pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+            pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
             // pantauan: 1
             keyword : '',
             start: 0,
-            limit: 20
+            limit: 10
         },
         start: 0,
-        limit: 20,
+        activePage: 1,
+        limit: 10,
         entities: {
             rows: [],
             count: 0,
             countAll: 0
-        }
+        },
+        dummy_rows: [
+            {
+              foo:'bar'
+            }
+            ,{
+              foo:'bar'
+            }
+            ,{
+              foo:'bar'
+            }
+        ],
+        disabledButton: false
     }
 
     getData = () => {
@@ -39,7 +54,9 @@ class DaftarPendaftaran extends Component {
         },()=>{
             this.props.getCalonPD(this.state.routeParams).then((result)=>{
                 this.setState({
-                    entities: this.props.entities
+                    ...this.state,
+                    entities: this.props.entities,
+                    loading: false
                 });
             });
         });
@@ -66,7 +83,25 @@ class DaftarPendaftaran extends Component {
     }
 
     componentDidMount = () => {
-        this.getData();
+        // this.getData();
+        this.setState({
+            routeParams: {
+                ...this.state.routeParams,
+                start: 0
+            }
+        },()=>{
+            // console.log('loading:'+this.state.loading);
+
+            this.props.getCalonPD(this.state.routeParams).then((result)=>{
+                this.setState({
+                    ...this.state,
+                    entities: this.props.entities,
+                    loading: false
+                },()=>{
+                    // console.log('loading:'+this.state.loading);
+                });
+            });
+        });
     }
 
     muatSelanjutnya = () => {
@@ -75,7 +110,8 @@ class DaftarPendaftaran extends Component {
                 ...this.state.routeParams,
                 start: parseInt(this.state.start)+parseInt(this.state.limit)
             },
-            start: parseInt(this.state.start)+parseInt(this.state.limit)
+            start: parseInt(this.state.start)+parseInt(this.state.limit),
+            loading: true
         }, ()=> {
             this.props.getCalonPD(this.state.routeParams).then((result)=>{
                 this.setState({
@@ -85,21 +121,51 @@ class DaftarPendaftaran extends Component {
                             ...this.state.entities.rows,
                             ...this.props.entities.rows
                         ]
-                    }
+                    },
+                    loading: false
                 });
             });
-            // this.props.getPPDBSekolah(this.state.routeParamsCariSekolah).then((result)=>{
-            //     this.setState({
-            //         ppdb_sekolah: {
-            //             ...this.state.ppdb_sekolah,
-            //             rows: [
-            //                 ...this.state.ppdb_sekolah.rows,
-            //                 ...this.props.ppdb_sekolah.rows
-            //             ]
-            //         }
-            //     })
-            // });
         });
+    }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({
+            start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit)),
+            routeParams: {
+              ...this.state.routeParams,
+              start: ((parseInt(pageNumber)-1)*parseInt(this.state.limit))
+            },
+            activePage: pageNumber,
+            loading: true
+          },()=>{
+              this.props.getCalonPD(this.state.routeParams).then(e => {
+                  this.setState({ entities: this.props.entities, loading: false });
+              });
+          });
+    }
+
+    batalkanKonfirmasi = (calon_peserta_didik_id, nama) => {
+        this.$f7.dialog.confirm('Apakah Anda ingin membatalkan konfirmasi '+nama+'?', 'Konfirmasi', ()=>{
+            // console.log('jadi');
+            this.setState({
+                disabledButton: true,
+                routeParamsBatal: {
+                    calon_peserta_didik_id: calon_peserta_didik_id
+                }
+            },()=>{
+                this.props.batalkanKonfirmasi(this.state.routeParamsBatal).then((result)=>{
+                    this.props.getCalonPD(this.state.routeParams).then((result)=>{
+                        this.setState({
+                            disabledButton: false,
+                            entities: this.props.entities
+                        });
+                    });
+                });
+            });
+        },()=>{
+            // console.log('batal');
+        });
+        // console.log('jadi');
     }
 
     render()
@@ -107,7 +173,7 @@ class DaftarPendaftaran extends Component {
         return (
             <Page name="cari" style={{paddingBottom:'40px'}}>
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
-                    <NavTitle sliding>Data Pendaftar</NavTitle>
+                    <NavTitle sliding>Data Pendaftar {localStorage.getItem('kode_aplikasi') !== 'PPDB'  && <>{localStorage.getItem('wilayah_aplikasi')}</>}</NavTitle>
                     <Subnavbar inner={false}>
                         <Searchbar
                             className="searchbar-demo"
@@ -125,9 +191,55 @@ class DaftarPendaftaran extends Component {
                 </Navbar>
 
                 <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftar</Block>
-                <Block strong style={{marginTop:'0px', marginBottom:'8px'}}>
+                <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
                     Menampilkan {this.props.entities.countAll ? this.props.entities.countAll : '0'} data pendaftar
+                    {localStorage.getItem('kode_aplikasi') !== 'PPDB'  && <>&nbsp;di {localStorage.getItem('wilayah_aplikasi')}</>}
                 </Block>
+                {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={this.state.limit}
+                    totalItemsCount={this.props.entities.countAll}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                />
+                }
+                {this.state.loading ?
+                <>
+                {this.state.dummy_rows.map((opt)=>{
+                    return (
+                        <Card className="demo-card-header-pic" style={{borderTop:'3px solid #00BCD4'}} className={"skeleton-text skeleton-effect-blink"}>
+                            <CardContent>
+                                <Row>
+                                    <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
+                                        <div style={{height:'120px', width:'120px'}}>&nbsp;</div>
+                                    </Col>
+                                    <Col width="70" tabletWidth="85">
+                                        <Row noGap>
+                                            <Col width="100">
+                                                <a disabled={true} href={"/ProfilSekolah/"+ "option.sekolah_id"}>
+                                                    <h2 style={{marginTop: '0px', marginBottom: '0px'}}>
+                                                        {"option.nama"}  
+                                                    </h2>
+                                                </a>
+                                            </Col>
+                                            <Col width="100" tabletWidth="40">
+                                                NIK: <b>{"option.nik"}</b> <br/>
+                                                Jenis Kelamin: <b> { "option.jenis_kelamin" === 'L' ? 'Laki laki' : "option.jenis_kelamin" === 'P' ? 'Perempuan' : '' } </b> <br/>
+                                                TTL: <b>{ "option.tempat_lahir" }, { "option.tanggal_lahir" }</b> <br/>
+                                                Titik Koordinat: <b>{ "option.lintang" }, {"option.bujur"}</b> <br/>
+                                                Sekolah Asal: <b>{ "option.sekolah_asal.nama" } ({"option.sekolah_asal.npsn"})</b> <br/>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </CardContent>
+                        </Card>
+                    )
+                })}
+                </>
+                :
+                <>
                 {this.state.entities.rows.map((option, key)=>{
 
                     // let sekolah_asal = '';
@@ -163,34 +275,6 @@ class DaftarPendaftaran extends Component {
                                                 Titik Koordinat: <b>{ option.lintang }, {option.bujur}</b> <br/>
                                                 Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                             </Col>
-                                            <Col width="100" tabletWidth="60">
-                                                {/* <div className="data-table card">
-                                                    <table>
-                                                        <tbody>
-                                                            {
-                                                                option.pilihan_sekolah.map((n, key) => {
-                                                                    return (
-                                                                        <tr key={key}>
-                                                                            <td>{ key + 1 }</td>
-                                                                            <td>{ n.npsn }</td>
-                                                                            <td>{ n.nama_sekolah }</td>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div> */}
-                                                {/* <List>
-                                                    {option.pilihan_sekolah.map((n, key) => {
-                                                        return (
-                                                            <ListItem className={"daftarSekolah"} style={{fontSize:'12px'}} title={key+1+". "+n.nama_sekolah + "("+n.npsn+")"} after={"No.Urut 0"}>
-                                                                
-                                                            </ListItem>
-                                                        )
-                                                    })}
-                                                </List> */}
-                                            </Col>
                                         </Row>
                                     </Col>
                                     <Col width={100} style={{border:'1px solid #ccceee', marginTop:'8px'}}>
@@ -215,12 +299,26 @@ class DaftarPendaftaran extends Component {
                             </CardContent>
                             <CardFooter className="no-border">
                             {/* <CardFooter className="no-border" style={{display:'-webkit-inline-box', width:'100%'}}> */}
+                                {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                                 <Button disabled={(option.status_konfirmasi === 1 ? true : false)} onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id)}>
                                     Edit Formulir
                                 </Button>
+                                }
+                                {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                                <Button disabled={(option.status_konfirmasi === 0 ? true : false)} onClick={()=>this.batalkanKonfirmasi(option.calon_peserta_didik_id, option.nama)} iconIos="f7:shield_slash" iconSize="17" raised fill color="red">
+                                    {this.state.disabledButton && <Preloader color="white"></Preloader>}&nbsp;Batalkan Konfirmasi
+                                </Button>
+                                }
+                                {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                                 <Button disabled={(option.status_konfirmasi === 1 ? true : false)} onClick={()=>this.$f7router.navigate("/tambahKonfirmasi/"+option.calon_peserta_didik_id)}>
                                     Status: {(option.status_konfirmasi === 1 ? 'Terkonfirmasi' : 'Draft')}
                                 </Button>
+                                }
+                                {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                                <Button disabled={(option.status_konfirmasi === 1 ? true : false)}>
+                                    Status: {(option.status_konfirmasi === 1 ? 'Terkonfirmasi' : 'Draft')}
+                                </Button>
+                                }
                                 <Button>
                                     Tanggal Konfirmasi: {option.status_konfirmasi === 1 ? option.tanggal_konfirmasi : '-'}
                                 </Button>
@@ -228,15 +326,19 @@ class DaftarPendaftaran extends Component {
                                     fillIos
                                     onClick={e => this.cetakFormulir(option) }
                                     disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                    iconIos="f7:printer_fill"
+                                    iconSize="17"
                                 >
-                                    Cetak Formulir
+                                    &nbsp;Cetak Formulir
                                 </Button>
                                 <Button
                                     fillIos
                                     onClick={e => this.cetakBukti(option) }
                                     disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                    iconIos="f7:printer_fill"
+                                    iconSize="17"
                                 >
-                                    Cetak Bukti Pendaftaran
+                                    &nbsp;Cetak Bukti Pendaftaran
                                 </Button>
                             </CardFooter>
                             {option.status_konfirmasi !== 1 &&
@@ -247,10 +349,25 @@ class DaftarPendaftaran extends Component {
                         </Card>
                     )
                 })}
+                </>
+                }
+                {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={this.state.limit}
+                    totalItemsCount={this.props.entities.countAll}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                />
+                }
+                {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
+                <>
                 {this.props.entities.count > 1 &&
                 <Block strong style={{marginTop:'8px', marginBottom:'0px'}}>
                     <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat data selanjutnya</Button>
                 </Block>
+                }
+                </>
                 }
             </Page>
         )
@@ -259,7 +376,8 @@ class DaftarPendaftaran extends Component {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-      getCalonPD                        : Actions.getCalonPD
+      getCalonPD                        : Actions.getCalonPD,
+      batalkanKonfirmasi                : Actions.batalkanKonfirmasi
     }, dispatch);
 }
 

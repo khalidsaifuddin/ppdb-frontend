@@ -42,7 +42,8 @@ class tambahCalonPesertaDidik extends Component {
       error: null,
       loading: false,
       routeParams:{
-        pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+        pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
+        // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
         orang_tua_utama: 'ayah',
         pendidikan_terakhir_id_ayah: 99,
         pekerjaan_id_ayah: 98,

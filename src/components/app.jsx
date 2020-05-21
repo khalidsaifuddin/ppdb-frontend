@@ -147,12 +147,14 @@ class app extends Component {
                       <i slot="media" className="f7-icons">house</i>
                     </ListItem>
                   }
-                  <ListItem link="/Cari/" view=".view-main" panelClose panel-close title="Cari Data">
+                  <ListItem link="/Cari/" view=".view-main" panelClose panel-close title="Cari Data Dapodik">
                     <i slot="media" className="f7-icons">search</i>
                   </ListItem>
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                   <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Formulir Pendaftaran">
                     <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
                   </ListItem>
+                  }
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                     <i slot="media" className="f7-icons">doc_plaintext</i>
                   </ListItem>
@@ -206,11 +208,13 @@ class app extends Component {
                     </ListItem>
                   }
                 </List>
+                {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                 <Block className="formRegisterWidget">
                   <img src="./static/images/formulir-illustration.png" alt="formulir ilustrasi"/>
                   <p>Daftarkan anak Anda segera ke sekolah terbaik!</p>
                   <Button href="/tambahCalonPesertaDidik/" view=".view-main" raised fill round color="orange">Daftar Sekarang</Button>
                 </Block>
+                }
               </Page>
             </View>
           </Panel>
@@ -249,20 +253,29 @@ class app extends Component {
                     iconMd="f7:search" 
                     text="Cari"
                   />
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                   <Link 
-                    iconIos="f7:pencil_ellipsis_rectangle" 
-                    iconAurora="f7:pencil_ellipsis_rectangle" 
-                    iconMd="f7:pencil_ellipsis_rectangle" 
-                    text="Formulir"
-                    popoverOpen=".popover-menu"
-                    className="formulir--menu"
+                  iconIos="f7:pencil_ellipsis_rectangle" 
+                  iconAurora="f7:pencil_ellipsis_rectangle" 
+                  iconMd="f7:pencil_ellipsis_rectangle" 
+                  text="Formulir"
+                  popoverOpen=".popover-menu"
+                  className="formulir--menu"
                   />
+                  }
                   <Link 
                     href={"/Daftar/"} 
                     iconIos="f7:doc_plaintext" 
                     iconAurora="f7:doc_plaintext" 
                     iconMd="f7:doc_plaintext" 
                     text="Pendaftar"
+                  />
+                  <Link 
+                    href={"/detailCalonpdSekolah/"} 
+                    iconIos="f7:building_2_fill" 
+                    iconAurora="f7:building_2_fill" 
+                    iconMd="f7:building_2_fill" 
+                    text="Sekolah"
                   />
                   {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                     <>

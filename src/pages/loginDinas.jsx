@@ -14,7 +14,7 @@ import * as Actions from '../store/actions';
 import GoogleLogin from 'react-google-login';
 import io from 'socket.io-client';
 
-class loginSekolah extends Component {
+class loginDinas extends Component {
   constructor(props) {
     super(props);
     
@@ -124,6 +124,10 @@ class loginSekolah extends Component {
   doLogin = () => {
     this.setState({
       loading: true,
+      routeParams: {
+        ...this.state.routeParams,
+        peran_id: 8
+      }
     }, ()=> {
       this.props.login(this.state.routeParams).then((result)=> {
         this.setState({
@@ -133,6 +137,7 @@ class loginSekolah extends Component {
               localStorage.setItem('token', result.payload.token);
               localStorage.setItem('user', JSON.stringify(result.payload.user));
               localStorage.setItem('sudah_login',  '1');
+              localStorage.setItem('pengguna_dinas',  '1');
 
               this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil');
               
@@ -141,9 +146,9 @@ class loginSekolah extends Component {
                 id: JSON.parse(localStorage.getItem('user')).pengguna_id,
               };
               
-              socket.emit('login', params, (err) => {
-                if (err) {}
-              });
+              // socket.emit('login', params, (err) => {
+              //   if (err) {}
+              // });
               
               window.location.href="/";
             } else {
@@ -158,7 +163,7 @@ class loginSekolah extends Component {
 
   render() {
     return (
-      <Page className="loginPage" name="loginSekolah" hideBarsOnScroll>
+      <Page className="loginPage" name="loginDinas" hideBarsOnScroll>
         {this.state.loading &&
           <Progressbar className="loginProgress" infinite color="blue" />
         }
@@ -166,26 +171,26 @@ class loginSekolah extends Component {
           <div className="logoApp">
             <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
             <LoginScreenTitle>{localStorage.getItem('judul_aplikasi')}</LoginScreenTitle>
-            <LoginScreenTitle style={{fontStyle:'20px'}}>Masuk Dasbor Sekolah</LoginScreenTitle>
+            <LoginScreenTitle style={{fontStyle:'20px'}}>Masuk Dasbor Dinas</LoginScreenTitle>
           </div>
           <List form>
             <ListInput
-              label="NPSN"
+              label="Username"
               type="text"
-              name="npsn"
-              placeholder="Masukkan NPSN Sekolah Anda..."
+              name="username"
+              placeholder="Masukkan Username Dinas..."
               disabled={(this.state.loading ? true : false)}
               value={this.state.routeParams.npsn}
-              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,npsn: e.target.value}})}
+              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,username: e.target.value}})}
             />
             <ListInput
-              label="Kode Registrasi"
-              type="text"
-              name="kode_registrasi"
+              label="Password"
+              type="password  "
+              name="password"
               disabled={(this.state.loading ? true : false)}
-              placeholder="Masukkan Kode Registrasi Dapodik..."
+              placeholder="Masukkan Password Dinas..."
               value={this.state.routeParams.password}
-              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,koreg: e.target.value}})}
+              onInput={(e) => this.setState({routeParams:{...this.state.routeParams,password: e.target.value}})}
             />
           </List>
             <Button 
@@ -199,7 +204,7 @@ class loginSekolah extends Component {
                 disabled={(this.state.loading ? true : false)}
                 onClick={this.doLogin}
             >
-                &nbsp; Masuk Dasbor Sekolah
+                &nbsp; Masuk Dasbor Dinas
             </Button>
         </Block>
         <div className="animatedWave wave--1"></div>
@@ -229,5 +234,5 @@ function mapStateToProps({ App }) {
   }
 }
 
-export default (connect(mapStateToProps, mapDispatchToProps)(loginSekolah));
+export default (connect(mapStateToProps, mapDispatchToProps)(loginDinas));
   

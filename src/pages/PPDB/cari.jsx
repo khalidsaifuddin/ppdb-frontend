@@ -264,6 +264,10 @@ class cari extends Component {
                           <Row>
                             <Col width="100" tabletWidth="55">
                               <div className="tentangPeserta">
+                                <span>Sumber Data</span>
+                                <b>DAPODIK</b>
+                              </div>
+                              <div className="tentangPeserta">
                                 <span>NIK</span>
                                 {option.nik && <b>{this.props.keyword ? <span dangerouslySetInnerHTML= {{__html:option.nik.replace(new RegExp(this.props.keyword, "ig"), this.props.keyword.toLowerCase())}} /> : option.nik}</b>}
                               </div>
@@ -286,9 +290,11 @@ class cari extends Component {
                           </Row>
                         </CardContent>
                         <CardFooter>
+                          {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                           <Button raised fill disabled={(option.flag_pendaftar ? true : false)} onClick={()=>this.daftarkanPesertaDidik(option.peserta_didik_id)}>
                             <Icon f7="person_badge_plus" size="16px"></Icon> {((!option.flag_pendaftar ? <>Daftarkan Peserta Didik</> : <>Peserta didik ini sudah didaftarkan sebelumnya</>))}
                           </Button>
+                          }
                         </CardFooter>
                       </Card>
                     )

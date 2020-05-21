@@ -28,12 +28,20 @@ const initialState = {
     validasi_berkas: {
         rows: [],
         total: 0
-    }
+    },
+    rekap_total: {}
 }
 
 const PPDBPesertaDidikReducer = function (state = initialState, action) {
     switch ( action.type )
     {
+        case Actions.GET_REKAP_TOTAL:
+        {
+            return {
+                ...state,
+                rekap_total: action.payload
+            };
+        }
         case Actions.GET_PESERTA_DIDIK:
         {
             return {

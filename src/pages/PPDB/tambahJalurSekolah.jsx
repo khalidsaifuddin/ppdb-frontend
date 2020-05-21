@@ -14,7 +14,8 @@ class tambahJalurSekolah extends Component {
         error: null,
         loading: false,
         routeParams:{
-            pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+            pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
+            // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
             calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
             kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
             id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
