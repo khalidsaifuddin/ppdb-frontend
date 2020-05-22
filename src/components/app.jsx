@@ -109,7 +109,7 @@ class app extends Component {
     localStorage.setItem('user', '');
     localStorage.setItem('token', '');
 
-    window.location.href="/";
+    window.location.href=localStorage.getItem('root_base');
   }
 
   alertLoginData() {
@@ -270,6 +270,7 @@ class app extends Component {
                     iconMd="f7:doc_plaintext" 
                     text="Pendaftar"
                   />
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
                   <Link 
                     href={"/detailCalonpdSekolah/"} 
                     iconIos="f7:building_2_fill" 
@@ -277,6 +278,7 @@ class app extends Component {
                     iconMd="f7:building_2_fill" 
                     text="Sekolah"
                   />
+                  }
                   {localStorage.getItem('kode_aplikasi') === 'MEJA' &&
                     <>
                       <Link 

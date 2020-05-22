@@ -150,7 +150,7 @@ class loginDinas extends Component {
               //   if (err) {}
               // });
               
-              window.location.href="/";
+              window.location.href=localStorage.getItem('root_base');
             } else {
               localStorage.setItem('sudah_login',  '0');
 
@@ -185,7 +185,7 @@ class loginDinas extends Component {
             />
             <ListInput
               label="Password"
-              type="password  "
+              type="password"
               name="password"
               disabled={(this.state.loading ? true : false)}
               placeholder="Masukkan Password Dinas..."

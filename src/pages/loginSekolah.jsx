@@ -145,7 +145,8 @@ class loginSekolah extends Component {
                 if (err) {}
               });
               
-              window.location.href="/";
+              window.location.href=localStorage.getItem('root_base');
+              // window.location.href="/";
             } else {
               localStorage.setItem('sudah_login',  '0');
 

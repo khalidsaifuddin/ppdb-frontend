@@ -24,7 +24,8 @@ import {
   Searchbar,
   Segmented,
   Tabs,
-  Tab
+  Tab,
+  Preloader
 } from 'framework7-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -411,12 +412,44 @@ class DaftarPendaftaran extends Component {
                                         </h2>
                                     </a>
                                 </Col>
-                                <Col width="100" tabletWidth="40">
+                                <Col width="100" tabletWidth="60" style={{marginBottom:'8px'}}>
                                     NIK: <b>{option.nik}</b> <br/>
                                     Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
                                     TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
                                     Titik Koordinat: <b>{ option.lintang }, {option.bujur}</b> <br/>
                                     Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
+                                </Col>
+                                <Col width="100" tabletWidth="40">
+                                  {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
+                                  <Button style={{marginBottom:'4px'}} disabled={(option.status_konfirmasi === 1 ? true : false)} onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id)}>
+                                      Edit Formulir
+                                  </Button>
+                                  }
+                                  {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                                  <Button style={{marginBottom:'4px'}} disabled={(option.status_konfirmasi === 0 ? true : false)} onClick={()=>this.batalkanKonfirmasi(option.calon_peserta_didik_id, option.nama)} iconIos="f7:shield_slash" iconSize="17" raised fill color="red">
+                                      {this.state.disabledButton && <Preloader color="white"></Preloader>}&nbsp;Batalkan Konfirmasi
+                                  </Button>
+                                  }
+                                  <Button
+                                      fillIos
+                                      onClick={e => this.cetakFormulir(option) }
+                                      disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                      iconIos="f7:printer_fill"
+                                      iconSize="17"
+                                      style={{marginBottom:'4px'}}
+                                  >
+                                      &nbsp;Cetak Formulir
+                                  </Button>
+                                  <Button
+                                      fillIos
+                                      onClick={e => this.cetakBukti(option) }
+                                      disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                      iconIos="f7:printer_fill"
+                                      iconSize="17"
+                                      style={{marginBottom:'4px'}}
+                                  >
+                                      &nbsp;Cetak Bukti Pendaftaran
+                                  </Button>
                                 </Col>
                             </Row>
                         </Col>
@@ -442,7 +475,7 @@ class DaftarPendaftaran extends Component {
                 </CardContent>
                 <CardFooter className="no-border">
                 {/* <CardFooter className="no-border" style={{display:'-webkit-inline-box', width:'100%'}}> */}
-                    {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
+                    {/* {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                     <Button disabled={(option.status_konfirmasi === 1 ? true : false)} onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id)}>
                         Edit Formulir
                     </Button>
@@ -451,7 +484,7 @@ class DaftarPendaftaran extends Component {
                     <Button disabled={(option.status_konfirmasi === 0 ? true : false)} onClick={()=>this.batalkanKonfirmasi(option.calon_peserta_didik_id, option.nama)} iconIos="f7:shield_slash" iconSize="17" raised fill color="red">
                         {this.state.disabledButton && <Preloader color="white"></Preloader>}&nbsp;Batalkan Konfirmasi
                     </Button>
-                    }
+                    } */}
                     {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                     <Button disabled={(option.status_konfirmasi === 1 ? true : false)} onClick={()=>this.$f7router.navigate("/tambahKonfirmasi/"+option.calon_peserta_didik_id)}>
                         Status: {(option.status_konfirmasi === 1 ? 'Terkonfirmasi' : 'Draft')}
@@ -465,7 +498,7 @@ class DaftarPendaftaran extends Component {
                     <Button>
                         Tanggal Konfirmasi: {option.status_konfirmasi === 1 ? option.tanggal_konfirmasi : '-'}
                     </Button>
-                    <Button
+                    {/* <Button
                         fillIos
                         onClick={e => this.cetakFormulir(option) }
                         disabled={(option.status_konfirmasi === 1 ? false : true)}
@@ -482,7 +515,7 @@ class DaftarPendaftaran extends Component {
                         iconSize="17"
                     >
                         &nbsp;Cetak Bukti Pendaftaran
-                    </Button>
+                    </Button> */}
                 </CardFooter>
                 {option.status_konfirmasi !== 1 &&
                 <CardFooter className="no-border" style={{minHeight:'10px',fontSize:'10px',padding:'8px', fontStyle:'italic',paddingLeft:'16px'}}>
@@ -523,6 +556,7 @@ class DaftarPendaftaran extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getCalonPD: Actions.getCalonPD,
+    batalkanKonfirmasi : Actions.batalkanKonfirmasi
   }, dispatch);
 }
 
