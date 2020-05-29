@@ -120,11 +120,11 @@ class JadwalKegiatan extends Component {
 				<div className="daftarKegiatan">
 					<div className="judulKegiatan">
 						<h3>Daftar Jadwal Kegiatan</h3>
-						{/* <div className="tautanKegiatan">
+						<div className="tautanKegiatan">
 							<Button raised fill color="deeppurple" onClick={e => this.handleLink([], "/jadwalKegiatan/create")}>
 								<Icon f7="calendar_badge_plus" size="18px" /> <span>BUAT JADWAL</span>
 							</Button>
-						</div> */}
+						</div>
 					</div>
 					{this.state.items.length === 0 ? (
 						<Card className="noLoadContent" noShadow noBorder key={null}>
@@ -175,9 +175,9 @@ class JadwalKegiatan extends Component {
 								</CardContent>
 								<CardFooter>
 									<div className="cardActions">
-										{/* <Button raised fill onClick={e => this.handleLink(option, ("/jadwalKegiatan/" + option.jadwal_kegiatan_id))}>
+										<Button raised fill onClick={e => this.handleLink(option, ("/jadwalKegiatan/" + option.jadwal_kegiatan_id))}>
 											<Icon ios="f7:pencil_circle_fill" size="20px"/> Ubah
-										</Button> */}
+										</Button>
 										<Button raised fill color="red" onClick={e => this.handleDelete(option)}>
 											<Icon ios="f7:xmark_circle_fill" size="20px"/> Hapus
 										</Button>
