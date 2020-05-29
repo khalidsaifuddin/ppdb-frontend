@@ -74,7 +74,9 @@ class DetailcalonpdSiswa extends Component {
 
     render()
     {
-        const sekolah = this.props.sekolah_calonpd.rows[0]
+        const sekolah = this.props.sekolah_calonpd.rows[0];
+
+        console.log(this.props.sekolah_calonpd_detail);
 
         return (
             <Page name="cari" style={{paddingBottom:'50px'}}>
@@ -194,7 +196,7 @@ class DetailcalonpdSiswa extends Component {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getSekolahCalonpd                           : Actions.getSekolahCalonpd,
+        getSekolahCalonpd                           : Actions.getSekolahdetail,
         getCalonpdSekolah                           : Actions.getCalonpdSekolah
     }, dispatch);
 }
@@ -203,7 +205,8 @@ function mapStateToProps({ App, PPDBSekolah }) {
     return {
         window_dimension                            : App.window_dimension,
         calonpd_sekolah                             : PPDBSekolah.calonpd_sekolah,
-        sekolah_calonpd                             : PPDBSekolah.sekolah_calonpd
+        sekolah_calonpd                             : PPDBSekolah.sekolah_calonpd,
+        sekolah_calonpd_detail                      : PPDBSekolah.sekolah_calonpd_detail
     }
 }
 

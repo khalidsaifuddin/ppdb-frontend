@@ -14,6 +14,11 @@ const initialState = {
         rows: [],
         count : 0,
         countAll: 0
+    },
+    sekolah_calonpd_detail : {
+        rows: [],
+        count : 0,
+        countAll: 0
     }
 }
 
@@ -43,6 +48,17 @@ const PPDBSekolahReducer = function (state = initialState, action) {
             return {
                 ...state,
                 calonpd_sekolah: {
+                    rows: action.payload.rows,
+                    count: action.payload.count,
+                    countAll: action.payload.countAll
+                }
+            }
+        }
+        case Actions.GET_SEKOLAH_DETAIL:
+        {
+            return {
+                ...state,
+                sekolah_calonpd_detail: {
                     rows: action.payload.rows,
                     count: action.payload.count,
                     countAll: action.payload.countAll
