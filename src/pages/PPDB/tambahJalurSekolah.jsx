@@ -177,7 +177,8 @@ class tambahJalurSekolah extends Component {
                                                 <option disabled value={"0"}>Mohon Pilih Jalur Terlebih Dahulu ...</option>
                                                 <option value={"0100"}>Affirmasi</option>
                                                 <option value={"0200"}>Perpindahan Orang Tua</option>
-                                                <option value={"0300"}>Minat Bakat (SMPN 3 Lumajang / SMPN 2 Tempeh)</option>
+                                                <option value={"0300"}>Minat & Bakat</option>
+                                                {/* <option value={"0300"}>Minat Bakat (SMPN 3 Lumajang / SMPN 2 Tempeh)</option> */}
                                                 <option value={"0400"}>Zonasi</option>
                                                 <option value={"0500"}>Tahfidz</option>
                                             </select>

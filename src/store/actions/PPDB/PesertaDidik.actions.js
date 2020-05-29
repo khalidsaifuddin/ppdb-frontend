@@ -17,6 +17,7 @@ export const SIMPAN_LINTANG_BUJUR = '[PESERTA DIDIK] SIMPAN LINTANG BUJUR';
 export const VALIDASI_BERKAS = '[PESERTA DIDIK] VALIDASI BERKAS';
 export const BATALKAN_KONFIRMASI = '[PESERTA DIDIK] BATALKAN KONFIRMASI';
 export const GET_REKAP_TOTAL = '[PESERTA DIDIK] GET REKAP TOTAL';
+export const GET_CALON_PD_SEKOLAH = '[PESERTA DIDIK] GET CALON PD SEKOLAH';
 
 export function getRekapTotal(routeParams)
 {
@@ -331,6 +332,25 @@ export function batalkanKonfirmasi(routeParams)
         request.then((response) =>
             dispatch({
                 type   : BATALKAN_KONFIRMASI,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+
+export function getCalonPesertaDidikSekolah(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/getCalonPesertaDidikSekolah', {
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_CALON_PD_SEKOLAH,
                 payload: response.data,
                 routeParams
             })

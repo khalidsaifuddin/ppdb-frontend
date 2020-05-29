@@ -159,7 +159,7 @@ class Beranda extends Component {
     const { jkBeranda } = this.props;
 
     return (
-      <Page name="Beranda" hideBarsOnScroll>
+      <Page name="Beranda" hideBarsOnScroll className="utamanya" style={{background:'url(static/images/paper.png)', backgroundAttachment:'fixed'}}>
         {localStorage.getItem('sudah_login') === '1' &&
           <Navbar 
             sliding={false} 
@@ -184,7 +184,7 @@ class Beranda extends Component {
           </Navbar>
         }
         <div className="contentApp">
-          <div className="bgMain"></div>
+          <div className={localStorage.getItem('tema_warna') === 'ungu-terong' ? "bgMain" : "bgMain2"}></div>
           <div className="titleMain">
             <img src={localStorage.getItem('logo_wilayah')} height="70" alt="logo" />
             <h2>{localStorage.getItem('judul_aplikasi')}</h2>

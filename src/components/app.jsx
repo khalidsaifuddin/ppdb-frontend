@@ -147,9 +147,11 @@ class app extends Component {
                       <i slot="media" className="f7-icons">house</i>
                     </ListItem>
                   }
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <ListItem link="/Cari/" view=".view-main" panelClose panel-close title="Cari Data Dapodik">
                     <i slot="media" className="f7-icons">search</i>
                   </ListItem>
+                  }
                   {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                   <ListItem link="/tambahCalonPesertaDidik/" view=".view-main" panelClose panel-close title="Formulir Pendaftaran">
                     <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
@@ -158,12 +160,16 @@ class app extends Component {
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                     <i slot="media" className="f7-icons">doc_plaintext</i>
                   </ListItem>
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <ListItem link="/detailCalonpdSekolah/" view=".view-main" panelClose panel-close title="Daftar Sekolah">
                     <i slot="media" className="f7-icons">building_2_fill</i>
                   </ListItem>
+                  }
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <ListItem link="/JadwalKegiatan/" view=".view-main" panelClose panel-close title="Jadwal Kegiatan">
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
+                  }
                   {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
                     <i slot="media" className="f7-icons">book</i>
                   </ListItem>
@@ -197,7 +203,7 @@ class app extends Component {
                       <i slot="media" className="f7-icons">square_arrow_right</i>
                     </ListItem>
                   }
-                  {localStorage.getItem('sudah_login') === '1' && 
+                  {localStorage.getItem('sudah_login') === '1' && localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                     <ListItem link="/ProfilPengguna/" view=".view-main" panelClose panel-close title="Profil Pengguna">
                       <i slot="media" className="f7-icons">person</i>
                     </ListItem>
@@ -246,6 +252,7 @@ class app extends Component {
                     iconMd="f7:house" 
                     text="Beranda"
                   />
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <Link 
                     href={"/Cari/"} 
                     iconIos="f7:search" 
@@ -253,6 +260,7 @@ class app extends Component {
                     iconMd="f7:search" 
                     text="Cari"
                   />
+                  }
                   {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
                   <Link 
                   iconIos="f7:pencil_ellipsis_rectangle" 
@@ -263,6 +271,16 @@ class app extends Component {
                   className="formulir--menu"
                   />
                   }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <Link 
+                    href={"/DaftarCalonPesertaDidikSekolah/"} 
+                    iconIos="f7:doc_plaintext" 
+                    iconAurora="f7:doc_plaintext" 
+                    iconMd="f7:doc_plaintext" 
+                    text="Pendaftar"
+                  />
+                  }
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <Link 
                     href={"/Daftar/"} 
                     iconIos="f7:doc_plaintext" 
@@ -270,7 +288,8 @@ class app extends Component {
                     iconMd="f7:doc_plaintext" 
                     text="Pendaftar"
                   />
-                  {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
                   <Link 
                     href={"/detailCalonpdSekolah/"} 
                     iconIos="f7:building_2_fill" 

@@ -304,10 +304,16 @@ class cari extends Component {
                     <Button raised fill color="gray" onClick={this.muatSelanjutnya}>Muat Hasil Lainnya</Button>
                   }
                 </div>
+                <br/>
+                <br/>
+                <br/>
               </div>
             </Tab>
             <Tab id="tab-2" className="page-content">
               <CariSekolah />
+              <br/>
+              <br/>
+              <br/>
             </Tab>
           </Tabs>
         </Block>

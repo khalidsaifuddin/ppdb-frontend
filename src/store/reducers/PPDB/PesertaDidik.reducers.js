@@ -29,7 +29,12 @@ const initialState = {
         rows: [],
         total: 0
     },
-    rekap_total: {}
+    rekap_total: {},
+    calon_pd_sekolah: {
+        rows: [],
+        count : 0,
+        countAll: 0
+    }
 }
 
 const PPDBPesertaDidikReducer = function (state = initialState, action) {
@@ -89,6 +94,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
             return {
                 ...state,
                 validasi_berkas: action.payload
+            };
+        }
+        case Actions.GET_CALON_PD_SEKOLAH:
+        {
+            return {
+                ...state,
+                calon_pd_sekolah: action.payload
             };
         }
         default:

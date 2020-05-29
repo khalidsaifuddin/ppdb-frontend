@@ -271,6 +271,25 @@
   transform: scaleX(1.2);
 }
 
+/* bgmain2 */
+.bgMain2 {
+  position: absolute;
+  top: 0;
+  height: 290px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  width: 100%;
+  z-index: -1;
+  background-image: -o-linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);
+  background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);
+  /* background-image: -o-linear-gradient(110deg, #b721ff 0%, #21d4fd 100%); */
+  /* background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%); */
+  -webkit-transform: scaleX(1.2);
+  -ms-transform: scaleX(1.2);
+  transform: scaleX(1.2);
+}
+/* end of bgmain2 */
+
 .titleMain {
   font-weight: bold;
   color: white;
@@ -1650,6 +1669,132 @@
   color: #8d8d8d;
 }
 
+/* loginpage2 */
+.loginPage2 {
+  width: 100%;
+  position: relative;
+}
+
+.loginPage2 .page-content {
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-image: -o-linear-gradient(328.3deg, rgb(41, 250, 239) 22.9%, rgba(67,212,255,1) 69%);
+  background-image: linear-gradient(121.7deg, rgba(41,250,239,1) 22.9%, rgba(67,212,255,1) 69%);
+  overflow: hidden;
+}
+
+.loginPage2 .page-content .loginProgress {
+  height: 4px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  border-radius: 0;
+}
+
+.loginPage2 .page-content .loginBox {
+  max-width: 380px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 9px 50px #0000001f;
+  box-shadow: 0px 9px 50px #0000001f;
+}
+
+.loginPage2 .page-content .loginBox .logoApp {
+  position: relative;
+  display: block;
+}
+
+.loginPage2 .page-content .loginBox .logoApp img {
+  height: 72px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.loginPage2 .page-content .loginBox .logoApp .login-screen-title {
+  margin-top: .375rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #125034;
+  text-transform: uppercase;
+}
+
+.loginPage2 .page-content .loginBox .list li { margin-bottom: .5rem; }
+
+.loginPage2 .page-content .loginBox .list .item-content { padding-left: 0; }
+
+.loginPage2 .page-content .loginBox .list .item-input .item-inner { padding-right: 0; }
+
+.loginPage2 .page-content .loginBox .loginActions { display: block; }
+
+.loginPage2 .page-content .loginBox .loginActions .loginBtn {
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.loginPage2 .page-content .loginBox .loginActions .loginBtn i { margin-right: .375rem; }
+
+.loginPage2 .page-content .loginBox .loginActions .loginDivider {
+  text-align: center;
+  width: 100%;
+  margin: .625rem 0;
+}
+
+.loginPage2 .page-content .loginBox .loginActions .googleBtn {
+  background-color: rgb(255, 255, 255);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: rgba(0, 0, 0, 0.54);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  padding: 0px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Roboto, sans-serif;
+  height: 40px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: .25rem !important;
+}
+
+.loginPage2 .page-content .loginBox .loginActions .googleBtn > div {
+  margin-right: .5rem !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  height: 18px !important;
+}
+
+.loginPage2 .page-content .loginBox .loginFooter {
+  margin: 0;
+  text-align: center;
+  padding-top: 3rem;
+  color: #8d8d8d;
+}
+
+/* end of loginpage2 */
+
 .animatedWave {
   width: 2000px;
   height: 2025px;
@@ -1674,6 +1819,14 @@
   border-radius: 50%;
   bottom: -240%;
   left: -50%;
+}
+
+.animatedWave.wave--3 {
+  -webkit-animation: wave 20s infinite linear;
+  animation: wave 20s infinite linear;
+  border-radius: 50%;
+  bottom: -240%;
+  top: 40%;
 }
 
 @-webkit-keyframes wave {
@@ -2031,4 +2184,26 @@
     display: block;
     font-size: 12px;
   }
+}
+
+.judul-jalur{
+  padding: 5px;
+  min-height: 10px;
+  text-align: center;
+  /* width: 100%; */
+  display: block;
+}
+
+.no-urut{
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.menu-saring-urut .menu-item-content .icon {
+  margin-left: 4px;
+}
+
+.menu-pendaftar .menu-inner {
+  display: inline-flex;
+  text-align: right;
 }

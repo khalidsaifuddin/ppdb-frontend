@@ -194,13 +194,14 @@ class login extends Component {
 
   render() {
     return (
-      <Page className="loginPage" name="RaporDapodik" hideBarsOnScroll>
+      <Page className={localStorage.getItem('tema_warna') === 'ungu-terong' ? "loginPage" : "loginPage2"} name="RaporDapodik" hideBarsOnScroll>
         {this.state.loading &&
           <Progressbar className="loginProgress" infinite color="blue" />
         }
         <Block className="loginBox">
           <div className="logoApp">
-            <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
+            <img src={localStorage.getItem('logo_wilayah')} height="25" alt={localStorage.getItem('sub_judul_aplikasi')} />
+            {/* <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" /> */}
             <LoginScreenTitle>{localStorage.getItem('judul_aplikasi')}</LoginScreenTitle>
           </div>
           <List form>
@@ -261,7 +262,13 @@ class login extends Component {
             >
               Login sebagai sekolah
             </Button> */}
-            <p className="loginFooter">Disdik Kabupaten Lumajang ©2020</p>
+            <p className="loginFooter">{localStorage.getItem('sub_judul_aplikasi')} ©2020</p>
+            <br/>
+            <p style={{textAlign:'center', marginBottom:'-20px', fontSize:'10px'}}>
+              Didukung oleh
+              <br/>
+              <img src="static/images/ppdblite_logo.png" height="25" />
+            </p>
           </div>
         </Block>
         <div className="animatedWave wave--1"></div>

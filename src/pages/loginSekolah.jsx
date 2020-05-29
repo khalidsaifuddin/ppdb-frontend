@@ -125,35 +125,72 @@ class loginSekolah extends Component {
     this.setState({
       loading: true,
     }, ()=> {
-      this.props.login(this.state.routeParams).then((result)=> {
-        this.setState({
-          loading: false,
-        }, ()=> {
-            if(typeof(result.payload.token) !== 'undefined') {
-              localStorage.setItem('token', result.payload.token);
-              localStorage.setItem('user', JSON.stringify(result.payload.user));
+
+      this.setState({
+        routeParams: {
+          ...this.state.routeParams,
+          tampil_koreg: 1
+        }
+      },()=>{
+        this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
+          // console.log(this.props.ppdb_sekolah);
+
+          if(this.props.ppdb_sekolah.count > 0){
+            //sekolah ditemukan
+            
+            if(this.props.ppdb_sekolah.rows[0].koreg === '1'){
+              //koreg sesuai
+              // this.$f7.dialog.alert("Sekolah tidak ditemukan! Mohon masukkan NPSN sekolah yang sesuai!", 'Peringatan');
+              // localStorage.setItem('token', result.payload.token);
+              localStorage.setItem('user', JSON.stringify(this.props.ppdb_sekolah.rows[0]));
               localStorage.setItem('sudah_login',  '1');
 
-              this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil');
-              
-              let params = {
-                nama: JSON.parse(localStorage.getItem('user')).nama,
-                id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-              };
-              
-              socket.emit('login', params, (err) => {
-                if (err) {}
-              });
+              this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil')
               
               window.location.href=localStorage.getItem('root_base');
-              // window.location.href="/";
-            } else {
-              localStorage.setItem('sudah_login',  '0');
-
-              this.$f7.dialog.alert(result.payload.error, 'Peringatan');
+              
+            }else{
+              //koreg tidak sesuai
+              this.$f7.dialog.alert("Kode registrasi tidaks sesuai!", 'Peringatan');
             }
-        })
+
+          }else{
+            //sekolah tidak ditemukan
+            this.$f7.dialog.alert("Sekolah tidak ditemukan! Mohon masukkan NPSN sekolah yang sesuai!", 'Peringatan');
+          }
+        });
       });
+      // this.props.login(this.state.routeParams).then((result)=> {
+      //   this.setState({
+      //     loading: false,
+      //   }, ()=> {
+      //       if(typeof(result.payload.token) !== 'undefined') {
+      //         localStorage.setItem('token', result.payload.token);
+      //         localStorage.setItem('user', JSON.stringify(result.payload.user));
+      //         localStorage.setItem('sudah_login',  '1');
+
+      //         this.$f7.dialog.alert('Selamat datang, '+JSON.parse(localStorage.getItem('user')).nama, 'Berhasil');
+              
+      //         let params = {
+      //           nama: JSON.parse(localStorage.getItem('user')).nama,
+      //           id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+      //         };
+              
+      //         socket.emit('login', params, (err) => {
+      //           if (err) {}
+      //         });
+              
+      //         window.location.href=localStorage.getItem('root_base');
+      //         // window.location.href="/";
+      //       } else {
+      //         localStorage.setItem('sudah_login',  '0');
+
+      //         this.$f7.dialog.alert(result.payload.error, 'Peringatan');
+      //       }
+      //   })
+      // });
+
+
     });
   }
 
@@ -185,7 +222,7 @@ class loginSekolah extends Component {
               name="kode_registrasi"
               disabled={(this.state.loading ? true : false)}
               placeholder="Masukkan Kode Registrasi Dapodik..."
-              value={this.state.routeParams.password}
+              value={this.state.routeParams.koreg}
               onInput={(e) => this.setState({routeParams:{...this.state.routeParams,koreg: e.target.value}})}
             />
           </List>
@@ -205,6 +242,7 @@ class loginSekolah extends Component {
         </Block>
         <div className="animatedWave wave--1"></div>
         <div className="animatedWave wave--2"></div>
+        <div className="animatedWave wave--3"></div>
       </Page>
     )
   }
@@ -218,15 +256,17 @@ function mapDispatchToProps(dispatch) {
     login: Actions.login,
     getPengguna: Actions.getPengguna,
     buatPengguna: Actions.buatPengguna,
+    getPPDBSekolah: Actions.getPPDBSekolah
   }, dispatch);
 }
 
-function mapStateToProps({ App }) {
+function mapStateToProps({ App, PPDBSekolah }) {
   return {
     window_dimension: App.window_dimension,
     loading: App.loading,
     tabBar: App.tabBar,
     pengguna: App.pengguna,
+    ppdb_sekolah: PPDBSekolah.ppdb_sekolah
   }
 }
 

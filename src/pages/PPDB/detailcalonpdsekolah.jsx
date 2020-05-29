@@ -31,6 +31,8 @@ class DetailcalonpdSekolah extends Component {
       loading: false,
       routeParams:{
         searchText: '',
+        kode_wilayah: (localStorage.getItem('kode_wilayah_aplikasi') ? localStorage.getItem('kode_wilayah_aplikasi') : null),
+        id_level_wilayah: (localStorage.getItem('id_level_wilayah_aplikasi') ? localStorage.getItem('id_level_wilayah_aplikasi') : null)
       },
       activePage: 1,
       start: 0,

@@ -29,6 +29,7 @@ import JadwalKegiatan from '../pages/PPDB/jadwalKegiatan';
 import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 import loginSekolah from '../pages/loginSekolah';
 import loginDinas from '../pages/loginDinas';
+import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidikSekolah';
 
 var routes = [
   {
@@ -105,7 +106,7 @@ var routes = [
   },
   {
     path: '/login',
-    component: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? login : (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? loginDinas : loginSekolah)),
+    component: (localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' ? loginSekolah : (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? loginDinas : login)),
   },
   {
     path: '/login/:jenis',
@@ -118,6 +119,10 @@ var routes = [
   {
     path: '/petaPD/:peserta_didik_id/:lintang/:bujur',
     component: petaPD,
+  },
+  {
+    path: '/DaftarCalonPesertaDidikSekolah',
+    component: DaftarCalonPesertaDidikSekolah
   },
   {
     path: '/ProfilPengguna',

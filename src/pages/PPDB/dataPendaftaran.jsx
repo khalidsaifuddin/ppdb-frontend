@@ -61,6 +61,7 @@ class DaftarPendaftaran extends Component {
     routeParams:{
         pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
         // pantauan: 1
+        sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),
         keyword : '',
         start: 0,
         limit: 10

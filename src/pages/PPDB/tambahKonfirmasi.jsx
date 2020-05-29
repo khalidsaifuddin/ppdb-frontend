@@ -180,39 +180,13 @@ class tambahKonfirmasi extends Component {
                     });
                     return false;
                 }
-            }
-    
-            this.props.validasiBerkas(this.state.routeParams).then((result)=>{
-    
-                console.log(this.props.validasi_berkas);
-    
-                if(this.props.validasi_berkas.count < 1){
-                    //datanya nggak ada
-                    this.$f7.dialog.alert('Mohon lengkapi berkas persyaratan sebelum melakukan konfirmasi!','Peringatan');
-                    this.setState({
-                        ...this.state,
-                        disableButton: false
-                    });
-                    return false;
-                }else{
-                    //datanya ada
-                    let totalValidasi = 0;
-                    let yangHarus = 0;
-                    this.props.validasi_berkas.rows.map((option)=>{
-                        if(parseInt(option.wajib) === 1){
-                            yangHarus++;
-                            
-                            if(option.nama_file){
-                                totalValidasi++;
-                            }
-                        }
 
-                    });
-    
-                    console.log(totalValidasi);
-                    
-                    if(totalValidasi < yangHarus){
-                        //belum lengkap
+                this.props.validasiBerkas(this.state.routeParams).then((result)=>{
+        
+                    console.log(this.props.validasi_berkas);
+        
+                    if(this.props.validasi_berkas.count < 1){
+                        //datanya nggak ada
                         this.$f7.dialog.alert('Mohon lengkapi berkas persyaratan sebelum melakukan konfirmasi!','Peringatan');
                         this.setState({
                             ...this.state,
@@ -220,48 +194,107 @@ class tambahKonfirmasi extends Component {
                         });
                         return false;
                     }else{
-                        //sudah lengkap
-                        // console.log('sudah lengkap');
-                        this.$f7.dialog.confirm('Apakah Anda yakin ingin konfirmasi?','Konfirmasi',()=>{
-
-                            this.setState({
-                                routeParams:{
-                                    status: status,
-                                    pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-                                    calon_peserta_didik_id: this.state.calon_peserta_didik.calon_peserta_didik_id
+                        //datanya ada
+                        let totalValidasi = 0;
+                        let yangHarus = 0;
+                        this.props.validasi_berkas.rows.map((option)=>{
+                            if(parseInt(option.wajib) === 1){
+                                yangHarus++;
+                                
+                                if(option.nama_file){
+                                    totalValidasi++;
                                 }
-                            },()=>{
-                                this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
-                                    if(parseInt(this.state.routeParams.status) === 1){
-                                        //konfirmasi
-                                        this.setState({
-                                            ...this.state,
-                                            disableButton: false
-                                        });
-                                        this.$f7router.navigate("/Daftar/");
-                                    }else{
-                                        //simpan draft
-                                        this.setState({
-                                            ...this.state,
-                                            disableButton: false
-                                        });
-                                        this.$f7router.navigate("/Daftar/");
-                                    }
-                                });
-                            });
-                            
-                        },()=>{
+                            }
+    
+                        });
+        
+                        console.log(totalValidasi);
+                        
+                        if(totalValidasi < yangHarus){
+                            //belum lengkap
+                            this.$f7.dialog.alert('Mohon lengkapi berkas persyaratan sebelum melakukan konfirmasi!','Peringatan');
                             this.setState({
                                 ...this.state,
                                 disableButton: false
                             });
-                        });
-
+                            return false;
+                        }else{
+                            //sudah lengkap
+                            // console.log('sudah lengkap');
+                            this.$f7.dialog.confirm('Apakah Anda yakin ingin konfirmasi?','Konfirmasi',()=>{
+    
+                                this.setState({
+                                    routeParams:{
+                                        status: status,
+                                        pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+                                        calon_peserta_didik_id: this.state.calon_peserta_didik.calon_peserta_didik_id
+                                    }
+                                },()=>{
+                                    this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
+                                        if(parseInt(this.state.routeParams.status) === 1){
+                                            //konfirmasi
+                                            this.setState({
+                                                ...this.state,
+                                                disableButton: false
+                                            });
+                                            this.$f7router.navigate("/Daftar/");
+                                        }else{
+                                            //simpan draft
+                                            this.setState({
+                                                ...this.state,
+                                                disableButton: false
+                                            });
+                                            this.$f7router.navigate("/Daftar/");
+                                        }
+                                    });
+                                });
+                                
+                            },()=>{
+                                this.setState({
+                                    ...this.state,
+                                    disableButton: false
+                                });
+                            });
+    
+                        }
+        
                     }
+        
+                });
+
+            }else{
+
+                // simpan draft
+                this.setState({
+                    routeParams:{
+                        status: status,
+                        pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+                        calon_peserta_didik_id: this.state.calon_peserta_didik.calon_peserta_didik_id
+                    }
+                },()=>{
+                    
+                    this.props.simpanKonfirmasiPendaftaran(this.state.routeParams).then((result)=>{
+                        if(parseInt(this.state.routeParams.status) === 1){
+                            //konfirmasi
+                            this.setState({
+                                ...this.state,
+                                disableButton: false
+                            });
+                            this.$f7router.navigate("/Daftar/");
+                        }else{
+                            //simpan draft
+                            this.setState({
+                                ...this.state,
+                                disableButton: false
+                            });
+                            this.$f7router.navigate("/Daftar/");
+                        }
+                    });
+                });
+
+
+            }
     
-                }
-    
-            });
 
         });
 
