@@ -2207,3 +2207,14 @@
   display: inline-flex;
   text-align: right;
 }
+
+.bg-beranda-chart {
+  margin: 5px;
+  text-align: center;
+  align-items: center;
+}
+
+.table-beranda table thead tr td, .table-beranda table tbody tr td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

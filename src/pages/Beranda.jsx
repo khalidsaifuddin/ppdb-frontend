@@ -23,6 +23,8 @@ import { connect } from 'react-redux';
 import * as Actions from '../store/actions';
 import io from 'socket.io-client';
 import PPDBPesertaDidikReducer from '../store/reducers/PPDB/PesertaDidik.reducers';
+import BerandaDinas from './berandaWidget/beranda-dinas';
+import BerandaSekolah from './berandaWidget/beranda-sekolah';
 
 const bulan = [
   'Januari',
@@ -191,42 +193,14 @@ class Beranda extends Component {
             <h6>{localStorage.getItem('sub_judul_aplikasi')}</h6>
           </div>
           {localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
-          // <Block className="gridMenu">
-          <Row noGap>
-            <Col width="50" tabletWidth="25">
-              <Card style={{minWidth:'200px'}}>
-                <CardContent style={{textAlign:'center'}}>
-                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.total ? this.formatAngka(this.state.rekap_total.total) : '0'}</b><br/>
-                  Pendaftar
-                </CardContent>
-              </Card>
-            </Col>
-            <Col width="50" tabletWidth="25">
-              <Card style={{minWidth:'200px'}}>
-                <CardContent style={{textAlign:'center'}}>
-                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.berkas_valid ? this.formatAngka(this.state.rekap_total.berkas_valid) : '0'}</b><br/>
-                  Pendaftar Berkas Lengkap
-                </CardContent>
-              </Card>
-            </Col>
-            <Col width="50" tabletWidth="25">
-              <Card style={{minWidth:'200px'}}>
-                <CardContent style={{textAlign:'center'}}>
-                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.konfirmasi ? this.formatAngka(this.state.rekap_total.konfirmasi) : '0'}</b><br/>
-                  Pendaftar Terkonfirmasi
-                </CardContent>
-              </Card>
-            </Col>
-            <Col width="50" tabletWidth="25">
-              <Card style={{minWidth:'200px'}}>
-                <CardContent style={{textAlign:'center'}}>
-                  <b style={{fontSize:'30px'}}>{this.state.rekap_total.diterima ? this.formatAngka(this.state.rekap_total.diterima) : '0'}</b><br/>
-                  Pendaftar Diterima
-                </CardContent>
-              </Card>
-            </Col>
-          </Row>
-          // </Block>
+            <>
+              <BerandaDinas rekap_total={this.state}/>
+            </>
+          }
+          {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+            <>
+              <BerandaSekolah/>
+            </>
           }
           {localStorage.getItem('kode_aplikasi') === 'PPDB' &&
           <Block className="gridMenu">
