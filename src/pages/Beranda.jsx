@@ -161,7 +161,7 @@ class Beranda extends Component {
     const { jkBeranda } = this.props;
 
     return (
-      <Page name="Beranda" hideBarsOnScroll className="utamanya" style={{background:'url(static/images/paper.png)', backgroundAttachment:'fixed'}}>
+      <Page name="Beranda" hideBarsOnScroll>
         {localStorage.getItem('sudah_login') === '1' &&
           <Navbar 
             sliding={false} 
