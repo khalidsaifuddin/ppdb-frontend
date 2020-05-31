@@ -9,6 +9,7 @@ import PPDBPesertaDidik from './PPDB/PesertaDidik.reducers';
 import PPDBSekolah from './PPDB/Sekolah.reducers';
 import DaftarPendaftaran from './PPDB/daftarPendaftaran.reducers';
 import JadwalKegiatan from './PPDB/jadwalKegiatan.reducers';
+import Beranda from './PPDB/beranda.reducers';
 
 const rootReducer = combineReducers({
     App,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     PPDBPesertaDidik,
     PPDBSekolah,
     DaftarPendaftaran,
-    JadwalKegiatan
+    JadwalKegiatan,
+    Beranda
 });
 
 export default rootReducer;
