@@ -2207,3 +2207,235 @@
   display: inline-flex;
   text-align: right;
 }
+
+.bg-beranda-chart {
+  margin: 5px;
+  text-align: center;
+  align-items: center;
+}
+
+.table-beranda table thead tr td, 
+.table-beranda table tbody tr td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.dashboardService {
+  margin-top: 15px;
+  position: relative;
+}
+
+.dashboardService .serviceWidgets {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.dashboardService .serviceItem {
+  display: block;
+  text-decoration: none;
+  margin: 4px;
+  border-top: 3px solid #ffffff1f;
+}
+
+.dashboardService .serviceItem .card-content {
+  position: relative;
+  display: block;
+}
+
+.dashboardService .serviceItem .card-content h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 2rem;
+  padding: 1rem;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.dashboardService .serviceItem .card-content h2 span {
+  display: block;
+  font-size: .875rem;
+  font-weight: 400; 
+}
+
+.dashboardService .serviceItem .card-content .link {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 15px 15px;
+  font-size: .75rem;
+  color: #ffffff;
+  opacity: .75;
+}
+
+.dashboardService .serviceRecap {
+  margin: 4px 4px 8px;
+  display: block;
+}
+
+.dashboardService .serviceRecap .card-content {
+  position: relative;
+  display: flex;
+  padding: 12px 15px;
+}
+
+.dashboardService .serviceRecap .card-content .serviceChart {
+  max-width: 128px;
+  min-width: 128px;
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin-right: 15px;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc {
+  width: 100%;
+  position: relative;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc h4 {
+  margin: 0 0 8px;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc p {
+  margin: 0;
+  display: flex;
+  font-size: .8125rem;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc p span {
+  position: relative;
+  min-width: 80px;
+  display: block;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc p span::after {
+  content: ':';
+  position: absolute;
+  top: 0;
+  right: 5px;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .eventList {
+  position: relative;
+  display: block;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .eventList .eventItem {
+  display: flex;
+  width: 100%;
+  margin-bottom: .5rem;
+  position: relative;
+  color: #242424;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .eventList .eventItem h5 {
+  font-size: .875rem;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  padding-left: 35px;
+  min-height: 26px;
+  align-items: center;
+  font-weight: 400;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .eventList .eventItem h5 i {
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  background-color: #0b83e2;
+  color: #fff;
+  border-radius: .25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .eventList .eventItem h5 span {
+  font-weight: 600;
+  display: block;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .documentList {
+  position: relative;
+  display: block;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .documentList .documentItem {
+  display: flex;
+  width: 100%;
+  margin-bottom: .5rem;
+  position: relative;
+  color: #242424;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .documentList .documentItem h5 {
+  font-size: .875rem;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  padding-left: 35px;
+  min-height: 26px;
+  align-items: center;
+  font-weight: 400;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .documentList .documentItem h5 i {
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  background-color: #ff3b30;
+  color: #fff;
+  border-radius: .25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.dashboardService .serviceRecap .card-content .serviceDesc .documentList .documentItem h5 span {
+  height: 26px;
+  background-color: #ff3b30;
+  padding: 0 .75rem;
+  display: block;
+  line-height: 26px;
+  border-radius: .25rem;
+  color: #fff;
+}
+
+.dashboardService .serviceRecap .card-content .data-table {
+  position: relative;
+  width: 100%;
+}
+
+.dashboardService .serviceRecap .card-content .data-table tbody tr:last-child {
+  background-color: #f4f4f4;
+  font-weight: 700;
+}
+
+.dashboardService .serviceRecap .card-content .data-table tr td {
+  padding: 4px 15px;
+  font-size: .8125rem;
+}
+
+.dashboardService .serviceRecap .card-footer {
+  background-color: #ff9500db;
+  min-height: auto;
+  padding: 7px 15px;
+}
+
+.dashboardService .serviceRecap .card-footer .laneUpdate {
+  margin: 0;
+  font-size: .8125rem;
+  color: #fff;
+  display: block;
+  text-align: center;
+  width: 100%;
+}

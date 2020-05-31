@@ -157,7 +157,7 @@ class DetailcalonpdSekolah extends Component {
                     {/* <img src={"http://foto.data.kemdikbud.go.id/getImage/" + "option.npsn" + "/1.jpg"}></img>  */}
                   </div>
                   <div className="tentangSekolah">
-                    <Link href={"/ProfilSekolah/"+"sekolah_id"}>
+                    <Link href={"/detailCalonpdSekolah/"+"sekolah_id"}>
                       <h3>
                         <span>{"option.nama"}</span>
                         <b>({"option.npsn"})</b>
@@ -223,7 +223,7 @@ class DetailcalonpdSekolah extends Component {
                     <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}></img> 
                   </div>
                   <div className="tentangSekolah">
-                    <Link href={"/ProfilSekolah/"+"sekolah_id"}>
+                    <Link href={"/detailCalonpdSekolah/"+option.sekolah_id}>
                       <h3>
                         <span>{option.nama}</span>
                         <b>({option.npsn})</b>

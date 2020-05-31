@@ -8,3 +8,4 @@ export * from './PPDB/PesertaDidik.actions';
 export * from './PPDB/Sekolah.actions';
 export * from './PPDB/daftarPendaftaranactions.';
 export * from './PPDB/jadwalKegiatan.actions';
+export * from './PPDB/beranda.actions';
