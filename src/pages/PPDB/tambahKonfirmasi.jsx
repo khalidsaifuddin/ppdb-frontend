@@ -15,6 +15,7 @@ class tambahKonfirmasi extends Component {
     state = {
         error: null,
         loading: false,
+        displayOnly: this.$f7route.params['displayOnly'] ? this.$f7route.params['displayOnly'] : null,
         routeParams:{
             pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
@@ -311,9 +312,9 @@ class tambahKonfirmasi extends Component {
             <Page name="tambahKonfirmasi" hideBarsOnScroll>
                 <Navbar sliding={false}>
                 {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
-                    <NavTitle sliding>Tambah Peserta Didik</NavTitle>
+                    <NavTitle sliding>{this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}</NavTitle>
                     <NavTitleLarge>
-                        Tambah Peserta Didik
+                        {this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}
                     </NavTitleLarge>
                 </Navbar>
                 {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
@@ -324,13 +325,20 @@ class tambahKonfirmasi extends Component {
                 </Segmented> */}
                 <Block className="pageWithTitle">
                     <Segmented className="steps" raised>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Identitas Peserta Didik</Button>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Jalur dan Pilihan Sekolah</Button>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahBerkas/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Kelengkapan Berkas</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Identitas Peserta Didik</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Jalur dan Pilihan Sekolah</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahBerkas/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Kelengkapan Berkas</Button>
                         <Button tabLinkActive>Konfirmasi</Button>
                     </Segmented>
+                    {this.state.displayOnly !== null &&
+                    <>
+                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp;Verifikasi
+                    </Button>
+                    <br/>
+                    </>
+                    }
                 </Block>
-
                 <Row noGap>
                     <Col width="100" tabletWidth="100">
                         <Card>
@@ -358,7 +366,7 @@ class tambahKonfirmasi extends Component {
                                     <b>{this.state.calon_peserta_didik.nama_pengguna}</b>
                                 </div>
                                 <hr/>
-
+                                {this.state.displayOnly === null &&
                                 <i style={{fontSize:'10px'}}>
                                     Keterangan:
                                     <ul>
@@ -376,7 +384,9 @@ class tambahKonfirmasi extends Component {
                                         </li>
                                     </ul>
                                 </i>
+                                }
 
+                                {this.state.displayOnly === null &&
                                 <Row>
                                     <Col width="50" style={{padding:'16px'}}>
                                         <Button raised fill onClick={()=>this.simpanKonfirmasi("1")} disabled={this.state.disableButton}>
@@ -405,6 +415,7 @@ class tambahKonfirmasi extends Component {
                                         </Card>
                                     </Col>
                                 </Row>
+                                }
                             </CardContent>
                         </Card>
                     </Col>

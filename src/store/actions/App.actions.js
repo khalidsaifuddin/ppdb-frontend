@@ -23,6 +23,8 @@ export const GET_GEOJSON_BASIC = '[APP] GET GEOJSON BASIC';
 export const GET_WILAYAH_KLIEN = '[APP] GET WILAYAH_KLIEN';
 export const GET_BERKAS_JALUR = '[APP] GET BERKAS JALUR';
 export const GEOCODE = '[APP] GEOCODE';
+export const SET_PENDAFTAR = '[APP] SET PENDAFTAR';
+export const SET_CALON = '[APP] SET CALON';
 
 export function updateWindowDimension()
 {
@@ -357,4 +359,26 @@ export function getGeocode(routeParams)
                 routeParams
             })
         );
+}
+
+export function setPendaftar(string)
+{
+    
+    return (dispatch) => {
+        return dispatch ({
+            type: SET_PENDAFTAR,
+            pendaftar: string
+        })
+    }
+}
+
+export function setCalon(string)
+{
+    
+    return (dispatch) => {
+        return dispatch ({
+            type: SET_CALON,
+            calon: string
+        })
+    }
 }

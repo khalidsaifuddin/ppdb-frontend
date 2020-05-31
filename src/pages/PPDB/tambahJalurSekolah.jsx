@@ -13,6 +13,7 @@ class tambahJalurSekolah extends Component {
     state = {
         error: null,
         loading: false,
+        displayOnly: this.$f7route.params['displayOnly'] ? this.$f7route.params['displayOnly'] : null,
         routeParams:{
             pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
@@ -20,7 +21,10 @@ class tambahJalurSekolah extends Component {
             kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
             id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
             start: 0,
-            limit: 10
+            limit: 10,
+            pilihan_sekolah: [{
+                jalur: '-'
+            }]
         },
         start: 0,
         limit: 10,
@@ -146,11 +150,13 @@ class tambahJalurSekolah extends Component {
                                                         Jarak<br/>
                                                         <b style={{fontSize:'25px', color:'#434343'}}>{parseFloat(option.jarak).toFixed(1)}</b> KM
                                                     </Col>
+                                                    {this.state.displayOnly === null &&
                                                     <Col width="15">
                                                         <Button style={{marginLeft:'8px'}} raised fill onClick={()=>this.hapusPilihanSekolah(option.sekolah_id)}>
                                                             Hapus
                                                         </Button>
                                                     </Col>
+                                                    }
                                                 </Row>
                                             </CardContent>
                                         </Card>)
@@ -161,7 +167,8 @@ class tambahJalurSekolah extends Component {
                                     routeParams: {
                                         ...this.state.routeParams,
                                         // pilihan_sekolah: this.props.sekolah_pilihan.rows,
-                                        jalur_id: this.props.sekolah_pilihan.rows[0].jalur_id
+                                        jalur_id: this.props.sekolah_pilihan.rows[0].jalur_id,
+                                        jalur: this.props.sekolah_pilihan.rows[0].jalur
                                     },
                                     objSekolahPilihan: this.props.sekolah_pilihan.rows,
                                     sekuen_sekolah_pilihan: this.props.sekolah_pilihan.count,
@@ -186,6 +193,7 @@ class tambahJalurSekolah extends Component {
                                     )
                                 },()=>{
                                     console.log(this.state.arrSekolahPilihan);
+                                    console.log(this.state.routeParams);
                                 });
 
                             }else{
@@ -516,9 +524,9 @@ class tambahJalurSekolah extends Component {
             <Page name="tambahJalurSekolah" hideBarsOnScroll>
                 <Navbar sliding={false}>
                 {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
-                    <NavTitle sliding>Tambah Peserta Didik</NavTitle>
+                    <NavTitle sliding>{this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}</NavTitle>
                     <NavTitleLarge>
-                        Tambah Peserta Didik
+                        {this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}
                     </NavTitleLarge>
                 </Navbar>
                 {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
@@ -529,13 +537,20 @@ class tambahJalurSekolah extends Component {
                 </Segmented> */}
                 <Block className="pageWithTitle">
                     <Segmented className="steps" raised>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Identitas Peserta Didik</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Identitas Peserta Didik</Button>
                         <Button tabLinkActive>Jalur dan Pilihan Sekolah</Button>
-                        <Button disabled>Kelengkapan Berkas</Button>
-                        <Button disabled>Konfirmasi</Button>
+                        <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahBerkas/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/"+this.state.routeParams.jalur_id+"/displayOnly")}>Kelengkapan Berkas</Button>
+                        <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahKonfirmasi/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/displayOnly")}>Konfirmasi</Button>
                     </Segmented>
+                    {this.state.displayOnly !== null &&
+                    <>
+                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp;Verifikasi
+                    </Button>
+                    <br/>
+                    </>
+                    }
                 </Block>
-
                 <Row noGap>
                     <Col width="100" tabletWidth="100">
                         <Card>
@@ -543,9 +558,14 @@ class tambahJalurSekolah extends Component {
                                 Jalur Pendaftaran
                             </CardHeader> */}
                             <CardContent>
+                                {this.state.displayOnly === null &&
                                 <List>
                                 {this.state.smartSelectJalur}
                                 </List>
+                                }
+                                {this.state.displayOnly !== null &&
+                                <h1 style={{marginTop:'0px', marginBottom:'0px'}}>Jalur {this.state.routeParams.jalur}</h1>
+                                }
                             </CardContent>
                         </Card>
                     </Col>
@@ -555,9 +575,11 @@ class tambahJalurSekolah extends Component {
                                 Pilihan Sekolah
                             </CardHeader>
                             <CardContent>
+                                {this.state.displayOnly === null &&
                                 <Button raised fill large style={{width:'100%', maxWidth:'250px', margin:'auto'}} onClick={this.tambahSekolahPilihan}>
                                     Tambah Sekolah Pilihan
                                 </Button>
+                                }
                                 <div style={{borderTop:'1px solid #eee', marginTop:'8px'}}>
                                     {/* <List>
 
@@ -569,11 +591,13 @@ class tambahJalurSekolah extends Component {
                             </CardContent>
                         </Card>
                     </Col>
+                    {this.state.displayOnly === null &&
                     <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
                         <Button disabled={this.state.disabledInput} raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
                             {this.state.disabledInput && <Preloader color="white"></Preloader>} Simpan dan Lanjutkan
                         </Button>
                     </Col>
+                    }
                 </Row>
                 <Sheet backdrop opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'70%'}}>
                 <Toolbar>

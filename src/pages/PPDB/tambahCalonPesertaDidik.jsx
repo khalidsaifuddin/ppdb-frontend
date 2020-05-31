@@ -41,6 +41,7 @@ class tambahCalonPesertaDidik extends Component {
     this.state = {
       error: null,
       loading: false,
+      displayOnly: this.$f7route.params['displayOnly'] ? this.$f7route.params['displayOnly'] : null,
       routeParams:{
         pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
         // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
@@ -150,7 +151,7 @@ class tambahCalonPesertaDidik extends Component {
               // lintang: (this.state.lintang ? this.state.lintang : this.props.calon_peserta_didik.rows[0].lintang),
               // bujur: (this.state.bujur ? this.state.bujur : this.props.calon_peserta_didik.rows[0].bujur),
             },
-            disabledInput: false,
+            disabledInput: (this.state.displayOnly === null ? false : true),
             sekolah_terpilih: this.props.calon_peserta_didik.rows[0].sekolah_asal
           }, ()=> {
             // console.log(this.state.sekolah_terpilih);
@@ -326,7 +327,7 @@ class tambahCalonPesertaDidik extends Component {
             this.setState({
               ...this.state,
               loading:false,
-              disabledInput: false,
+              disabledInput: (this.state.displayOnly === null ? false : true),
             });
           }
         });
@@ -434,7 +435,7 @@ class tambahCalonPesertaDidik extends Component {
           });
         } else {
           this.setState({
-            disabledInput: false,
+            disabledInput: (this.state.displayOnly === null ? false : true),
             labelNik: 'NIK valid dan dapat didaftarkan',
           });
         }
@@ -457,7 +458,7 @@ class tambahCalonPesertaDidik extends Component {
           });
         } else {
           this.setState({
-            disabledInput: false,
+            disabledInput: (this.state.displayOnly === null ? false : true),
             labelNISN: 'NISN valid dan dapat didaftarkan',
           });
         }
@@ -498,18 +499,28 @@ class tambahCalonPesertaDidik extends Component {
     return (
       <Page name="tambahCalonPesertaDidik" hideBarsOnScroll>
         <Navbar sliding={false} backLink="Kembali">
-          <NavTitle sliding>Tambah Peserta Didik</NavTitle>
+          {/* <NavTitle sliding>Verifikasi Calon Peserta Didik</NavTitle> */}
+          <NavTitle sliding>{this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}</NavTitle>
           <NavTitleLarge>
-            Tambah Peserta Didik
+            {/* Verifikasi Calon Peserta Didik */}
+            {this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}
           </NavTitleLarge>
         </Navbar>
         <Block className="pageWithTitle">
           <Segmented className="steps" raised>
             <Button tabLinkActive>Identitas Peserta Didik</Button>
-            <Button disabled>Jalur dan Pilihan Sekolah</Button>
-            <Button disabled>Kelengkapan Berkas</Button>
-            <Button disabled>Konfirmasi</Button>
+            <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/displayOnly")}>Jalur dan Pilihan Sekolah</Button>
+            <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahBerkas/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/"+this.state.routeParams.jalur_id+"/displayOnly")}>Kelengkapan Berkas</Button>
+            <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahKonfirmasi/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/displayOnly")}>Konfirmasi</Button>
           </Segmented>
+          {this.state.displayOnly !== null &&
+          <>
+          <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+            &nbsp;Verifikasi
+          </Button>
+          <br/>
+          </>
+          }
           <Row>
             <Col width="100" tabletWidth="50">
               <Card noShadow noBorder>
@@ -523,7 +534,7 @@ class tambahCalonPesertaDidik extends Component {
                       label="Nomor Induk Kependudukan / NIK"
                       type="number"
                       placeholder="Ketikkan NIK dan enter..."
-                      clearButton
+                      clearButton={(this.state.displayOnly === null ? true : false)}
                       onChange={this.setFieldValue('nik')}
                       onBlur={this.cekNik}
                       pattern="[0-9]*"
@@ -531,11 +542,16 @@ class tambahCalonPesertaDidik extends Component {
                       data-error-message="Mohon hanya masukkan Angka!"
                       defaultValue={this.state.routeParams.nik}
                       data-validate-on-blur="true"
+                      disabled={(this.state.displayOnly === null ? false : true)}
                     >
+                      {this.state.displayOnly === null &&
                       <span slot="info"><b style={{color:(this.state.disabledInput ? 'red' : 'green')}}>{this.state.labelNik}</b></span>
+                      }
+                      {this.state.displayOnly === null &&
                       <Button raised fill small slot="inner" className="checkBtn" color="orange" onClick={this.cekNikEnter}>
                         Cek NIK
                       </Button>
+                      }
                     </ListInput>
                     <ListInput
                       className="inputNumber inputNisn"
@@ -543,23 +559,25 @@ class tambahCalonPesertaDidik extends Component {
                       type="number"
                       placeholder="NISN Calon Peserta Didik..."
                       info="Sesuai Ijazah"
-                      clearButton
+                      clearButton={(this.state.displayOnly === null ? true : false)}
                       onChange={this.setFieldValue('nisn')}
                       data-error-message="Mohon masukkan NISN dengan benar!"
                       defaultValue={this.state.routeParams.nisn}
                       disabled={this.state.disabledInput}
                       data-validate-on-blur="true"
                     >
+                      {this.state.displayOnly === null &&
                       <Button raised fill small slot="inner" className="checkBtn" color="orange" onClick={this.cekNisnEnter}>
                         Cek NISN
                       </Button>
+                      }
                     </ListInput>
                     <ListInput
                       label="Nama Calon Peserta Didik"
                       type="text"
                       placeholder="Nama Calon Peserta Didik..."
                       info="Sesuai Ijazah"
-                      clearButton
+                      clearButton={(this.state.displayOnly === null ? true : false)}
                       onChange={this.setFieldValue('nama')}
                       defaultValue={this.state.routeParams.nama}
                       disabled={this.state.disabledInput}
@@ -588,7 +606,7 @@ class tambahCalonPesertaDidik extends Component {
                       label="Tempat Lahir"
                       type="text"
                       placeholder="Tempat Lahir..."
-                      clearButton
+                      clearButton={(this.state.displayOnly === null ? true : false)}
                       onChange={this.setFieldValue('tempat_lahir')}
                       defaultValue={this.state.routeParams.tempat_lahir}
                       disabled={this.state.disabledInput}
@@ -607,7 +625,7 @@ class tambahCalonPesertaDidik extends Component {
                       type="textarea"
                       placeholder="Alamat Tempat Tinggal ..."
                       info="Sesuai dengan kartu keluarga (KK)"
-                      clearButton
+                      clearButton={(this.state.displayOnly === null ? true : false)}
                       onChange={this.setFieldValue('alamat_tempat_tinggal')}
                       defaultValue={this.state.routeParams.alamat_tempat_tinggal}
                       disabled={this.state.disabledInput}
@@ -767,7 +785,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="text"
                         disabled={this.state.disabledInput}
                         placeholder="Nama Ayah..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         onChange={this.setFieldValue('nama_ayah')}
                         defaultValue={this.state.routeParams.nama_ayah}
                       />
@@ -778,7 +796,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="text"
                         disabled={this.state.disabledInput}
                         placeholder="Tempat Lahir Ayah..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         onChange={this.setFieldValue('tempat_lahir_ayah')}
                         defaultValue={this.state.routeParams.tempat_lahir_ayah}
                       />
@@ -838,7 +856,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="textarea"
                         placeholder="Alamat Tempat Tinggal Ayah ..."
                         info="Sesuai dengan kartu keluarga (KK)"
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         disabled={this.state.disabledInput}
                         onChange={this.setFieldValue('alamat_tempat_tinggal_ayah')}
                         defaultValue={this.state.routeParams.alamat_tempat_tinggal_ayah}
@@ -850,7 +868,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="tel"
                         data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Ayah..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         validate
                         disabled={this.state.disabledInput}
                         pattern="[0-9]*"
@@ -863,7 +881,7 @@ class tambahCalonPesertaDidik extends Component {
                         label="Nama Ibu"
                         type="text"
                         placeholder="Nama Ibu..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         disabled={this.state.disabledInput}
                         onChange={this.setFieldValue('nama_ibu')}
                         defaultValue={this.state.routeParams.nama_ibu}
@@ -874,7 +892,7 @@ class tambahCalonPesertaDidik extends Component {
                         label="Tempat Lahir Ibu"
                         type="text"
                         placeholder="Tempat Lahir Ibu..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         disabled={this.state.disabledInput}
                         onChange={this.setFieldValue('tempat_lahir_ibu')}
                         defaultValue={this.state.routeParams.tempat_lahir_ibu}
@@ -936,7 +954,7 @@ class tambahCalonPesertaDidik extends Component {
                         disabled={this.state.disabledInput}
                         placeholder="Alamat Tempat Tinggal Ibu..."
                         info="Sesuai dengan kartu keluarga (KK)"
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         onChange={this.setFieldValue('alamat_tempat_tinggal_ibu')}
                         defaultValue={this.state.routeParams.alamat_tempat_tinggal_ibu}
                       />
@@ -947,7 +965,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="tel"
                         data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Ibu..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         validate
                         pattern="[0-9]*"
                         onChange={this.setFieldValue('no_telepon_ibu')}
@@ -960,7 +978,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="text"
                         disabled={this.state.disabledInput}
                         placeholder="Nama Wali..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         onChange={this.setFieldValue('nama_wali')}
                         defaultValue={this.state.routeParams.nama_wali}
                       />
@@ -970,7 +988,7 @@ class tambahCalonPesertaDidik extends Component {
                         label="Tempat Lahir Wali"
                         type="text"
                         placeholder="Tempat Lahir Wali..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         disabled={this.state.disabledInput}
                         onChange={this.setFieldValue('tempat_lahir_wali')}
                         defaultValue={this.state.routeParams.tempat_lahir_wali}
@@ -1032,7 +1050,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="textarea"
                         placeholder="Alamat Tempat Tinggal Wali..."
                         info="Sesuai dengan kartu keluarga (KK)"
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         disabled={this.state.disabledInput}
                         onChange={this.setFieldValue('alamat_tempat_tinggal_wali')}
                         defaultValue={this.state.routeParams.alamat_tempat_tinggal_wali}
@@ -1044,7 +1062,7 @@ class tambahCalonPesertaDidik extends Component {
                         type="tel"
                         data-error-message="Mohon isikan nomor telepon yang benar!"
                         placeholder="Nomor Telepon Wali..."
-                        clearButton
+                        clearButton={(this.state.displayOnly === null ? true : false)}
                         validate
                         disabled={this.state.disabledInput}
                         pattern="[0-9]*"
@@ -1073,10 +1091,13 @@ class tambahCalonPesertaDidik extends Component {
                         </CardContent>
                       }
                     </Card>
+                    {this.state.displayOnly === null &&
                     <Button disabled={this.state.disabledInput} fill sheetOpen=".demo-sheet">Pilih Sekolah</Button>
+                    }
                   </CardContent>
                 </Card>
             </Col>
+            {this.state.displayOnly === null &&
             <Col width="100">
               <Block className="simpanFormulir" style={{marginBottom:'50px'}}>
                 <Button disabled={this.state.disabledInput} raised fill large onClick={this.simpan}>
@@ -1084,6 +1105,7 @@ class tambahCalonPesertaDidik extends Component {
                 </Button>
               </Block>
             </Col>
+            }
           </Row>
           <Sheet className="demo-sheet" push style={{height:'50%'}}>
             <Toolbar>

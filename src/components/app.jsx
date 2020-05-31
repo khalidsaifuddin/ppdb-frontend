@@ -96,6 +96,34 @@ class app extends Component {
     //   }
     // });
     // console.log(this);
+
+    if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah'){
+      this.setState({
+        routeParams: {
+          sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),
+          keyword : '',
+          start: 0,
+          limit: 10,
+          urut: 'jarak',
+          verifikasi: 'N'
+        }
+      },()=>{
+
+        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+          this.props.setPendaftar(this.props.calon_pd_sekolah.countAll);
+          // console.log(this.props.calon_pd_sekolah.countAll);
+          // console.log(this.props.pendaftar);
+        });
+        
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
+          this.props.setCalon(this.props.peringkat_peserta_didik.countAll);
+          // console.log(this.props.calon_pd_sekolah.countAll);
+          // console.log(this.props.pendaftar);
+        });
+
+      });
+
+    }
   }
 
   gantiSemester = (b) => {
@@ -157,9 +185,22 @@ class app extends Component {
                     <i slot="media" className="f7-icons">pencil_ellipsis_rectangle</i>
                   </ListItem>
                   }
+                  {/* DaftarCalonPesertaDidikSekolah */}
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <ListItem link="/Daftar/" view=".view-main" panelClose panel-close title="Data Pendaftar">
                     <i slot="media" className="f7-icons">doc_plaintext</i>
                   </ListItem>
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <ListItem link="/DaftarCalonPesertaDidikSekolah/" view=".view-main" panelClose panel-close title={"Pendaftar (" + this.props.pendaftar + ")"}>
+                    <i slot="media" className="f7-icons">doc_plaintext</i>
+                  </ListItem>
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <ListItem link="/PeringkatCalon/" view=".view-main" panelClose panel-close title={"Calon Diterima ("+this.props.calon+")"}>
+                    <i slot="media" className="f7-icons">doc_plaintext</i>
+                  </ListItem>
+                  }
                   {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <ListItem link="/detailCalonpdSekolah/" view=".view-main" panelClose panel-close title="Daftar Sekolah">
                     <i slot="media" className="f7-icons">building_2_fill</i>
@@ -280,6 +321,15 @@ class app extends Component {
                     text="Pendaftar"
                   />
                   }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <Link 
+                    href={"/PeringkatCalon/"} 
+                    iconIos="f7:doc_plaintext" 
+                    iconAurora="f7:doc_plaintext" 
+                    iconMd="f7:doc_plaintext" 
+                    text="Diterima"
+                  />
+                  }
                   {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <Link 
                     href={"/Daftar/"} 
@@ -378,17 +428,25 @@ function mapDispatchToProps(dispatch) {
     updateWindowDimension: Actions.updateWindowDimension,
     setLoading: Actions.setLoading,
     setTabActive: Actions.setTabActive,
+    getCalonPesertaDidikSekolah: Actions.getCalonPesertaDidikSekolah,
+    setPendaftar: Actions.setPendaftar,
+    setCalon: Actions.setCalon,
+    PeringkatPesertaDidik: Actions.PeringkatPesertaDidik
   }, dispatch);
 }
 
-function mapStateToProps({ App }) {
+function mapStateToProps({ App, PPDBPesertaDidik }) {
   return {
     window_dimension: App.window_dimension,
     loading: App.loading,
     tabBar: App.tabBar,
     judul_panel_kanan: App.judul_panel_kanan,
     isi_panel_kanan: App.isi_panel_kanan,
-    panel_kanan_buka: App.panel_kanan_buka
+    panel_kanan_buka: App.panel_kanan_buka,
+    pendaftar: App.pendaftar,
+    calon_pd_sekolah: PPDBPesertaDidik.calon_pd_sekolah,
+    peringkat_peserta_didik: PPDBPesertaDidik.peringkat_peserta_didik,
+    calon: App.calon
   }
 }
 

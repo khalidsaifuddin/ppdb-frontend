@@ -15,6 +15,7 @@ class tambahBerkas extends Component {
     state = {
         error: null,
         loading: false,
+        displayOnly: this.$f7route.params['displayOnly'] ? this.$f7route.params['displayOnly'] : null,
         routeParams:{
             pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
@@ -108,6 +109,8 @@ class tambahBerkas extends Component {
                     },()=>{
                         // console.log(this.state.routeParams);
                         this.props.getBerkasCalon(this.state.routeParams).then((result)=>{
+
+                            console.log(this.props.berkas_calon);
 
                             let arrJenis = {};
 
@@ -286,7 +289,7 @@ class tambahBerkas extends Component {
     }
 
     uploadGagal = (xhr) => {
-        this.$f7.dialog.alert('Ada kesalahan pada sistema atau jaringan Anda, mohon cek kembali sebelum melakukan upload ulang', 'Mohon maaf');
+        this.$f7.dialog.alert('Ada kesalahan pada sistem atau jaringan Anda, mohon cek kembali sebelum melakukan upload ulang', 'Mohon maaf');
     }
 
     render()
@@ -295,9 +298,9 @@ class tambahBerkas extends Component {
             <Page name="tambahBerkas" hideBarsOnScroll>
                 <Navbar sliding={false}>
                 {/* <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}> */}
-                    <NavTitle sliding>Tambah Peserta Didik</NavTitle>
+                    <NavTitle sliding>{this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}</NavTitle>
                     <NavTitleLarge>
-                        Tambah Peserta Didik
+                        {this.state.displayOnly === null ? <>Tambah Peserta Didik</> : this.state.routeParams.nama}
                     </NavTitleLarge>
                 </Navbar>
                 {/* <Segmented raised style={{marginLeft:'8px', marginRight:'8px', marginTop: '70px', marginBottom: '8px'}}>
@@ -308,13 +311,20 @@ class tambahBerkas extends Component {
                 </Segmented> */}
                 <Block className="pageWithTitle">
                     <Segmented className="steps" raised>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Identitas Peserta Didik</Button>
-                        <Button onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null))}>Jalur dan Pilihan Sekolah</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Identitas Peserta Didik</Button>
+                        <Button onClick={()=>this.$f7router.navigate("/tambahJalurSekolah/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+(this.state.displayOnly === null ? '' : '/displayOnly'))}>Jalur dan Pilihan Sekolah</Button>
                         <Button tabLinkActive>Kelengkapan Berkas</Button>
-                        <Button disabled>Konfirmasi</Button>
+                        <Button disabled={(this.state.displayOnly === null ? true : false)} onClick={()=>this.$f7router.navigate("/tambahKonfirmasi/"+(this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null)+"/displayOnly")}>Konfirmasi</Button>
                     </Segmented>
+                    {this.state.displayOnly !== null &&
+                    <>
+                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp;Verifikasi
+                    </Button>
+                    <br/>
+                    </>
+                    }
                 </Block>
-
                 <Row noGap>
                     {this.props.berkas_jalur.rows.map((option)=>{
                         return (
@@ -324,6 +334,13 @@ class tambahBerkas extends Component {
                                         {option.nama}
                                     </CardHeader>
                                     <CardContent>
+                                        {this.state.displayOnly !== null &&
+                                        <>
+                                        <img style={{width:'100%'}} src={"http://117.53.47.95:8000"+this.state["file_gambar_"+option.kode]} />
+                                        {/* <img style={{height:'350px'}} src={localStorage.getItem('api_base')+this.state["file_gambar_"+option.kode]} /> */}
+                                        </>
+                                        }
+                                        {this.state.displayOnly === null &&
                                         <Dropzone className="droping" onDrop={this.acceptedFile('gambar_'+option.kode)}>
                                             {({getRootProps, getInputProps}) => (
                                                 <section>
@@ -335,25 +352,32 @@ class tambahBerkas extends Component {
                                                         {this.state["file_gambar_"+option.kode] !== '' &&
                                                         <>
                                                         <img style={{height:'150px'}} src={localStorage.getItem('api_base')+this.state["file_gambar_"+option.kode]} />
+                                                        {this.state.displayOnly === null &&
                                                         <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                                        }
                                                         </>
                                                         }
-                                                        {this.state["gambar_"+option.kode] === '' &&
+                                                        {this.state.displayOnly === null &&
                                                         <>
-                                                        <p>Tarik dan seret gambar {option.nama} Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
-                                                        <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 2MB, dan hanya dalam format .jpg, atau .png</p>
-                                                        </>
-                                                        }
-                                                        {this.state["gambar_"+option.kode] !== '' && this.state["file_gambar_"+option.kode] === '' &&
-                                                        <>
-                                                        <p style={{fontSize:'20px'}}>{this.state["gambar_"+option.kode]}</p>
-                                                        <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                                            {this.state["gambar_"+option.kode] === '' &&
+                                                            <>
+                                                                <p>Tarik dan seret gambar {option.nama} Anda ke sini, atau klik/Sentuh untuk cari gambar</p>
+                                                                <p style={{fontSize:'12px', fontStyle:'italic'}}>Ukuran maksimal berkas adalah 2MB, dan hanya dalam format .jpg, atau .png</p>
+                                                                </>
+                                                                }
+                                                                {this.state["gambar_"+option.kode] !== '' && this.state["file_gambar_"+option.kode] === '' &&
+                                                                <>
+                                                                <p style={{fontSize:'20px'}}>{this.state["gambar_"+option.kode]}</p>
+                                                                <p style={{fontSize:'12px', fontStyle:'italic'}}>Klik/Sentuh kembali untuk mengganti gambar. Ukuran maksimal berkas adalah 1MB, dan hanya dalam format .jpg, atau .png</p>
+                                                            </>
+                                                            }
                                                         </>
                                                         }
                                                     </div>
                                                 </section>
                                             )}
                                         </Dropzone>
+                                        }
                                     </CardContent>
                                 </Card>
                             </Col>
@@ -605,11 +629,13 @@ class tambahBerkas extends Component {
                         </Card>
                     </Col>
                     } */}
+                    {this.state.displayOnly === null &&
                     <Col width="100" style={{padding:'8px', marginBottom:'70px'}}>
                         <Button disabled={this.state.disabledInput} raised fill large style={{width:'100%', maxWidth:'5   00px', margin:'auto', marginBottom:'20px'}} onClick={this.simpan}>
                             {this.state.disabledInput && <Preloader color="white"></Preloader>} Simpan dan Lanjutkan
                         </Button>
                     </Col>
+                    }
                 </Row>
                 <Sheet opened={this.state.sheetOpened} className="demo-sheet" push style={{height:'50%'}}>
                 <Toolbar>

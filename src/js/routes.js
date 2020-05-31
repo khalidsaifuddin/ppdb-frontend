@@ -30,6 +30,9 @@ import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 import loginSekolah from '../pages/loginSekolah';
 import loginDinas from '../pages/loginDinas';
 import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidikSekolah';
+import ProfilCalon from '../pages/PPDB/ProfilCalon';
+import vervalPendaftar from '../pages/PPDB/vervalPendaftar';
+import PeringkatCalon from '../pages/PPDB/PeringkatCalon';
 
 var routes = [
   {
@@ -53,11 +56,19 @@ var routes = [
     component: tambahCalonPesertaDidik
   },
   {
+    path: '/tambahCalonPesertaDidik/:peserta_didik_id/:displayOnly',
+    component: tambahCalonPesertaDidik
+  },
+  {
     path: '/tambahJalurSekolah',
     component: tambahJalurSekolah
   },
   {
     path: '/tambahJalurSekolah/:peserta_didik_id',
+    component: tambahJalurSekolah
+  },
+  {
+    path: '/tambahJalurSekolah/:peserta_didik_id/:displayOnly',
     component: tambahJalurSekolah
   },
   {
@@ -69,6 +80,10 @@ var routes = [
     component: tambahKonfirmasi
   },
   {
+    path: '/tambahKonfirmasi/:peserta_didik_id/:displayOnly',
+    component: tambahKonfirmasi
+  },
+  {
     path: '/tambahBerkas',
     component: tambahBerkas
   },
@@ -77,7 +92,15 @@ var routes = [
     component: tambahBerkas
   },
   {
+    path: '/vervalPendaftar/:calon_peserta_didik_id',
+    component: vervalPendaftar
+  },
+  {
     path: '/tambahBerkas/:peserta_didik_id/:jalur_id',
+    component: tambahBerkas
+  },
+  {
+    path: '/tambahBerkas/:peserta_didik_id/:jalur_id/:displayOnly',
     component: tambahBerkas
   },
   {
@@ -125,6 +148,10 @@ var routes = [
     component: DaftarCalonPesertaDidikSekolah
   },
   {
+    path: '/PeringkatCalon',
+    component: PeringkatCalon
+  },
+  {
     path: '/ProfilPengguna',
     component: ProfilPengguna,
     // keepAlive: true,
@@ -132,6 +159,11 @@ var routes = [
   {
     path: '/ProfilPengguna/:pengguna_id',
     component: ProfilPengguna,
+    // keepAlive: true,
+  },
+  {
+    path: '/ProfilCalon/:calon_peserta_didik_id',
+    component: ProfilCalon,
     // keepAlive: true,
   },
   {

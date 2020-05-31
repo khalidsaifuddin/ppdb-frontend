@@ -151,7 +151,7 @@ class DetailcalonpdSiswa extends Component {
                                                 {/* Tanggal Pengisian Formulir: <b>{ option.create_date }</b> <br/> */}
                                                 {/* Asal Sekolah: <b>{ "(" + option.npsn_sekolah_asal + ") " + option.nama_sekolah_asal }</b> <br/> */}
                                                 Jalur <b>{ option.jalur }</b> <br/>
-                                                No Urut<br/>
+                                                No Urut Pendaftaran<br/>
                                                 <b style={{fontSize:'25px'}}>{ option.urutan }</b> <br/>
                                             </Col>
                                             <Col width="100" style={{borderTop:'0px solid #ccc', paddingBottom:'8px'}}>

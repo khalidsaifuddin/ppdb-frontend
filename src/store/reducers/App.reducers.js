@@ -111,7 +111,9 @@ const initialState = {
         }],
         count: 0
     },
-    geocode: []
+    geocode: [],
+    pendaftar: 0,
+    calon: 0
 };
 
 const appReducer = function (state = initialState, action) {
@@ -264,6 +266,20 @@ const appReducer = function (state = initialState, action) {
             return {
                 ...state,
                 geocode: action.payload
+            };
+        }
+        case Actions.SET_PENDAFTAR:
+        {
+            return {
+                ...state,
+                pendaftar: action.pendaftar
+            };
+        }
+        case Actions.SET_CALON:
+        {
+            return {
+                ...state,
+                calon: action.calon
             };
         }
         default:
