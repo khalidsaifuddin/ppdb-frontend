@@ -2439,3 +2439,24 @@
   text-align: center;
   width: 100%;
 }
+
+.text-center {
+  text-align: center;
+  align-items: center;
+}
+
+.mb-0 {
+  margin-bottom: 0rem;
+}
+
+.m-4 {
+  margin: 0.4rem;
+}
+
+.m-8 {
+  margin: 0.8rem;
+}
+
+.ml-8 {
+  margin-left: 0.8rem;
+}

@@ -33,6 +33,8 @@ import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidi
 import ProfilCalon from '../pages/PPDB/ProfilCalon';
 import vervalPendaftar from '../pages/PPDB/vervalPendaftar';
 import PeringkatCalon from '../pages/PPDB/PeringkatCalon';
+import EditKuotaSekolah from '../pages/PPDB/editKuotaSekolah';
+import KuotaSekolah from '../pages/PPDB/kuotaSekolah';
 
 var routes = [
   {
@@ -150,6 +152,14 @@ var routes = [
   {
     path: '/PeringkatCalon',
     component: PeringkatCalon
+  },
+  {
+    path: '/editKuotaSekolah/',
+    component: KuotaSekolah
+  },
+  {
+    path: '/editKuotaSekolah/:sekolah_id',
+    component: EditKuotaSekolah
   },
   {
     path: '/ProfilPengguna',

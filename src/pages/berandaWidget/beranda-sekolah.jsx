@@ -61,13 +61,13 @@ class BerandaSekolah extends Component {
                             <Card className="serviceRecap">
                                 <CardContent padding={false}>
                                 <div className="serviceChart">
-                                    <img src="https://lampung17.com/wp-content/uploads/2020/04/61sek.jpg" height="80"/>
+                                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + beranda_sekolah.sekolah.npsn + "/1.jpg"} width="140" />
                                 </div>
-                                <div className="serviceDesc">
-                                    <h4>{ beranda_sekolah.sekolah.nama }</h4>
+                                <div className="serviceDesc ml-8">
+                                    <h4>{ beranda_sekolah.sekolah.nama } ({ beranda_sekolah.sekolah.npsn })</h4>
                                     <span>{ beranda_sekolah.sekolah.kecamatan }</span><br/>
                                     <span>{ beranda_sekolah.sekolah.alamat_jalan }</span><br/>
-                                    <span>Lokasi = lintang: { beranda_sekolah.sekolah.lintang }, Bujur: { beranda_sekolah.sekolah.bujur }</span><br/>
+                                    <span>lintang: { beranda_sekolah.sekolah.lintang }, Bujur: { beranda_sekolah.sekolah.bujur }</span><br/>
                                     <span>Kuota: { beranda_sekolah.sekolah.kuota }</span><br/>
                                 </div>
                                 </CardContent>
@@ -93,7 +93,7 @@ class BerandaSekolah extends Component {
                             <Card className="serviceRecap">
                                 <CardContent padding={false}>
                                 <div className="serviceChart">
-                                    <img src="https://lh3.googleusercontent.com/proxy/b4-38f7EmDOoy333KtydPHGRG1YvGlArerQuDRE9g1aJDgdcPedUFoGYY_Fb34B_-cMv7ibngeeJCfF87o2ibokwAtHlGLene6PnGQ" height="80"/>
+                                    <img src="https://kip-kuliah.kemdikbud.go.id/uploads/informasi/dhTN5EAi9Irz2lc8kLsxtUm1HobFR0_tgl20200227000701.png" height="80"/>
                                 </div>
                                 <div className="serviceDesc">
                                     <h4>{beranda_sekolah.pendaftar.kuota_0100.nama}</h4> {/* Affirmasi */}
@@ -125,7 +125,7 @@ class BerandaSekolah extends Component {
                             <Card className="serviceRecap">
                                 <CardContent padding={false}>
                                 <div className="serviceChart">
-                                    <img src="https://lh3.googleusercontent.com/proxy/frl1BN6A6er7d3JPbGAIKqc1KqtVwG677Z5U3plrRuGQ0bXGxudlW8INSCnFKEj6Js_WrUBudso6jaOs7zGh7OQwuupN50ymFaNmNan0JrJvMRF5naHByw" height="80"/>
+                                    <img src="https://hafidzpreneur.com/wp-content/uploads/2019/11/koran-icon.svg.hi_.png" height="80"/>
                                 </div>
                                 <div className="serviceDesc">
                                     <h4>{beranda_sekolah.pendaftar.kuota_0500.nama}</h4> {/* Tahfidz */}

@@ -26,6 +26,14 @@ import routes from '../js/routes';
 import io from 'socket.io-client';
 import 'framework7-icons';
 
+const menu_dinas = [
+  {
+    title : 'Kuota Sekolah',
+    iconf7 : 'person_3',
+    link : '/editKuotaSekolah/',
+  }
+];
+
 class app extends Component {
   constructor(props) {
     super(props);
@@ -211,6 +219,23 @@ class app extends Component {
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
                   }
+                  {
+                    localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' && menu_dinas.map((n, key) => {
+                      return (
+                        <ListItem
+                          key={key}
+                          title={ n.title }
+                          link={ n.link }
+                          view=".view-main"
+                          panelClose
+                          panel-close
+                        >
+                          <i slot="media" className="f7-icons">{ n.iconf7 }</i>
+                        </ListItem>
+                      )
+                    })
+                  }
+                  
                   {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
                     <i slot="media" className="f7-icons">book</i>
                   </ListItem>
