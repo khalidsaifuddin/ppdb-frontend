@@ -105,7 +105,7 @@ class app extends Component {
     // });
     // console.log(this);
 
-    if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah'){
+    if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' && localStorage.getItem('user')){
       this.setState({
         routeParams: {
           sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),

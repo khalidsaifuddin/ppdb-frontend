@@ -386,6 +386,15 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         ));
     }
 
+    unduhExcel = () => {
+        const { sekolah_id, keyword, urut, verifikasi } = this.state.routeParams;
+
+        const link = "http://"+localStorage.getItem('api_base')+"/api/CalonPesertaDidik/getCalonPesertaDidikSekolah_excel";
+        const params = "?sekolah_id=" + sekolah_id + "&keyword="+keyword+"&start=0&limit=999999&urut=" + urut + "&verifikasi=" + verifikasi;
+
+        window.open(link + params, "_blank");
+    }
+
   render() {
     return (
       <Page name="data-pendaftar">
@@ -424,9 +433,16 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                 <Col width="40" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
-                    <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
-                        Saring dan Urut
-                    </Link>
+                    <Row>
+                        <Col>
+                            <Link iconIos="f7:square_list" iconSize="medium" onClick={this.unduhExcel}>Unduh Excel</Link>
+                        </Col>
+                        <Col>
+                            <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
+                                Saring dan Urut
+                            </Link>
+                        </Col>                        
+                    </Row>
                     {/* <Menu className="menu-pendaftar"> */}
                         {/* <MenuItem iconIos="f7:chart_bar_fill" iconSize="20" text={"Konfirmasi (" + this.state.label_konfirmasi + ")"} dropdown className="menu-saring-urut">
                             <MenuDropdown right>
