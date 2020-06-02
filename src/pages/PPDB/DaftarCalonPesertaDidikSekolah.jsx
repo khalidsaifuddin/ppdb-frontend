@@ -426,23 +426,19 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
         {/* <Block strong style={{overflowY:'hidden', overflowX:'auto', marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}> */}
             <Row noGap>
-                <Col width="60">
+                <Col tabletWidth="75" width="50">
                     Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data pendaftar belum diverifikasi
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
-                <Col width="40" style={{textAlign:'right'}}>
+                <Col tabletWidth="10" width="50">
+                    <Button fillIos onClick={this.unduhExcel}>Unduh Excel</Button>
+                </Col>
+                <Col tabletWidth="15" width="50" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
-                    <Row>
-                        <Col>
-                            <Link iconIos="f7:square_list" iconSize="medium" onClick={this.unduhExcel}>Unduh Excel</Link>
-                        </Col>
-                        <Col>
-                            <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
-                                Saring dan Urut
-                            </Link>
-                        </Col>                        
-                    </Row>
+                <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
+                    Saring dan Urut
+                </Link>
                     {/* <Menu className="menu-pendaftar"> */}
                         {/* <MenuItem iconIos="f7:chart_bar_fill" iconSize="20" text={"Konfirmasi (" + this.state.label_konfirmasi + ")"} dropdown className="menu-saring-urut">
                             <MenuDropdown right>

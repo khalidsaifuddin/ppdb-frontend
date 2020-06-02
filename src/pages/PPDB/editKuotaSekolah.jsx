@@ -103,28 +103,31 @@ class EditKuotasekolah extends Component {
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
                     <NavTitle sliding>Ubah Kuota Sekolah</NavTitle>
                 </Navbar>
-                    <Row>
-                        <Col width="20" tabletWidth="20">
-                            <Card padding={false}>
+                    <Row noGap>
+                        <Col tabletWidth="20" width="20">
+                            <Card style={{ height: '200px' }}>
                                 <CardContent>
                                     <img
                                         src={ sekolah.npsn ? ('http://foto.data.kemdikbud.go.id/getImage/' + sekolah.npsn + '/1.jpg') : 'https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg' }
-                                        height="200px"
+                                        height="170px"
                                         width="100%"
                                     />
                                 </CardContent>
                             </Card>
                         </Col>
-                        <Col width="80" tabletWidth="80">
-                            <Card>
+                        <Col tabletWidth="80" width="80">
+                            <Card style={{ height: '200px' }}>
                                 <CardContent>
                                     <Row>
                                         <Col>
-                                            <h4 className="mb-0">
-                                                {
-                                                    (sekolah.nama ? sekolah.nama : '-' ) + 
-                                                    " (" + (sekolah.npsn ? sekolah.npsn : '-') + ")"
-                                                }</h4>
+                                            <a href="#">
+                                                <h4 className="mb-0">
+                                                    {
+                                                        (sekolah.nama ? sekolah.nama : '-' ) + 
+                                                        " (" + (sekolah.npsn ? sekolah.npsn : '-') + ")"
+                                                    }
+                                                </h4>
+                                            </a>
                                             <hr/>
                                             <span>Provinsi : { sekolah.provinsi }</span><br/>
                                             <span>Kabupaten : { sekolah.kabupaten }</span><br/>
@@ -134,8 +137,10 @@ class EditKuotasekolah extends Component {
                                             <span>Bujur: { sekolah.bujur }</span><br/>
                                         </Col>
                                         <Col className="text-center">
-                                            <h1 className="mb-0">{ this.state.kuota.kuota ? this.state.kuota.kuota : 0 }</h1>
-                                            <i>Kuota Siswa</i>
+                                            <a href="#">
+                                                <h1 className="mb-0">{ this.state.kuota.kuota ? this.state.kuota.kuota : 0 }</h1>
+                                                <i>Kuota Siswa</i>
+                                            </a>
                                         </Col>
                                     </Row>
                                 </CardContent>

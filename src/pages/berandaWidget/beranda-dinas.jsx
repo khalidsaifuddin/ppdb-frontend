@@ -260,9 +260,9 @@ class BerandaDinas extends Component {
                                 }
                             </div>
                         </CardContent>
-                        <CardFooter>
+                        {/* <CardFooter>
                             <p className="laneUpdate">Pembaharuan per <b>01-06-2020 12:00</b></p>
-                        </CardFooter>
+                        </CardFooter> */}
                     </Card>
                     <Card className="serviceRecap">
                         <CardContent padding={false}>

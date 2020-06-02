@@ -230,8 +230,15 @@ class DaftarPendaftaran extends Component {
         </Navbar>
         <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftar</Block>
         <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
-          Menampilkan {this.props.entities.countAll ? this.props.entities.countAll : '0'} data pendaftar
-          {localStorage.getItem('kode_aplikasi') !== 'PPDB'  && <>&nbsp;di {localStorage.getItem('wilayah_aplikasi')}</>}
+          <Row>
+            <Col tabletWidth="80" width="50">
+              Menampilkan {this.props.entities.countAll ? this.props.entities.countAll : '0'} data pendaftar
+              {localStorage.getItem('kode_aplikasi') !== 'PPDB'  && <>&nbsp;di {localStorage.getItem('wilayah_aplikasi')}</>}
+            </Col>
+            <Col tabletWidth="20" width="50">
+              {/* <Button fillIos>Excel</Button> */}
+            </Col>
+          </Row>
         </Block>
         {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
         <Pagination
