@@ -389,7 +389,7 @@ class DaftarCalonPesertaDidikSekolah extends Component {
     unduhExcel = () => {
         const { sekolah_id, keyword, urut, verifikasi } = this.state.routeParams;
 
-        const link = "http://"+localStorage.getItem('api_base')+"/api/CalonPesertaDidik/getCalonPesertaDidikSekolah_excel";
+        const link = localStorage.getItem('api_base')+"/api/CalonPesertaDidik/getCalonPesertaDidikSekolah_excel";
         const params = "?sekolah_id=" + sekolah_id + "&keyword="+keyword+"&start=0&limit=999999&urut=" + urut + "&verifikasi=" + verifikasi;
 
         window.open(link + params, "_blank");

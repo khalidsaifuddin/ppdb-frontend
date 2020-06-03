@@ -236,7 +236,7 @@ class DaftarPendaftaran extends Component {
               {localStorage.getItem('kode_aplikasi') !== 'PPDB'  && <>&nbsp;di {localStorage.getItem('wilayah_aplikasi')}</>}
             </Col>
             <Col tabletWidth="20" width="50">
-              {/* <Button fillIos>Excel</Button> */}
+              <Button fillIos>Excel</Button>
             </Col>
           </Row>
         </Block>
