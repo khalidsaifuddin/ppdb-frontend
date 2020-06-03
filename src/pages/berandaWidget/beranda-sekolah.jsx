@@ -51,6 +51,11 @@ class BerandaSekolah extends Component {
     render() {
       const { loading } = this.state;
       const { beranda_sekolah } = this.props;
+      let ttl_rekap_pilihan = 0;
+
+      beranda_sekolah.pilihan_sekolah.map((n, key) => {
+        ttl_rekap_pilihan = ttl_rekap_pilihan + parseInt(n.count);
+      })
 
       return (
         <>
@@ -160,7 +165,7 @@ class BerandaSekolah extends Component {
                                     <img src="https://image.flaticon.com/icons/svg/2192/2192432.svg" height="80"/>
                                 </div>
                                 <div className="serviceDesc">
-                                    <h4>Rekap Pilihan Pendaftar</h4>
+                                    <h4>Rekap Pendaftar (Total: {ttl_rekap_pilihan})</h4>
                                     {
                                         beranda_sekolah.pilihan_sekolah.map((n, key) => {
                                             return (

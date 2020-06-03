@@ -30,6 +30,7 @@ import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 import loginSekolah from '../pages/loginSekolah';
 import loginDinas from '../pages/loginDinas';
 import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidikSekolah';
+import DaftarCalonPesertaDidikSekolahTable from '../pages/PPDB/DaftarCalonPesertaDidikSekolahTable';
 import ProfilCalon from '../pages/PPDB/ProfilCalon';
 import vervalPendaftar from '../pages/PPDB/vervalPendaftar';
 import PeringkatCalon from '../pages/PPDB/PeringkatCalon';
@@ -148,6 +149,10 @@ var routes = [
   {
     path: '/DaftarCalonPesertaDidikSekolah',
     component: DaftarCalonPesertaDidikSekolah
+  },
+  {
+    path: '/DaftarCalonPesertaDidikSekolahTable/',
+    component: DaftarCalonPesertaDidikSekolahTable
   },
   {
     path: '/PeringkatCalon',

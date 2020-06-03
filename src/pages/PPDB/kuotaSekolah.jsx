@@ -102,6 +102,7 @@ class Kuotasekolah extends Component {
                                 <th className="text-center">No</th>
                                 <th className="text-center">npsn</th>
                                 <th className="label-cell">Sekolah</th>
+                                <th className="text-center">Total Kuota</th>
                                 <th className="text-center">Affirmasi</th>
                                 <th className="text-center">Perpindahan<br/>Orang Tua</th>
                                 <th className="text-center">Minat dan Bakat</th>
@@ -121,6 +122,7 @@ class Kuotasekolah extends Component {
                                             <td className="text-center">{ (limit * (activePage-1)) + key + 1}</td>
                                             <td className="text-center">{ n.npsn }</td>
                                             <td className="lebel-cell">{ n.nama }</td>
+                                            <td className="text-center">{ n.kuota ? n.kuota : '-' }</td>
                                             <td className="text-center">{ n.kuota_0100 ? n.kuota_0100 : '-' }</td>
                                             <td className="text-center">{ n.kuota_0200 ? n.kuota_0200 : '-' }</td>
                                             <td className="text-center">{ n.kuota_0300 ? n.kuota_0300 : '-' }</td>

@@ -388,7 +388,6 @@ class DaftarCalonPesertaDidikSekolah extends Component {
 
     unduhExcel = () => {
         const { sekolah_id, keyword, urut, verifikasi } = this.state.routeParams;
-
         const link = localStorage.getItem('api_base')+"/api/CalonPesertaDidik/getCalonPesertaDidikSekolah_excel";
         const params = "?sekolah_id=" + sekolah_id + "&keyword="+keyword+"&start=0&limit=999999&urut=" + urut + "&verifikasi=" + verifikasi;
 
@@ -425,15 +424,18 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         </Block> */}
         <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
         {/* <Block strong style={{overflowY:'hidden', overflowX:'auto', marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}> */}
-            <Row noGap>
-                <Col tabletWidth="75" width="50">
+            <Row>
+                <Col tabletWidth="70" width="100">
                     Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data pendaftar belum diverifikasi
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
                 <Col tabletWidth="10" width="50">
-                    <Button fillIos onClick={this.unduhExcel}>Unduh Excel</Button>
+                    <Button fillIos iconF7="square_list" iconSize="medium" href="/DaftarCalonPesertaDidikSekolahTable/">List</Button>
                 </Col>
-                <Col tabletWidth="15" width="50" style={{textAlign:'right'}}>
+                <Col tabletWidth="10" width="50">
+                    <Button fillIos iconF7="arrow_down_doc" iconSize="medium" onClick={this.unduhExcel}>Unduh Excel</Button>
+                </Col>
+                <Col tabletWidth="10" width="50" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
                 <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
@@ -486,9 +488,9 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         }
         {this.state.loading ?
         <>
-        {this.state.dummy_rows.map((opt)=>{
+        {this.state.dummy_rows.map((opt, key)=>{
             return (
-                <Card className="demo-card-header-pic" style={{borderTop:'3px solid #00BCD4'}} className={"skeleton-text skeleton-effect-blink"}>
+                <Card className="demo-card-header-pic" style={{borderTop:'3px solid #00BCD4'}} className={"skeleton-text skeleton-effect-blink"} key={key}>
                     <CardContent>
                         <Row>
                             <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>
