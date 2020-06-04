@@ -15,6 +15,8 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
             searchText : '',
             start: 0,
             limit: 50,
+            urut: 'jarak',
+            verifikasi: 'N'
         },
         activePage: 1,
         start: 0,
@@ -105,7 +107,7 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
                 <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
                     <Row>
                         <Col tabletWidth="80" width="50">Menampilkan { calon_pd_sekolah_list.countAll } data pendaftar belum diverifikasi</Col>
-                        <Col tabletWidth="20" width="50"><Button fillIos iconF7="arrow_down_doc" iconSize="medium" onClick={this.unduhExcel}>Unduh Excel</Button></Col>
+                        <Col tabletWidth="20" width="50"><Button fillIos iconF7="arrow_down_doc" iconSize="medium" color="green" onClick={this.unduhExcel}>Unduh Xls</Button></Col>
                     </Row>
                 </Block>
                 <Pagination
@@ -127,11 +129,11 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
                                 <th className="min-w-32 text-center">JK</th>
                                 <th className="min-w-100 text-left">Tempat Lahir</th>
                                 <th className="min-w-70 text-left">Tanggal Lahir</th>
-                                <th className="min-w-128 text-left">Sekolah Asal</th>
                                 <th className="min-w-70 text-center">Jalur</th>
                                 <th className="min-w-32 text-center">Pilihan</th>
-                                <th className="min-w-32 text-center">No Urut</th>
                                 <th className="min-w-32 text-center">Jarak (KM)</th>
+                                <th className="min-w-32 text-center">No Urut</th>
+                                <th className="min-w-128 text-left">Sekolah Asal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,11 +150,11 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
                                             <td className="min-w-32 text-center">{ n.jenis_kelamin }</td>
                                             <td className="min-w-100 text-left">{ n.tempat_lahir}</td>
                                             <td className="min-w-70 text-left">{ n.tanggal_lahir }</td>
-                                            <td className="min-w-128 text-left">{ n.sekolah_asal.nama }</td>
                                             <td className="min-w-70 text-center">{ n.jalur }</td>
                                             <td className="min-w-32 text-center">{ n.urut_pilihan }</td>
-                                            <td className="min-w-32 text-center">{ n.urutan }</td>
                                             <td className="min-w-32 text-center">{ this.handleDecimal(n.jarak_km) }</td>
+                                            <td className="min-w-32 text-center">{ n.urutan }</td>
+                                            <td className="min-w-128 text-left">{ n.sekolah_asal.nama }</td>
                                         </tr>
                                     )
                                 })

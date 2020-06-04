@@ -425,17 +425,17 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
         {/* <Block strong style={{overflowY:'hidden', overflowX:'auto', marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}> */}
             <Row>
-                <Col tabletWidth="70" width="100">
+                <Col tabletWidth="55" width="100">
                     Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data pendaftar belum diverifikasi
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
-                <Col tabletWidth="10" width="50">
-                    <Button fillIos iconF7="square_list" iconSize="medium" href="/DaftarCalonPesertaDidikSekolahTable/">List</Button>
+                <Col tabletWidth="15" width="50">
+                    <Button fillIos iconF7="square_list" iconSize="medium" href="/DaftarCalonPesertaDidikSekolahTable/">Table</Button>
                 </Col>
-                <Col tabletWidth="10" width="50">
-                    <Button fillIos iconF7="arrow_down_doc" iconSize="medium" onClick={this.unduhExcel}>Unduh Excel</Button>
+                <Col tabletWidth="15" width="50">
+                    <Button fillIos iconF7="arrow_down_doc" iconSize="medium" color="green" onClick={this.unduhExcel}>Unduh Xls</Button>
                 </Col>
-                <Col tabletWidth="10" width="50" style={{textAlign:'right'}}>
+                <Col tabletWidth="15" width="50" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
                 <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
