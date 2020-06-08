@@ -179,6 +179,8 @@ localStorage.setItem('tema_warna','ungu-terong');
 
 // localStorage.setItem('google_api','1010108449023-6qolnf5bdkckntc94vq88brt28pgu04n.apps.googleusercontent.com'); // lumajang
 // localStorage.setItem('api_base','http://ppdb:8888');
+// localStorage.setItem('google_api','1010108449023-6qolnf5bdkckntc94vq88brt28pgu04n.apps.googleusercontent.com'); // lumajang
+// localStorage.setItem('api_base','http://mejabantu.one/');
 
 //////
 // localStorage.setItem('kode_aplikasi','PPDB');

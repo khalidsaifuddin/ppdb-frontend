@@ -2448,3 +2448,70 @@
   padding-top: 8px;
   font-weight: bold;
 }
+
+.text-center {
+  text-align: center;
+  align-items: center;
+}
+
+.text-left {
+  text-align: left;
+  align-items: left;
+}
+
+.mb-0 {
+  margin-bottom: 0rem;
+}
+
+.m-4 {
+  margin: 0.4rem;
+}
+
+.m-8 {
+  margin: 0.8rem;
+}
+
+.ml-8 {
+  margin-left: 0.8rem;
+}
+
+/* WIDTH */
+.min-w-32 {
+  min-width: 3.2rem;
+  width: 3.2rem;
+}
+
+.min-w-42 {
+  min-width: 4.2rem;
+  width: 4.2rem;
+}
+
+.min-w-52 {
+  min-width: 5.2rem;
+  width: 5.2rem;
+}
+
+.min-w-70 {
+  min-width: 7.0rem;
+  width: 7.0rem;
+}
+
+.min-w-82 {
+  min-width: 8.2rem;
+  width: 8.2rem;
+}
+
+.min-w-100 {
+  min-width: 10.0rem;
+  width: 10.0rem;
+}
+
+.min-w-128 {
+  min-width: 12.8rem;
+  width: 12.8rem;
+}
+
+.min-w-132 {
+  min-width: 13.2rem;
+  width: 13.2rem;
+}

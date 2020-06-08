@@ -30,6 +30,7 @@ import TambahJadwalkegiatan from '../pages/PPDB/tambahJadwalkegiatan';
 import loginSekolah from '../pages/loginSekolah';
 import loginDinas from '../pages/loginDinas';
 import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidikSekolah';
+import DaftarCalonPesertaDidikSekolahTable from '../pages/PPDB/DaftarCalonPesertaDidikSekolahTable';
 import ProfilCalon from '../pages/PPDB/ProfilCalon';
 import vervalPendaftar from '../pages/PPDB/vervalPendaftar';
 import PeringkatCalon from '../pages/PPDB/PeringkatCalon';
@@ -38,6 +39,8 @@ import petaSebaranPendaftar from '../pages/PPDB/petaSebaranPendaftar';
 import berkasBesar from '../pages/PPDB/berkasBesar';
 import Pengumuman from '../pages/PPDB/Pengumuman';
 import PengumumanSekolah from '../pages/PPDB/PengumumanSekolah';
+import EditKuotaSekolah from '../pages/PPDB/editKuotaSekolah';
+import KuotaSekolah from '../pages/PPDB/kuotaSekolah';
 
 var routes = [
   {
@@ -153,12 +156,24 @@ var routes = [
     component: DaftarCalonPesertaDidikSekolah
   },
   {
+    path: '/DaftarCalonPesertaDidikSekolahTable/',
+    component: DaftarCalonPesertaDidikSekolahTable
+  },
+  {
     path: '/PeringkatCalon',
     component: PeringkatCalon
   },
   {
     path: '/PeringkatCalonLain',
     component: PeringkatCalonLain
+  },
+  {
+    path: '/editKuotaSekolah/',
+    component: KuotaSekolah
+  },
+  {
+    path: '/editKuotaSekolah/:sekolah_id',
+    component: EditKuotaSekolah
   },
   {
     path: '/ProfilPengguna',

@@ -18,6 +18,7 @@ export const VALIDASI_BERKAS = '[PESERTA DIDIK] VALIDASI BERKAS';
 export const BATALKAN_KONFIRMASI = '[PESERTA DIDIK] BATALKAN KONFIRMASI';
 export const GET_REKAP_TOTAL = '[PESERTA DIDIK] GET REKAP TOTAL';
 export const GET_CALON_PD_SEKOLAH = '[PESERTA DIDIK] GET CALON PD SEKOLAH';
+export const GET_CALON_PD_SEKOLAH_LIST = '[PESERTA DIDIK] GET CALON PD SEKOLAH LIST';
 export const SIMPAN_PD_DITERIMA = '[PESERTA DIDIK] SIMPAN PD DITERIMA';
 export const PERINGKAT_PESERTA_DIDIK = '[PESERTA DIDIK] PERINGKAT PESERTA DIDIK';
 export const REKAP_KUOTA_SEKOLAH = '[PESERTA DIDIK] REKAP KUOTA SEKOLAH';
@@ -360,6 +361,25 @@ export function getCalonPesertaDidikSekolah(routeParams)
             })
         );
 }
+
+export function getCalonPesertaDidikSekolahList(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/getCalonPesertaDidikSekolah', {
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : GET_CALON_PD_SEKOLAH_LIST,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
 
 export function simpanPesertaDidikDiterima(routeParams)
 {

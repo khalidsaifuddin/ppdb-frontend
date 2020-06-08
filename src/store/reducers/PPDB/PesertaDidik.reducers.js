@@ -35,6 +35,11 @@ const initialState = {
         count : 0,
         countAll: 0
     },
+    calon_pd_sekolah_list: {
+        rows: [],
+        count: 0,
+        countAll: 0
+    },
     peringkat_peserta_didik: {
         rows: [],
         count : 0,
@@ -117,6 +122,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
                 ...state,
                 calon_pd_sekolah: action.payload
             };
+        }
+        case Actions.GET_CALON_PD_SEKOLAH_LIST:
+        {
+            return {
+                ...state,
+                calon_pd_sekolah_list: action.payload
+            }
         }
         case Actions.PERINGKAT_PESERTA_DIDIK:
         {

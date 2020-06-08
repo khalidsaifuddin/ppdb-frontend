@@ -387,6 +387,14 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         ));
     }
 
+    unduhExcel = () => {
+        const { sekolah_id, keyword, urut, verifikasi } = this.state.routeParams;
+        const link = localStorage.getItem('api_base')+"/api/CalonPesertaDidik/getCalonPesertaDidikSekolah_excel";
+        const params = "?sekolah_id=" + sekolah_id + "&keyword="+keyword+"&start=0&limit=999999&urut=" + urut + "&verifikasi=" + verifikasi;
+
+        window.open(link + params, "_blank");
+    }
+
   render() {
     return (
       <Page name="data-pendaftar">
@@ -414,17 +422,23 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         </Block>
         <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
         {/* <Block strong style={{overflowY:'hidden', overflowX:'auto', marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}> */}
-            <Row noGap>
-                <Col width="60">
+            <Row>
+                <Col tabletWidth="55" width="100">
                     Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data pendaftar belum diverifikasi
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
-                <Col width="40" style={{textAlign:'right'}}>
+                <Col tabletWidth="15" width="50">
+                    <Button fillIos iconF7="square_list" iconSize="medium" href="/DaftarCalonPesertaDidikSekolahTable/">Table</Button>
+                </Col>
+                <Col tabletWidth="15" width="50">
+                    <Button fillIos iconF7="arrow_down_doc" iconSize="medium" color="green" onClick={this.unduhExcel}>Unduh Xls</Button>
+                </Col>
+                <Col tabletWidth="15" width="50" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
-                    <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
-                        Saring dan Urut
-                    </Link>
+                <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
+                    Saring dan Urut
+                </Link>
                     {/* <Menu className="menu-pendaftar"> */}
                         {/* <MenuItem iconIos="f7:chart_bar_fill" iconSize="20" text={"Konfirmasi (" + this.state.label_konfirmasi + ")"} dropdown className="menu-saring-urut">
                             <MenuDropdown right>
@@ -472,9 +486,9 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         }
         {this.state.loading ?
         <>
-        {this.state.dummy_rows.map((opt)=>{
+        {this.state.dummy_rows.map((opt, key)=>{
             return (
-                <Card className="demo-card-header-pic" style={{borderTop:'3px solid #00BCD4'}} className={"skeleton-text skeleton-effect-blink"}>
+                <Card className="demo-card-header-pic" style={{borderTop:'3px solid #00BCD4'}} className={"skeleton-text skeleton-effect-blink"} key={key}>
                     <CardContent>
                         <Row>
                             <Col width="30" tabletWidth="15" style={{background:"#cccccc", backgroundSize:'cover', backgroundPosition:'center', textAlign:'center', overflow:'hidden'}}>

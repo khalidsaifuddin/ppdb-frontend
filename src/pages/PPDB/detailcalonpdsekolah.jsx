@@ -220,7 +220,7 @@ class DetailcalonpdSekolah extends Component {
               <Card key={option.sekolah_id} noShadow noBorder>
                 <CardContent padding={false}>
                   <div className="gambarSekolah" style={{backgroundImage: 'url(https://img.freepik.com/free-vector/school-building_23-2147521232.jpg?size=338&ext=jpg)'}}>
-                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}></img> 
+                    <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"}/>
                   </div>
                   <div className="tentangSekolah">
                     <Link href={"/detailCalonpdSekolah/"+option.sekolah_id}>

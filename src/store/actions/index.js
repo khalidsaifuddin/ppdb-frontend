@@ -9,3 +9,4 @@ export * from './PPDB/Sekolah.actions';
 export * from './PPDB/daftarPendaftaranactions.';
 export * from './PPDB/jadwalKegiatan.actions';
 export * from './PPDB/beranda.actions';
+export * from './PPDB/kuotaSekolah.actions';

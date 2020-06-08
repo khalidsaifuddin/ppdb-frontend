@@ -26,6 +26,14 @@ import routes from '../js/routes';
 import io from 'socket.io-client';
 import 'framework7-icons';
 
+const menu_dinas = [
+  {
+    title : 'Kuota Sekolah',
+    iconf7 : 'person_3',
+    link : '/editKuotaSekolah/',
+  }
+];
+
 class app extends Component {
   constructor(props) {
     super(props);
@@ -97,7 +105,7 @@ class app extends Component {
     // });
     // console.log(this);
 
-    if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah'){
+    if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' && localStorage.getItem('user')){
       this.setState({
         routeParams: {
           sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? (parseInt(localStorage.getItem('sudah_login')) === 1 ? JSON.parse(localStorage.getItem('user')).sekolah_id : null) : null),
@@ -221,6 +229,23 @@ class app extends Component {
                     <i slot="media" className="f7-icons">calendar</i>
                   </ListItem>
                   }
+                  {
+                    localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' && menu_dinas.map((n, key) => {
+                      return (
+                        <ListItem
+                          key={key}
+                          title={ n.title }
+                          link={ n.link }
+                          view=".view-main"
+                          panelClose
+                          panel-close
+                        >
+                          <i slot="media" className="f7-icons">{ n.iconf7 }</i>
+                        </ListItem>
+                      )
+                    })
+                  }
+                  
                   {/* <ListItem link="/" view=".view-main" panelClose panel-close title="Petunjuk">
                     <i slot="media" className="f7-icons">book</i>
                   </ListItem>
