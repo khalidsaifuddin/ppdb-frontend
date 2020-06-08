@@ -11,21 +11,27 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
         disabled: true,
         routeParams:{
             sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),
-            kode_wilayah : localStorage.getItem('kode_wilayah_aplikasi') ? localStorage.getItem('kode_wilayah_aplikasi') : '',
-            searchText : '',
+            keyword : '',
             start: 0,
-            limit: 50,
+            limit: 10,
             urut: 'jarak',
-            verifikasi: 'N'
+            verifikasi: 'N',
+            urut_pilihan: 1
         },
         activePage: 1,
         start: 0,
         limit: 50,
+        sekolah : [],
     }
 
     getData = () => {
         this.props.getCalonPesertaDidikSekolahList(this.state.routeParams).then(e => {
             this.setState({ loading: false });
+            this.props.getPPDBSekolah(this.state.routeParams).then( e => {
+                this.setState({
+                    sekolah: this.props.ppdb_sekolah.rows[0]
+                });
+            });
         });
     }
 
@@ -89,7 +95,7 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
         return (
             <Page name="cari" style={{paddingBottom:'50px'}}>
                 <Navbar sliding={false} backLink="Kembali" onBackClick={this.backClick}>
-                    <NavTitle sliding>Pendaftar di SMP NEGERI 2 SUKODONO</NavTitle>
+                    <NavTitle sliding>Pendaftar di {this.state.sekolah.nama}</NavTitle>
                     <Subnavbar inner={false}>
                         <Searchbar
                             className="searchbar-demo"
@@ -179,12 +185,14 @@ class DaftarCalonPesertaDidikSekolahTable extends Component {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getCalonPesertaDidikSekolahList             : Actions.getCalonPesertaDidikSekolahList,
+        getPPDBSekolah                              : Actions.getPPDBSekolah
     }, dispatch);
   }
   
-  function mapStateToProps({ App, PPDBPesertaDidik }) {
+  function mapStateToProps({ App, PPDBPesertaDidik, PPDBSekolah }) {
     return {
-        calon_pd_sekolah_list                       : PPDBPesertaDidik.calon_pd_sekolah_list
+        calon_pd_sekolah_list                       : PPDBPesertaDidik.calon_pd_sekolah_list,
+        ppdb_sekolah                                : PPDBSekolah.ppdb_sekolah,
     }
   }
 
