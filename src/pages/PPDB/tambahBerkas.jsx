@@ -318,8 +318,8 @@ class tambahBerkas extends Component {
                     </Segmented>
                     {this.state.displayOnly !== null &&
                     <>
-                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
-                        &nbsp;Verifikasi
+                    <Button disabled={(this.state.routeParams.status_terima !== null ? true : false)} raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp; {(this.state.routeParams.status_terima !== null ? <>Telah diverifikasi</> : <>Verifikasi</>)}
                     </Button>
                     <br/>
                     </>
@@ -336,8 +336,9 @@ class tambahBerkas extends Component {
                                     <CardContent>
                                         {this.state.displayOnly !== null &&
                                         <>
-                                        <img style={{width:'100%'}} src={"http://117.53.47.95:8000"+this.state["file_gambar_"+option.kode]} />
-                                        {/* <img style={{height:'350px'}} src={localStorage.getItem('api_base')+this.state["file_gambar_"+option.kode]} /> */}
+                                        {/* <img style={{width:'100%'}} src={"http://117.53.47.95:8000"+this.state["file_gambar_"+option.kode]} /> */}
+                                        <img style={{width:'100%'}} src={localStorage.getItem('api_base')+this.state["file_gambar_"+option.kode]} />
+                                        <Button fill style={{marginTop:'8px'}} onClick={()=>this.$f7router.navigate('/berkasBesar#'+this.state["file_gambar_"+option.kode])}>Perbesar Berkas</Button>
                                         </>
                                         }
                                         {this.state.displayOnly === null &&

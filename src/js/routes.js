@@ -33,6 +33,11 @@ import DaftarCalonPesertaDidikSekolah from '../pages/PPDB/DaftarCalonPesertaDidi
 import ProfilCalon from '../pages/PPDB/ProfilCalon';
 import vervalPendaftar from '../pages/PPDB/vervalPendaftar';
 import PeringkatCalon from '../pages/PPDB/PeringkatCalon';
+import PeringkatCalonLain from '../pages/PPDB/PeringkatCalonLain';
+import petaSebaranPendaftar from '../pages/PPDB/petaSebaranPendaftar';
+import berkasBesar from '../pages/PPDB/berkasBesar';
+import Pengumuman from '../pages/PPDB/Pengumuman';
+import PengumumanSekolah from '../pages/PPDB/PengumumanSekolah';
 
 var routes = [
   {
@@ -152,8 +157,22 @@ var routes = [
     component: PeringkatCalon
   },
   {
+    path: '/PeringkatCalonLain',
+    component: PeringkatCalonLain
+  },
+  {
     path: '/ProfilPengguna',
     component: ProfilPengguna,
+    // keepAlive: true,
+  },
+  {
+    path: '/Pengumuman',
+    component: Pengumuman,
+    // keepAlive: true,
+  },
+  {
+    path: '/PengumumanSekolah/:sekolah_id',
+    component: PengumumanSekolah,
     // keepAlive: true,
   },
   {
@@ -162,9 +181,18 @@ var routes = [
     // keepAlive: true,
   },
   {
+    path: '/petaSebaranPendaftar/:sekolah_id',
+    component: petaSebaranPendaftar,
+    // keepAlive: true,
+  },
+  {
     path: '/ProfilCalon/:calon_peserta_didik_id',
     component: ProfilCalon,
     // keepAlive: true,
+  },
+  {
+    path: '/berkasBesar',
+    component: berkasBesar
   },
   {
     path: '/settings/',

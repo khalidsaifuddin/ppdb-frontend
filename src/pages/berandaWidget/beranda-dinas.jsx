@@ -56,6 +56,8 @@ class BerandaDinas extends Component {
         this.props.BERANDA_getBerandaDinas({kode_wilayah : this.state.kode_wilayah}).then(e => {
             this.setState({ loading: false });
         });
+
+        console.log(this.props);
     }
 
     render() {
@@ -133,7 +135,7 @@ class BerandaDinas extends Component {
                 <div className="serviceWidgets">
                 <Row noGap>
                     <Col width="50" tabletWidth="25">
-                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #2196f3 0%, #8bccff 100.2%)"}}>
+                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #2196f3 0%, #8bccff 100.2%)", minHeight:'120px'}}>
                         <CardContent padding={false}>
                             <h2>{rekap_total.total ? this.formatAngka(rekap_total.total) : '0'} <span>Pendaftar</span></h2>
                             <Link href="/">Lihat Selengkapnya <Icon f7="arrow_right" size="14px"></Icon></Link>
@@ -141,7 +143,7 @@ class BerandaDinas extends Component {
                     </Card>
                     </Col>
                     <Col width="50" tabletWidth="25">
-                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #4cd964 0%, #6df884 100.2%)"}}>
+                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #4cd964 0%, #6df884 100.2%)", minHeight:'120px'}}>
                         <CardContent padding={false}>
                             <h2>{rekap_total.berkas_valid ? this.formatAngka(rekap_total.berkas_valid) : '0'} <span>Pendaftar Berkas Lengkap</span></h2>
                             <Link href="/">Lihat Selengkapnya <Icon f7="arrow_right" size="14px"></Icon></Link>
@@ -149,7 +151,7 @@ class BerandaDinas extends Component {
                     </Card>
                     </Col>
                     <Col width="50" tabletWidth="25">
-                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #ff9500 0%, #ffbf65 100.2%)"}}>
+                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #ff9500 0%, #ffbf65 100.2%)", minHeight:'120px'}}>
                         <CardContent padding={false}>
                             <h2>{rekap_total.konfirmasi ? this.formatAngka(rekap_total.konfirmasi) : '0'} <span>Pendaftar Terkonfirmasi</span></h2>
                             <Link href="/">Lihat Selengkapnya <Icon f7="arrow_right" size="14px"></Icon></Link>
@@ -157,7 +159,7 @@ class BerandaDinas extends Component {
                     </Card>
                     </Col>
                     <Col width="50" tabletWidth="25">
-                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #9c27b0 0%, #c75ada 100.2%)"}}>
+                    <Card className="serviceItem" style={{backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, #9c27b0 0%, #c75ada 100.2%)", minHeight:'120px'}}>
                         <CardContent padding={false}>
                             <h2>{rekap_total.diterima ? this.formatAngka(rekap_total.diterima) : '0'} <span>Pendaftar Diterima</span></h2>
                             <Link href="/">Lihat Selengkapnya <Icon f7="arrow_right" size="14px"></Icon></Link>

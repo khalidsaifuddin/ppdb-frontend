@@ -100,26 +100,31 @@ class app extends Component {
     if(localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah'){
       this.setState({
         routeParams: {
-          sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),
+          sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? (parseInt(localStorage.getItem('sudah_login')) === 1 ? JSON.parse(localStorage.getItem('user')).sekolah_id : null) : null),
           keyword : '',
           start: 0,
           limit: 10,
           urut: 'jarak',
-          verifikasi: 'N'
+          verifikasi: 'N',
+          urut_pilihan: 1
         }
       },()=>{
+        if(parseInt(localStorage.getItem('sudah_login')) === 1){
 
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
-          this.props.setPendaftar(this.props.calon_pd_sekolah.countAll);
-          // console.log(this.props.calon_pd_sekolah.countAll);
-          // console.log(this.props.pendaftar);
-        });
-        
-        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
-          this.props.setCalon(this.props.peringkat_peserta_didik.countAll);
-          // console.log(this.props.calon_pd_sekolah.countAll);
-          // console.log(this.props.pendaftar);
-        });
+          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+            this.props.setPendaftar((this.props.calon_pd_sekolah.countAll ? this.props.calon_pd_sekolah.countAll : '0'));
+            // console.log(this.props.calon_pd_sekolah.countAll);
+            // console.log(this.props.pendaftar);
+          });
+          
+          this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
+            this.props.setCalon(this.props.peringkat_peserta_didik.countAll);
+            // console.log(this.props.calon_pd_sekolah.countAll);
+            // console.log(this.props.pendaftar);
+          });
+          
+        }
+
 
       });
 
@@ -161,7 +166,7 @@ class app extends Component {
         <Statusbar></Statusbar>
         {localStorage.getItem('sudah_pilih_kota') === '1' &&
         <>
-        {localStorage.getItem('sudah_login') === '1' &&
+        {localStorage.getItem('sudah_login') === '1' && localStorage.getItem('kode_aplikasi') !== 'PPDB-publik' &&
           <Panel className="mainMenu" left cover>
             <View>
               <Page>
@@ -198,7 +203,12 @@ class app extends Component {
                   }
                   {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
                   <ListItem link="/PeringkatCalon/" view=".view-main" panelClose panel-close title={"Calon Diterima ("+this.props.calon+")"}>
-                    <i slot="media" className="f7-icons">doc_plaintext</i>
+                    <i slot="media" className="f7-icons">checkmark_seal</i>
+                  </ListItem>
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <ListItem link="/PeringkatCalonLain/" view=".view-main" panelClose panel-close title={"Calon Lainnya"}>
+                    <i slot="media" className="f7-icons">chevron_down_circle</i>
                   </ListItem>
                   }
                   {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
@@ -281,7 +291,7 @@ class app extends Component {
         <Views tabs className="safe-areas" hideToolbarOnScroll>
           {localStorage.getItem('sudah_pilih_kota') === '1' &&
           <>
-          {localStorage.getItem('sudah_login') === '1' &&
+          {localStorage.getItem('sudah_login') === '1' && localStorage.getItem('kode_aplikasi') !== 'PPDB-publik' &&
             <Toolbar className="mobileTab" labels bottom hideToolbarOnScroll>
               {localStorage.getItem('sudah_login') === '1' &&
                 <>
@@ -318,16 +328,25 @@ class app extends Component {
                     iconIos="f7:doc_plaintext" 
                     iconAurora="f7:doc_plaintext" 
                     iconMd="f7:doc_plaintext" 
-                    text="Pendaftar"
+                    text={"Pendaftar ("+this.props.pendaftar+")"}
                   />
                   }
                   {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
                   <Link 
                     href={"/PeringkatCalon/"} 
-                    iconIos="f7:doc_plaintext" 
-                    iconAurora="f7:doc_plaintext" 
-                    iconMd="f7:doc_plaintext" 
-                    text="Diterima"
+                    iconIos="f7:checkmark_seal" 
+                    iconAurora="f7:checkmark_seal" 
+                    iconMd="f7:checkmark_seal" 
+                    text={"Diterima ("+this.props.calon+")"}
+                  />
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <Link 
+                    href={"/PeringkatCalonLain/"} 
+                    iconIos="f7:chevron_down_circle" 
+                    iconAurora="f7:chevron_down_circle" 
+                    iconMd="f7:chevron_down_circle" 
+                    text="Lainnya"
                   />
                   }
                   {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&

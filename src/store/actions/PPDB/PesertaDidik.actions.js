@@ -21,6 +21,7 @@ export const GET_CALON_PD_SEKOLAH = '[PESERTA DIDIK] GET CALON PD SEKOLAH';
 export const SIMPAN_PD_DITERIMA = '[PESERTA DIDIK] SIMPAN PD DITERIMA';
 export const PERINGKAT_PESERTA_DIDIK = '[PESERTA DIDIK] PERINGKAT PESERTA DIDIK';
 export const REKAP_KUOTA_SEKOLAH = '[PESERTA DIDIK] REKAP KUOTA SEKOLAH';
+export const DAFTAR_PESERTA_DIDIK_DITERIMA = '[PESERTA DIDIK] DAFTAR PESERTA DIDIK DITERIMA';
 
 export function getRekapTotal(routeParams)
 {
@@ -406,6 +407,24 @@ export function RekapKuotaSekolah(routeParams)
         request.then((response) =>
             dispatch({
                 type   : REKAP_KUOTA_SEKOLAH,
+                payload: response.data,
+                routeParams
+            })
+        );
+}
+
+export function daftarPesertaDidikDiterima(routeParams)
+{
+    const request = axios.get(localStorage.getItem('api_base')+'/api/CalonPesertaDidik/daftarPesertaDidikDiterima', {
+        params: {
+            ...routeParams
+        }
+    });
+
+    return (dispatch) =>
+        request.then((response) =>
+            dispatch({
+                type   : DAFTAR_PESERTA_DIDIK_DITERIMA,
                 payload: response.data,
                 routeParams
             })

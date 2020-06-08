@@ -44,6 +44,11 @@ const initialState = {
         rows: [],
         count : 0,
         countAll: 0
+    },
+    peserta_didik_diterima: {
+        rows: [],
+        count: 0,
+        countAll: 0
     }
 }
 
@@ -125,6 +130,13 @@ const PPDBPesertaDidikReducer = function (state = initialState, action) {
             return {
                 ...state,
                 rekap_kuota_sekolah: action.payload
+            };
+        }
+        case Actions.DAFTAR_PESERTA_DIDIK_DITERIMA:
+        {
+            return {
+                ...state,
+                peserta_didik_diterima: action.payload
             };
         }
         default:

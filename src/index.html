@@ -147,6 +147,8 @@
       <h4 id="judul_aplikasi"> </h4>
       <div style="color:white" id="sub_judul_aplikasi"> </div>
       <br/>
+      <div style="font-style:italic;color:white" id="loading_kelamaan"></div>
+      <br/>
       <div class="preloader color-white">
         <span class="preloader-inner">
           <span class="preloader-inner-line"></span>
@@ -176,16 +178,53 @@
     // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Maluku Tengah');
     // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/3/3d/Lambang_Kabupaten_Maluku_Tengah.png');
     // localStorage.setItem('tema_warna','toska-lumut');
+    // localStorage.setItem('kode_aplikasi','PPDB-dinas');
+
+    // localStorage.setItem('judul_aplikasi','PPDB Maluku Tengah');
+    // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Maluku Tengah');
+    // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/3/3d/Lambang_Kabupaten_Maluku_Tengah.png');
+    // localStorage.setItem('tema_warna','toska-lumut');
+    // localStorage.setItem('kode_aplikasi','PPDB-sekolah');
+
+    // localStorage.setItem('judul_aplikasi','PPDB Maluku Tengah');
+    // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Maluku Tengah');
+    // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/3/3d/Lambang_Kabupaten_Maluku_Tengah.png');
+    // localStorage.setItem('tema_warna','toska-lumut');
+    // localStorage.setItem('kode_aplikasi','PPDB');
     
     localStorage.setItem('judul_aplikasi','PPDB Lumajang');
     localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Lumajang');
     localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/f/f4/Lambang_Kabupaten_Lumajang.png');
     localStorage.setItem('tema_warna','ungu-terong');
+    localStorage.setItem('kode_aplikasi','PPDB-sekolah');
+
+    // localStorage.setItem('judul_aplikasi','PPDB Lumajang');
+    // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Lumajang');
+    // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/f/f4/Lambang_Kabupaten_Lumajang.png');
+    // localStorage.setItem('tema_warna','ungu-terong');
+    // localStorage.setItem('kode_aplikasi','PPDB');
+
+    // localStorage.setItem('judul_aplikasi','PPDB Lumajang');
+    // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Lumajang');
+    // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/f/f4/Lambang_Kabupaten_Lumajang.png');
+    // localStorage.setItem('tema_warna','ungu-terong');
+    // localStorage.setItem('kode_aplikasi','PPDB-dinas');
+
+    // localStorage.setItem('judul_aplikasi','PPDB Lumajang');
+    // localStorage.setItem('sub_judul_aplikasi','Dinas Pendidikan Kabupaten Lumajang');
+    // localStorage.setItem('logo_wilayah','https://upload.wikimedia.org/wikipedia/commons/f/f4/Lambang_Kabupaten_Lumajang.png');
+    // localStorage.setItem('tema_warna','ungu-terong');
+    // localStorage.setItem('kode_aplikasi','PPDB-publik');
+    
 
     document.getElementById("logo_utama").src = localStorage.getItem('logo_wilayah');
     document.getElementById("judul_aplikasi").innerHTML = localStorage.getItem('judul_aplikasi');
     document.getElementById("sub_judul_aplikasi").innerHTML = localStorage.getItem('sub_judul_aplikasi');
     document.getElementById("splashScreen").className = (localStorage.getItem('tema_warna') === 'ungu-terong' ? 'splashScreen' : 'splashScreen2');
+    
+    setTimeout(() => {
+      document.getElementById("loading_kelamaan").innerHTML = "(Silakan reload halaman ini jika ada loading tidak segera selesai)";
+    }, 30000);
 
     window.addEventListener('load', function () {
       setTimeout(function () {

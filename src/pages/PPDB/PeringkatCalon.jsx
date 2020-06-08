@@ -428,24 +428,24 @@ class PeringkatCalon extends Component {
             <Row noGap>
                 {this.props.rekap_kuota_sekolah.rows.map((option)=>{
 
-                    if(option.jalur_id !== '0500'){
+                    // if(option.jalur_id !== '0500'){
 
-                        return (
-                            <Col width="50" tabletWidth="25">
-                                <Card>
-                                    <CardHeader style={{textAlign:'left', minHeight:'50px', alignItems:'flex-start'}}>
-                                        <b style={{fontSize:'11px'}}>{option.nama}</b>
-                                    </CardHeader>
-                                    <CardContent style={{textAlign:'left'}}>
-                                        <b style={{fontSize:'20px'}}>{option.jumlah}/{option.kuota}</b>&nbsp;
-                                        {/* <br/> */}
-                                        ({parseFloat(option.persen).toFixed(1)}%)
-                                    </CardContent>
-                                </Card>
-                            </Col>
-                        )
+                    return (
+                        <Col width="50" tabletWidth="20">
+                            <Card>
+                                <CardHeader style={{textAlign:'left', minHeight:'50px', alignItems:'flex-start'}}>
+                                    <b style={{fontSize:'11px'}}>{option.nama}</b>
+                                </CardHeader>
+                                <CardContent style={{textAlign:'left'}}>
+                                    <b style={{fontSize:'20px'}}>{option.jumlah}/{option.kuota}</b>&nbsp;
+                                    <br/>
+                                    ({parseFloat(option.persen).toFixed(1)}%)
+                                </CardContent>
+                            </Card>
+                        </Col>
+                    )
 
-                    }
+                    // }
 
                 })}
                 <Col width="100">
@@ -593,7 +593,7 @@ class PeringkatCalon extends Component {
           <Card className="noLoadContent" noShadow noBorder key={null}>
             <CardContent padding={false}>
               <img src="/static/images/icons/no-peserta.svg" alt="peserta"/>
-              <h4 className="display-block text-align-center">Data pendaftar belum ada, atau semua pendaftar telah terverifikasi!</h4>
+              <h4 className="display-block text-align-center">Data Calon Peserta Didik diterima belum ada!</h4>
             </CardContent>
           </Card>
         ) : ''}
@@ -616,7 +616,7 @@ class PeringkatCalon extends Component {
                                         </h2>
                                     </a>
                                 </Col>
-                                <Col width="100" tabletWidth="100" style={{marginBottom:'8px'}}>
+                                <Col width="100" tabletWidth="60" style={{marginBottom:'8px'}}>
                                     NIK: <b>{option.nik}</b> <br/>
                                     Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
                                     TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
@@ -624,12 +624,56 @@ class PeringkatCalon extends Component {
                                     Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                     Pendaftar: <b>{option.pendaftar}</b> ({option.email_pendaftar})<br/>
                                 </Col>
+                                <Col width="100" tabletWidth="40" style={{marginBottom:'8px'}}>
+                                    <Button
+                                        fillIos
+                                        onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id+"/displayOnly")}
+                                        //   onClick={e => this.$f7router.navigate('/ProfilCalon/'+option.calon_peserta_didik_id) }
+                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                        iconIos="f7:doc_person"
+                                        iconSize="17"
+                                        style={{marginBottom:'4px'}}
+                                    >
+                                        &nbsp;Profil
+                                    </Button>
+                                    <Button
+                                        fillIos
+                                        //   onClick={e => this.cetakFormulir(option) }
+                                        disabled={(option.status_konfirmasi === 1 ? (option.peserta_didik_id_diterima !== null ? true : false) : true)}
+                                        iconIos="f7:checkmark_alt_circle_fill"
+                                        iconSize="17"
+                                        style={{marginBottom:'4px'}}
+                                        onClick={e => this.$f7router.navigate('/vervalPendaftar/'+option.calon_peserta_didik_id) }
+                                    >
+                                        &nbsp;Verifikasi
+                                    </Button>
+                                    <Button
+                                        fillIos
+                                        onClick={e => this.cetakFormulir(option) }
+                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                        iconIos="f7:printer_fill"
+                                        iconSize="17"
+                                        style={{marginBottom:'4px'}}
+                                    >
+                                        &nbsp;Cetak Formulir
+                                    </Button>
+                                    <Button
+                                        fillIos
+                                        onClick={e => this.cetakBukti(option) }
+                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
+                                        iconIos="f7:printer_fill"
+                                        iconSize="17"
+                                        style={{marginBottom:'4px'}}
+                                    >
+                                        &nbsp;Cetak Bukti
+                                    </Button>
+                                </Col>
                             </Row>
                         </Col>
                         <Col width="100" tabletWidth="100">
-                            <Row noGap>
-                                <Col width="35" tabletWidth="35">
-                                    <Card>
+                            <Row>
+                                <Col width={option.jalur_id === '0400' ? "50" : "100"} tabletWidth={option.jalur_id === '0400' ? "30" : "60"}>
+                                    <Card style={{margin:'0px'}}>
                                         <CardHeader className="judul-jalur" style={{fontSize:'12px', minHeight:'45px'}}>
                                             Jalur<br/>
                                             <b>{option.nama_jalur}</b>
@@ -648,8 +692,9 @@ class PeringkatCalon extends Component {
                                         
                                     </p> */}
                                 </Col>
-                                <Col width="35" tabletWidth="35">
-                                    <Card>
+                                {option.jalur_id === '0400' &&
+                                <Col width="50" tabletWidth="30">
+                                    <Card style={{margin:'0px'}}>
                                         <CardHeader className="judul-jalur" style={{fontSize:'12px', minHeight:'45px'}}>
                                             Jarak dari Sekolah
                                         </CardHeader>
@@ -660,8 +705,22 @@ class PeringkatCalon extends Component {
                                         </CardContent>
                                     </Card>
                                 </Col>
-                                <Col width="30" tabletWidth="30">
-                                  <Button
+                                }
+                                {option.verifikator !== null &&
+                                <Col width="100" tabletWidth="40">
+                                    <Card style={{margin:'0px',background:'#9CCC65', fontWeight:'bold'}}>
+                                        <CardContent style={{color:'white'}}>
+                                            Berkas Diverifikasi oleh {option.verifikator}
+                                        </CardContent>
+                                    </Card>
+                                    {/* {parseInt(option.status_terima) === 1 && <Button raised fill style={{background:'#4CAF50', fontWeight:'bold'}}>Diterima (Sudah daftar Ulang) {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
+                                    {parseInt(option.status_terima) === 2 && <Button raised fill style={{background:'#FFB300', fontWeight:'bold'}}>Berkas Tidak lengkap {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
+                                    {parseInt(option.status_terima) === 3 && <Button raised fill style={{background:'#FF5722', fontWeight:'bold'}}>Ditolak {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
+                                    {parseInt(option.status_terima) === 4 && <Button raised fill style={{background:'#9E9E9E', fontWeight:'bold'}}>Cabut Berkas {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>} */}
+                                </Col>
+                                }
+                                {/* <Col width="30" tabletWidth="30"> */}
+                                  {/* <Button
                                       fillIos
                                       onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id+"/displayOnly")}
                                     //   onClick={e => this.$f7router.navigate('/ProfilCalon/'+option.calon_peserta_didik_id) }
@@ -671,7 +730,7 @@ class PeringkatCalon extends Component {
                                       style={{marginBottom:'4px'}}
                                   >
                                       &nbsp;Profil
-                                  </Button>
+                                  </Button> */}
                                   {/* <Button
                                       fillIos
                                     //   onClick={e => this.cetakFormulir(option) }
@@ -683,7 +742,7 @@ class PeringkatCalon extends Component {
                                   >
                                       &nbsp;Verifikasi
                                   </Button> */}
-                                  <Button
+                                  {/* <Button
                                       fillIos
                                       onClick={e => this.cetakFormulir(option) }
                                       disabled={(option.status_konfirmasi === 1 ? false : true)}
@@ -702,17 +761,13 @@ class PeringkatCalon extends Component {
                                       style={{marginBottom:'4px'}}
                                   >
                                       &nbsp;Cetak Bukti
-                                  </Button>
-                                </Col>
-                                {option.verifikator !== null &&
+                                  </Button> */}
+                                {/* </Col> */}
+                                {/* {option.verifikator !== null &&
                                 <Col width="100" tabletWidth="100">
                                     <Button raised fill style={{background:'#9CCC65', fontWeight:'bold'}}>Berkas Diverifikasi oleh {option.verifikator}</Button>
-                                    {/* {parseInt(option.status_terima) === 1 && <Button raised fill style={{background:'#4CAF50', fontWeight:'bold'}}>Diterima (Sudah daftar Ulang) {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
-                                    {parseInt(option.status_terima) === 2 && <Button raised fill style={{background:'#FFB300', fontWeight:'bold'}}>Berkas Tidak lengkap {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
-                                    {parseInt(option.status_terima) === 3 && <Button raised fill style={{background:'#FF5722', fontWeight:'bold'}}>Ditolak {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
-                                    {parseInt(option.status_terima) === 4 && <Button raised fill style={{background:'#9E9E9E', fontWeight:'bold'}}>Cabut Berkas {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>} */}
                                 </Col>
-                                }
+                                } */}
                             </Row>
                         </Col>
                     </Row>

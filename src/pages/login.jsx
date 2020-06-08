@@ -263,7 +263,6 @@ class login extends Component {
               Login sebagai sekolah
             </Button> */}
             <p className="loginFooter">{localStorage.getItem('sub_judul_aplikasi')} ©2020</p>
-            <br/>
             <p style={{textAlign:'center', marginBottom:'-20px', fontSize:'10px'}}>
               Didukung oleh
               <br/>

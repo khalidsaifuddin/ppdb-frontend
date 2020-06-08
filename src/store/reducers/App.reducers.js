@@ -279,7 +279,7 @@ const appReducer = function (state = initialState, action) {
         {
             return {
                 ...state,
-                calon: action.calon
+                calon: (action.calon ? action.calon : 0)
             };
         }
         default:

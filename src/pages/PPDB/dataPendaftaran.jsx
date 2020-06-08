@@ -64,7 +64,8 @@ class DaftarPendaftaran extends Component {
         sekolah_id: (localStorage.getItem('kode_aplikasi')  === 'PPDB-sekolah' ? JSON.parse(localStorage.getItem('user')).sekolah_id : null),
         keyword : '',
         start: 0,
-        limit: 10
+        limit: 10,
+        kode_wilayah: (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? localStorage.getItem('kode_wilayah_aplikasi') : null)
     },
     start: 0,
     activePage: 1,
@@ -131,6 +132,7 @@ class DaftarPendaftaran extends Component {
           routeParams: {
               ...this.state.routeParams,
               start: 0
+              // kode_wilayah: (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? localStorage.getItem('kode_wilayah_aplikasi') : null)
           }
       },()=>{
           // console.log('loading:'+this.state.loading);
@@ -208,6 +210,53 @@ class DaftarPendaftaran extends Component {
     },()=>{
       // console.log('batal');
     });
+  }
+
+  simpanKonfirmasi = (status, pengguna_id, calon_peserta_didik_id) => {
+
+    this.setState({
+        ...this.state,
+        disableButton: true
+    },()=>{
+
+      this.$f7.dialog.confirm('Apakah Anda yakin ingin konfirmasi?','Konfirmasi',()=>{
+
+          this.setState({
+              routeParamsKonfirmasi:{
+                  status: status,
+                  pengguna_id: pengguna_id,
+                  calon_peserta_didik_id: calon_peserta_didik_id
+              }
+          },()=>{
+              this.props.simpanKonfirmasiPendaftaran(this.state.routeParamsKonfirmasi).then((result)=>{
+                  if(parseInt(this.state.routeParams.status) === 1){
+                      //konfirmasi
+                      this.setState({
+                          ...this.state,
+                          disableButton: false
+                      });
+                      this.$f7router.navigate("/Daftar/");
+                  }else{
+                      //simpan draft
+                      this.setState({
+                          ...this.state,
+                          disableButton: false
+                      });
+                      this.$f7router.navigate("/Daftar/");
+                  }
+              });
+          });
+          
+      },()=>{
+          this.setState({
+              ...this.state,
+              disableButton: false
+          });
+      });
+
+    });
+
+
   }
 
   render() {
@@ -431,6 +480,11 @@ class DaftarPendaftaran extends Component {
                                       {this.state.disabledButton && <Preloader color="white"></Preloader>}&nbsp;Batalkan Konfirmasi
                                   </Button>
                                   }
+                                  {/* {localStorage.getItem('kode_aplikasi') !== 'PPDB' &&
+                                  <Button raised fill onClick={()=>this.simpanKonfirmasi("1", option.pengguna_id, option.calon_peserta_didik_id)} disabled={(option.status_konfirmasi === 1 ? false : true)}>
+                                    {this.state.disableButton && <Preloader color="white"></Preloader>} Konfirmasi Pendaftar ini
+                                  </Button>
+                                  } */}
                                   <Button
                                       fillIos
                                       onClick={e => this.cetakFormulir(option) }
@@ -463,7 +517,7 @@ class DaftarPendaftaran extends Component {
                                             <CardContent style={{padding:'4px', background: 'rgba(0, 0, 0, 0.5)', minHeight:'100px'}}>
                                             <div style={{fontSize:'12px', color:'white', minHeight:'35px'}}><b>{optionSekolah.nama_sekolah}</b></div>
                                             <div style={{fontSize:'12px', color:'#FFF9C4', fontWeight:'bold'}}>Jalur {optionSekolah.jalur}</div>
-                                            <div style={{fontSize:'12px', color:'white'}}>No.Urut Sementara</div>
+                                            <div style={{fontSize:'12px', color:'white'}}>No.Urut Pendaftaran Sementara</div>
                                             <div style={{fontSize:'25px', fontWeight:'bold', color:'white'}}>{optionSekolah.urutan}/{optionSekolah.kuota}</div>
                                             </CardContent>
                                         </Card>
@@ -557,7 +611,8 @@ class DaftarPendaftaran extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getCalonPD: Actions.getCalonPD,
-    batalkanKonfirmasi : Actions.batalkanKonfirmasi
+    batalkanKonfirmasi : Actions.batalkanKonfirmasi,
+    simpanKonfirmasiPendaftaran: Actions.simpanKonfirmasiPendaftaran
   }, dispatch);
 }
 

@@ -191,7 +191,7 @@ class vervalPendaftar extends Component {
                                     // onChange={()=>this.klikPilihSekolah(option.sekolah_id, option.nama, option.npsn, (option.alamat_jalan + ", " + option.kecamatan + ", " + option.kabupaten + ", " + option.provinsi), option.bentuk_pendidikan_id, option.status_sekolah, option.jarak)}
                                 />
                             </ListItem>
-                            <ListItem title="Cabut Berkas">
+                            {/* <ListItem title="Cabut Berkas">
                                 <Radio 
                                     name={"status_terima"} 
                                     value={4} 
@@ -199,11 +199,11 @@ class vervalPendaftar extends Component {
                                     onChange={()=>this.klikVerval(4)}
                                     disabled={this.state.loading}
                                 />
-                            </ListItem>
+                            </ListItem> */}
                         </List>
                         <br/>
                         <br/>
-                        <Button disabled={this.state.loading} raised fill large onClick={this.simpanVerval}>
+                        <Button disabled={(this.state.loading ? true : (this.state.routeParams.status_terima === null ? true : false))} raised fill large onClick={this.simpanVerval}>
                         {this.state.loading && <Preloader color="white"></Preloader>}&nbsp;Simpan
                         </Button>
                     </CardContent>

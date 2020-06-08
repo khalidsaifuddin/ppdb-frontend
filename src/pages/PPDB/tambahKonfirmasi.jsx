@@ -332,8 +332,8 @@ class tambahKonfirmasi extends Component {
                     </Segmented>
                     {this.state.displayOnly !== null &&
                     <>
-                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
-                        &nbsp;Verifikasi
+                    <Button disabled={(this.state.routeParams.status_terima !== null ? true : false)} raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp; {(this.state.routeParams.status_terima !== null ? <>Telah diverifikasi</> : <>Verifikasi</>)}
                     </Button>
                     <br/>
                     </>

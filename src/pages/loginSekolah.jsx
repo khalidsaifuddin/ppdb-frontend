@@ -151,7 +151,10 @@ class loginSekolah extends Component {
               
             }else{
               //koreg tidak sesuai
-              this.$f7.dialog.alert("Kode registrasi tidaks sesuai!", 'Peringatan');
+              this.$f7.dialog.alert("Kode registrasi tidak sesuai!", 'Peringatan');
+              this.setState({
+                loading:false
+              })
             }
 
           }else{
@@ -196,15 +199,17 @@ class loginSekolah extends Component {
 
   render() {
     return (
-      <Page className="loginPage" name="loginSekolah" hideBarsOnScroll>
+      <Page className={localStorage.getItem('tema_warna') === 'ungu-terong' ? "loginPage" : "loginPage2"} name="loginSekolah" hideBarsOnScroll>
         {this.state.loading &&
           <Progressbar className="loginProgress" infinite color="blue" />
         }
         <Block className="loginBox">
           <div className="logoApp">
-            <img src="./static/images/logo-kabupaten-lumajang.png" height="25" alt="kabupaten lumajang" />
-            <LoginScreenTitle>{localStorage.getItem('judul_aplikasi')}</LoginScreenTitle>
-            <LoginScreenTitle style={{fontStyle:'20px'}}>Masuk Dasbor Sekolah</LoginScreenTitle>
+            <img src={localStorage.getItem('logo_wilayah')} height="25" alt="kabupaten lumajang" />
+            <LoginScreenTitle>
+              {localStorage.getItem('judul_aplikasi')}
+              <div style={{fontStyle:'20px'}}>Masuk Dasbor Sekolah</div>
+            </LoginScreenTitle>
           </div>
           <List form>
             <ListInput
@@ -226,19 +231,27 @@ class loginSekolah extends Component {
               onInput={(e) => this.setState({routeParams:{...this.state.routeParams,koreg: e.target.value}})}
             />
           </List>
-            <Button 
-                fill 
-                large
-                className="loginBtn"
-                iconIos="f7:square_arrow_right" 
-                iconAurora="f7:square_arrow_right" 
-                iconMd="material:enter"  
-                title="Masuk" 
-                disabled={(this.state.loading ? true : false)}
-                onClick={this.doLogin}
-            >
-                &nbsp; Masuk Dasbor Sekolah
-            </Button>
+          <Button 
+              fill 
+              large
+              className="loginBtn"
+              iconIos="f7:square_arrow_right" 
+              iconAurora="f7:square_arrow_right" 
+              iconMd="material:enter"  
+              title="Masuk" 
+              disabled={(this.state.loading ? true : false)}
+              onClick={this.doLogin}
+          >
+              &nbsp; Masuk Dasbor Sekolah
+          </Button>
+          <p className="loginFooter">Dinas Pendidikan {localStorage.getItem('wilayah_aplikasi')} ©2020</p>
+          <br/>
+          <p style={{textAlign:'center', marginBottom:'-20px', fontSize:'10px'}}>
+            Didukung oleh
+            <br/>
+            <img src="static/images/ppdblite_logo.png" height="25" />
+          </p>
+          <br/>
         </Block>
         <div className="animatedWave wave--1"></div>
         <div className="animatedWave wave--2"></div>

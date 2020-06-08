@@ -18,8 +18,8 @@ class tambahJalurSekolah extends Component {
             pengguna_id: (localStorage.getItem('kode_aplikasi') === 'PPDB' ? JSON.parse(localStorage.getItem('user')).pengguna_id : null),
             // pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
             calon_peserta_didik_id: this.$f7route.params['peserta_didik_id'] ? this.$f7route.params['peserta_didik_id'] : null,
-            kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
-            id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
+            // kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+            // id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi'),
             start: 0,
             limit: 10,
             pilihan_sekolah: [{
@@ -305,7 +305,9 @@ class tambahJalurSekolah extends Component {
             this.setState({
                 routeParams: {
                     ...this.state.routeParams,
-                    searchText: 'apcbdfd'
+                    searchText: 'apcbdfd',
+                    kode_wilayah: localStorage.getItem('kode_wilayah_aplikasi'),
+                    id_level_wilayah: localStorage.getItem('id_level_wilayah_aplikasi')
                     // bentuk_pendidikan_id: (this.state.usia <= 12 ? '5' : '5-6')
                 }
             },()=>{
@@ -544,8 +546,8 @@ class tambahJalurSekolah extends Component {
                     </Segmented>
                     {this.state.displayOnly !== null &&
                     <>
-                    <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
-                        &nbsp;Verifikasi
+                    <Button disabled={(this.state.routeParams.status_terima !== null ? true : false)} raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+                        &nbsp; {(this.state.routeParams.status_terima !== null ? <>Telah diverifikasi</> : <>Verifikasi</>)}
                     </Button>
                     <br/>
                     </>

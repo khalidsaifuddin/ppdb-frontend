@@ -121,9 +121,11 @@ class JadwalKegiatan extends Component {
 					<div className="judulKegiatan">
 						<h3>Daftar Jadwal Kegiatan</h3>
 						<div className="tautanKegiatan">
+							{localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
 							<Button raised fill color="deeppurple" onClick={e => this.handleLink([], "/jadwalKegiatan/create")}>
 								<Icon f7="calendar_badge_plus" size="18px" /> <span>BUAT JADWAL</span>
 							</Button>
+							}
 						</div>
 					</div>
 					{this.state.items.length === 0 ? (

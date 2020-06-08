@@ -37,7 +37,7 @@ import * as Actions from '../../store/actions';
 
 import Pagination from "react-js-pagination";
 
-class DaftarCalonPesertaDidikSekolah extends Component {
+class PeringkatCalonLain extends Component {
   
   state = {
     error: null,
@@ -47,9 +47,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         keyword : '',
         start: 0,
         limit: 10,
-        urut: 'jarak',
-        verifikasi: 'N',
-        urut_pilihan: 1
+        urut: 'jarak_asc',
+        verifikasi: 'Y',
+        status_terima: 1,
+        tipe: 'lain'
     },
     sekolah: {},
     start: 0,
@@ -82,7 +83,8 @@ class DaftarCalonPesertaDidikSekolah extends Component {
     },
     label_pilihan: 'Semua',
     label_urut: 'No Urut',
-    label_jalur: 'Semua'
+    label_jalur: 'Semua',
+    tanggal_rekap: '2020-01-01'
   }
 
   getData = () => {
@@ -93,10 +95,11 @@ class DaftarCalonPesertaDidikSekolah extends Component {
     },
     loading: true
     }, ()=> {
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
+            // this.props.setCalon(this.props.peringkat_peserta_didik.countAll);
             this.setState({
                 loading: false,
-                entities: this.props.calon_pd_sekolah
+                entities: this.props.peringkat_peserta_didik
             });
         })
     });
@@ -129,20 +132,33 @@ class DaftarCalonPesertaDidikSekolah extends Component {
               start: 0
           }
       },()=>{
-          this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
-              this.setState({
-                  sekolah: this.props.ppdb_sekolah.rows[0]
-              });
+            this.props.getPPDBSekolah(this.state.routeParams).then((result)=>{
+                this.setState({
+                    sekolah: this.props.ppdb_sekolah.rows[0]
+                });
+            });
+
+            this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
+                // this.props.setCalon(this.props.peringkat_peserta_didik.countAll);
+                this.setState({
+                    loading: false,
+                    entities: this.props.peringkat_peserta_didik
+                });
+
+            //   this.props.setPendaftar(this.props.peringkat_peserta_didik.countAll);
           });
 
-          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
-              this.setState({
-                  loading: false,
-                  entities: this.props.calon_pd_sekolah
-              });
-
-              this.props.setPendaftar(this.props.calon_pd_sekolah.countAll);
-          });
+            this.props.RekapKuotaSekolah(this.state.routeParams).then((result)=>{
+                // this.setState({
+                //     sekolah: this.props.ppdb_sekolah.rows[0]
+                // });
+                
+                this.props.rekap_kuota_sekolah.rows.map((option)=>{
+                    this.setState({
+                        tanggal_rekap: (option.tanggal_rekap !== null ? option.tanggal_rekap : this.state.tanggal_rekap)
+                    });
+                })
+            });
       });
   }
 
@@ -155,10 +171,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
       start: parseInt(this.state.start)+parseInt(this.state.limit),
       loading: true
     }, ()=> {
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
             this.setState({
                 loading: false,
-                entities: this.props.calon_pd_sekolah
+                entities: this.props.peringkat_peserta_didik
             });
         })
     });
@@ -174,10 +190,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
       activePage: pageNumber,
       loading: true
     },()=>{
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
             this.setState({
                 loading: false,
-                entities: this.props.calon_pd_sekolah
+                entities: this.props.peringkat_peserta_didik
             });
         })
     });
@@ -195,10 +211,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         label_urut: label,
         loading: true
       },()=>{
-          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+          this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
               this.setState({
                   loading: false,
-                  entities: this.props.calon_pd_sekolah
+                  entities: this.props.peringkat_peserta_didik
               });
           })
     });
@@ -216,10 +232,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         label_urut: label,
         loading: true
       },()=>{
-          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+          this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
               this.setState({
                   loading: false,
-                  entities: this.props.calon_pd_sekolah
+                  entities: this.props.peringkat_peserta_didik
               });
           })
     });
@@ -237,10 +253,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         label_pilihan: label,
         loading: true
       },()=>{
-          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+          this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
               this.setState({
                   loading: false,
-                  entities: this.props.calon_pd_sekolah
+                  entities: this.props.peringkat_peserta_didik
               });
           })
     });
@@ -258,10 +274,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         label_jalur: label,
         loading: true
       },()=>{
-          this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+          this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
               this.setState({
                   loading: false,
-                  entities: this.props.calon_pd_sekolah
+                  entities: this.props.peringkat_peserta_didik
               });
           })
     });
@@ -302,10 +318,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
             [tipe]: 1
         }
     },()=>{
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
             this.setState({
                 loading: false,
-                entities: this.props.calon_pd_sekolah
+                entities: this.props.peringkat_peserta_didik
             });
         })
     });
@@ -322,10 +338,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
         },
         activePage: 1
     },()=>{
-        this.props.getCalonPesertaDidikSekolah(this.state.routeParams).then((result)=>{
+        this.props.PeringkatPesertaDidik(this.state.routeParams).then((result)=>{
             this.setState({
                 loading: false,
-                entities: this.props.calon_pd_sekolah
+                entities: this.props.peringkat_peserta_didik
             });
         })
     });
@@ -344,8 +360,10 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                         // smartSelectParams={{openIn: 'sheet', searchbar: true, searchbarPlaceholder: 'Saring Bentuk'}}
                         >
                         <select name="urut" defaultValue={"jarak"} onChange={this.setParamValue}>
-                            <option value={"jarak"}>Jarak</option>
-                            <option value={"urut"}>No Urut Pendaftaran</option>
+                            <option value={"jarak_asc"}>Jarak (Dekat ke Jauh)</option>
+                            <option value={"jarak_desc"}>Jarak (Jauh ke Dekat)</option>
+                            <option value={"nama_asc"}>Nama (A-Z)</option>
+                            <option value={"nama_desc"}>Nama (Z-A)</option>
                         </select>
                     </ListItem>
                 </List>
@@ -353,9 +371,8 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                     {/* <ListItem
                         title="Pilihan"
                         smartSelect
-                        // smartSelectParams={{openIn: 'sheet', searchbar: true, searchbarPlaceholder: 'Saring Bentuk'}}
-                        >
-                        <select name="urut_pilihan" defaultValue={"1"} onChange={this.setParamValue}>
+                    >
+                        <select name="urut_pilihan" defaultValue={"99"} onChange={this.setParamValue}>
                             <option value={"99"}>Semua</option>
                             <option value={"1"}>Pilihan 1</option>
                             <option value={"2"}>Pilihan 2</option>
@@ -365,8 +382,7 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                     <ListItem
                         title="Jalur"
                         smartSelect
-                        // smartSelectParams={{openIn: 'sheet', searchbar: true, searchbarPlaceholder: 'Saring Bentuk'}}
-                        >
+                    >
                         <select name="jalur_id" defaultValue={"99"} onChange={this.setParamValue}>
                             <option value={"99"}>Semua</option>
                             <option value={"0100"}>Affirmasi</option>
@@ -374,12 +390,6 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                             <option value={"0300"}>Minat & Bakat</option>
                             <option value={"0400"}>Zonasi</option>
                             <option value={"0500"}>Tahfidz</option>
-                            {/* <MenuDropdownItem href="#" text="Semua" onClick={()=>this.saring('99', "Semua")}/>
-                            <MenuDropdownItem href="#" text="Affirmasi" onClick={()=>this.saring('0100', "Affirmasi")}/>
-                            <MenuDropdownItem href="#" text="Perpindahan Orang Tua" onClick={()=>this.saring('0200', "Perpindahan Orang Tua")} />  
-                            <MenuDropdownItem href="#" text="Zonasi" onClick={()=>this.saring('0400', "Zonasi")} />  
-                            <MenuDropdownItem href="#" text="Minat & Bakat" onClick={()=>this.saring('0300', "Minat & Bakat")} />  
-                            <MenuDropdownItem href="#" text="Tahfidz" onClick={()=>this.saring('0500', "Tahfidz")} />  */}
                         </select>
                     </ListItem>
                 </List>
@@ -391,7 +401,7 @@ class DaftarCalonPesertaDidikSekolah extends Component {
     return (
       <Page name="data-pendaftar">
         <Navbar sliding={false} backLink="Kembali">
-          <NavTitle sliding>Pendaftar di {this.state.sekolah.nama}</NavTitle>
+          <NavTitle sliding>Calon Peserta Didik Lainnya</NavTitle>
           <Subnavbar inner={false}>
             <Searchbar
               className="searchbar-demo"
@@ -406,17 +416,11 @@ class DaftarCalonPesertaDidikSekolah extends Component {
           </Subnavbar>
         </Navbar>
         <Block strong style={{marginTop:'-4px', marginBottom:'0px'}}>Data Pendaftar</Block>
-        <Block strong style={{marginTop:'0px', marginBottom:'0px'}}>
-            <Segmented raised>
-                <Button tabLinkActive={this.state.tabLinkActive.semua} onClick={()=>this.pindahTab('semua')}>Daftar</Button>
-                <Button tabLinkActive={this.state.tabLinkActive.diterima} onClick={()=>this.$f7router.navigate('/PetaSebaranPendaftar/'+this.state.routeParams.sekolah_id)}>Peta Sebaran</Button>
-            </Segmented>
-        </Block>
-        <Block strong style={{marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
+        <Block strong style={{marginTop:'8px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}>
         {/* <Block strong style={{overflowY:'hidden', overflowX:'auto', marginTop:'0px', marginBottom:(localStorage.getItem('kode_aplikasi') === 'PPDB' ? '8px' : '-45px')}}> */}
             <Row noGap>
                 <Col width="60">
-                    Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data pendaftar belum diverifikasi
+                    Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data calon peserta didik lainnya
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
                 <Col width="40" style={{textAlign:'right'}}>
@@ -510,7 +514,7 @@ class DaftarCalonPesertaDidikSekolah extends Component {
           <Card className="noLoadContent" noShadow noBorder key={null}>
             <CardContent padding={false}>
               <img src="/static/images/icons/no-peserta.svg" alt="peserta"/>
-              <h4 className="display-block text-align-center">Data pendaftar belum ada, atau semua pendaftar telah terverifikasi!</h4>
+              <h4 className="display-block text-align-center">Data Calon Peserta Didik lainnya belum ada!</h4>
             </CardContent>
           </Card>
         ) : ''}
@@ -524,93 +528,41 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                             {/* <img src={"http://foto.data.kemdikbud.go.id/getImage/" + option.npsn + "/1.jpg"} style={{maxHeight:'150px', minHeight:'150px', minWidth:'100%', border:'0px solid #ccc', marginBottom:'-5px'}}></img>  */}
                             <img src={(option.pas_foto.search("assets") !== -1 ? localStorage.getItem("api_base")+option.pas_foto : option.pas_foto)} style={{maxHeight:'120px', minHeight:'120px', border:'0px solid #ccc', marginBottom:'-5px'}}></img> 
                         </Col>
-                        <Col width="70" tabletWidth="85">
+                        <Col width="70" tabletWidth="45">
                             <Row noGap>
                                 <Col width="100">
-                                    <a href={"#"+ option.sekolah_id}>
+                                    <a onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id+"/displayOnly")}>
                                         <h2 style={{marginTop: '0px', marginBottom: '0px'}}>
                                             { option.nama}  
                                         </h2>
                                     </a>
                                 </Col>
-                                <Col width="100" tabletWidth="60" style={{marginBottom:'8px'}}>
+                                <Col width="100" tabletWidth="100" style={{marginBottom:'8px'}}>
                                     NIK: <b>{option.nik}</b> <br/>
                                     Jenis Kelamin: <b> { option.jenis_kelamin === 'L' ? 'Laki laki' : option.jenis_kelamin === 'P' ? 'Perempuan' : '' } </b> <br/>
                                     TTL: <b>{ option.tempat_lahir }, { option.tanggal_lahir }</b> <br/>
-                                    Titik Koordinat: <b>{ option.lintang }, {option.bujur}</b> <Link onClick={()=>window.open('https://www.google.com/maps/@'+option.lintang+','+option.bujur+',17z')}>(Google Maps)</Link><br/>
+                                    Titik Koordinat: <b>{ option.lintang }, {option.bujur}</b> <br/>
                                     Sekolah Asal: <b>{ option.sekolah_asal.nama } ({option.sekolah_asal.npsn})</b> <br/>
                                     Pendaftar: <b>{option.pendaftar}</b> ({option.email_pendaftar})<br/>
                                 </Col>
-                                <Col width="100" tabletWidth="40" style={{marginBottom:'8px'}}>
-                                    <Button
-                                        fillIos
-                                        onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id+"/displayOnly")}
-                                        //   onClick={e => this.$f7router.navigate('/ProfilCalon/'+option.calon_peserta_didik_id) }
-                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
-                                        iconIos="f7:doc_person"
-                                        iconSize="17"
-                                        style={{marginBottom:'4px'}}
-                                    >
-                                        &nbsp;Profil
-                                    </Button>
-                                    <Button
-                                        fillIos
-                                        //   onClick={e => this.cetakFormulir(option) }
-                                        disabled={(option.status_konfirmasi === 1 ? (option.peserta_didik_id_diterima !== null ? true : false) : true)}
-                                        iconIos="f7:checkmark_alt_circle_fill"
-                                        iconSize="17"
-                                        style={{marginBottom:'4px'}}
-                                        onClick={e => this.$f7router.navigate('/vervalPendaftar/'+option.calon_peserta_didik_id) }
-                                    >
-                                        &nbsp;Verifikasi
-                                    </Button>
-                                    <Button
-                                        fillIos
-                                        onClick={e => this.cetakFormulir(option) }
-                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
-                                        iconIos="f7:printer_fill"
-                                        iconSize="17"
-                                        style={{marginBottom:'4px'}}
-                                    >
-                                        &nbsp;Cetak Formulir
-                                    </Button>
-                                    <Button
-                                        fillIos
-                                        onClick={e => this.cetakBukti(option) }
-                                        disabled={(option.status_konfirmasi === 1 ? false : true)}
-                                        iconIos="f7:printer_fill"
-                                        iconSize="17"
-                                        style={{marginBottom:'4px'}}
-                                    >
-                                        &nbsp;Cetak Bukti
-                                    </Button>
-                                </Col>
                             </Row>
                         </Col>
-                        <Col width="100" tabletWidth="100">
+                        <Col width="100" tabletWidth="40">
                             <Row noGap>
-                                <Col width={option.jalur_id === '0400' ? "50" : "100"} tabletWidth={option.jalur_id === '0400' ? "50" : "100"}>
+                                {/* <Col width="35" tabletWidth="35">
                                     <Card>
                                         <CardHeader className="judul-jalur" style={{fontSize:'12px', minHeight:'45px'}}>
                                             Jalur<br/>
-                                            {option.jalur}
+                                            <b>{option.nama_jalur}</b>
                                         </CardHeader>
                                         <CardContent className="judul-jalur" style={{minHeight:'85px'}}>
-                                            <span style={{fontSize:'15px', fontWeight:'bold'}}>Pilihan {option.urut_pilihan}</span><br/>
-                                            <span style={{fontSize:'10px'}}>No Urut Pendaftaran</span>
+                                            <span style={{fontSize:'10px'}}>No Urut Penerimaan</span>
                                             <br/>
-                                            <span className="no-urut">{option.urutan}</span>
+                                            <span className="no-urut">{option.no_urut_final}</span>
                                         </CardContent>
                                     </Card>
-                                    {/* <p style={{textAlign:'center'}}>
-                                        
-                                    </p>
-                                    <p style={{textAlign:'center'}}>
-                                        
-                                    </p> */}
-                                </Col>
-                                {option.jalur_id === '0400' &&
-                                <Col width="50" tabletWidth="50">
+                                </Col> */}
+                                {/* <Col width="35" tabletWidth="35">
                                     <Card>
                                         <CardHeader className="judul-jalur" style={{fontSize:'12px', minHeight:'45px'}}>
                                             Jarak dari Sekolah
@@ -621,30 +573,17 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                                             <span style={{fontSize:'15px'}}>meter (<b>{parseFloat(option.jarak_km).toFixed(2)} km</b>)</span>
                                         </CardContent>
                                     </Card>
-                                </Col>
-                                }
-                                {/* <Col width="30" tabletWidth="30"> */}
-                                  {/* <Button
+                                </Col> */}
+                                {/* <Col width="30" tabletWidth="30">
+                                  <Button
                                       fillIos
                                       onClick={()=>this.$f7router.navigate("/tambahCalonPesertaDidik/"+option.calon_peserta_didik_id+"/displayOnly")}
-                                    //   onClick={e => this.$f7router.navigate('/ProfilCalon/'+option.calon_peserta_didik_id) }
                                       disabled={(option.status_konfirmasi === 1 ? false : true)}
                                       iconIos="f7:doc_person"
                                       iconSize="17"
                                       style={{marginBottom:'4px'}}
                                   >
                                       &nbsp;Profil
-                                  </Button>
-                                  <Button
-                                      fillIos
-                                    //   onClick={e => this.cetakFormulir(option) }
-                                      disabled={(option.status_konfirmasi === 1 ? (option.peserta_didik_id_diterima !== null ? true : false) : true)}
-                                      iconIos="f7:checkmark_alt_circle_fill"
-                                      iconSize="17"
-                                      style={{marginBottom:'4px'}}
-                                      onClick={e => this.$f7router.navigate('/vervalPendaftar/'+option.calon_peserta_didik_id) }
-                                  >
-                                      &nbsp;Verifikasi
                                   </Button>
                                   <Button
                                       fillIos
@@ -665,15 +604,30 @@ class DaftarCalonPesertaDidikSekolah extends Component {
                                       style={{marginBottom:'4px'}}
                                   >
                                       &nbsp;Cetak Bukti
-                                  </Button> */}
-                                {/* </Col> */}
-                                {option.peserta_didik_id_diterima !== null &&
+                                  </Button>
+                                </Col> */}
+                                <Col width="100" tabletWidth="100" style={{marginBottom:'0px'}}>
+                                    {/* <Button raised fill style={{background:(parseInt(option.status_terima) === 3 ? 'red' : '#8CCC65'), fontWeight:'bold'}}> */}
+                                    <Card style={{margin:'0px',marginBottom:'8px',background:(parseInt(option.status_terima) === 3 ? 'red' : '#8CCC65'), fontWeight:'bold'}}>
+                                        <CardContent style={{color:'white'}}>
+                                            {option.status} {(option.sekolah_id_penerima !== null && <>({option.sekolah_penerima})</>)}
+                                        </CardContent>
+                                    </Card>
+                                    {/* </Button> */}
+                                </Col>
+                                {option.verifikator !== null &&
                                 <Col width="100" tabletWidth="100">
-                                    {parseInt(option.status_terima) === 9 && <Button raised fill style={{background:'#9CCC65', fontWeight:'bold'}}>Terverifikasi {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
-                                    {parseInt(option.status_terima) === 1 && <Button raised fill style={{background:'#4CAF50', fontWeight:'bold'}}>Diterima (Sudah daftar Ulang) {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
+                                    {/* <Button raised fill style={{background:'#9CCC65', fontWeight:'bold'}}> */}
+                                    <Card style={{margin:'0px',marginBottom:'8px',background:'#9CCC65', fontWeight:'bold'}}>
+                                        <CardContent style={{color:'white'}}>
+                                            Berkas Diverifikasi oleh {option.verifikator}
+                                        </CardContent>
+                                    </Card>
+                                    {/* </Button> */}
+                                    {/* {parseInt(option.status_terima) === 1 && <Button raised fill style={{background:'#4CAF50', fontWeight:'bold'}}>Diterima (Sudah daftar Ulang) {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
                                     {parseInt(option.status_terima) === 2 && <Button raised fill style={{background:'#FFB300', fontWeight:'bold'}}>Berkas Tidak lengkap {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
                                     {parseInt(option.status_terima) === 3 && <Button raised fill style={{background:'#FF5722', fontWeight:'bold'}}>Ditolak {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
-                                    {parseInt(option.status_terima) === 4 && <Button raised fill style={{background:'#9E9E9E', fontWeight:'bold'}}>Cabut Berkas {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>}
+                                    {parseInt(option.status_terima) === 4 && <Button raised fill style={{background:'#9E9E9E', fontWeight:'bold'}}>Cabut Berkas {option.diterima_sekolah === 'sekolah_lain' && <>oleh {option.sekolah_penerima}</>}</Button>} */}
                                 </Col>
                                 }
                             </Row>
@@ -736,10 +690,13 @@ function mapDispatchToProps(dispatch) {
     getCalonPD: Actions.getCalonPD,
     batalkanKonfirmasi : Actions.batalkanKonfirmasi,
     getPPDBSekolah: Actions.getPPDBSekolah,
-    getCalonPesertaDidikSekolah: Actions.getCalonPesertaDidikSekolah,
+    PeringkatPesertaDidik: Actions.PeringkatPesertaDidik,
     setJudulKanan: Actions.setJudulKanan,
     setIsiKanan: Actions.setIsiKanan,
-    setPendaftar: Actions.setPendaftar
+    setPendaftar: Actions.setPendaftar,
+    PeringkatPesertaDidik: Actions.PeringkatPesertaDidik,
+    RekapKuotaSekolah: Actions.RekapKuotaSekolah,
+    setCalon: Actions.setCalon
   }, dispatch);
 }
 
@@ -747,9 +704,12 @@ function mapStateToProps({ App, PPDBPesertaDidik, PPDBSekolah }) {
   return {
     window_dimension: App.window_dimension,
     ppdb_sekolah: PPDBSekolah.ppdb_sekolah,
-    calon_pd_sekolah: PPDBPesertaDidik.calon_pd_sekolah
+    calon_pd_sekolah: PPDBPesertaDidik.calon_pd_sekolah,
+    peringkat_peserta_didik: PPDBPesertaDidik.peringkat_peserta_didik,
+    rekap_kuota_sekolah: PPDBPesertaDidik.rekap_kuota_sekolah,
+    calon: PPDBPesertaDidik.calon
   }
 }
 
-export default (connect(mapStateToProps, mapDispatchToProps)(DaftarCalonPesertaDidikSekolah));
+export default (connect(mapStateToProps, mapDispatchToProps)(PeringkatCalonLain));
   

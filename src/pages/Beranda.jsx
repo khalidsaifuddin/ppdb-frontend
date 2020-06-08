@@ -85,76 +85,92 @@ class Beranda extends Component {
   }
 
   componentDidMount = () => {
-    if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
-      let arrUrl = window.location.href.split("#");
 
-      if(arrUrl.length > 1) {
-        switch (arrUrl[1]) {
-          case 'loginsekolah':
-            this.$f7router.navigate('/loginSekolah/');
-            break;
-          default:
-            this.$f7router.navigate('/login/');
-            break;
+    // console.log(localStorage.getItem('kode_aplikasi'));
+    if(localStorage.getItem('kode_aplikasi') !== 'PPDB-publik'){
+
+      if(parseInt(localStorage.getItem('sudah_login')) !== 1) {
+        let arrUrl = window.location.href.split("#");
+        
+        // if(parseInt(localStorage.getItem('publik')) === 1){
+        //   //publik
+        //   this.$f7router.navigate("/cari/");
+        // }
+  
+        if(arrUrl.length > 1) {
+          switch (arrUrl[1]) {
+            case 'loginsekolah':
+              this.$f7router.navigate('/loginSekolah/');
+              break;
+            default:
+              this.$f7router.navigate('/login/');
+              break;
+          }
+        } else {
+          this.$f7router.navigate('/login/');
         }
-      } else {
-        this.$f7router.navigate('/login/');
       }
-    }
-
-    localStorage.setItem('current_url', '/');
-
-    let socket = io(localStorage.getItem('socket_url'));
-
-    socket.on('updateUserList', (users) => {
-      this.setState({
-        users
-      }, ()=> {});
-    });
-
-    if(parseInt(localStorage.getItem('sudah_login')) === 1) {
-      this.setState({
-        loadingPendaftaran: true,
-        loadingJadwal: true,
-        routeParamsNotifikasi: {
-          pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-          dibaca: "1",
-        },
-        routeParams: {
-          ...this.state.routeParams,
-          limit: 2,
-          pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
-        }
-      }, ()=> {
-        this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
-          this.setState({
-            notifikasi: this.props.notifikasi,
-          });
-        });
-
-        this.props.getCalonPD(this.state.routeParams).then(e => {
-          this.setState({ 
-            loadingPendaftaran: false ,
-            entities: this.props.entities,
-          });
-        });
-
-        this.props.getJKberanda().then(e => {
-          this.setState({
-            loadingJadwal: false,
-          });
-        });
-      });
-    }
-
-    if(localStorage.getItem('kode_aplikasi') === 'PPDB-dinas'){
-      this.props.getRekapTotal(this.state.routeParams).then((result)=>{
+  
+      localStorage.setItem('current_url', '/');
+  
+      let socket = io(localStorage.getItem('socket_url'));
+  
+      socket.on('updateUserList', (users) => {
         this.setState({
-          ...this.state,
-          rekap_total: this.props.rekap_total[0]
-        })
+          users
+        }, ()=> {});
       });
+  
+      if(parseInt(localStorage.getItem('sudah_login')) === 1) {
+        this.setState({
+          loadingPendaftaran: true,
+          loadingJadwal: true,
+          routeParamsNotifikasi: {
+            pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+            dibaca: "1",
+          },
+          routeParams: {
+            ...this.state.routeParams,
+            limit: 2,
+            pengguna_id: JSON.parse(localStorage.getItem('user')).pengguna_id,
+            kode_wilayah: (localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' ? localStorage.getItem('kode_wilayah_aplikasi') : null)
+          }
+        }, ()=> {
+          if(localStorage.getItem('kode_aplikasi') === 'PPDB-dinas'){
+            this.props.getRekapTotal(this.state.routeParams).then((result)=>{
+              this.setState({
+                ...this.state,
+                rekap_total: this.props.rekap_total[0]
+              },()=>{
+                console.log(this.state.rekap_total);
+              });
+            });
+          }
+          
+          this.props.getNotifikasi(this.state.routeParamsNotifikasi).then((result)=> {
+            this.setState({
+              notifikasi: this.props.notifikasi,
+            });
+          });
+  
+          this.props.getCalonPD(this.state.routeParams).then(e => {
+            this.setState({ 
+              loadingPendaftaran: false ,
+              entities: this.props.entities,
+            });
+          });
+  
+          this.props.getJKberanda().then(e => {
+            this.setState({
+              loadingJadwal: false,
+            });
+          });
+        });
+      }
+    }else{
+      this.$f7router.navigate("/Pengumuman/");
     }
+    
   }
 
   render() {
@@ -162,7 +178,7 @@ class Beranda extends Component {
 
     return (
       <Page name="Beranda" hideBarsOnScroll>
-        {localStorage.getItem('sudah_login') === '1' &&
+        {localStorage.getItem('sudah_login') === '1' && localStorage.getItem('kode_aplikasi') !== 'PPDB-publik' &&
           <Navbar 
             sliding={false} 
             large
@@ -194,7 +210,7 @@ class Beranda extends Component {
           </div>
           {localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
             <>
-              <BerandaDinas rekap_total={this.state}/>
+              <BerandaDinas rekap_total={this.state.rekap_total}/>
             </>
           }
           {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
@@ -267,7 +283,7 @@ class Beranda extends Component {
                                     <div className="registrationImage" style={{backgroundImage:'url(http://foto.data.kemdikbud.go.id/getImage/' + optionSekolah.npsn + '/1.jpg)'}}></div>
                                     <div className="registrationDesc">
                                       <h4>{optionSekolah.nama_sekolah}<span>Jalur {optionSekolah.jalur}</span></h4>
-                                      <p>No. Urut Sementara</p>
+                                      <p>No. Urut Pendaftaran Sementara</p>
                                       <h2>{optionSekolah.urutan}/{optionSekolah.kuota}</h2>
                                     </div>
                                   </div>
@@ -302,7 +318,9 @@ class Beranda extends Component {
                         <CardContent padding={false}>
                           <img src="/static/images/icons/no-jadwal.svg" alt="jadwal"/>
                           <h4>Belum ada kegiatan untuk saat ini.</h4>
+                          {localStorage.getItem('kode_aplikasi') === 'PPDB-dinas' &&
                           <Button raised fill onClick={()=>this.$f7router.navigate("/JadwalKegiatan/")} color="deeppurple">Buat jadwal disini!</Button>
+                          }
                         </CardContent>
                       </Card>
                     ) : ''}

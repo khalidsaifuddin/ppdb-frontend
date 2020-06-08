@@ -515,8 +515,8 @@ class tambahCalonPesertaDidik extends Component {
           </Segmented>
           {this.state.displayOnly !== null &&
           <>
-          <Button raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
-            &nbsp;Verifikasi
+          <Button disabled={(this.state.routeParams.status_terima !== null ? true : false)} raised fill large iconIos="f7:checkmark_alt_circle_fill" onClick={()=>this.$f7router.navigate("/vervalPendaftar/"+this.state.routeParams.calon_peserta_didik_id)}>
+            &nbsp; {(this.state.routeParams.status_terima !== null ? <>Telah diverifikasi</> : <>Verifikasi</>)}
           </Button>
           <br/>
           </>
@@ -735,9 +735,16 @@ class tambahCalonPesertaDidik extends Component {
                       disabled={this.state.disabledInput}
                     />
                   </List>
+                  {localStorage.getItem('kode_aplikasi') !== 'PPDB-sekolah' &&
                   <Button onClick={this.bukaPeta}>
                     Lihat / Ubah Posisi Koordinat Rumah
                   </Button>
+                  }
+                  {localStorage.getItem('kode_aplikasi') === 'PPDB-sekolah' &&
+                  <Button onClick={()=>window.open('https://www.google.com/maps/@'+this.state.routeParams.lintang+','+this.state.routeParams.bujur+',17z')}>
+                    Lihat Lokasi di Google Maps
+                  </Button>
+                  }
                 </CardContent>
               </Card>
             </Col>
