@@ -396,6 +396,15 @@ class PeringkatCalon extends Component {
         ));
     }
 
+    handleExcel = () => {
+        const link = localStorage.getItem('api_base') + "/api/CalonPesertaDidik/PeringkatPesertaDidik_excel";
+        const params = "?sekolah_id=" + this.state.routeParams.sekolah_id + 
+        "&start=0&limit=99999&urut=jarak_asc" +
+        "&verifikasi=" + this.state.routeParams.verifikasi + 
+        "&status_terima=" + this.state.routeParams.status_terima;
+        window.open(link + params);
+    }
+
   render() {
     return (
       <Page name="data-pendaftar">
@@ -502,7 +511,10 @@ class PeringkatCalon extends Component {
                     Menampilkan {this.state.entities.countAll ? this.state.entities.countAll : '0'} data calon peserta didik diterima
                     {/* &nbsp;{this.state.sekolah.nama} */}
                 </Col>
-                <Col width="40" style={{textAlign:'right'}}>
+                <Col width="20">
+                    <Button color="green" fillIos onClick={e => this.handleExcel()}>Undul Xls</Button>
+                </Col>
+                <Col width="20" style={{textAlign:'right'}}>
                     {/* <Button iconIos="f7:sort_up">
                     </Button> */}
                     <Link iconIos="f7:sort_up" panelOpen="right" onClick={this.bukaPengaturan}>
